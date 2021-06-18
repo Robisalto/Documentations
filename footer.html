@@ -1,0 +1,32 @@
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+
+
+<script>
+  getQuote();
+
+$(document).ready(function() {
+  $("#getMessage").on("click", function(){
+    getQuote();
+    });
+});
+
+function getQuote() {
+  $.getJSON("https://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=en&jsonp=?", function(data) {
+  $('#quote').html(data.quoteText);
+  $('#author').html(data.quoteAuthor);
+  $('#tweetQuote').attr('href', 'https://twitter.com/intent/tweet?text=' + data.quoteText + '- ' + data.quoteAuthor).attr('target','_blank');
+  })
+}
+</script>
+
+
+<p id="quote"></p>
+  <a id="tweetQuote" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+  <p id="author"></p>
+  <div id="getMessage">
+    <img class="icon" src="https://d30y9cdsu7xlg0.cloudfront.net/png/17148-200.png">
+    <!--<img id="getMessage" class="icon" src="https://pixabay.com/static/uploads/photo/2016/03/31/23/19/buddha-1297531_960_720.png">-->
+    <p class="prompt">Random Wisdom Generator</p>
+  </div>

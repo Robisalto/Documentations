@@ -1,0 +1,33 @@
+[
+    {
+        "type": "CouldNotLoadIncludeFile",
+        "verbosity": "INFO",
+        "path": "geometry.sty",
+        "source": "source",
+        "line": 1,
+        "column": 35
+    },
+    {
+        "type": "CouldNotLoadIncludeFile",
+        "verbosity": "INFO",
+        "path": "geometry.sty",
+        "source": "source",
+        "line": 1,
+        "column": 35
+    },
+    {
+        "type": "BlockNotRendered",
+        "verbosity": "INFO",
+        "contents": {
+            "t": "RawBlock",
+            "c": [
+                "tex",
+                "\\usepackage[margin=.5in]{geometry}"
+            ]
+        }
+    },
+    {
+        "type": "NoLangSpecified",
+        "verbosity": "INFO"
+    }
+]
