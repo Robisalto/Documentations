@@ -23,7 +23,7 @@ extensions: 'extra'
 - [Formation **Linux** Administration: Bases & Services (35H)](2021-06-07-POEI-Linux.html)
 - [Formation Programmation **Shell** (21H)](2021-06-14-POEI-Script-Shell.html)
 - [Formation **Git** (14H)](2021-06-17-POEI-Git.html)
-- Formation **Docker**: Initiation
+- [Formation **Docker**: Initiation](2021-06-21-POEI-Docker.html)
 - Formation **Ansible**: Initiation
 - Mise en Situation Docker/Ansible - Cursus DevOps
 
