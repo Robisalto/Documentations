@@ -1,7 +1,7 @@
 ---
 title: POEI DevOps - Docker
-author: Bruno GUERIN 
-date: 2021-06-17
+author: 
+date: 2021-06-21
 linkcolor: lightblue
 pdf-engine: xelatex
 header-includes:
@@ -12,11 +12,14 @@ extensions: 'extra'
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-#### Formation Linux Administration: Bases et Services
+#### Formation Docker: Initiation
 
-Animée par Bruno GUERIN de DAWAN Toulouse, 14H du 17/06/21 au 18/06/21.
-(bguerin@dawan.fr)
-Formateur Dawan (Linux, réseau et bases de données)
+Pierre Sablé, Formateur & Administrateur Systèmes Linux - DevOps.
+21H du 21/06/21 au 23/06/21
+
+Tel : 07.63.88.76.21
+(<psable@dawan.fr>)
 
 ---
 
+ 
