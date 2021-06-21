@@ -28,11 +28,14 @@ extensions: 'extra'
 - Mise en Situation Docker/Ansible - Cursus DevOps
 
 ## **Linux Academy** 
-[**Linux Academy** *(https://app.linuxacademy.com/)*](https://app.linuxacademy.com/)
 
-  + [Certified Entry-Level Python Programmer Certification](Certified_Entry-Level_Python_Programmer_Certification.html)
+[**Linux Academy**] *(https://app.linuxacademy.com/)*](https://app.linuxacademy.com/)*
 
-## **Devenir un développeur Python** 
+- [Certified Entry-Level Python Programmer Certification](Certified_Entry-Level_Python_Programmer_Certification.html)
+
+
+## **Devenir un développeur Python**
+
 [**Devenir un développeur Python** *(LinkedIn Learning)*](https://www.linkedin.com/learning/paths/devenir-un-developpeur-python?u=82613770)
 
   + [I. Les fondements de la programmation  La conception orientée objet](NotImplemented.html)
@@ -44,7 +47,8 @@ extensions: 'extra'
   + [VII. Python les structures de données](VII.PythonLesStructuresDeDonnées.html)
   + [VIII. Découvrir Raspberry Pi](VIII.DécouvrirRaspberryPi.html)
 
-## **Devenir Administrateur Système Linux** 
+## **Devenir Administrateur Système Linux**
+
 [**Devenir Administrateur Système Linux** *(LinkedIn Learning)*](https://www.linkedin.com/learning/paths/devenir-administrateur-administratrice-systeme-linux)
 
   + [I. Les commandes du terminal](DevenirAdministrateurSystèmeLinux1.html)
@@ -57,6 +61,7 @@ extensions: 'extra'
   + [VIII. Découvrir l'écriture de Scripts en Bash](DevenirAdministrateurSystèmeLinux8.html)
   + [IX. Administration d'un Serveur LAMP](DevenirAdministrateurSystèmeLinux_9.html)
 
+
 ## **Become a DevOps Engineer** 
 [**Become a DevOps Engineer** *(LinkedIn Learning)*](https://www.linkedin.com/learning/paths/become-a-devops-engineer?=82613770)
 
@@ -66,16 +71,18 @@ extensions: 'extra'
   + [XXI. Graphite & Grafana](GraphiteGrafana.html)
 
 # CESI
+
 ## EXIA
 
 ## RISR
 - [2017-07-02: **LINUX** - (Laurent HUBERT)](2018-07-02-Linux-LaurentHUBERT.html)
 
-## MSI
 
 
 # Tutorials & Courses 
+
 ## Tech Skills
+
 - [ ] [La Formation Complète Python](LaFormationCompletePython.html)
 - [x] [Build a Resume Website With Python and Django](Build_a_Resume_Website_With_Python_and_Django.html)
 - [ ] [Configure My DJANGO App](Configure_My_DJANGO_App.html)
@@ -89,12 +96,14 @@ extensions: 'extra'
 - [CSS Animations & Transitions *(LinkedIn Learning)*]()
 
 ## Human Skills
+
 - [Influencer lesautres *(LinkedIn Learning)*]()
 - [Ecouter efficacement *(LinkedIn Learning)*]()
 - [Les fondements de la gestion du temps *(LinkedIn Learning)*]()
 - [Apprendre à dire "non" *(LinkedIn Learning)*]() 
 
 # Docs Perso
+
 - [Workout](MyWORKOUT.html)
 - [Quotes](Quotes.html)
 - [Lyrics](Lyrics.html)
@@ -104,6 +113,7 @@ extensions: 'extra'
 - [Recipes](Recipes.html)
 
 # Docs Techniques
+
 - [Wireshark-Tutorial](Bibliotheque\Wireshark-Tutorial.pdf)
 - [The Hackers Manual](Bibliotheque\The Hackers Manual.pdf)
 - [Raspberry Pi Hacks](Bibliotheque\Raspberry Pi Hacks.pdf)
@@ -114,10 +124,12 @@ extensions: 'extra'
 - [YGGTorrent](YGGTorrent.html)
 
 # Books
+
 - [Mediations](Meditations.html)
 - [The 48 Laws of Power](The_48_Laws_of_Power.html)
 
 # Templates
+
 - [Procédure pour créer un nouvel article](Creer_un_nouvel_article.html)
 - [Template](template.html): Le fichier ``template.html`` contient toutes les infos nécessaires pour maintenir les Documentations à jour.
 - [Markdown Cheat Sheet](CheatSheet.html)
