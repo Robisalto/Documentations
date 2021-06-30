@@ -288,3 +288,71 @@ end
 Puis on relance les VMs: `vagrant up`
 
 ![](2021-06-30-POEI-Vagrant-Packer/demo2.png)
+
+# Validate *(linter)*
+
+Pour assurer l'intégrité du fichier `vagrantfile`:
+
+```sh
+vagrant validate
+```
+
+# Fichier *values.yaml*
+
+```yml
+---
+  box: 'ubuntu/focal64'
+  hostname: 'My-Ubuntu'
+  
+  name: 'demo4'
+  memory: '512'
+  cpus: '1'
+...
+```
+
+
+# Administration des machines précédentes
+
+
+```ruby
+Vagrant.configure("2") do |config|                         
+                                                           
+  require 'yaml'                                           
+  if File.file?('values.yaml')                             
+    conf = YAML.load_file('values.yaml')                
+  else                                                     
+    raise "Configuration file 'values.yaml' does not exist"
+  end                                                      
+                                                           
+  config.vm.box = conf['box'] || "ubuntu/focal64"                         
+  config.vm.hostname = conf['hostname'] || "ubuntu-20.04"
+  
+  config.vm.network :private_network, ip: "192.168.0.50" 
+
+  if ARGV[1] and ARGV[1] != conf['name']
+    conf['name'] = ARGV[1]
+  end
+                                                           
+  # Les ressources                                         
+  config.vm.define conf['name'] do |vm|                    
+                                                           
+    vm.vm.provider "virtualbox" do |v|                     
+      v.memory = conf['memory']                            
+      v.cpus = conf['cpus']                                
+      v.name = conf['name']                                
+    end                                                    
+                                                           
+  end                                                      
+end 
+```
+
+Les lignes:
+
+```ruby
+  if ARGV[1] and ARGV[1] != conf['name']
+    conf['name'] = ARGV[1]
+  end
+```
+Nous permette de reprendre le contrôle sur les machines gérées précédemment et de les détruire, exemple:
+
+`vagrant destroy demo2`
