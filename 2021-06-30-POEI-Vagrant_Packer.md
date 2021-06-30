@@ -120,7 +120,7 @@ Permet de **suspendre** l'état de la machine.
 
 <div class=info> Pour suspendre toutes les VMs: `vagrant suspend` </div>
 
-### Exemple 
+**Exemple :**
 
 ```bash
 Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
@@ -178,7 +178,7 @@ $ vagrant resume
 
 ## Vagrant destroy
 
-**Détruit totaleent la VM**
+**Détruit totalement la VM**
 
 # Connexion / Authentification
 
