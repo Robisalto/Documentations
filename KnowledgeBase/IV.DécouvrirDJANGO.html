@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <title>IV. Découvrir DJANGO</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">IV. Découvrir DJANGO</h1>
+<p class="author">David DEBRAY</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#i.-sinitier-à-django">I. S’initier à Django</a>
+<ul>
+<li><a href="#i-i.-aborder-cette-formation-sur-django">I-I. Aborder cette formation sur Django</a></li>
+<li><a href="#i-ii.-utiliser-les-fichiers-source">I-II. Utiliser les fichiers source</a></li>
+<li><a href="#i-iii.-comprendre-django">I-III. Comprendre Django</a></li>
+<li><a href="#i-iv.-installer-python-et-virtualenv">I-IV. Installer Python et Virtualenv</a></li>
+<li><a href="#i-v.-installer-django-dans-virtualenv">I-V. Installer Django dans Virtualenv</a></li>
+<li><a href="#i-vi.-créer-un-projet-et-tester-le-serveur-interne">I-VI. Créer un projet et tester le serveur interne</a></li>
+<li><a href="#i-vii.-paramétrer-la-base-de-données">I-VII. Paramétrer la base de données</a></li>
+<li><a href="#i-viii.-générer-les-modèles-avec-inspectdb">I-VIII. Générer les modèles avec inspectdb</a></li>
+<li><a href="#i-ix.-créer-une-application">I-IX. Créer une application</a></li>
+</ul></li>
+<li><a href="#ii.-configurer-les-routes-et-créer-des-vues-et-des-gabarits">II. Configurer les routes et créer des vues et des gabarits</a>
+<ul>
+<li><a href="#ii-i.-configurer-les-routes-dans-django">II-I. Configurer les routes dans Django</a></li>
+<li><a href="#ii-ii.-créer-la-première-vue">II-II. Créer la première vue</a></li>
+<li><a href="#ii-iii.-déclarer-lapplication">II-III. Déclarer l’application</a></li>
+<li><a href="#ii-iv.-créer-un-gabarit">II-IV. Créer un gabarit</a></li>
+<li><a href="#ii-iv.-créer-un-gabarit-1">II-IV. Créer un gabarit</a></li>
+<li><a href="#ii-vi.-envoyer-des-informations-au-gabarit">II-VI. Envoyer des informations au gabarit</a></li>
+</ul></li>
+<li><a href="#iii.-afficher-des-requêtes-avec-django">III. Afficher des requêtes avec Django</a>
+<ul>
+<li><a href="#iii-i.-appeler-un-modèle-dans-une-vue">III-I. Appeler un modèle dans une vue</a></li>
+<li><a href="#iii-ii.-créer-un-gabarit-pour-afficher-des-données-du-modèle">III-II. Créer un gabarit pour afficher des données du modèle</a></li>
+<li><a href="#iii-iii.-créer-un-gabarit-global">III-III. Créer un gabarit global</a></li>
+<li><a href="#iii-iv.-étendre-le-gabarit-de-base">III-IV. Étendre le gabarit de base</a></li>
+<li><a href="#iii-v.-implémenter-un-paginateur">III-V. Implémenter un paginateur</a></li>
+<li><a href="#iii-vi.-afficher-la-pagination-dans-le-gabarit">III-VI. Afficher la pagination dans le gabarit</a></li>
+<li><a href="#iii-vii.-filtrer-le-modèle">III-VII. Filtrer le modèle</a></li>
+<li><a href="#iii-viii.-modifier-la-vue-pour-appliquer-le-filtre">III-VIII. Modifier la vue pour appliquer le filtre</a></li>
+<li><a href="#iii-ix.-déboguer-avec-pdb">III-IX. Déboguer avec pdb</a></li>
+<li><a href="#iii-x.-créer-des-variables-dans-le-gabarit">III-X. Créer des variables dans le gabarit</a></li>
+</ul></li>
+<li><a href="#iv.-installer-son-application-django">IV. Installer son application Django</a>
+<ul>
+<li><a href="#iv-i.-préparer-la-gestion-des-formulaires">IV-I. Préparer la gestion des formulaires</a></li>
+<li><a href="#iv-ii.-créer-une-classe-form">IV-II. Créer une classe Form</a></li>
+<li><a href="#iv-iii.-intégrer-form-dans-un-gabarit">IV-III. Intégrer Form dans un gabarit</a></li>
+<li><a href="#iv-iv.-modifier-le-modèle-pour-laffichage-de-ses-éléments">IV-IV. Modifier le modèle pour l’affichage de ses éléments</a></li>
+<li><a href="#iv-v.-implémenter-lajout-dans-le-modèle">IV-V. Implémenter l’ajout dans le modèle</a></li>
+<li><a href="#iv-vi.-installer-sur-apache">IV-VI. Installer sur Apache</a></li>
+<li><a href="#iv-vii.-comprendre-les-fichiers-statiques">IV-VII. Comprendre les fichiers statiques</a></li>
+<li><a href="#iv-viii.-conclure-sur-cette-découverte-de-django">IV-VIII. Conclure sur cette découverte de Django</a></li>
+</ul></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I. Introduction.mp4" type="video/mp4">
+</video>
+<h1 id="i.-sinitier-à-django">I. S’initier à Django</h1>
+<h2 id="i-i.-aborder-cette-formation-sur-django">I-I. Aborder cette formation sur Django</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-I. Aborder cette formation sur Django.mp4" type="video/mp4">
+</video>
+<h2 id="i-ii.-utiliser-les-fichiers-source">I-II. Utiliser les fichiers source</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-II. Utiliser les fichiers source.mp4" type="video/mp4">
+</video>
+<h2 id="i-iii.-comprendre-django">I-III. Comprendre Django</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-III. Comprendre Django.mp4" type="video/mp4">
+</video>
+<blockquote>
+<p><strong>Framework MVC:</strong> Model, View, Controller</p>
+</blockquote>
+<h2 id="i-iv.-installer-python-et-virtualenv">I-IV. Installer Python et Virtualenv</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-IV. Installer Python et Virtualenv.mp4" type="video/mp4">
+</video>
+<p>Sur un environnement Linux (<code>FromDELL</code>):</p>
+<pre class="shell"><code>sudo apt-get install python3 python3-pip -y
+sudo pip3 install virtualenv</code></pre>
+<h2 id="i-v.-installer-django-dans-virtualenv">I-V. Installer Django dans Virtualenv</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-V. Installer Django dans Virtualenv.mp4" type="video/mp4">
+</video>
+<h2 id="i-vi.-créer-un-projet-et-tester-le-serveur-interne">I-VI. Créer un projet et tester le serveur interne</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-VI. Créer un projet et tester le serveur interne.mp4" type="video/mp4">
+</video>
+<h2 id="i-vii.-paramétrer-la-base-de-données">I-VII. Paramétrer la base de données</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-VII. Paramétrer la base de données.mp4" type="video/mp4">
+</video>
+<p><code>./manage.py migrate</code></p>
+<figure>
+<img src="IV.DécouvrirDJANGO\I-VII.%20Paramétrer%20la%20base%20de%20données.png" alt="" /><figcaption>Paramétrer la base de données</figcaption>
+</figure>
+<h2 id="i-viii.-générer-les-modèles-avec-inspectdb">I-VIII. Générer les modèles avec inspectdb</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-VIII. Générer les modèles avec inspectdb.mp4" type="video/mp4">
+</video>
+<p><code>./manage.py inspectdb</code></p>
+<h2 id="i-ix.-créer-une-application">I-IX. Créer une application</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\I-IX. Créer une application.mp4" type="video/mp4">
+</video>
+<h1 id="ii.-configurer-les-routes-et-créer-des-vues-et-des-gabarits">II. Configurer les routes et créer des vues et des gabarits</h1>
+<h2 id="ii-i.-configurer-les-routes-dans-django">II-I. Configurer les routes dans Django</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\II-I. Configurer les routes dans Django.mp4" type="video/mp4">
+</video>
+<h2 id="ii-ii.-créer-la-première-vue">II-II. Créer la première vue</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\II-II. Créer la première vue.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iii.-déclarer-lapplication">II-III. Déclarer l’application</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\II-III. Déclarer l'application.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iv.-créer-un-gabarit">II-IV. Créer un gabarit</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\II-IV. Créer un gabarit.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iv.-créer-un-gabarit-1">II-IV. Créer un gabarit</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\II-IV. Créer un gabarit.mp4" type="video/mp4">
+</video>
+<h2 id="ii-vi.-envoyer-des-informations-au-gabarit">II-VI. Envoyer des informations au gabarit</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\II-VI. Envoyer des informations au gabarit.mp4" type="video/mp4">
+</video>
+<h1 id="iii.-afficher-des-requêtes-avec-django">III. Afficher des requêtes avec Django</h1>
+<h2 id="iii-i.-appeler-un-modèle-dans-une-vue">III-I. Appeler un modèle dans une vue</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-I. Appeler un modèle dans une vue.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ii.-créer-un-gabarit-pour-afficher-des-données-du-modèle">III-II. Créer un gabarit pour afficher des données du modèle</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-II. Créer un gabarit pour afficher des données du modèle.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iii.-créer-un-gabarit-global">III-III. Créer un gabarit global</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-III. Créer un gabarit global.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iv.-étendre-le-gabarit-de-base">III-IV. Étendre le gabarit de base</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-IV. Étendre le gabarit de base.mp4" type="video/mp4">
+</video>
+<h2 id="iii-v.-implémenter-un-paginateur">III-V. Implémenter un paginateur</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-V. Implémenter un paginateur.mp4" type="video/mp4">
+</video>
+<h2 id="iii-vi.-afficher-la-pagination-dans-le-gabarit">III-VI. Afficher la pagination dans le gabarit</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-VI. Afficher la pagination dans le gabarit.mp4" type="video/mp4">
+</video>
+<h2 id="iii-vii.-filtrer-le-modèle">III-VII. Filtrer le modèle</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-VII. Filtrer le modèle.mp4" type="video/mp4">
+</video>
+<h2 id="iii-viii.-modifier-la-vue-pour-appliquer-le-filtre">III-VIII. Modifier la vue pour appliquer le filtre</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-VIII. Modifier la vue pour appliquer le filtre.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ix.-déboguer-avec-pdb">III-IX. Déboguer avec pdb</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-IX. Déboguer avec pdb.mp4" type="video/mp4">
+</video>
+<h2 id="iii-x.-créer-des-variables-dans-le-gabarit">III-X. Créer des variables dans le gabarit</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\III-X. Créer des variables dans le gabarit.mp4" type="video/mp4">
+</video>
+<h1 id="iv.-installer-son-application-django">IV. Installer son application Django</h1>
+<h2 id="iv-i.-préparer-la-gestion-des-formulaires">IV-I. Préparer la gestion des formulaires</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-I. Préparer la gestion des formulaires.mp4" type="video/mp4">
+</video>
+<h2 id="iv-ii.-créer-une-classe-form">IV-II. Créer une classe Form</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-II. Créer une classe Form.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iii.-intégrer-form-dans-un-gabarit">IV-III. Intégrer Form dans un gabarit</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-III. Intégrer Form dans un gabarit.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iv.-modifier-le-modèle-pour-laffichage-de-ses-éléments">IV-IV. Modifier le modèle pour l’affichage de ses éléments</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-IV. Modifier le modèle pour l'affichage de ses éléments.mp4" type="video/mp4">
+</video>
+<h2 id="iv-v.-implémenter-lajout-dans-le-modèle">IV-V. Implémenter l’ajout dans le modèle</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-V. Implémenter l'ajout dans le modèle.mp4" type="video/mp4">
+</video>
+<h2 id="iv-vi.-installer-sur-apache">IV-VI. Installer sur Apache</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-VI. Installer sur Apache.mp4" type="video/mp4">
+</video>
+<h2 id="iv-vii.-comprendre-les-fichiers-statiques">IV-VII. Comprendre les fichiers statiques</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-VII. Comprendre les fichiers statiques.mp4" type="video/mp4">
+</video>
+<h2 id="iv-viii.-conclure-sur-cette-découverte-de-django">IV-VIII. Conclure sur cette découverte de Django</h2>
+<video width="600" height="337" controls>
+<source src="IV.DécouvrirDJANGO\IV-VIII. Conclure sur cette découverte de Django.mp4" type="video/mp4">
+</video>
+<h1 id="certification">CERTIFICATION</h1>
+<p style="text-align: center; text-decoration-color: red">
+<a href="IV.DécouvrirDJANGO\CertificateOfCompletion_Decouvrir%20Django.pdf">CertificateOfCompletion_Decouvrir Django.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="DécouvrirDJANGO.pdf">Découvrir DJANGO - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

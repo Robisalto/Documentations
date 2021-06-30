@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <title>Configurer Visual Studio Code</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Configurer Visual Studio Code</h1>
+<p class="author">David DEBRAY</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#installer-python-sur-le-système">Installer Python sur le Système</a>
+<ul>
+<li><a href="#windows">Windows</a>
+<ul>
+<li><a href="#windows-subsystem-for-linux">Windows Subsystem for Linux</a></li>
+</ul></li>
+<li><a href="#macos">MacOS</a></li>
+<li><a href="#linux">LINUX</a></li>
+</ul></li>
+<li><a href="#sources">Sources</a></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="installer-python-sur-le-système">Installer Python sur le Système</h1>
+<ul>
+<li><a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+</ul>
+<h2 id="windows">Windows</h2>
+<p>Install <a href="https://www.python.org/downloads/">Python from python.org</a>. You can typically use the <strong>Download Python</strong> button that appears first on the page to download the latest version.</p>
+<blockquote>
+<p>Note: If you don’t have admin access, an additional option for installing Python on Windows is to use the Microsoft Store. The Microsoft Store provides installs of <a href="https://www.microsoft.com/en-us/p/python-37/9nj46sx7x90p">Python 3.7</a> and <a href="https://www.microsoft.com/en-us/p/python-38/9mssztt1n39l">Python 3.8</a>. Be aware that you might have compatibility issues with some packages using this method.</p>
+</blockquote>
+<p>For additional information about using Python on Windows, see <a href="https://docs.python.org/3.7/using/windows.html">Using Python on Windows at Python.org</a>.</p>
+<h3 id="windows-subsystem-for-linux">Windows Subsystem for Linux</h3>
+<p><strong>Windows Subsystem for Linux</strong>: If you are working on Windows and want a Linux environment for working with Python, the <a href="https://docs.microsoft.com/windows/wsl/about">Windows Subsystem for Linux</a> (WSL) is an option for you. If you choose this option, you’ll also want to install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-wsl">Remote - WSL extension</a>. For more information about using WSL with VS Code, see <a href="https://code.visualstudio.com/docs/remote/remote-overview">VS Code Remote Development</a> or try the <a href="https://code.visualstudio.com/docs/remote/wsl-tutorial">Working in WSL tutorial</a>, which will walk you through setting up WSL, installing Python, and creating a Hello World application running in WSL.</p>
+<h2 id="macos">MacOS</h2>
+<p>The system install of Python on macOS is not supported. Instead, an installation through Homebrew is recommended. To install Python using Homebrew on macOS use <code>brew install python3</code> at the Terminal prompt.</p>
+<blockquote>
+<p>Note On macOS, make sure the location of your VS Code installation is included in your PATH environment variable. <a href="https://code.visualstudio.com/docs/setup/mac#_launching-from-the-command-line">See these setup instructions</a> for more information.</p>
+</blockquote>
+<h2 id="linux">LINUX</h2>
+<p>The built-in Python 3 installation on Linux works well, but to install other Python packages you must install <code>pip</code> with <a href="https://pip.pypa.io/en/stable/installing/#installing-with-get-pip-py">get-pip.py</a>.</p>
+<h1 id="sources">Sources</h1>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=xFciV6Ew5r4">Setting up a Python Development Environment in Sublime Text 3</a></li>
+<li><a href="https://code.visualstudio.com/docs/python/python-tutorial">https://code.visualstudio.com/docs/python/python-tutorial</a></li>
+</ul>
+<hr />
+<p style="text-align: center">
+<a href="template.pdf">Template - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <title>V. Créer un Script avec Python</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">V. Créer un Script avec Python</h1>
+<p class="author">David DEBRAY</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#bienvenue-dans-créer-un-script-avec-python">Bienvenue dans « Créer un script avec Python »</a></li>
+</ul></li>
+<li><a href="#i.-mettre-en-place-lenvironnement-de-développement">I. Mettre en place l’environnement de développement</a>
+<ul>
+<li><a href="#i-iii.-installer-les-modules-dans-pycharm">I-III. Installer les modules dans PyCharm</a></li>
+<li><a href="#i-iv.-intégrer-mercurial-dans-pycharm">I-IV. Intégrer Mercurial dans PyCharm</a></li>
+<li><a href="#i-v.-créer-une-classe">I-V. Créer une classe</a></li>
+<li><a href="#i-vi.-mettre-en-place-le-corps-de-la-méthode-get">I-VI. Mettre en place le corps de la méthode <code>get</code></a></li>
+<li><a href="#i-vii.-appeler-la-méthode-get">I-VII. Appeler la méthode <code>get</code></a></li>
+</ul></li>
+<li><a href="#ii.-créer-des-éléments-de-base-base-dune-classe-python">II. Créer des éléments de base base d’une classe Python</a>
+<ul>
+<li><a href="#ii-i.-ajouter-un-constructeur">II-I. Ajouter un constructeur</a></li>
+<li><a href="#ii-ii.-réécrire-la-méthode-get">II-II. Réécrire la méthode GET</a></li>
+<li><a href="#ii-iii.-utiliser-une-expression-rationnelle">II-III. Utiliser une expression rationnelle</a></li>
+<li><a href="#ii-iv.-utiliser-des-annotations">II-IV. Utiliser des annotations</a></li>
+<li><a href="#ii-v.-contrôler-le-type-et-les-assertions">II-V. Contrôler le type et les assertions</a></li>
+</ul></li>
+<li><a href="#iii.-faire-une-gestion-avancée-des-classes">III. Faire une gestion avancée des classes</a>
+<ul>
+<li><a href="#iii-i.-déclarer-des-variables-de-classe">III-I. Déclarer des variables de classe</a></li>
+<li><a href="#iii-ii.-appeler-des-variables-de-classe">III-II. Appeler des variables de classe</a></li>
+<li><a href="#iii-iii.-créer-des-propriétés-de-la-classe">III-III. Créer des propriétés de la classe</a></li>
+<li><a href="#iii-iv.-utiliser-des-propriétés-de-la-classe">III-IV. Utiliser des propriétés de la classe</a></li>
+<li><a href="#iii-v.-comprendre-lesprit-pythonique-des-propriétés">III-V. Comprendre l’esprit pythonique des propriétés</a></li>
+</ul></li>
+<li><a href="#iv.-manipuler-des-dictionnaires-et-des-tuples">IV. Manipuler des Dictionnaires et des Tuples</a>
+<ul>
+<li><a href="#iv-i.-supprimer-un-élément-du-dictionnaire">IV-I. Supprimer un élément du dictionnaire</a></li>
+<li><a href="#iv-ii.-effectuer-une-suppression-de-différentes-manières">IV-II. Effectuer une suppression de différentes manières</a></li>
+<li><a href="#iv-iii.-comprendre-le-dictionnaire">IV-III. Comprendre le dictionnaire</a></li>
+<li><a href="#iv-iv.-découvrir-les-façon-ditérer-sur-un-dictionnaire">IV-IV. Découvrir les façon d’itérer sur un dictionnaire</a></li>
+<li><a href="#iv-v.-utiliser-lopérateur-splat">IV-V. Utiliser l’opérateur SPLAT</a></li>
+</ul></li>
+<li><a href="#v.-traiter-des-chaînes-et-la-programmation-gui">V. Traiter des chaînes et la programmation GUI</a>
+<ul>
+<li><a href="#v-i.-etablir-les-différences-entre-bytes-et-str">V-I. Etablir les différences entre bytes et STR</a></li>
+<li><a href="#v-ii.-convertir-des-bytes-vers-str">V-II. Convertir des bytes vers STR</a></li>
+<li><a href="#v-iii.-utiliser-une-expression-rationnelle-pour-extraire-lencodage">V-III. Utiliser une expression rationnelle pour extraire l’encodage</a></li>
+<li><a href="#v-iv.-gérer-les-différentes-bibliothèques-gui-pour-python">V-IV. Gérer les différentes bibliothèques GUI pour Python</a></li>
+<li><a href="#v-v.-générer-du-code-wxpython-avec-wxglade">V-V. Générer du code wxPython avec wxGlade</a></li>
+<li><a href="#v-vi.-voir-un-exemple-dapplication-gui-wxpython">V-VI. Voir un exemple d’application GUI wxPython</a></li>
+<li><a href="#v-vii.-conclure-sur-le-développement-dun-script-avec-python">V-VII. Conclure sur le développement d’un script avec Python</a></li>
+</ul></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="bienvenue-dans-créer-un-script-avec-python">Bienvenue dans « Créer un script avec Python »</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\0. Intro - Bienvenue dans « Créer un script avec Python ».mp4" type="video/mp4">
+</video>
+<h1 id="i.-mettre-en-place-lenvironnement-de-développement">I. Mettre en place l’environnement de développement</h1>
+<h2 id="i-iii.-installer-les-modules-dans-pycharm">I-III. Installer les modules dans PyCharm</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\I-III. Installer les modules dans PyCharm.mp4" type="video/mp4">
+</video>
+<h2 id="i-iv.-intégrer-mercurial-dans-pycharm">I-IV. Intégrer Mercurial dans PyCharm</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\I-IV. Intégrer Mercurial dans PyCharm.mp4" type="video/mp4">
+</video>
+<h2 id="i-v.-créer-une-classe">I-V. Créer une classe</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\I-V. Créer une classe.mp4" type="video/mp4">
+</video>
+<h2 id="i-vi.-mettre-en-place-le-corps-de-la-méthode-get">I-VI. Mettre en place le corps de la méthode <code>get</code></h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\I-VI. Mettre en place le corps de la méthode get.mp4" type="video/mp4">
+</video>
+<h2 id="i-vii.-appeler-la-méthode-get">I-VII. Appeler la méthode <code>get</code></h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\I-VII. Appeler la méthode get.mp4" type="video/mp4">
+</video>
+<h1 id="ii.-créer-des-éléments-de-base-base-dune-classe-python">II. Créer des éléments de base base d’une classe Python</h1>
+<h2 id="ii-i.-ajouter-un-constructeur">II-I. Ajouter un constructeur</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\II-I. Ajouter un constructeur.mp4" type="video/mp4">
+</video>
+<h2 id="ii-ii.-réécrire-la-méthode-get">II-II. Réécrire la méthode GET</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\II-II. Réécrire la méthode GET.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iii.-utiliser-une-expression-rationnelle">II-III. Utiliser une expression rationnelle</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\II-III. Utiliser une expression rationnelle.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iv.-utiliser-des-annotations">II-IV. Utiliser des annotations</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\II-IV. Utiliser des annotations.mp4" type="video/mp4">
+</video>
+<h2 id="ii-v.-contrôler-le-type-et-les-assertions">II-V. Contrôler le type et les assertions</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\II-V. Contrôler le type et les assertions.mp4" type="video/mp4">
+</video>
+<h1 id="iii.-faire-une-gestion-avancée-des-classes">III. Faire une gestion avancée des classes</h1>
+<h2 id="iii-i.-déclarer-des-variables-de-classe">III-I. Déclarer des variables de classe</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\III-I. Déclarer des variables de classe.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ii.-appeler-des-variables-de-classe">III-II. Appeler des variables de classe</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\III-II. Appeler des variables de classe.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iii.-créer-des-propriétés-de-la-classe">III-III. Créer des propriétés de la classe</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\III-III. Créer des propriétés de la classe.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iv.-utiliser-des-propriétés-de-la-classe">III-IV. Utiliser des propriétés de la classe</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\III-IV. Utiliser des propriétés de la classe.mp4" type="video/mp4">
+</video>
+<h2 id="iii-v.-comprendre-lesprit-pythonique-des-propriétés">III-V. Comprendre l’esprit pythonique des propriétés</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\III-V. Comprendre l'esprit pythonique des propriétés.mp4" type="video/mp4">
+</video>
+<h1 id="iv.-manipuler-des-dictionnaires-et-des-tuples">IV. Manipuler des Dictionnaires et des Tuples</h1>
+<h2 id="iv-i.-supprimer-un-élément-du-dictionnaire">IV-I. Supprimer un élément du dictionnaire</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\IV-I. Supprimer un élément du dictionnaire.mp4" type="video/mp4">
+</video>
+<h2 id="iv-ii.-effectuer-une-suppression-de-différentes-manières">IV-II. Effectuer une suppression de différentes manières</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\IV-II. Effectuer une suppression de différentes manières.mp4" type="video/mp4">
+</video>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># 1ère façon</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="cf">try</span>:</span>
+<span id="cb1-3"><a href="#cb1-3"></a>            <span class="kw">del</span> reponse[<span class="st">&#39;cache--control&#39;</span>]</span>
+<span id="cb1-4"><a href="#cb1-4"></a>        <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
+<span id="cb1-5"><a href="#cb1-5"></a>            <span class="cf">pass</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># 2ème</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>reponse.pop(<span class="st">&#39;cache--control&#39;</span>, <span class="va">None</span>)</span></code></pre></div>
+<h2 id="iv-iii.-comprendre-le-dictionnaire">IV-III. Comprendre le dictionnaire</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\IV-III. Comprendre le dictionnaire.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iv.-découvrir-les-façon-ditérer-sur-un-dictionnaire">IV-IV. Découvrir les façon d’itérer sur un dictionnaire</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\IV-IV. Découvrir les façon d'itérer sur un dictionnaire.mp4" type="video/mp4">
+</video>
+<h2 id="iv-v.-utiliser-lopérateur-splat">IV-V. Utiliser l’opérateur SPLAT</h2>
+<p class="info">
+Opérateur d’unpacking (*x)
+</p>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\IV-V. Utiliser l'opérateur SPLAT.mp4" type="video/mp4">
+</video>
+<h1 id="v.-traiter-des-chaînes-et-la-programmation-gui">V. Traiter des chaînes et la programmation GUI</h1>
+<h2 id="v-i.-etablir-les-différences-entre-bytes-et-str">V-I. Etablir les différences entre bytes et STR</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-I. Etablir les différences entre bytes et STR.mp4" type="video/mp4">
+</video>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># En BYTES (Tableau d&#39;octets)</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="bu">print</span>(<span class="bu">type</span>(b<span class="st">&quot;coucou&quot;</span>))</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># retourne:</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;bytes&#39;</span><span class="op">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># En STR (Chaîne de caratères)</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="bu">print</span> (<span class="bu">type</span>(<span class="st">&quot;coucou&quot;</span>))</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># retourne:</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;str&#39;</span><span class="op">&gt;</span></span></code></pre></div>
+<h2 id="v-ii.-convertir-des-bytes-vers-str">V-II. Convertir des bytes vers STR</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-II. Convertir des bytes vers STR.mp4" type="video/mp4">
+</video>
+<h2 id="v-iii.-utiliser-une-expression-rationnelle-pour-extraire-lencodage">V-III. Utiliser une expression rationnelle pour extraire l’encodage</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-III. Utiliser une expression rationnelle pour extraire l'encodage.mp4" type="video/mp4">
+</video>
+<h2 id="v-iv.-gérer-les-différentes-bibliothèques-gui-pour-python">V-IV. Gérer les différentes bibliothèques GUI pour Python</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-IV. Gérer les différentes bibliothèques GUI pour Python.mp4" type="video/mp4">
+</video>
+<h2 id="v-v.-générer-du-code-wxpython-avec-wxglade">V-V. Générer du code wxPython avec wxGlade</h2>
+<p class="info">
+Sur Python2 car wxPython n’existe pas encore pour Python3 😢
+</p>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-V. Générer du code wxPython avec wxGlade.mp4" type="video/mp4">
+</video>
+<h2 id="v-vi.-voir-un-exemple-dapplication-gui-wxpython">V-VI. Voir un exemple d’application GUI wxPython</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-VI. Voir un exemple d'application GUI wxPython.mp4" type="video/mp4">
+</video>
+<h2 id="v-vii.-conclure-sur-le-développement-dun-script-avec-python">V-VII. Conclure sur le développement d’un script avec Python</h2>
+<video width="1000" height="562" controls>
+<source src="V.CréerUnScriptAvecPython\V-VII. Conclure sur le développement d'un script avec Python.mp4" type="video/mp4">
+</video>
+<h1 id="certification">CERTIFICATION</h1>
+<ul>
+<li><a href="V.CréerUnScriptAvecPython\CertificateOfCompletion_Creer%20un%20script%20avec%20Python.pdf">Certificat - Créer un Script avec Python</a></li>
+</ul>
+<hr />
+<p style="text-align: center">
+<a href="V.CréerUnScriptAvecPython.pdf">V. Créer un Script avec Python - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="dcterms.date" content="2021-06-24" />
+  <title>POEI DevOps - Ansible</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Ansible</h1>
+<p class="author"></p>
+<p class="date">2021-06-24</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#doc-source">Doc Source</a></li>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a>
+<ul>
+<li><a href="#yaml-checker">YAML Checker</a></li>
+<li><a href="#syntax-check">Syntax Check</a></li>
+<li><a href="#ansible-cheatsheet">Ansible Cheatsheet</a></li>
+<li><a href="#les-facts">Les facts</a></li>
+<li><a href="#tags">Tags</a></li>
+</ul></li>
+<li><a href="#installation-de-ansible">Installation de <strong><em>Ansible</em></strong></a>
+<ul>
+<li><a href="#sur-le-client-deby">Sur le Client <em>Deby</em></a>
+<ul>
+<li><a href="#prérequis">Prérequis</a></li>
+<li><a href="#attribution-de-droits-sudo">Attribution de droits <em>SUDO</em></a></li>
+</ul></li>
+<li><a href="#sur-le-serveur-ansible-ansiblectl">Sur le serveur Ansible <strong><em>Ansiblectl</em></strong></a></li>
+<li><a href="#connexion-ssh-serveurclient">Connexion SSH Serveur/Client</a>
+<ul>
+<li><a href="#génération-de-clés-ssh">Génération de clés ssh</a></li>
+<li><a href="#copie-de-la-clé-publique">Copie de la clé Publique</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#configuration-de-ansible">Configuration de Ansible</a>
+<ul>
+<li><a href="#inventory">Inventory</a>
+<ul>
+<li><a href="#test-ping">Test PING</a></li>
+</ul></li>
+<li><a href="#ansible.cfg">ansible.cfg</a></li>
+</ul></li>
+<li><a href="#ansible-builtins">Ansible Builtins</a></li>
+<li><a href="#ansible-playbook">Ansible Playbook</a>
+<ul>
+<li><a href="#création-dun-utilisateur-ansible">Création d’un utilisateur “ansible”</a></li>
+<li><a href="#déploiement-de-clé-ssh-publique">Déploiement de clé ssh publique</a></li>
+<li><a href="#création-dun-fichier-de-config-sudoers">Création d’un fichier de config sudoers</a>
+<ul>
+<li><a href="#modification-de-lutilisateur">Modification de l’utilisateur</a></li>
+<li><a href="#modification-dans-ansible.cfg">Modification dans ANSIBLE.CFG</a></li>
+</ul></li>
+<li><a href="#ansible-en-tant-que-sudo">ANSIBLE en tant que SUDO</a>
+<ul>
+<li><a href="#sans-loption--b">Sans l’option <code>-b</code></a></li>
+<li><a href="#avec-loption--b">Avec l’option <code>-b</code></a></li>
+</ul></li>
+<li><a href="#bootstrap-playbook"><em>BootStrap Playbook</em></a></li>
+<li><a href="#requirements_playbook">Requirements_Playbook</a></li>
+<li><a href="#variables-dans-playbook">Variables dans Playbook</a>
+<ul>
+<li><a href="#variables-en-liste">Variables en Liste</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#loops">Loops</a>
+<ul>
+<li><a href="#boucle-dans-des-dictionnaires">Boucle dans des dictionnaires</a>
+<ul>
+<li><a href="#gestion-de-version-de-programme">Gestion de Version de Programme</a></li>
+<li><a href="#parcours-de-structure-de-données-exemple">Parcours de Structure de Données <em>(Exemple)</em></a></li>
+<li><a href="#générer-un-mot-de-passe-pour-un-uilisateur">Générer un mot de passe pour un uilisateur</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#gestion-avancée-dinventaire">Gestion avancée d’inventaire</a>
+<ul>
+<li><a href="#gestion-de-group">Gestion de <em>group</em></a></li>
+<li><a href="#gestion-de-host">Gestion de <em>host</em></a></li>
+</ul></li>
+<li><a href="#conditionnals">Conditionnals</a></li>
+<li><a href="#ajout-dune-machine-centos-au-parc">Ajout d’une machine CentOS au parc</a>
+<ul>
+<li><a href="#erreur-sudo">Erreur <em>SUDO</em></a></li>
+<li><a href="#lancement-du-bootstrap_playbook">Lancement du <em>bootstrap_playbook</em></a></li>
+</ul></li>
+<li><a href="#requirements_playbook-1"><em>Requirements_playbook</em></a>
+<ul>
+<li><a href="#découverte-des-facts">Découverte des <strong><em>facts</em></strong></a></li>
+<li><a href="#modification-du-playbook">Modification du playbook</a></li>
+</ul></li>
+<li><a href="#task-4-message-of-the-day">Task 4: “Message of the Day”</a>
+<ul>
+<li><a href="#gestion-des-copies-de-fichiers">Gestion des copies de fichiers</a></li>
+<li><a href="#motd-dynamique">MOTD Dynamique</a>
+<ul>
+<li><a href="#ajout-du-groupe-sudo">Ajout du Groupe <em>sudo</em></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#ansible-vault">Ansible Vault</a></li>
+<li><a href="#rôles-structure">Rôles &amp; Structure</a></li>
+<li><a href="#handlers">Handlers</a></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h4 id="formation-docker-initiation">Formation Docker: Initiation</h4>
+<p>Pierre Sablé, Formateur &amp; Administrateur Systèmes Linux - DevOps. 21H du 21/06/21 au 23/06/21</p>
+<p>Tel : <em>07.63.88.76.21</em> - Mail: <em><a href="mailto:psable@dawan.fr" class="email">psable@dawan.fr</a></em></p>
+<hr />
+<h1 id="doc-source">Doc Source</h1>
+<p>Documentation Source en PDF:</p>
+<iframe src="2021-06-24-POEI-Ansible/Formation_Ansible-Pierre_SABLE.pdf" width="100%" height="320px" allowfullscreen="yes">
+</iframe>
+<p>Site officiel: <a href="https://www.ansible.com/overview/it-automation" class="uri">https://www.ansible.com/overview/it-automation</a></p>
+<h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
+<h2 id="yaml-checker">YAML Checker</h2>
+<p><strong><em>YAML Checker</em></strong> permet de tester si le code YAML est correct ;)</p>
+<p><a href="https://yamlchecker.com/" class="uri">https://yamlchecker.com/</a></p>
+<h2 id="syntax-check">Syntax Check</h2>
+<p>Avec ansible il est possible d’utiliser la vérification de syntaxe avec:</p>
+<pre class="shell"><code>odin@ansiblectl:~/formation_ansible$ ansible-playbook bootstrap_playbook.yml -b --syntax-check
+
+playbook: bootstrap_playbook.yml</code></pre>
+<h2 id="ansible-cheatsheet">Ansible Cheatsheet</h2>
+<p>Tuto Digital Ocean: <a href="https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide" class="uri">https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide</a></p>
+<h2 id="les-facts">Les facts</h2>
+<p>Module pour collecter les facts : <code>setup</code>.</p>
+<p>Module lancé automatiquement lors du déclenchement d’un playbook au travers d’une task <code>gathering_facts</code></p>
+<p>Le module peut être lancé manuellement en mode “Ad-Hoc” ou au travers d’une task dans un playbook</p>
+<pre class="shell"><code>$ ansible -m setup nodes</code></pre>
+<h2 id="tags">Tags</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html</a></p>
+<p>Exemple :</p>
+<pre class="shell"><code>$ ansible-playbook requirements_playbook.yml --tags crea_users
+$ ansible-playbook requirements_playbook.yml --skip-tags crea_users</code></pre>
+<hr />
+<h1 id="installation-de-ansible">Installation de <strong><em>Ansible</em></strong></h1>
+<p>Guide d’installation de <strong>Ansible</strong>: <a href="https://docs.ansible.com/ansible/latest/installation_guide/index.html" class="uri">https://docs.ansible.com/ansible/latest/installation_guide/index.html</a></p>
+<p><a href="https://docs.ansible.com/ansible/latest/installation_guide/index.html" class="uri">https://docs.ansible.com/ansible/latest/installation_guide/index.html</a></p>
+<h2 id="sur-le-client-deby">Sur le Client <em>Deby</em></h2>
+<h3 id="prérequis">Prérequis</h3>
+<p>On vérifie que les prérequis sont bien présents:</p>
+<p><code>python --version</code> et <code>python3 --version</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">stagiaire@debian</span>:~$ python --version</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">Python</span> 2.7.16</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">stagiaire@debian</span>:~$ python3 --version</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">Python</span> 3.7.3</span></code></pre></div>
+<h3 id="attribution-de-droits-sudo">Attribution de droits <em>SUDO</em></h3>
+<ul>
+<li>Installation en <strong>root</strong>:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">apt</span> update -y </span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">apt</span> install sudo -y</span></code></pre></div>
+<ul>
+<li>Ajout du User “stagiaire” dans le groupe <strong><em>sudo</em></strong>:</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">usermod</span> -aG sudo stagiaire</span></code></pre></div>
+<h2 id="sur-le-serveur-ansible-ansiblectl">Sur le serveur Ansible <strong><em>Ansiblectl</em></strong></h2>
+<p>Sur le serveur <strong><em>Ansiblectl</em></strong> on installe les prérequis:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">sudo</span> apt update -y</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">sudo</span> apt install python3-pip</span></code></pre></div>
+<p>Installe le binaire <code>ansible</code>pour le user <em>stagiaire</em>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">pip3</span> install ansible</span></code></pre></div>
+<p>On vérifie:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Mise à jour du profile</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">odin@ansiblectl</span>:~$ . .profile </span>
+<span id="cb9-3"><a href="#cb9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># Vérification</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="ex">odin@ansiblectl</span>:~$ ansible --version</span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="ex">ansible</span> [core 2.11.2] </span>
+<span id="cb9-7"><a href="#cb9-7"></a>  <span class="ex">config</span> file = None</span>
+<span id="cb9-8"><a href="#cb9-8"></a>  <span class="ex">configured</span> module search path = [<span class="st">&#39;/home/odin/.ansible/plugins/modules&#39;</span>, <span class="st">&#39;/usr/share/ansible/plugins/modules&#39;</span>]</span>
+<span id="cb9-9"><a href="#cb9-9"></a>  <span class="ex">ansible</span> python module location = /home/odin/.local/lib/python3.8/site-packages/ansible</span>
+<span id="cb9-10"><a href="#cb9-10"></a>  <span class="ex">ansible</span> collection location = /home/odin/.ansible/collections:/usr/share/ansible/collections</span>
+<span id="cb9-11"><a href="#cb9-11"></a>  <span class="ex">executable</span> location = /home/odin/.local/bin/ansible</span>
+<span id="cb9-12"><a href="#cb9-12"></a>  <span class="ex">python</span> version = 3.8.5 (default, May 27 2021, 13:30:53) [<span class="ex">GCC</span> 9.3.0]</span>
+<span id="cb9-13"><a href="#cb9-13"></a>  <span class="ex">jinja</span> version = 2.10.1</span>
+<span id="cb9-14"><a href="#cb9-14"></a>  <span class="ex">libyaml</span> = True</span></code></pre></div>
+<h2 id="connexion-ssh-serveurclient">Connexion SSH Serveur/Client</h2>
+<p>On teste la connexion entre les 2 machines:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">odin@ansiblectl</span>:~$ . .profile </span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="ex">odin@ansiblectl</span>:~$ ansible --version</span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="ex">ansible</span> [core 2.11.2] </span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="ex">config</span> file = None</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="ex">configured</span> module search path = [<span class="st">&#39;/home/odin/.ansible/plugins/modules&#39;</span>, <span class="st">&#39;/usr/share/ansible/plugins/modules&#39;</span>]</span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="ex">ansible</span> python module location = /home/odin/.local/lib/python3.8/site-packages/ansible</span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="ex">ansible</span> collection location = /home/odin/.ansible/collections:/usr/share/ansible/collections</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="ex">executable</span> location = /home/odin/.local/bin/ansible</span>
+<span id="cb10-9"><a href="#cb10-9"></a>  <span class="ex">python</span> version = 3.8.5 (default, May 27 2021, 13:30:53) [<span class="ex">GCC</span> 9.3.0]</span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="ex">jinja</span> version = 2.10.1</span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="ex">libyaml</span> = True</span></code></pre></div>
+<p>On teste la connexion <strong><em>ssh</em></strong>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">odin@ansiblectl</span>:~$ ssh stagiaire@192.168.1.42</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">The</span> authenticity of host <span class="st">&#39;192.168.1.42 (192.168.1.42)&#39;</span> can<span class="st">&#39;t be established.</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">ECDSA key fingerprint is SHA256:8t/KE2MR6n5dLX3NDDKq1pf5YvB3KKKsBqoumPNWUTA.</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="st">Are you sure you want to continue connecting (yes/no/[fingerprint])? yes</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="st">Warning: Permanently added &#39;</span>192.168.1.42<span class="st">&#39; (ECDSA) to the list of known hosts.</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="st">stagiaire@192.168.1.42&#39;</span>s password: </span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="ex">Linux</span> debian 4.19.0-13-amd64 <span class="co">#1 SMP Debian 4.19.160-2 (2020-11-28) x86_64</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="ex">The</span> programs included with the Debian GNU/Linux system are free software<span class="kw">;</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="ex">the</span> exact distribution terms for each program are described in the</span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="ex">individual</span> files in /usr/share/doc/*/copyright.</span>
+<span id="cb11-12"><a href="#cb11-12"></a></span>
+<span id="cb11-13"><a href="#cb11-13"></a><span class="ex">Debian</span> GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="ex">permitted</span> by applicable law.</span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="ex">Last</span> login: Thu Jun 24 11:57:36 2021 from 192.168.1.38</span>
+<span id="cb11-16"><a href="#cb11-16"></a>         <span class="ex">_</span>,met<span class="va">$$$$$gg</span>.           stagiaire@debian</span>
+<span id="cb11-17"><a href="#cb11-17"></a>      ,<span class="ex">g</span><span class="va">$$$$$$$$$$$$$$$P</span>.        OS: Debian 10 buster</span>
+<span id="cb11-18"><a href="#cb11-18"></a>    ,<span class="ex">g</span><span class="va">$$</span>P<span class="st">&quot;&quot;</span>       <span class="st">&quot;&quot;&quot;Y</span><span class="va">$$</span><span class="st">.&quot;</span>.      Kernel: x86_64 Linux 4.19.0-13-amd64</span>
+<span id="cb11-19"><a href="#cb11-19"></a>   ,<span class="va">$$</span><span class="ex">P</span><span class="st">&#39;              `$$$.      Uptime: 4d 6h 9m</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="st">  &#39;</span>,<span class="va">$$</span>P       ,ggs.     <span class="kw">`</span><span class="va">$$</span><span class="ex">b</span>:    Packages: 480</span>
+<span id="cb11-21"><a href="#cb11-21"></a>  <span class="kw">`</span>d<span class="va">$$</span><span class="st">&#39;     ,$P&quot;&#39;</span>   .    <span class="va">$$</span>$     Shell: bash 5.0.3</span>
+<span id="cb11-22"><a href="#cb11-22"></a>   <span class="va">$$</span><span class="ex">P</span>      d<span class="st">$&#39;     ,    $$P     CPU: Intel Core i7-8750H @ 2.208GHz</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="st">   $$:      $$.   -    ,d$$&#39;</span>     GPU: svgadrmfb</span>
+<span id="cb11-24"><a href="#cb11-24"></a>   <span class="va">$$</span><span class="dt">\;</span>      <span class="ex">Y</span><span class="va">$b</span>._   _,d<span class="va">$P</span><span class="st">&#39;      RAM: 129MiB / 483MiB</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="st">   Y$$.    `.`&quot;Y$$$$P&quot;&#39;</span>         </span>
+<span id="cb11-26"><a href="#cb11-26"></a>   <span class="kw">`</span><span class="va">$$</span><span class="ex">b</span>      <span class="st">&quot;-.__              </span></span>
+<span id="cb11-27"><a href="#cb11-27"></a><span class="st">    </span><span class="kw">`</span><span class="ex">Y</span><span class="va">$$</span>                        </span>
+<span id="cb11-28"><a href="#cb11-28"></a>     <span class="kw">`</span><span class="st">Y</span><span class="va">$$</span><span class="st">.                      </span></span>
+<span id="cb11-29"><a href="#cb11-29"></a><span class="st">       </span><span class="kw">`</span><span class="va">$$</span><span class="ex">b.</span>                    </span>
+<span id="cb11-30"><a href="#cb11-30"></a>         <span class="kw">`</span><span class="st">Y</span><span class="va">$$</span><span class="st">b.                 </span></span>
+<span id="cb11-31"><a href="#cb11-31"></a><span class="st">            </span><span class="kw">`</span><span class="st">&quot;Y</span><span class="va">$b</span><span class="st">._             </span></span>
+<span id="cb11-32"><a href="#cb11-32"></a><span class="st">                </span><span class="kw">`</span><span class="st">&quot;&quot;&quot;&quot;</span>           </span>
+<span id="cb11-33"><a href="#cb11-33"></a>                                </span></code></pre></div>
+<p>Pour plus d’infos: <a href="https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/41773-la-connexion-securisee-a-distance-avec-ssh" class="uri">https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/41773-la-connexion-securisee-a-distance-avec-ssh</a></p>
+<h3 id="génération-de-clés-ssh">Génération de clés ssh</h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">odin@ansiblectl</span>:~$ ssh-keygen -t ed25519 -b 4096 </span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">Generating</span> public/private ed25519 key pair.</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="ex">Enter</span> file in which to save the key (/home/odin/.ssh/id_ed25519)<span class="bu">:</span>   </span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="ex">Enter</span> passphrase (empty for no passphrase)<span class="bu">:</span> </span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="ex">Enter</span> same passphrase again: </span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="ex">Your</span> identification has been saved in /home/odin/.ssh/id_ed25519</span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="ex">Your</span> public key has been saved in /home/odin/.ssh/id_ed25519.pub</span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="ex">The</span> key fingerprint is:</span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="ex">SHA256</span>:imdbgJv9XJVgQ142HRfNIioPBNWN7EONlF5NXQ+o5AU odin@ansiblectl</span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="ex">The</span> key<span class="st">&#39;s randomart image is:</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="st">+--[ED25519 256]--+</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a><span class="st">|      .o.+EB+=+=*|</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="st">|        .oOoB.+o=|</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="st">|       . *== . ..|</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="st">|     .  o.Bo .   |</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="st">|    . . S+ .o    |</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="st">|     = o  ..     |</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="st">|    + = . .      |</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="st">|     o = .       |</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="st">|      . o        |</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a><span class="st">+----[SHA256]-----+</span></span></code></pre></div>
+<ul>
+<li><p>Ici on laisse la <strong>passphrase</strong> vide.</p></li>
+<li><p>L’option <code>-b</code> permet de choisir le nombre de bits de la clé. Plutôt utiliser 4-8GB.</p></li>
+</ul>
+<h3 id="copie-de-la-clé-publique">Copie de la clé Publique</h3>
+<p>On copie la clé publique <code>id_ed25519.pub</code> sur le serveur <strong>Deby</strong>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">odin@ansiblectl</span>:~$ ssh-copy-id -i /home/odin/.ssh/id_ed25519.pub stagiaire@192.168.1.42</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="ex">/usr/bin</span>/ssh-copy-id: <span class="ex">INFO</span>: Source of key(s) <span class="ex">to</span> be installed: <span class="st">&quot;/home/odin/.ssh/id_ed25519.pub&quot;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="ex">/usr/bin</span>/ssh-copy-id: <span class="ex">INFO</span>: attempting to log in with the new key(s), <span class="ex">to</span> filter out any that are already installed</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="ex">/usr/bin</span>/ssh-copy-id: <span class="ex">INFO</span>: 1 key(s) <span class="ex">remain</span> to be installed -- if you are prompted now it is to install the new keys</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="ex">stagiaire@192.168.1.42</span><span class="st">&#39;s password: </span></span>
+<span id="cb13-6"><a href="#cb13-6"></a></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="st">Number of key(s) added: 1</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="st">Now try logging into the machine, with:   &quot;ssh &#39;</span>stagiaire@192.168.1.42<span class="st">&#39;&quot;</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="st">and check to make sure that only the key(s) you wanted were added.</span></span></code></pre></div>
+<p>On se log pour vérifier:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">odin@ansiblectl</span>:~$ ssh stagiaire@192.168.1.42</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="ex">Linux</span> debian 4.19.0-13-amd64 <span class="co">#1 SMP Debian 4.19.160-2 (2020-11-28) x86_64</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="ex">The</span> programs included with the Debian GNU/Linux system are free software<span class="kw">;</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="ex">the</span> exact distribution terms for each program are described in the</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="ex">individual</span> files in /usr/share/doc/*/copyright.</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="ex">Debian</span> GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="ex">permitted</span> by applicable law.</span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="ex">Last</span> login: Thu Jun 24 12:22:14 2021 from 192.168.1.37</span>
+<span id="cb14-11"><a href="#cb14-11"></a>         <span class="ex">_</span>,met<span class="va">$$$$$gg</span>.           stagiaire@debian</span>
+<span id="cb14-12"><a href="#cb14-12"></a>      ,<span class="ex">g</span><span class="va">$$$$$$$$$$$$$$$P</span>.        OS: Debian 10 buster</span>
+<span id="cb14-13"><a href="#cb14-13"></a>    ,<span class="ex">g</span><span class="va">$$</span>P<span class="st">&quot;&quot;</span>       <span class="st">&quot;&quot;&quot;Y</span><span class="va">$$</span><span class="st">.&quot;</span>.      Kernel: x86_64 Linux 4.19.0-13-amd64</span>
+<span id="cb14-14"><a href="#cb14-14"></a>   ,<span class="va">$$</span><span class="ex">P</span><span class="st">&#39;              `$$$.      Uptime: 4d 6h 26m</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="st">  &#39;</span>,<span class="va">$$</span>P       ,ggs.     <span class="kw">`</span><span class="va">$$</span><span class="ex">b</span>:    Packages: 480</span>
+<span id="cb14-16"><a href="#cb14-16"></a>  <span class="kw">`</span>d<span class="va">$$</span><span class="st">&#39;     ,$P&quot;&#39;</span>   .    <span class="va">$$</span>$     Shell: bash 5.0.3</span>
+<span id="cb14-17"><a href="#cb14-17"></a>   <span class="va">$$</span><span class="ex">P</span>      d<span class="st">$&#39;     ,    $$P     CPU: Intel Core i7-8750H @ 2.208GHz</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a><span class="st">   $$:      $$.   -    ,d$$&#39;</span>     GPU: svgadrmfb</span>
+<span id="cb14-19"><a href="#cb14-19"></a>   <span class="va">$$</span><span class="dt">\;</span>      <span class="ex">Y</span><span class="va">$b</span>._   _,d<span class="va">$P</span><span class="st">&#39;      RAM: 130MiB / 483MiB</span></span>
+<span id="cb14-20"><a href="#cb14-20"></a><span class="st">   Y$$.    `.`&quot;Y$$$$P&quot;&#39;</span>         </span>
+<span id="cb14-21"><a href="#cb14-21"></a>   <span class="kw">`</span><span class="va">$$</span><span class="ex">b</span>      <span class="st">&quot;-.__              </span></span>
+<span id="cb14-22"><a href="#cb14-22"></a><span class="st">    </span><span class="kw">`</span><span class="ex">Y</span><span class="va">$$</span>                        </span>
+<span id="cb14-23"><a href="#cb14-23"></a>     <span class="kw">`</span><span class="st">Y</span><span class="va">$$</span><span class="st">.                      </span></span>
+<span id="cb14-24"><a href="#cb14-24"></a><span class="st">       </span><span class="kw">`</span><span class="va">$$</span><span class="ex">b.</span>                    </span>
+<span id="cb14-25"><a href="#cb14-25"></a>         <span class="kw">`</span><span class="st">Y</span><span class="va">$$</span><span class="st">b.                 </span></span>
+<span id="cb14-26"><a href="#cb14-26"></a><span class="st">            </span><span class="kw">`</span><span class="st">&quot;Y</span><span class="va">$b</span><span class="st">._             </span></span>
+<span id="cb14-27"><a href="#cb14-27"></a><span class="st">                </span><span class="kw">`</span><span class="st">&quot;&quot;&quot;&quot;</span>           </span>
+<span id="cb14-28"><a href="#cb14-28"></a>                                </span>
+<span id="cb14-29"><a href="#cb14-29"></a><span class="ex">stagiaire@debian</span>:~$ </span></code></pre></div>
+<div class="success">
+La connexion se fait bien en utilisant la clé ssh
+</div>
+<p>On vérifie sur le serveur <strong>Deby</strong>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">stagiaire@debian</span>:~$ ls -al .ssh/</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ex">total</span> 164</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">drwx------</span>  2 stagiaire stagiaire   4096 juin  24 12:36 .</span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="ex">drwxr-xr-x</span> 16 stagiaire stagiaire 159744 juin  24 12:36 ..</span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="ex">-rw-------</span>  1 stagiaire stagiaire     97 juin  24 12:36 authorized_keys</span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="ex">stagiaire@debian</span>:~$ cat .ssh/authorized_keys </span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDI1NTE5AAAAIPTrlVkSDwfev5+Py4oEESLv96oxvSHyckhhhE2joUMq odin@ansiblectl</span></code></pre></div>
+<p>Les clés publiques sont dans le fichier <code>authorized_keys</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">stagiaire@debian</span>:~$ cat .ssh/authorized_keys </span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">ssh-ed25519</span> AAAAC3NzaC1lZDI1NTE5AAAAIPTrlVkSDwfev5+Py4oEESLv96oxvSHyckhhhE2joUMq odin@ansiblectl</span></code></pre></div>
+<div class="info">
+En cas d’erreur: <code>ansible command not found</code>, il faut actualiser le <code>.profile</code> avec: . <code>~/.profile</code>.
+</div>
+<h1 id="configuration-de-ansible">Configuration de Ansible</h1>
+<h2 id="inventory">Inventory</h2>
+<blockquote>
+<p>Inventaire : point d’entrée pour spécifier les machines de mon réseau; les composant à administrer avec ansible</p>
+<ul>
+<li>élément essentiel : il décrit votre infra</li>
+<li>plusieurs formats : ini = plat ou yaml</li>
+<li>déclaration de node ou de groupes qui contiennent des nodes</li>
+</ul>
+</blockquote>
+<p>Sur le serveur <strong><em>ansiblectl</em></strong>, on créer le répertoire <strong>formation_ansible</strong> et dedans le fichier d’inventaire:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">formation_ansible/</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>├── <span class="ex">README.md</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>└── <span class="ex">inventory_home</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="ex">0</span> directories, 2 files</span></code></pre></div>
+<p>Dans le fichier d’inventaire on déclare la machine a gérer:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a>[<span class="ex">local</span>]</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="ex">manager</span> ansible_connection=local</span>
+<span id="cb18-3"><a href="#cb18-3"></a></span>
+<span id="cb18-4"><a href="#cb18-4"></a>[<span class="ex">nodes</span>]</span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="ex">mydeby</span> ansible_host=192.168.1.42</span></code></pre></div>
+<p>On génère l’inventaire:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible-inventory -i inventory_home --list</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="kw">{</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>    <span class="st">&quot;_meta&quot;</span>: <span class="kw">{</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>        <span class="st">&quot;hostvars&quot;</span>: <span class="kw">{</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>            <span class="st">&quot;manager&quot;</span>: <span class="kw">{</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>                <span class="st">&quot;ansible_connection&quot;</span>: <span class="st">&quot;local&quot;</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>            <span class="kw">}</span>,</span>
+<span id="cb19-8"><a href="#cb19-8"></a>            <span class="st">&quot;mydeby&quot;</span>: <span class="kw">{</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a>                <span class="st">&quot;ansible_host&quot;</span>: <span class="st">&quot;192.168.1.42&quot;</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a>            <span class="kw">}</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>        <span class="kw">}</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a>    <span class="kw">}</span>,</span>
+<span id="cb19-13"><a href="#cb19-13"></a>    <span class="st">&quot;all&quot;</span>: <span class="kw">{</span></span>
+<span id="cb19-14"><a href="#cb19-14"></a>        <span class="st">&quot;children&quot;</span>:<span class="bu"> [</span></span>
+<span id="cb19-15"><a href="#cb19-15"></a>            <span class="st">&quot;local&quot;</span>,</span>
+<span id="cb19-16"><a href="#cb19-16"></a>            <span class="st">&quot;nodes&quot;</span>,</span>
+<span id="cb19-17"><a href="#cb19-17"></a>            <span class="st">&quot;ungrouped&quot;</span></span>
+<span id="cb19-18"><a href="#cb19-18"></a>        ]</span>
+<span id="cb19-19"><a href="#cb19-19"></a>    },</span>
+<span id="cb19-20"><a href="#cb19-20"></a>    <span class="st">&quot;local&quot;</span>: {</span>
+<span id="cb19-21"><a href="#cb19-21"></a>        <span class="st">&quot;hosts&quot;</span>: [</span>
+<span id="cb19-22"><a href="#cb19-22"></a>            <span class="st">&quot;manager&quot;</span></span>
+<span id="cb19-23"><a href="#cb19-23"></a>        ]</span>
+<span id="cb19-24"><a href="#cb19-24"></a>    },</span>
+<span id="cb19-25"><a href="#cb19-25"></a>    <span class="st">&quot;nodes&quot;</span>: {</span>
+<span id="cb19-26"><a href="#cb19-26"></a>        <span class="st">&quot;hosts&quot;</span>: [</span>
+<span id="cb19-27"><a href="#cb19-27"></a>            <span class="st">&quot;mydeby&quot;</span></span>
+<span id="cb19-28"><a href="#cb19-28"></a>        ]</span>
+<span id="cb19-29"><a href="#cb19-29"></a>    }</span>
+<span id="cb19-30"><a href="#cb19-30"></a>}</span></code></pre></div>
+<h3 id="test-ping">Test PING</h3>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible -i inventory_home --user stagiaire -m ping all</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="ex">manager</span> <span class="kw">|</span> <span class="ex">SUCCESS</span> =<span class="op">&gt;</span> {</span>
+<span id="cb20-3"><a href="#cb20-3"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python3&quot;</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="kw">}</span>,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">false</span>,</span>
+<span id="cb20-7"><a href="#cb20-7"></a>    <span class="st">&quot;ping&quot;</span>: <span class="st">&quot;pong&quot;</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>}</span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="ex">mydeby</span> <span class="kw">|</span> <span class="ex">SUCCESS</span> =<span class="op">&gt;</span> {</span>
+<span id="cb20-10"><a href="#cb20-10"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb20-11"><a href="#cb20-11"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python&quot;</span></span>
+<span id="cb20-12"><a href="#cb20-12"></a>    <span class="kw">}</span>,</span>
+<span id="cb20-13"><a href="#cb20-13"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">false</span>,</span>
+<span id="cb20-14"><a href="#cb20-14"></a>    <span class="st">&quot;ping&quot;</span>: <span class="st">&quot;pong&quot;</span></span>
+<span id="cb20-15"><a href="#cb20-15"></a>}</span></code></pre></div>
+<p>Tri par <strong><em>nodes</em></strong> <em>(groupe)</em> :</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible -i inventory_home --user stagiaire -m ping nodes</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="ex">mydeby</span> <span class="kw">|</span> <span class="ex">SUCCESS</span> =<span class="op">&gt;</span> {</span>
+<span id="cb21-3"><a href="#cb21-3"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python&quot;</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>    <span class="kw">}</span>,</span>
+<span id="cb21-6"><a href="#cb21-6"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">false</span>,</span>
+<span id="cb21-7"><a href="#cb21-7"></a>    <span class="st">&quot;ping&quot;</span>: <span class="st">&quot;pong&quot;</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>}</span></code></pre></div>
+<div class="info">
+<p>Pour plus de facilité on rajoute le compte stagiaire dans l’inventaire:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="ex">mydeby</span> ansible_host=192.168.1.42 ansible_user=stagiaire</span></code></pre></div>
+<p>On peut aussi rajouter une clé ssh si elle est différente:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="ex">mydeby</span> ansible_host=192.168.1.42 ansible_user=stagiaire ssh_private_key_file=~/.ssh/custom_key</span></code></pre></div>
+</div>
+<h2 id="ansible.cfg">ansible.cfg</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/reference_appendices/config.html" class="uri">https://docs.ansible.com/ansible/latest/reference_appendices/config.html</a></p>
+<p>Un fichier <code>ansible.cfg</code> peut être lu au lancement d’une commande ansible.</p>
+<ul>
+<li>Plusieurs chemins possible : on parle de <strong>precedence order</strong></li>
+<li>On peut y deposer des valeurs par défaut utilisée lors du lancement ansible</li>
+<li>Plusieurs sections à l’intérieur</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible nodes -m ansible.builtin.apt -a <span class="st">&quot;name=wget state=present&quot;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="ex">mydeby</span> <span class="kw">|</span> <span class="ex">SUCCESS</span> =<span class="op">&gt;</span> {</span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python&quot;</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="kw">}</span>,</span>
+<span id="cb24-7"><a href="#cb24-7"></a>    <span class="st">&quot;cache_update_time&quot;</span>: <span class="ex">1624524688</span>,</span>
+<span id="cb24-8"><a href="#cb24-8"></a>    <span class="st">&quot;cache_updated&quot;</span>: <span class="fu">false</span>,</span>
+<span id="cb24-9"><a href="#cb24-9"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">false</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a>}</span></code></pre></div>
+<h1 id="ansible-builtins">Ansible Builtins</h1>
+<p><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html" class="uri">https://docs.ansible.com/ansible/latest/collections/ansible/builtin/index.html</a></p>
+<div class="info">
+Pour pouvoir utiliser les modules <code>ansible.builtin.*</code> en <code>sudo</code> il faudra utiliser l’option <code>BECOME</code>.
+</div>
+<ul>
+<li>Sans l’option <code>BECOME</code>:</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible nodes -m ansible.builtin.apt -a <span class="st">&quot;name=ranger state=absent&quot;</span> -b</span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="ex">mydeby</span> <span class="kw">|</span> <span class="ex">FAILED</span>! =<span class="op">&gt;</span> {</span>
+<span id="cb25-4"><a href="#cb25-4"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python&quot;</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>    <span class="kw">}</span>,</span>
+<span id="cb25-7"><a href="#cb25-7"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">false</span>,</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    <span class="st">&quot;module_stderr&quot;</span>: <span class="st">&quot;Shared connection to 192.168.1.42 closed.\r\n&quot;</span>,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="st">&quot;module_stdout&quot;</span>: <span class="st">&quot;sudo: il est nécessaire de saisir un mot de passe\r\n&quot;</span>,</span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="st">&quot;msg&quot;</span>: <span class="st">&quot;MODULE FAILURE\nSee stdout/stderr for the exact error&quot;</span>,</span>
+<span id="cb25-11"><a href="#cb25-11"></a>    <span class="st">&quot;rc&quot;</span>: <span class="ex">1</span></span>
+<span id="cb25-12"><a href="#cb25-12"></a>}</span></code></pre></div>
+<ul>
+<li>Avec l’option <code>BECOME</code>:</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible nodes -m ansible.builtin.apt -a <span class="st">&quot;name=ranger state=absent&quot;</span> -b --ask-become-pass</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="ex">BECOME</span> password: </span>
+<span id="cb26-3"><a href="#cb26-3"></a></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="ex">mydeby</span> <span class="kw">|</span> <span class="ex">SUCCESS</span> =<span class="op">&gt;</span> {</span>
+<span id="cb26-5"><a href="#cb26-5"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python&quot;</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>    <span class="kw">}</span>,</span>
+<span id="cb26-8"><a href="#cb26-8"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">false</span></span>
+<span id="cb26-9"><a href="#cb26-9"></a>}</span></code></pre></div>
+<p>Le paquet <code>ranger</code>est bien <strong>absent</strong>.</p>
+<ul>
+<li>Installation du paquet <code>ranger</code>:</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible nodes -m ansible.builtin.apt -a <span class="st">&quot;name=ranger state=present&quot;</span> -b --ask-become-pass</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="ex">BECOME</span> password: </span>
+<span id="cb27-3"><a href="#cb27-3"></a></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="ex">mydeby</span> <span class="kw">|</span> <span class="ex">CHANGED</span> =<span class="op">&gt;</span> {</span>
+<span id="cb27-5"><a href="#cb27-5"></a>    <span class="st">&quot;ansible_facts&quot;</span>: <span class="kw">{</span></span>
+<span id="cb27-6"><a href="#cb27-6"></a>        <span class="st">&quot;discovered_interpreter_python&quot;</span>: <span class="st">&quot;/usr/bin/python&quot;</span></span>
+<span id="cb27-7"><a href="#cb27-7"></a>    <span class="kw">}</span>,</span>
+<span id="cb27-8"><a href="#cb27-8"></a>    <span class="st">&quot;cache_update_time&quot;</span>: <span class="ex">1624524688</span>,</span>
+<span id="cb27-9"><a href="#cb27-9"></a>    <span class="st">&quot;cache_updated&quot;</span>: <span class="fu">false</span>,</span>
+<span id="cb27-10"><a href="#cb27-10"></a>    <span class="st">&quot;changed&quot;</span>: <span class="fu">true</span>,</span>
+<span id="cb27-11"><a href="#cb27-11"></a>    <span class="st">&quot;stderr&quot;</span>: <span class="st">&quot;&quot;</span>,</span>
+<span id="cb27-12"><a href="#cb27-12"></a>    <span class="st">&quot;stderr_lines&quot;</span>: [],</span>
+<span id="cb27-13"><a href="#cb27-13"></a>    <span class="st">&quot;stdout&quot;</span>: <span class="st">&quot;Reading package lists...\nBuilding dependency tree...\nReading state information...\nThe following packages were automatically installed and are no longer required:\n  apache2-bin apache2-data apache2-utils libapr1 libaprutil1\n  libaprutil1-dbd-sqlite3 libaprutil1-ldap libbrotli1 libjansson4 ssl-cert\nUse &#39;sudo apt autoremove&#39; to remove them.\nThe following additional packages will be installed:\n  libgc1c2 w3m w3m-img\nSuggested packages:\n  atool caca-utils poppler-utils | mupdf-tools highlight | python-pygments\n  unoconv mediainfo | exiftool cmigemo dict dict-wn dictd libsixel-bin mpv\n  w3m-el xdg-utils xsel\nThe following NEW packages will be installed:\n  libgc1c2 ranger w3m w3m-img\n0 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.\nNeed to get 1616 kB of archives.\nAfter this operation, 3826 kB of additional disk space will be used.\nGet:1 http://deb.debian.org/debian buster/main amd64 libgc1c2 amd64 1:7.6.4-0.4 [224 kB]\nGet:2 http://deb.debian.org/debian buster/main amd64 ranger all 1.9.2-4 [217 kB]\nGet:3 http://deb.debian.org/debian buster/main amd64 w3m amd64 0.5.3-37 [1042 kB]\nGet:4 http://deb.debian.org/debian buster/main amd64 w3m-img amd64 0.5.3-37 [132 kB]\nFetched 1616 kB in 3s (598 kB/s)\nSelecting previously unselected package libgc1c2:amd64.\r\n(Reading database ... \r(Reading database ... 5%\r(Reading database ... 10%\r(Reading database ... 15%\r(Reading database ... 20%\r(Reading database ... 25%\r(Reading database ... 30%\r(Reading database ... 35%\r(Reading database ... 40%\r(Reading database ... 45%\r(Reading database ... 50%\r(Reading database ... 55%\r(Reading database ... 60%\r(Reading database ... 65%\r(Reading database ... 70%\r(Reading database ... 75%\r(Reading database ... 80%\r(Reading database ... 85%\r(Reading database ... 90%\r(Reading database ... 95%\r(Reading database ... 100%\r(Reading database ... 50448 files and directories currently installed.)\r\nPreparing to unpack .../libgc1c2_1%3a7.6.4-0.4_amd64.deb ...\r\nUnpacking libgc1c2:amd64 (1:7.6.4-0.4) ...\r\nSelecting previously unselected package ranger.\r\nPreparing to unpack .../ranger_1.9.2-4_all.deb ...\r\nUnpacking ranger (1.9.2-4) ...\r\nSelecting previously unselected package w3m.\r\nPreparing to unpack .../w3m_0.5.3-37_amd64.deb ...\r\nUnpacking w3m (0.5.3-37) ...\r\nSelecting previously unselected package w3m-img.\r\nPreparing to unpack .../w3m-img_0.5.3-37_amd64.deb ...\r\nUnpacking w3m-img (0.5.3-37) ...\r\nSetting up libgc1c2:amd64 (1:7.6.4-0.4) ...\r\nSetting up w3m (0.5.3-37) ...\r\nSetting up w3m-img (0.5.3-37) ...\r\nSetting up ranger (1.9.2-4) ...\r\nProcessing triggers for libc-bin (2.28-10) ...\r\nProcessing triggers for man-db (2.8.5-2) ...\r\nProcessing triggers for mime-support (3.62) ...\r\n&quot;</span>,</span>
+<span id="cb27-14"><a href="#cb27-14"></a>    <span class="st">&quot;stdout_lines&quot;</span>:<span class="bu"> [</span></span>
+<span id="cb27-15"><a href="#cb27-15"></a>        <span class="st">&quot;Reading package lists...&quot;</span>,</span>
+<span id="cb27-16"><a href="#cb27-16"></a>        <span class="st">&quot;Building dependency tree...&quot;</span>,</span>
+<span id="cb27-17"><a href="#cb27-17"></a>        <span class="st">&quot;Reading state information...&quot;</span>,</span>
+<span id="cb27-18"><a href="#cb27-18"></a>        <span class="st">&quot;The following packages were automatically installed and are no longer required:&quot;</span>,</span>
+<span id="cb27-19"><a href="#cb27-19"></a>        <span class="st">&quot;  apache2-bin apache2-data apache2-utils libapr1 libaprutil1&quot;</span>,</span>
+<span id="cb27-20"><a href="#cb27-20"></a>        <span class="st">&quot;  libaprutil1-dbd-sqlite3 libaprutil1-ldap libbrotli1 libjansson4 ssl-cert&quot;</span>,</span>
+<span id="cb27-21"><a href="#cb27-21"></a>        <span class="st">&quot;Use &#39;sudo apt autoremove&#39; to remove them.&quot;</span>,</span>
+<span id="cb27-22"><a href="#cb27-22"></a>        <span class="st">&quot;The following additional packages will be installed:&quot;</span>,</span>
+<span id="cb27-23"><a href="#cb27-23"></a>        <span class="st">&quot;  libgc1c2 w3m w3m-img&quot;</span>,</span>
+<span id="cb27-24"><a href="#cb27-24"></a>        <span class="st">&quot;Suggested packages:&quot;</span>,</span>
+<span id="cb27-25"><a href="#cb27-25"></a>        <span class="st">&quot;  atool caca-utils poppler-utils | mupdf-tools highlight | python-pygments&quot;</span>,</span>
+<span id="cb27-26"><a href="#cb27-26"></a>        <span class="st">&quot;  unoconv mediainfo | exiftool cmigemo dict dict-wn dictd libsixel-bin mpv&quot;</span>,</span>
+<span id="cb27-27"><a href="#cb27-27"></a>        <span class="st">&quot;  w3m-el xdg-utils xsel&quot;</span>,</span>
+<span id="cb27-28"><a href="#cb27-28"></a>        <span class="st">&quot;The following NEW packages will be installed:&quot;</span>,</span>
+<span id="cb27-29"><a href="#cb27-29"></a>        <span class="st">&quot;  libgc1c2 ranger w3m w3m-img&quot;</span>,</span>
+<span id="cb27-30"><a href="#cb27-30"></a>        <span class="st">&quot;0 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.&quot;</span>,</span>
+<span id="cb27-31"><a href="#cb27-31"></a>        <span class="st">&quot;Need to get 1616 kB of archives.&quot;</span>,</span>
+<span id="cb27-32"><a href="#cb27-32"></a>        <span class="st">&quot;After this operation, 3826 kB of additional disk space will be used.&quot;</span>,</span>
+<span id="cb27-33"><a href="#cb27-33"></a>        <span class="st">&quot;Get:1 http://deb.debian.org/debian buster/main amd64 libgc1c2 amd64 1:7.6.4-0.4 [224 kB]&quot;</span>,</span>
+<span id="cb27-34"><a href="#cb27-34"></a>        <span class="st">&quot;Get:2 http://deb.debian.org/debian buster/main amd64 ranger all 1.9.2-4 [217 kB]&quot;</span>,</span>
+<span id="cb27-35"><a href="#cb27-35"></a>        <span class="st">&quot;Get:3 http://deb.debian.org/debian buster/main amd64 w3m amd64 0.5.3-37 [1042 kB]&quot;</span>,</span>
+<span id="cb27-36"><a href="#cb27-36"></a>        <span class="st">&quot;Get:4 http://deb.debian.org/debian buster/main amd64 w3m-img amd64 0.5.3-37 [132 kB]&quot;</span>,</span>
+<span id="cb27-37"><a href="#cb27-37"></a>        <span class="st">&quot;Fetched 1616 kB in 3s (598 kB/s)&quot;</span>,</span>
+<span id="cb27-38"><a href="#cb27-38"></a>        <span class="st">&quot;Selecting previously unselected package libgc1c2:amd64.&quot;</span>,</span>
+<span id="cb27-39"><a href="#cb27-39"></a>        <span class="st">&quot;(Reading database ... &quot;</span>,</span>
+<span id="cb27-40"><a href="#cb27-40"></a>        <span class="st">&quot;(Reading database ... 5%&quot;</span>,</span>
+<span id="cb27-41"><a href="#cb27-41"></a>        <span class="st">&quot;(Reading database ... 10%&quot;</span>,</span>
+<span id="cb27-42"><a href="#cb27-42"></a>        <span class="st">&quot;(Reading database ... 15%&quot;</span>,</span>
+<span id="cb27-43"><a href="#cb27-43"></a>        <span class="st">&quot;(Reading database ... 20%&quot;</span>,</span>
+<span id="cb27-44"><a href="#cb27-44"></a>        <span class="st">&quot;(Reading database ... 25%&quot;</span>,</span>
+<span id="cb27-45"><a href="#cb27-45"></a>        <span class="st">&quot;(Reading database ... 30%&quot;</span>,</span>
+<span id="cb27-46"><a href="#cb27-46"></a>        <span class="st">&quot;(Reading database ... 35%&quot;</span>,</span>
+<span id="cb27-47"><a href="#cb27-47"></a>        <span class="st">&quot;(Reading database ... 40%&quot;</span>,</span>
+<span id="cb27-48"><a href="#cb27-48"></a>        <span class="st">&quot;(Reading database ... 45%&quot;</span>,</span>
+<span id="cb27-49"><a href="#cb27-49"></a>        <span class="st">&quot;(Reading database ... 50%&quot;</span>,</span>
+<span id="cb27-50"><a href="#cb27-50"></a>        <span class="st">&quot;(Reading database ... 55%&quot;</span>,</span>
+<span id="cb27-51"><a href="#cb27-51"></a>        <span class="st">&quot;(Reading database ... 60%&quot;</span>,</span>
+<span id="cb27-52"><a href="#cb27-52"></a>        <span class="st">&quot;(Reading database ... 65%&quot;</span>,</span>
+<span id="cb27-53"><a href="#cb27-53"></a>        <span class="st">&quot;(Reading database ... 70%&quot;</span>,</span>
+<span id="cb27-54"><a href="#cb27-54"></a>        <span class="st">&quot;(Reading database ... 75%&quot;</span>,</span>
+<span id="cb27-55"><a href="#cb27-55"></a>        <span class="st">&quot;(Reading database ... 80%&quot;</span>,</span>
+<span id="cb27-56"><a href="#cb27-56"></a>        <span class="st">&quot;(Reading database ... 85%&quot;</span>,</span>
+<span id="cb27-57"><a href="#cb27-57"></a>        <span class="st">&quot;(Reading database ... 90%&quot;</span>,</span>
+<span id="cb27-58"><a href="#cb27-58"></a>        <span class="st">&quot;(Reading database ... 95%&quot;</span>,</span>
+<span id="cb27-59"><a href="#cb27-59"></a>        <span class="st">&quot;(Reading database ... 100%&quot;</span>,</span>
+<span id="cb27-60"><a href="#cb27-60"></a>        <span class="st">&quot;(Reading database ... 50448 files and directories currently installed.)&quot;</span>,</span>
+<span id="cb27-61"><a href="#cb27-61"></a>        <span class="st">&quot;Preparing to unpack .../libgc1c2_1%3a7.6.4-0.4_amd64.deb ...&quot;</span>,</span>
+<span id="cb27-62"><a href="#cb27-62"></a>        <span class="st">&quot;Unpacking libgc1c2:amd64 (1:7.6.4-0.4) ...&quot;</span>,</span>
+<span id="cb27-63"><a href="#cb27-63"></a>        <span class="st">&quot;Selecting previously unselected package ranger.&quot;</span>,</span>
+<span id="cb27-64"><a href="#cb27-64"></a>        <span class="st">&quot;Preparing to unpack .../ranger_1.9.2-4_all.deb ...&quot;</span>,</span>
+<span id="cb27-65"><a href="#cb27-65"></a>        <span class="st">&quot;Unpacking ranger (1.9.2-4) ...&quot;</span>,</span>
+<span id="cb27-66"><a href="#cb27-66"></a>        <span class="st">&quot;Selecting previously unselected package w3m.&quot;</span>,</span>
+<span id="cb27-67"><a href="#cb27-67"></a>        <span class="st">&quot;Preparing to unpack .../w3m_0.5.3-37_amd64.deb ...&quot;</span>,</span>
+<span id="cb27-68"><a href="#cb27-68"></a>        <span class="st">&quot;Unpacking w3m (0.5.3-37) ...&quot;</span>,</span>
+<span id="cb27-69"><a href="#cb27-69"></a>        <span class="st">&quot;Selecting previously unselected package w3m-img.&quot;</span>,</span>
+<span id="cb27-70"><a href="#cb27-70"></a>        <span class="st">&quot;Preparing to unpack .../w3m-img_0.5.3-37_amd64.deb ...&quot;</span>,</span>
+<span id="cb27-71"><a href="#cb27-71"></a>        <span class="st">&quot;Unpacking w3m-img (0.5.3-37) ...&quot;</span>,</span>
+<span id="cb27-72"><a href="#cb27-72"></a>        <span class="st">&quot;Setting up libgc1c2:amd64 (1:7.6.4-0.4) ...&quot;</span>,</span>
+<span id="cb27-73"><a href="#cb27-73"></a>        <span class="st">&quot;Setting up w3m (0.5.3-37) ...&quot;</span>,</span>
+<span id="cb27-74"><a href="#cb27-74"></a>        <span class="st">&quot;Setting up w3m-img (0.5.3-37) ...&quot;</span>,</span>
+<span id="cb27-75"><a href="#cb27-75"></a>        <span class="st">&quot;Setting up ranger (1.9.2-4) ...&quot;</span>,</span>
+<span id="cb27-76"><a href="#cb27-76"></a>        <span class="st">&quot;Processing triggers for libc-bin (2.28-10) ...&quot;</span>,</span>
+<span id="cb27-77"><a href="#cb27-77"></a>        <span class="st">&quot;Processing triggers for man-db (2.8.5-2) ...&quot;</span>,</span>
+<span id="cb27-78"><a href="#cb27-78"></a>        <span class="st">&quot;Processing triggers for mime-support (3.62) ...&quot;</span></span>
+<span id="cb27-79"><a href="#cb27-79"></a>    ]</span>
+<span id="cb27-80"><a href="#cb27-80"></a>}</span></code></pre></div>
+<h1 id="ansible-playbook">Ansible Playbook</h1>
+<h2 id="création-dun-utilisateur-ansible">Création d’un utilisateur “ansible”</h2>
+<p>Création du <strong><em>playbook</em></strong>:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># Déclarer un play</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="co"># qui s&#39;adresse au groupe nodes</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="co"># qui déclare une tasks pour appeler le module ansible.builtin.user</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="co">  # - name: ansible</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="co">  #  - membre du groupe sudo</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="co">  #  - shell /bin/bash</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="pp">---</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a></span>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> module user pour le groupe nodes</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a></span>
+<span id="cb28-12"><a href="#cb28-12"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb28-15"><a href="#cb28-15"></a><span class="at">     </span><span class="fu">ansible.builtin.user</span><span class="kw">:</span></span>
+<span id="cb28-16"><a href="#cb28-16"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ansible</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="at">      </span><span class="fu">groups</span><span class="kw">:</span><span class="at"> sudo</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a><span class="at">      </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> /bin/bash</span></span></code></pre></div>
+<p>On exécute le <strong><em>playbook</em></strong> avec la commande suivante:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ansible-playbook premier_playbook.yml -b --ask-become-pass</span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="ex">BECOME</span> password: </span>
+<span id="cb29-3"><a href="#cb29-3"></a></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="ex">PLAY</span> [module user pour le groupe nodes] ****************************************************************************************************************************************************************************************************</span>
+<span id="cb29-5"><a href="#cb29-5"></a></span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="ex">TASK</span> [Gathering Facts] *********************************************************************************************************************************************************************************************************************</span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="ex">ok</span>: [mydeby]</span>
+<span id="cb29-8"><a href="#cb29-8"></a></span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="ex">TASK</span> [ansible.builtin.user] ****************************************************************************************************************************************************************************************************************</span>
+<span id="cb29-10"><a href="#cb29-10"></a><span class="ex">changed</span>: [mydeby]</span>
+<span id="cb29-11"><a href="#cb29-11"></a></span>
+<span id="cb29-12"><a href="#cb29-12"></a><span class="ex">PLAY</span> RECAP *********************************************************************************************************************************************************************************************************************************</span>
+<span id="cb29-13"><a href="#cb29-13"></a><span class="ex">mydeby</span>                     : ok=2    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   </span></code></pre></div>
+<h2 id="déploiement-de-clé-ssh-publique">Déploiement de clé ssh publique</h2>
+<p>On rajoute dans le fichier <strong><em>premier_playbook</em></strong>:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># Déclaration d&#39;une seconde task qui appelle le module &quot;authorized_keys&quot; pour pousser une clé ssh publique pour l&#39;utilisateur &quot;ansible&quot;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Module authorized_key pour déployer la clé publique</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="at">     </span><span class="fu">ansible.posix.authorized_key</span><span class="kw">:</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="at">      </span><span class="fu">user</span><span class="kw">:</span><span class="at"> ansible</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="at">      </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ lookup(&#39;file&#39;, &#39;/home/odin/.ssh/id_ed25519.pub&#39;) }}&quot;</span></span></code></pre></div>
+<p>Résultat:</p>
+<pre class="shell"><code>odin@ansiblectl:~/formation_ansible$ ansible-playbook premier_playbook.yml -b --ask-become-pass
+BECOME password: 
+
+PLAY [module user pour le groupe nodes] ****************************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] *********************************************************************************************************************************************************************************************************************
+ok: [mydeby]
+
+TASK [ansible.builtin.user] ****************************************************************************************************************************************************************************************************************
+ok: [mydeby]
+
+TASK [Module authorized_key pour déployer la clé publique] *********************************************************************************************************************************************************************************
+changed: [mydeby]
+
+PLAY RECAP *********************************************************************************************************************************************************************************************************************************
+mydeby                     : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0  </code></pre>
+<h2 id="création-dun-fichier-de-config-sudoers">Création d’un fichier de config sudoers</h2>
+<p>Dans le playbook:</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Déclaration d&#39;une 3e task pour  générer un fichier de config sudo dédié à l&#39;utilisateur &quot;ansible&quot;.</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Module COPY pour s&#39;assurer qu&#39;un fichier sudo pour ansible soit présent</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="at">     </span><span class="fu">ansible.builtin.copy</span><span class="kw">:</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="at">       </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;/etc/sudoers.d/ansible&#39;</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="at">       </span><span class="fu">content</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;ansible ALL=(ALL:ALL) NOPASSWD: ALL&#39;</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="at">       </span><span class="fu">backup</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="at">       </span><span class="fu">owner</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="at">       </span><span class="fu">group</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a><span class="at">       </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="dv">0440</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a><span class="at">       </span><span class="fu">validate</span><span class="kw">:</span><span class="at"> /usr/sbin/visudo -csf %s</span></span></code></pre></div>
+<p>Résultat:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1"></a><span class="co">...</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="co">TASK [Module COPY pour s&#39;assurer qu&#39;un fichier sudo pour ansible soit présent] *********************************************</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="co">changed: [mydeby]</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a></span>
+<span id="cb33-5"><a href="#cb33-5"></a><span class="co">PLAY RECAP *****************************************************************************************************************</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="co">mydeby                     : ok=4    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0 </span></span></code></pre></div>
+<h3 id="modification-de-lutilisateur">Modification de l’utilisateur</h3>
+<p>Dans le fichier d’inventaire <strong><em>inventory_home</em></strong>:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># On modifie la ligne:</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="ex">mydeby</span> ansible_host=192.168.1.38 ansible_user=stagiaire</span>
+<span id="cb34-3"><a href="#cb34-3"></a></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="co"># En: </span></span>
+<span id="cb34-5"><a href="#cb34-5"></a><span class="ex">mydeby</span> ansible_host=192.168.1.38 </span></code></pre></div>
+<p>Puis on lance avec l’utilisateur <strong><em>ansible</em></strong>:</p>
+<p>En <strong><em>ssh</em></strong>:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a><span class="ex">odin@ansiblectl</span>:~/formation_ansible$ ssh ansible@192.168.1.38</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="ex">Linux</span> debian 4.19.0-17-amd64 <span class="co">#1 SMP Debian 4.19.194-2 (2021-06-21) x86_64</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a></span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="ex">The</span> programs included with the Debian GNU/Linux system are free software<span class="kw">;</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="ex">the</span> exact distribution terms for each program are described in the</span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="ex">individual</span> files in /usr/share/doc/*/copyright.</span>
+<span id="cb35-7"><a href="#cb35-7"></a></span>
+<span id="cb35-8"><a href="#cb35-8"></a><span class="ex">Debian</span> GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent</span>
+<span id="cb35-9"><a href="#cb35-9"></a><span class="ex">permitted</span> by applicable law.</span>
+<span id="cb35-10"><a href="#cb35-10"></a><span class="ex">ansible@debian</span>:~$ </span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb36-1"><a href="#cb36-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible-playbook premier_playbook.yml --user ansible -b</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="dt">PLAY </span><span class="kw">[module user pour le groupe nodes]</span><span class="dt"> *****************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="dt">TASK </span><span class="kw">[Gathering Facts]</span><span class="dt"> **********************************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a></span>
+<span id="cb36-8"><a href="#cb36-8"></a><span class="dt">TASK </span><span class="kw">[I. Création user ANSIBLE dans groupe SUDO]</span><span class="dt"> ********************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb36-10"><a href="#cb36-10"></a></span>
+<span id="cb36-11"><a href="#cb36-11"></a><span class="dt">TASK </span><span class="kw">[II. Déploiement de la CLE PUBLIQUE]</span><span class="dt"> ***************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb36-12"><a href="#cb36-12"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a></span>
+<span id="cb36-14"><a href="#cb36-14"></a><span class="dt">TASK </span><span class="kw">[III. Création fichier config SUDOERS.D/ANSIBLE]</span><span class="dt"> ***************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb36-15"><a href="#cb36-15"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb36-16"><a href="#cb36-16"></a></span>
+<span id="cb36-17"><a href="#cb36-17"></a><span class="dt">PLAY RECAP **********************************************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb36-18"><a href="#cb36-18"></a><span class="dt">mydeby                     : ok</span><span class="ot">=</span><span class="dv">4</span><span class="st">    changed=</span><span class="dv">0</span><span class="st">    unreachable=</span><span class="dv">0</span><span class="st">    failed=</span><span class="dv">0</span><span class="st">    skipped=</span><span class="dv">0</span><span class="st">    rescued=</span><span class="dv">0</span><span class="st">    ignored=</span><span class="dv">0</span><span class="st">   </span></span></code></pre></div>
+<h3 id="modification-dans-ansible.cfg">Modification dans ANSIBLE.CFG</h3>
+<p>Dans le fichier de configuration <strong><em>ansible.cfg</em></strong> on rajoute l’utilisateur par défaut <strong><em>ansible</em></strong>.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">[defaults]</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="dt">inventory </span><span class="ot">=</span><span class="st"> ./inventory_home</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="dt">remote_user </span><span class="ot">=</span><span class="st"> ansible</span></span></code></pre></div>
+<div class="warning">
+<p>Attention aux notions de priorité!</p>
+<ul>
+<li><p>Le <em>user</em> déclaré dans le fichier d’inventaire sera prioritaire</p></li>
+<li><p>L’utilisateur déclaré dans <em>ansible.cfg</em> sera l’utilisateur par défaut, si rien n’est déclaré dans l’inventaire.</p></li>
+</ul>
+</div>
+<h2 id="ansible-en-tant-que-sudo">ANSIBLE en tant que SUDO</h2>
+<p>Notre utilisteur <strong><em>ansible</em></strong> possède des droits d’élévation <em>(sudo)</em></p>
+<p>Pour les utiliser avec la commande <code>ansible</code> on se servira de l’option <code>-b</code>.</p>
+<h3 id="sans-loption--b">Sans l’option <code>-b</code></h3>
+<div class="sourceCode" id="cb38"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb38-1"><a href="#cb38-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible-playbook premier_playbook.yml</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="dt">PLAY </span><span class="kw">[module user pour le groupe nodes]</span><span class="dt"> **************************************************************************************</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="dt">TASK </span><span class="kw">[Gathering Facts]</span><span class="dt"> *******************************************************************************************************</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a><span class="dt">TASK </span><span class="kw">[I. Création user ANSIBLE dans groupe SUDO]</span><span class="dt"> *****************************************************************************</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb38-10"><a href="#cb38-10"></a></span>
+<span id="cb38-11"><a href="#cb38-11"></a><span class="dt">TASK </span><span class="kw">[II. Déploiement de la CLE PUBLIQUE]</span><span class="dt"> ************************************************************************************</span></span>
+<span id="cb38-12"><a href="#cb38-12"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a></span>
+<span id="cb38-14"><a href="#cb38-14"></a><span class="dt">TASK </span><span class="kw">[III. Création fichier config SUDOERS.D/ANSIBLE]</span><span class="dt"> ************************************************************************</span></span>
+<span id="cb38-15"><a href="#cb38-15"></a><span class="dt">fatal: </span><span class="kw">[mydeby]</span><span class="dt">: FAILED! </span><span class="ot">=</span><span class="st">&gt; {&quot;changed&quot;: </span><span class="kw">false</span><span class="st">, &quot;checksum&quot;: &quot;f725f552a06d08e617329d6322a1a209efef6759&quot;, &quot;msg&quot;: &quot;Destination /etc/sudoers.d not writable&quot;}</span></span>
+<span id="cb38-16"><a href="#cb38-16"></a></span>
+<span id="cb38-17"><a href="#cb38-17"></a><span class="dt">PLAY RECAP *******************************************************************************************************************</span></span>
+<span id="cb38-18"><a href="#cb38-18"></a><span class="dt">mydeby                     : ok</span><span class="ot">=</span><span class="dv">3</span><span class="st">    changed=</span><span class="dv">0</span><span class="st">    unreachable=</span><span class="dv">0</span><span class="st">    failed=</span><span class="dv">1</span><span class="st">    skipped=</span><span class="dv">0</span><span class="st">    rescued=</span><span class="dv">0</span><span class="st">    ignored=</span><span class="dv">0</span><span class="st">   </span></span></code></pre></div>
+<h3 id="avec-loption--b">Avec l’option <code>-b</code></h3>
+<div class="sourceCode" id="cb39"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb39-1"><a href="#cb39-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible-playbook premier_playbook.yml -b</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a></span>
+<span id="cb39-3"><a href="#cb39-3"></a><span class="dt">PLAY </span><span class="kw">[module user pour le groupe nodes]</span><span class="dt"> **************************************************************************************</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="dt">TASK </span><span class="kw">[Gathering Facts]</span><span class="dt"> *******************************************************************************************************</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb39-7"><a href="#cb39-7"></a></span>
+<span id="cb39-8"><a href="#cb39-8"></a><span class="dt">TASK </span><span class="kw">[I. Création user ANSIBLE dans groupe SUDO]</span><span class="dt"> *****************************************************************************</span></span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb39-10"><a href="#cb39-10"></a></span>
+<span id="cb39-11"><a href="#cb39-11"></a><span class="dt">TASK </span><span class="kw">[II. Déploiement de la CLE PUBLIQUE]</span><span class="dt"> ************************************************************************************</span></span>
+<span id="cb39-12"><a href="#cb39-12"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb39-13"><a href="#cb39-13"></a></span>
+<span id="cb39-14"><a href="#cb39-14"></a><span class="dt">TASK </span><span class="kw">[III. Création fichier config SUDOERS.D/ANSIBLE]</span><span class="dt"> ************************************************************************</span></span>
+<span id="cb39-15"><a href="#cb39-15"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb39-16"><a href="#cb39-16"></a></span>
+<span id="cb39-17"><a href="#cb39-17"></a><span class="dt">PLAY RECAP *******************************************************************************************************************</span></span>
+<span id="cb39-18"><a href="#cb39-18"></a><span class="dt">mydeby                     : ok</span><span class="ot">=</span><span class="dv">4</span><span class="st">    changed=</span><span class="dv">0</span><span class="st">    unreachable=</span><span class="dv">0</span><span class="st">    failed=</span><span class="dv">0</span><span class="st">    skipped=</span><span class="dv">0</span><span class="st">    rescued=</span><span class="dv">0</span><span class="st">    ignored=</span><span class="dv">0</span><span class="st">   </span></span></code></pre></div>
+<h2 id="bootstrap-playbook"><em>BootStrap Playbook</em></h2>
+<p>Création d’un <em>playbook</em> permettant de gérer le socle pour ajouter de nouvelles machines dans la gestion d’Ansible.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># Déclarer un play</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="co"># qui s&#39;adresse au groupe nodes</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="co"># qui déclare une tasks pour appeler le module ansible.builtin.user</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a><span class="co">  # - name: ansible</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="co">  #  - membre du groupe sudo</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a><span class="co">  #  - shell /bin/bash</span></span>
+<span id="cb40-7"><a href="#cb40-7"></a><span class="pp">---</span></span>
+<span id="cb40-8"><a href="#cb40-8"></a></span>
+<span id="cb40-9"><a href="#cb40-9"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> module user pour le groupe nodes</span></span>
+<span id="cb40-10"><a href="#cb40-10"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb40-11"><a href="#cb40-11"></a></span>
+<span id="cb40-12"><a href="#cb40-12"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb40-13"><a href="#cb40-13"></a></span>
+<span id="cb40-14"><a href="#cb40-14"></a><span class="co"># Déclaration d&#39;une task qui permet de créer un utilisateur &quot;ansible&quot; avec les droits &quot;sudo&quot;</span></span>
+<span id="cb40-15"><a href="#cb40-15"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> I. Création user ANSIBLE dans groupe SUDO</span></span>
+<span id="cb40-16"><a href="#cb40-16"></a><span class="at">     </span><span class="fu">ansible.builtin.user</span><span class="kw">:</span></span>
+<span id="cb40-17"><a href="#cb40-17"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ansible</span></span>
+<span id="cb40-18"><a href="#cb40-18"></a><span class="at">      </span><span class="fu">groups</span><span class="kw">:</span><span class="at"> sudo</span></span>
+<span id="cb40-19"><a href="#cb40-19"></a><span class="at">      </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> /bin/bash</span></span>
+<span id="cb40-20"><a href="#cb40-20"></a></span>
+<span id="cb40-21"><a href="#cb40-21"></a><span class="co"># Déclaration d&#39;une seconde task qui appelle le module &quot;authorized_keys&quot; pour pousser une clé ssh publique pour l&#39;utilisateur &quot;ansible&quot;</span></span>
+<span id="cb40-22"><a href="#cb40-22"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> II. Déploiement de la CLE PUBLIQUE</span></span>
+<span id="cb40-23"><a href="#cb40-23"></a><span class="at">     </span><span class="fu">ansible.posix.authorized_key</span><span class="kw">:</span></span>
+<span id="cb40-24"><a href="#cb40-24"></a><span class="at">      </span><span class="fu">user</span><span class="kw">:</span><span class="at"> ansible</span></span>
+<span id="cb40-25"><a href="#cb40-25"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb40-26"><a href="#cb40-26"></a><span class="at">      </span><span class="fu">key</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ lookup(&#39;file&#39;, &#39;/home/odin/.ssh/id_ed25519.pub&#39;) }}&quot;</span></span>
+<span id="cb40-27"><a href="#cb40-27"></a></span>
+<span id="cb40-28"><a href="#cb40-28"></a><span class="co"># Déclaration d&#39;une 3e task pour  générer un fichier de config sudo dédié à l&#39;utilisateur &quot;ansible&quot;.</span></span>
+<span id="cb40-29"><a href="#cb40-29"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> III. Création fichier config SUDOERS.D/ANSIBLE</span></span>
+<span id="cb40-30"><a href="#cb40-30"></a><span class="at">     </span><span class="fu">ansible.builtin.copy</span><span class="kw">:</span></span>
+<span id="cb40-31"><a href="#cb40-31"></a><span class="at">       </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;/etc/sudoers.d/ansible&#39;</span></span>
+<span id="cb40-32"><a href="#cb40-32"></a><span class="at">       </span><span class="fu">content</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;ansible ALL=(ALL:ALL) NOPASSWD: ALL&#39;</span></span>
+<span id="cb40-33"><a href="#cb40-33"></a><span class="at">       </span><span class="fu">backup</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb40-34"><a href="#cb40-34"></a><span class="at">       </span><span class="fu">owner</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb40-35"><a href="#cb40-35"></a><span class="at">       </span><span class="fu">group</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb40-36"><a href="#cb40-36"></a><span class="at">       </span><span class="fu">mode</span><span class="kw">:</span><span class="at"> </span><span class="dv">0440</span></span>
+<span id="cb40-37"><a href="#cb40-37"></a><span class="at">       </span><span class="fu">validate</span><span class="kw">:</span><span class="at"> /usr/sbin/visudo -csf %s</span></span>
+<span id="cb40-38"><a href="#cb40-38"></a><span class="co">...</span></span></code></pre></div>
+<h2 id="requirements_playbook">Requirements_Playbook</h2>
+<div class="sourceCode" id="cb41"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># Déclarer un play</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="co"># qui s&#39;adresse au groupe &quot;nodes&quot;</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="co"># qui déclare une task pour appeler le module &quot;ansible.builtin.apt&quot;</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="co"># pour installer trois packages: nano, iperf, wget (liste)</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a></span>
+<span id="cb41-6"><a href="#cb41-6"></a><span class="co"># On va ensuite rebondir sur le concept de variable</span></span></code></pre></div>
+<h2 id="variables-dans-playbook">Variables dans Playbook</h2>
+<div class="info">
+Dans Ansible, il existe <strong>22</strong> endroits pour déclarer un variable ^^
+</div>
+<p>Doc Officielle: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html</a></p>
+<h3 id="variables-en-liste">Variables en Liste</h3>
+<p>Les variables sont déclarées avec <code>vars:</code> et utilisées avec la syntaxe: <code>"{{ ... }}"</code></p>
+<p>Dans le <strong><em>playbook</em></strong>:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1"></a><span class="pp">---</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Bootstrap pour Nodes</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="at">    </span><span class="fu">requirements</span><span class="kw">:</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="at">      </span><span class="kw">-</span><span class="at"> python-apt</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a><span class="at">      </span><span class="kw">-</span><span class="at"> python3-apt</span></span>
+<span id="cb42-8"><a href="#cb42-8"></a><span class="at">      </span><span class="kw">-</span><span class="at"> aptitude</span></span>
+<span id="cb42-9"><a href="#cb42-9"></a><span class="at">    </span><span class="fu">liste_packages</span><span class="kw">:</span></span>
+<span id="cb42-10"><a href="#cb42-10"></a><span class="at">      </span><span class="kw">-</span><span class="at"> nano</span></span>
+<span id="cb42-11"><a href="#cb42-11"></a><span class="at">      </span><span class="kw">-</span><span class="at"> iperf</span></span>
+<span id="cb42-12"><a href="#cb42-12"></a><span class="at">      </span><span class="kw">-</span><span class="at"> wget</span></span>
+<span id="cb42-13"><a href="#cb42-13"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ranger</span></span>
+<span id="cb42-14"><a href="#cb42-14"></a><span class="at">      </span><span class="kw">-</span><span class="at"> htop</span></span>
+<span id="cb42-15"><a href="#cb42-15"></a></span>
+<span id="cb42-16"><a href="#cb42-16"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb42-17"><a href="#cb42-17"></a></span>
+<span id="cb42-18"><a href="#cb42-18"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> I. CHECK Requirements</span></span>
+<span id="cb42-19"><a href="#cb42-19"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb42-20"><a href="#cb42-20"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ requirements }}&quot;</span></span>
+<span id="cb42-21"><a href="#cb42-21"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb42-22"><a href="#cb42-22"></a></span>
+<span id="cb42-23"><a href="#cb42-23"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> II. Install apt requirements list</span></span>
+<span id="cb42-24"><a href="#cb42-24"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb42-25"><a href="#cb42-25"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ liste_packages }}&quot;</span></span>
+<span id="cb42-26"><a href="#cb42-26"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb42-27"><a href="#cb42-27"></a></span>
+<span id="cb42-28"><a href="#cb42-28"></a><span class="co">...</span></span></code></pre></div>
+<div class="info">
+<p>Les listes ne sont pas suffisamment complexes pour correctement dimensionner le playbook. On a besoin de quelque chose de plus flexible et précis: Les dictionnaires.</p>
+</div>
+<h1 id="loops">Loops</h1>
+<h2 id="boucle-dans-des-dictionnaires">Boucle dans des dictionnaires</h2>
+<p>Dans le <em>playbook</em>:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># Déclarer un play</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="co"># qui s&#39;adresse au groupe &quot;nodes&quot;</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="co"># qui déclare une task pour appeler le module &quot;ansible.builtin.apt&quot;</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a><span class="co"># pour installer trois packages: nano, iperf, wget (liste)</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a></span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="co"># On va ensuite rebondir sur le concept de variable</span></span>
+<span id="cb43-7"><a href="#cb43-7"></a></span>
+<span id="cb43-8"><a href="#cb43-8"></a><span class="pp">---</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Bootstrap pour Nodes</span></span>
+<span id="cb43-10"><a href="#cb43-10"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb43-11"><a href="#cb43-11"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb43-12"><a href="#cb43-12"></a><span class="at">    </span><span class="fu">requirements</span><span class="kw">:</span></span>
+<span id="cb43-13"><a href="#cb43-13"></a><span class="at">      </span><span class="fu">python-apt</span><span class="kw">:</span></span>
+<span id="cb43-14"><a href="#cb43-14"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb43-15"><a href="#cb43-15"></a><span class="at">      </span><span class="fu">python3-apt</span><span class="kw">:</span></span>
+<span id="cb43-16"><a href="#cb43-16"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb43-17"><a href="#cb43-17"></a><span class="at">      </span><span class="fu">aptitude</span><span class="kw">:</span></span>
+<span id="cb43-18"><a href="#cb43-18"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb43-19"><a href="#cb43-19"></a><span class="at">    </span><span class="fu">list_packages</span><span class="kw">:</span></span>
+<span id="cb43-20"><a href="#cb43-20"></a><span class="at">      </span><span class="fu">nano</span><span class="kw">:</span></span>
+<span id="cb43-21"><a href="#cb43-21"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span>
+<span id="cb43-22"><a href="#cb43-22"></a><span class="at">      </span><span class="fu">iperf</span><span class="kw">:</span></span>
+<span id="cb43-23"><a href="#cb43-23"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb43-24"><a href="#cb43-24"></a><span class="at">      </span><span class="fu">wget</span><span class="kw">:</span></span>
+<span id="cb43-25"><a href="#cb43-25"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb43-26"><a href="#cb43-26"></a></span>
+<span id="cb43-27"><a href="#cb43-27"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb43-28"><a href="#cb43-28"></a></span>
+<span id="cb43-29"><a href="#cb43-29"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> I. CHECK Requirements</span></span>
+<span id="cb43-30"><a href="#cb43-30"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb43-31"><a href="#cb43-31"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}&quot;</span></span>
+<span id="cb43-32"><a href="#cb43-32"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb43-33"><a href="#cb43-33"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ requirements | dict2items }}&quot;</span></span>
+<span id="cb43-34"><a href="#cb43-34"></a><span class="at">    </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb43-35"><a href="#cb43-35"></a><span class="at">      </span><span class="fu">tag_data</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb43-36"><a href="#cb43-36"></a></span>
+<span id="cb43-37"><a href="#cb43-37"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> II. Install apt list packages</span></span>
+<span id="cb43-38"><a href="#cb43-38"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb43-39"><a href="#cb43-39"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}&quot;</span></span>
+<span id="cb43-40"><a href="#cb43-40"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb43-41"><a href="#cb43-41"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ list_packages | dict2items }}&quot;</span></span>
+<span id="cb43-42"><a href="#cb43-42"></a></span>
+<span id="cb43-43"><a href="#cb43-43"></a><span class="co">...</span></span></code></pre></div>
+<p>Résultat:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb44-1"><a href="#cb44-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible-playbook bootstrap_playbook.yml -b</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="dt">PLAY </span><span class="kw">[Bootstrap pour Nodes]</span><span class="dt"> ************************************************************************************************</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="dt">TASK </span><span class="kw">[Gathering Facts]</span><span class="dt"> *****************************************************************************************************</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb44-7"><a href="#cb44-7"></a></span>
+<span id="cb44-8"><a href="#cb44-8"></a><span class="dt">TASK </span><span class="kw">[I. CHECK Requirements]</span><span class="dt"> ***********************************************************************************************</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;python-apt&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb44-10"><a href="#cb44-10"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;python3-apt&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb44-11"><a href="#cb44-11"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;aptitude&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb44-12"><a href="#cb44-12"></a></span>
+<span id="cb44-13"><a href="#cb44-13"></a><span class="dt">TASK </span><span class="kw">[II. Install apt list packages]</span><span class="dt"> ***************************************************************************************</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a><span class="dt">changed: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;nano&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;absent&#39;}})</span></span>
+<span id="cb44-15"><a href="#cb44-15"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;iperf&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb44-16"><a href="#cb44-16"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;wget&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb44-17"><a href="#cb44-17"></a></span>
+<span id="cb44-18"><a href="#cb44-18"></a><span class="dt">PLAY RECAP *****************************************************************************************************************</span></span>
+<span id="cb44-19"><a href="#cb44-19"></a><span class="dt">mydeby                     : ok</span><span class="ot">=</span><span class="dv">3</span><span class="st">    changed=</span><span class="dv">1</span><span class="st">    unreachable=</span><span class="dv">0</span><span class="st">    failed=</span><span class="dv">0</span><span class="st">    skipped=</span><span class="dv">0</span><span class="st">    rescued=</span><span class="dv">0</span><span class="st">    ignored=</span><span class="dv">0</span></span></code></pre></div>
+<h3 id="gestion-de-version-de-programme">Gestion de Version de Programme</h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1"></a><span class="pp">---</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Bootstrap pour Nodes</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a></span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a><span class="at">    </span><span class="fu">requirements</span><span class="kw">:</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a><span class="at">      </span><span class="fu">python-apt</span><span class="kw">:</span></span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a><span class="at">      </span><span class="fu">python3-apt</span><span class="kw">:</span></span>
+<span id="cb45-10"><a href="#cb45-10"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb45-11"><a href="#cb45-11"></a><span class="at">      </span><span class="fu">aptitude</span><span class="kw">:</span></span>
+<span id="cb45-12"><a href="#cb45-12"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a></span>
+<span id="cb45-14"><a href="#cb45-14"></a><span class="at">    </span><span class="fu">list_packages</span><span class="kw">:</span></span>
+<span id="cb45-15"><a href="#cb45-15"></a><span class="at">      </span><span class="fu">nano</span><span class="kw">:</span></span>
+<span id="cb45-16"><a href="#cb45-16"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span>
+<span id="cb45-17"><a href="#cb45-17"></a><span class="at">      </span><span class="fu">iperf</span><span class="kw">:</span></span>
+<span id="cb45-18"><a href="#cb45-18"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb45-19"><a href="#cb45-19"></a><span class="at">        </span><span class="fu">version</span><span class="kw">:</span><span class="at"> 2.0.12+dfsg1-2</span></span>
+<span id="cb45-20"><a href="#cb45-20"></a><span class="at">      </span><span class="fu">wget</span><span class="kw">:</span></span>
+<span id="cb45-21"><a href="#cb45-21"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb45-22"><a href="#cb45-22"></a></span>
+<span id="cb45-23"><a href="#cb45-23"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb45-24"><a href="#cb45-24"></a></span>
+<span id="cb45-25"><a href="#cb45-25"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> I. CHECK Requirements</span></span>
+<span id="cb45-26"><a href="#cb45-26"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb45-27"><a href="#cb45-27"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}&quot;</span></span>
+<span id="cb45-28"><a href="#cb45-28"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb45-29"><a href="#cb45-29"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ requirements | dict2items }}&quot;</span></span>
+<span id="cb45-30"><a href="#cb45-30"></a><span class="at">    </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb45-31"><a href="#cb45-31"></a><span class="at">      </span><span class="fu">tag_data</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb45-32"><a href="#cb45-32"></a></span>
+<span id="cb45-33"><a href="#cb45-33"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> II. Install apt list packages</span></span>
+<span id="cb45-34"><a href="#cb45-34"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb45-35"><a href="#cb45-35"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}={{ item.value.version | default (&#39;*&#39;) }}&quot;</span><span class="co"> # Permet de gérer les version | sinon default</span></span>
+<span id="cb45-36"><a href="#cb45-36"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb45-37"><a href="#cb45-37"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ list_packages | dict2items }}&quot;</span></span>
+<span id="cb45-38"><a href="#cb45-38"></a></span>
+<span id="cb45-39"><a href="#cb45-39"></a><span class="co">...</span></span></code></pre></div>
+<h3 id="parcours-de-structure-de-données-exemple">Parcours de Structure de Données <em>(Exemple)</em></h3>
+<div class="sourceCode" id="cb46"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb46-1"><a href="#cb46-1"></a><span class="pp">---</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Bootstrap pour Nodes</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a></span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a><span class="co">...</span></span>
+<span id="cb46-7"><a href="#cb46-7"></a></span>
+<span id="cb46-8"><a href="#cb46-8"></a><span class="co">    # Déclaration d&#39;une liste d&#39;utilisateurs sous forme de dictionnaire</span></span>
+<span id="cb46-9"><a href="#cb46-9"></a><span class="co">    liste_users:</span></span>
+<span id="cb46-10"><a href="#cb46-10"></a><span class="co">      formation:</span></span>
+<span id="cb46-11"><a href="#cb46-11"></a><span class="co">        state: present</span></span>
+<span id="cb46-12"><a href="#cb46-12"></a><span class="co">        shell: /bin/bash</span></span>
+<span id="cb46-13"><a href="#cb46-13"></a><span class="co">        comment: &quot;User formation&quot;</span></span>
+<span id="cb46-14"><a href="#cb46-14"></a><span class="co">      deploy:</span></span>
+<span id="cb46-15"><a href="#cb46-15"></a><span class="co">        state: present</span></span>
+<span id="cb46-16"><a href="#cb46-16"></a><span class="co">      dev01:</span></span>
+<span id="cb46-17"><a href="#cb46-17"></a><span class="co">        shell: /bin/bash</span></span>
+<span id="cb46-18"><a href="#cb46-18"></a><span class="co">        comment: &quot;User developpement&quot;</span></span>
+<span id="cb46-19"><a href="#cb46-19"></a></span>
+<span id="cb46-20"><a href="#cb46-20"></a></span>
+<span id="cb46-21"><a href="#cb46-21"></a><span class="co">  tasks:</span></span>
+<span id="cb46-22"><a href="#cb46-22"></a></span>
+<span id="cb46-23"><a href="#cb46-23"></a><span class="co">...</span></span>
+<span id="cb46-24"><a href="#cb46-24"></a></span>
+<span id="cb46-25"><a href="#cb46-25"></a></span>
+<span id="cb46-26"><a href="#cb46-26"></a><span class="co"># Déclarer une task qui utilise le module ansible.buitin.user et qui parcours la structure de donnée</span></span>
+<span id="cb46-27"><a href="#cb46-27"></a><span class="co">    # liste_user.</span></span>
+<span id="cb46-28"><a href="#cb46-28"></a><span class="co">    # /!\  utilisation d&#39;une iteration</span></span>
+<span id="cb46-29"><a href="#cb46-29"></a><span class="co">    # /!\ valeurs par défaut (filter) =&gt; default(omit)</span></span>
+<span id="cb46-30"><a href="#cb46-30"></a></span>
+<span id="cb46-31"><a href="#cb46-31"></a><span class="co">  - name: III. Parcours Structure Données</span></span>
+<span id="cb46-32"><a href="#cb46-32"></a><span class="co">    ansible.builtin.user:</span></span>
+<span id="cb46-33"><a href="#cb46-33"></a><span class="co">      name: &quot;{{ item.key }}&quot;</span></span>
+<span id="cb46-34"><a href="#cb46-34"></a><span class="co">      state: &quot;{{ item.value.state | default(omit) }}&quot;</span></span>
+<span id="cb46-35"><a href="#cb46-35"></a><span class="co">      shell: &quot;{{ item.value.shell | default (&#39;*&#39;) }}&quot;</span></span>
+<span id="cb46-36"><a href="#cb46-36"></a><span class="co">      comment: &quot;{{ item.value.comment | default (&#39;*&#39;) }}&quot;</span></span>
+<span id="cb46-37"><a href="#cb46-37"></a><span class="co">    loop: &quot;{{ liste_users | dict2items }}&quot;</span></span></code></pre></div>
+<p>Résultat:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb47-1"><a href="#cb47-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible-playbook bootstrap_playbook.yml -b</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a></span>
+<span id="cb47-3"><a href="#cb47-3"></a><span class="dt">PLAY </span><span class="kw">[Bootstrap pour Nodes]</span><span class="dt"> *****************************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb47-4"><a href="#cb47-4"></a></span>
+<span id="cb47-5"><a href="#cb47-5"></a><span class="dt">TASK </span><span class="kw">[Gathering Facts]</span><span class="dt"> **********************************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb47-6"><a href="#cb47-6"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span></span>
+<span id="cb47-7"><a href="#cb47-7"></a></span>
+<span id="cb47-8"><a href="#cb47-8"></a><span class="dt">TASK </span><span class="kw">[I. CHECK Requirements]</span><span class="dt"> ****************************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb47-9"><a href="#cb47-9"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;python-apt&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb47-10"><a href="#cb47-10"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;python3-apt&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb47-11"><a href="#cb47-11"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;aptitude&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb47-12"><a href="#cb47-12"></a></span>
+<span id="cb47-13"><a href="#cb47-13"></a><span class="dt">TASK </span><span class="kw">[II. Install apt list packages]</span><span class="dt"> ********************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb47-14"><a href="#cb47-14"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;nano&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;absent&#39;}})</span></span>
+<span id="cb47-15"><a href="#cb47-15"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;iperf&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;, &#39;version&#39;: &#39;</span><span class="dv">2</span><span class="st">.</span><span class="fl">0.12</span><span class="st">+dfsg1</span><span class="dv">-2</span><span class="st">&#39;}})</span></span>
+<span id="cb47-16"><a href="#cb47-16"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;wget&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb47-17"><a href="#cb47-17"></a></span>
+<span id="cb47-18"><a href="#cb47-18"></a><span class="dt">TASK </span><span class="kw">[III. Parcours Structure Données]</span><span class="dt"> ******************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb47-19"><a href="#cb47-19"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;formation&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;, &#39;shell&#39;: &#39;/bin/bash&#39;, &#39;comment&#39;: &#39;User formation&#39;}})</span></span>
+<span id="cb47-20"><a href="#cb47-20"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;deploy&#39;, &#39;value&#39;: {&#39;state&#39;: &#39;present&#39;}})</span></span>
+<span id="cb47-21"><a href="#cb47-21"></a><span class="dt">ok: </span><span class="kw">[mydeby]</span><span class="dt"> </span><span class="ot">=</span><span class="st">&gt; (item={&#39;key&#39;: &#39;dev01&#39;, &#39;value&#39;: {&#39;shell&#39;: &#39;/bin/bash&#39;, &#39;comment&#39;: &#39;User developpement&#39;}})</span></span>
+<span id="cb47-22"><a href="#cb47-22"></a></span>
+<span id="cb47-23"><a href="#cb47-23"></a><span class="dt">PLAY RECAP **********************************************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb47-24"><a href="#cb47-24"></a><span class="dt">mydeby                     : ok</span><span class="ot">=</span><span class="dv">4</span><span class="st">    changed=</span><span class="dv">0</span><span class="st">    unreachable=</span><span class="dv">0</span><span class="st">    failed=</span><span class="dv">0</span><span class="st">    skipped=</span><span class="dv">0</span><span class="st">    rescued=</span><span class="dv">0</span><span class="st">    ignored=</span><span class="dv">0</span><span class="st"> </span></span></code></pre></div>
+<h3 id="générer-un-mot-de-passe-pour-un-uilisateur">Générer un mot de passe pour un uilisateur</h3>
+<h4 id="version-n1-mot-de-passe-en-clair">Version n°1: Mot de passe en clair</h4>
+<div class="sourceCode" id="cb48"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb48-1"><a href="#cb48-1"></a><span class="pp">---</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Bootstrap pour Nodes</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> nodes</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a></span>
+<span id="cb48-5"><a href="#cb48-5"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a><span class="co">...</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a></span>
+<span id="cb48-8"><a href="#cb48-8"></a><span class="co">    # Déclaration d&#39;une liste d&#39;utilisateurs sous forme de dictionnaire</span></span>
+<span id="cb48-9"><a href="#cb48-9"></a><span class="co">    liste_users:</span></span>
+<span id="cb48-10"><a href="#cb48-10"></a><span class="co">      formation:</span></span>
+<span id="cb48-11"><a href="#cb48-11"></a><span class="co">        state: present</span></span>
+<span id="cb48-12"><a href="#cb48-12"></a><span class="co">        shell: /bin/bash</span></span>
+<span id="cb48-13"><a href="#cb48-13"></a><span class="co">        comment: &quot;User formation&quot;</span></span>
+<span id="cb48-14"><a href="#cb48-14"></a><span class="co">      deploy:</span></span>
+<span id="cb48-15"><a href="#cb48-15"></a><span class="co">        state: present</span></span>
+<span id="cb48-16"><a href="#cb48-16"></a><span class="co">      dev01:</span></span>
+<span id="cb48-17"><a href="#cb48-17"></a><span class="co">        shell: /bin/bash</span></span>
+<span id="cb48-18"><a href="#cb48-18"></a><span class="co">        comment: &quot;User developpement&quot;</span></span>
+<span id="cb48-19"><a href="#cb48-19"></a><span class="co">        password: hastaLaVista</span></span>
+<span id="cb48-20"><a href="#cb48-20"></a></span>
+<span id="cb48-21"><a href="#cb48-21"></a><span class="co">  tasks:</span></span>
+<span id="cb48-22"><a href="#cb48-22"></a></span>
+<span id="cb48-23"><a href="#cb48-23"></a><span class="co">...</span></span>
+<span id="cb48-24"><a href="#cb48-24"></a><span class="co"># Déclarer une task qui utilise le module ansible.buitin.user et qui parcours la structure de donnée</span></span>
+<span id="cb48-25"><a href="#cb48-25"></a><span class="co">    # liste_user.</span></span>
+<span id="cb48-26"><a href="#cb48-26"></a><span class="co">    # /!\  utilisation d&#39;une iteration</span></span>
+<span id="cb48-27"><a href="#cb48-27"></a><span class="co">    # /!\ valeurs par défaut (filter) =&gt; default(omit)</span></span>
+<span id="cb48-28"><a href="#cb48-28"></a></span>
+<span id="cb48-29"><a href="#cb48-29"></a><span class="co">  - name: III. Parcours Structure Données</span></span>
+<span id="cb48-30"><a href="#cb48-30"></a><span class="co">    ansible.builtin.user:</span></span>
+<span id="cb48-31"><a href="#cb48-31"></a><span class="co">      name: &quot;{{ item.key }}&quot;</span></span>
+<span id="cb48-32"><a href="#cb48-32"></a><span class="co">      state: &quot;{{ item.value.state | default(omit) }}&quot;</span></span>
+<span id="cb48-33"><a href="#cb48-33"></a><span class="co">      shell: &quot;{{ item.value.shell | default (&#39;*&#39;) }}&quot;</span></span>
+<span id="cb48-34"><a href="#cb48-34"></a><span class="co">      comment: &quot;{{ item.value.comment | default (&#39;*&#39;) }}&quot;</span></span>
+<span id="cb48-35"><a href="#cb48-35"></a><span class="co">      password: &quot;{{ item.value.password | default (omit) | password_hash(&#39;sha512&#39;) }}&quot;</span></span>
+<span id="cb48-36"><a href="#cb48-36"></a><span class="co">    loop: &quot;{{ liste_users | dict2items }}&quot;</span></span>
+<span id="cb48-37"><a href="#cb48-37"></a></span>
+<span id="cb48-38"><a href="#cb48-38"></a></span>
+<span id="cb48-39"><a href="#cb48-39"></a><span class="co">...</span></span></code></pre></div>
+<h4 id="version-n2-mot-de-passe-chiffré">Version n°2: Mot de passe chiffré</h4>
+<div class="sourceCode" id="cb49"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb49-1"><a href="#cb49-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible -m debug -a &quot;msg</span><span class="ot">=</span><span class="st">{{ &#39;Hasta la Vista&#39; | password_hash(&#39;sha512&#39;, &#39;saltY&#39;) }}&quot; mydeby</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="dt">mydeby | SUCCESS </span><span class="ot">=</span><span class="st">&gt; {</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="dt">    &quot;msg&quot;: &quot;$6$saltY$eHxdhtGa3DL64gCbmNdEtaplBBjrRV0KMJfaw8JC3NeykBUaKklWYfaL5oCGZEiHchijpi/9XrPcyx18UH3fE/&quot;</span></span>
+<span id="cb49-4"><a href="#cb49-4"></a><span class="dt">}</span></span>
+<span id="cb49-5"><a href="#cb49-5"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ </span></span></code></pre></div>
+<p>On change les lignes:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1"></a><span class="co">#password: hastaLaVista</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">password</span><span class="kw">:</span><span class="at"> $6$saltY$eHxdhtGa3DL64gCbmNdEtaplBBjrRV0KMJfaw8JC3NeykBUaKklWYfaL5oCGZEiHchijpi/9XrPcyx18UH3fE/</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a></span>
+<span id="cb50-4"><a href="#cb50-4"></a><span class="co">#password: &quot;{{ item.value.password | default (omit) | password_hash(&#39;sha512&#39;) }}&quot;</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a><span class="fu">password</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.password | default (omit) }}&quot;</span></span></code></pre></div>
+<h1 id="gestion-avancée-dinventaire">Gestion avancée d’inventaire</h1>
+<p>Dans le dossier <code>formation_ansible</code> on rajoute les dossiers <code>group_vars</code> et <code>host_vars</code>. Ils serviront à déclarer des variables d’inventaire qui seront utilisées dans les playbooks.</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb51-1"><a href="#cb51-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ tree</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="dt">.</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a><span class="dt">├── README.md</span></span>
+<span id="cb51-4"><a href="#cb51-4"></a><span class="dt">├── ansible.cfg</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a><span class="dt">├── bootstrap_pkg_list.txt</span></span>
+<span id="cb51-6"><a href="#cb51-6"></a><span class="dt">├── bootstrap_playbook.yml</span></span>
+<span id="cb51-7"><a href="#cb51-7"></a><span class="dt">├── group_vars</span></span>
+<span id="cb51-8"><a href="#cb51-8"></a><span class="dt">│   ├── centos.yml</span></span>
+<span id="cb51-9"><a href="#cb51-9"></a><span class="dt">│   ├── debian.yml</span></span>
+<span id="cb51-10"><a href="#cb51-10"></a><span class="dt">│   └── ubuntu.yml</span></span>
+<span id="cb51-11"><a href="#cb51-11"></a><span class="dt">├── host_vars</span></span>
+<span id="cb51-12"><a href="#cb51-12"></a><span class="dt">├── inventory</span></span>
+<span id="cb51-13"><a href="#cb51-13"></a><span class="dt">└── requirements_playbook.yml</span></span>
+<span id="cb51-14"><a href="#cb51-14"></a></span>
+<span id="cb51-15"><a href="#cb51-15"></a><span class="dt">2 directories, 9 files</span></span></code></pre></div>
+<h2 id="gestion-de-group">Gestion de <em>group</em></h2>
+<p>Exemple de contenu de <code>ubuntu.yml</code>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">requirements</span><span class="kw">:</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a><span class="at">      </span><span class="fu">python-apt</span><span class="kw">:</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="at">      </span><span class="fu">python3-apt</span><span class="kw">:</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a><span class="at">      </span><span class="fu">aptitude</span><span class="kw">:</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a></span>
+<span id="cb52-9"><a href="#cb52-9"></a><span class="fu">list_packages</span><span class="kw">:</span></span>
+<span id="cb52-10"><a href="#cb52-10"></a><span class="at">      </span><span class="fu">nano</span><span class="kw">:</span></span>
+<span id="cb52-11"><a href="#cb52-11"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb52-12"><a href="#cb52-12"></a><span class="at">      </span><span class="fu">iperf</span><span class="kw">:</span></span>
+<span id="cb52-13"><a href="#cb52-13"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb52-14"><a href="#cb52-14"></a><span class="at">      </span><span class="fu">wget</span><span class="kw">:</span></span>
+<span id="cb52-15"><a href="#cb52-15"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span></code></pre></div>
+<h2 id="gestion-de-host">Gestion de <em>host</em></h2>
+<div class="sourceCode" id="cb53"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">list_packages</span><span class="kw">:</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="at">      </span><span class="fu">nano</span><span class="kw">:</span></span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span>
+<span id="cb53-4"><a href="#cb53-4"></a><span class="at">      </span><span class="fu">iperf</span><span class="kw">:</span></span>
+<span id="cb53-5"><a href="#cb53-5"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> absent</span></span>
+<span id="cb53-6"><a href="#cb53-6"></a><span class="at">      </span><span class="fu">wget</span><span class="kw">:</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb53-8"><a href="#cb53-8"></a><span class="at">      </span><span class="fu">curl</span><span class="kw">:</span></span>
+<span id="cb53-9"><a href="#cb53-9"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb53-10"><a href="#cb53-10"></a><span class="at">      </span><span class="fu">ranger</span><span class="kw">:</span></span>
+<span id="cb53-11"><a href="#cb53-11"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb53-12"><a href="#cb53-12"></a><span class="at">      </span><span class="fu">htop</span><span class="kw">:</span></span>
+<span id="cb53-13"><a href="#cb53-13"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span></code></pre></div>
+<h1 id="conditionnals">Conditionnals</h1>
+<p>Les <strong>conditionnals</strong> permettent de gérer des exceptions dans les playbooks.</p>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Shut down CentOS 6 and Debian 7 systems</span></span>
+<span id="cb54-3"><a href="#cb54-3"></a><span class="at">    </span><span class="fu">ansible.builtin.command</span><span class="kw">:</span><span class="at"> /sbin/shutdown -t now</span></span>
+<span id="cb54-4"><a href="#cb54-4"></a><span class="at">    </span><span class="fu">when</span><span class="kw">:</span><span class="at"> (ansible_facts[&#39;distribution&#39;] == &quot;CentOS&quot; and ansible_facts[&#39;distribution_major_version&#39;] == &quot;6&quot;) or</span></span>
+<span id="cb54-5"><a href="#cb54-5"></a><span class="at">          (ansible_facts[&#39;distribution&#39;] == &quot;Debian&quot; and ansible_facts[&#39;distribution_major_version&#39;] == &quot;7&quot;)</span></span></code></pre></div>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html</a></p>
+<p>Exemple dans notre <strong><em>requirements_playbook.yml</em></strong>:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb55-1"><a href="#cb55-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> II. Install apt list packages</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}={{ item.value.version | default (&#39;*&#39;) }}&quot;</span><span class="co"> # Permet de gérer les version | sinon default</span></span>
+<span id="cb55-4"><a href="#cb55-4"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb55-5"><a href="#cb55-5"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ list_packages | dict2items }}&quot;</span></span>
+<span id="cb55-6"><a href="#cb55-6"></a><span class="co">    # Ajout d&#39;une condition pour que la task ne soit exécutée QUE quand la variable &quot;liste_packages&quot; est définie</span></span>
+<span id="cb55-7"><a href="#cb55-7"></a><span class="at">    </span><span class="fu">when</span><span class="kw">:</span><span class="at"> liste_package is defined</span></span></code></pre></div>
+<h1 id="ajout-dune-machine-centos-au-parc">Ajout d’une machine CentOS au parc</h1>
+<div class="sourceCode" id="cb56"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb56-1"><a href="#cb56-1"></a><span class="kw">[local]</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a><span class="dt">manager ansible_connection</span><span class="ot">=</span><span class="st">local</span></span>
+<span id="cb56-3"><a href="#cb56-3"></a></span>
+<span id="cb56-4"><a href="#cb56-4"></a><span class="kw">[nodes:children]</span></span>
+<span id="cb56-5"><a href="#cb56-5"></a><span class="dt">debian</span></span>
+<span id="cb56-6"><a href="#cb56-6"></a><span class="dt">centos</span></span>
+<span id="cb56-7"><a href="#cb56-7"></a></span>
+<span id="cb56-8"><a href="#cb56-8"></a><span class="kw">[ubuntu]</span></span>
+<span id="cb56-9"><a href="#cb56-9"></a><span class="dt">manager</span></span>
+<span id="cb56-10"><a href="#cb56-10"></a></span>
+<span id="cb56-11"><a href="#cb56-11"></a><span class="kw">[debian]</span></span>
+<span id="cb56-12"><a href="#cb56-12"></a><span class="dt">mydeby ansible_host</span><span class="ot">=</span><span class="dv">192</span><span class="st">.</span><span class="dv">168</span><span class="st">.</span><span class="fl">3.3</span></span>
+<span id="cb56-13"><a href="#cb56-13"></a><span class="dt">deby2 ansible_host</span><span class="ot">=</span><span class="dv">192</span><span class="st">.</span><span class="dv">168</span><span class="st">.</span><span class="fl">3.4</span></span>
+<span id="cb56-14"><a href="#cb56-14"></a></span>
+<span id="cb56-15"><a href="#cb56-15"></a><span class="kw">[centos]</span></span>
+<span id="cb56-16"><a href="#cb56-16"></a><span class="dt">mycentos </span><span class="ot">=</span><span class="st"> ansible_host=</span><span class="dv">192</span><span class="st">.</span><span class="dv">168</span><span class="st">.</span><span class="fl">3.5</span></span></code></pre></div>
+<h2 id="erreur-sudo">Erreur <em>SUDO</em></h2>
+<p>Dans <strong><em>CentOS</em></strong> il n’y a pas de groupe <strong><em>SUDO</em></strong>.</p>
+<p>Nous devons donc modifier le playbook bootstrap pour accomoder notre nouveau besoin.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb57-1"><a href="#cb57-1"></a><span class="pp">---</span></span>
+<span id="cb57-2"><a href="#cb57-2"></a></span>
+<span id="cb57-3"><a href="#cb57-3"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> module user pour le groupe nodes</span></span>
+<span id="cb57-4"><a href="#cb57-4"></a><span class="co">  #• Varaiablilisation de la valeur hosts (pour gérer les différents OS)</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ cible | default(&#39;all&#39;) }}&quot;</span><span class="co"> # On peut maintenant &quot;cibler&quot; les hosts</span></span>
+<span id="cb57-6"><a href="#cb57-6"></a></span>
+<span id="cb57-7"><a href="#cb57-7"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb57-8"><a href="#cb57-8"></a></span>
+<span id="cb57-9"><a href="#cb57-9"></a><span class="co"># Déclaration d&#39;une task qui permet de créer un utilisateur &quot;ansible&quot; avec les droits &quot;sudo&quot;</span></span>
+<span id="cb57-10"><a href="#cb57-10"></a><span class="at">   </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> I. Création user ANSIBLE dans groupe SUDO</span></span>
+<span id="cb57-11"><a href="#cb57-11"></a><span class="at">     </span><span class="fu">ansible.builtin.user</span><span class="kw">:</span></span>
+<span id="cb57-12"><a href="#cb57-12"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ansible</span></span>
+<span id="cb57-13"><a href="#cb57-13"></a><span class="at">      </span><span class="fu">groups</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot; {{ grp_sudo | default (&#39;sudo&#39;) }} &quot;</span><span class="co"> # Défini &quot;sudo&quot; par défaut et la variable &quot;grp_sudo&quot; si renseignée</span></span>
+<span id="cb57-14"><a href="#cb57-14"></a><span class="at">      </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> /bin/bash</span></span></code></pre></div>
+<p>On renseigne la variable <code>grp_sudo</code> dans l’inventaire, ici le fichier <strong>centos.yml</strong> dans le répertoire <strong>group_vars</strong>:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb58-1"><a href="#cb58-1"></a><span class="co"># group_vars/centos.yml</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="fu">grp_sudo</span><span class="kw">:</span><span class="at"> wheel</span></span></code></pre></div>
+<h2 id="lancement-du-bootstrap_playbook">Lancement du <em>bootstrap_playbook</em></h2>
+<div class="sourceCode" id="cb59"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb59-1"><a href="#cb59-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible-playbook bootstrap_playbook.yml -b --user stagiaire --ask-become-pass -e &quot;cible</span><span class="ot">=</span><span class="st">centos&quot;</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="dt">BECOME password: </span></span>
+<span id="cb59-3"><a href="#cb59-3"></a></span>
+<span id="cb59-4"><a href="#cb59-4"></a><span class="dt">PLAY </span><span class="kw">[module user pour le groupe nodes]</span><span class="dt"> ****************************************************************************************************************************************************************************************************</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a></span>
+<span id="cb59-6"><a href="#cb59-6"></a><span class="dt">TASK </span><span class="kw">[Gathering Facts]</span><span class="dt"> *********************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb59-7"><a href="#cb59-7"></a><span class="dt">ok: </span><span class="kw">[mycentos]</span></span>
+<span id="cb59-8"><a href="#cb59-8"></a></span>
+<span id="cb59-9"><a href="#cb59-9"></a><span class="dt">TASK </span><span class="kw">[I. Création user ANSIBLE dans groupe SUDO]</span><span class="dt"> *******************************************************************************************************************************************************************************************</span></span>
+<span id="cb59-10"><a href="#cb59-10"></a><span class="dt">changed: </span><span class="kw">[mycentos]</span></span>
+<span id="cb59-11"><a href="#cb59-11"></a></span>
+<span id="cb59-12"><a href="#cb59-12"></a><span class="dt">TASK </span><span class="kw">[II. Déploiement de la CLE PUBLIQUE]</span><span class="dt"> **************************************************************************************************************************************************************************************************</span></span>
+<span id="cb59-13"><a href="#cb59-13"></a><span class="dt">changed: </span><span class="kw">[mycentos]</span></span>
+<span id="cb59-14"><a href="#cb59-14"></a></span>
+<span id="cb59-15"><a href="#cb59-15"></a><span class="dt">TASK </span><span class="kw">[III. Création fichier config SUDOERS.D/ANSIBLE]</span><span class="dt"> **************************************************************************************************************************************************************************************</span></span>
+<span id="cb59-16"><a href="#cb59-16"></a><span class="dt">changed: </span><span class="kw">[mycentos]</span></span>
+<span id="cb59-17"><a href="#cb59-17"></a></span>
+<span id="cb59-18"><a href="#cb59-18"></a><span class="dt">PLAY RECAP *********************************************************************************************************************************************************************************************************************************</span></span>
+<span id="cb59-19"><a href="#cb59-19"></a><span class="dt">mycentos                   : ok</span><span class="ot">=</span><span class="dv">4</span><span class="st">    changed=</span><span class="dv">3</span><span class="st">    unreachable=</span><span class="dv">0</span><span class="st">    failed=</span><span class="dv">0</span><span class="st">    skipped=</span><span class="dv">0</span><span class="st">    rescued=</span><span class="dv">0</span><span class="st">    ignored=</span><span class="dv">0</span></span></code></pre></div>
+<p>On utilise ici une <strong>“extra vars”</strong> pour déclarer la valeur de <strong>“cible”</strong>: <code>ansible-playbook bootstrap_playbook.yml -b --user stagiaire --ask-become-pass -e "cible=centos"</code></p>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html">extra vars</a> (for example, -e “user=my_user”)(always win precedence)</p>
+<h1 id="requirements_playbook-1"><em>Requirements_playbook</em></h1>
+<p>Dans le playbook <strong><em>requirements</em></strong> on installe les différents paquets, cependant dans CentOS on utilise la gestionnaire de paquets <strong><em>yum</em></strong>.</p>
+<h2 id="découverte-des-facts">Découverte des <strong><em>facts</em></strong></h2>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_vars_facts.html</a></p>
+<p>Ici les <strong>facts</strong> vont nous permettre de trier entre les familles <strong><em>Debian</em></strong> et <strong><em>RedHat</em></strong>.</p>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode ini"><code class="sourceCode ini"><span id="cb60-1"><a href="#cb60-1"></a><span class="dt">odin@ansiblectl:~/formation_ansible$ ansible -m setup all | grep -E &quot;hostname|family&quot;</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a><span class="dt">        &quot;ansible_hostname&quot;: &quot;deby2&quot;,</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a><span class="dt">        &quot;ansible_os_family&quot;: &quot;Debian&quot;,</span></span>
+<span id="cb60-4"><a href="#cb60-4"></a><span class="dt">        &quot;ansible_hostname&quot;: &quot;mydeby&quot;,</span></span>
+<span id="cb60-5"><a href="#cb60-5"></a><span class="dt">        &quot;ansible_os_family&quot;: &quot;Debian&quot;,</span></span>
+<span id="cb60-6"><a href="#cb60-6"></a><span class="dt">        &quot;ansible_hostname&quot;: &quot;centos8&quot;,</span></span>
+<span id="cb60-7"><a href="#cb60-7"></a><span class="dt">        &quot;ansible_os_family&quot;: &quot;RedHat&quot;,</span></span>
+<span id="cb60-8"><a href="#cb60-8"></a><span class="dt">        &quot;ansible_hostname&quot;: &quot;ansiblectl&quot;,</span></span>
+<span id="cb60-9"><a href="#cb60-9"></a><span class="dt">        &quot;ansible_os_family&quot;: &quot;Debian&quot;,</span></span></code></pre></div>
+<blockquote>
+<p>Pour consulter les facts on utilisera le module “<strong>setup</strong>”</p>
+</blockquote>
+<h2 id="modification-du-playbook">Modification du playbook</h2>
+<p>Dans le <strong><em>requirements_playbook.yml</em></strong> on rajoute le test sur la <code>ansible_os_family</code>:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb61-1"><a href="#cb61-1"></a></span>
+<span id="cb61-2"><a href="#cb61-2"></a><span class="pp">---</span></span>
+<span id="cb61-3"><a href="#cb61-3"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Bootstrap pour Nodes</span></span>
+<span id="cb61-4"><a href="#cb61-4"></a><span class="at">  </span><span class="fu">hosts</span><span class="kw">:</span><span class="at"> all</span></span>
+<span id="cb61-5"><a href="#cb61-5"></a></span>
+<span id="cb61-6"><a href="#cb61-6"></a><span class="at">  </span><span class="fu">vars</span><span class="kw">:</span></span>
+<span id="cb61-7"><a href="#cb61-7"></a><span class="co">    # Déclaration d&#39;une liste d&#39;utilisateurs sous forme de dictionnaire</span></span>
+<span id="cb61-8"><a href="#cb61-8"></a><span class="at">    </span><span class="fu">liste_users</span><span class="kw">:</span></span>
+<span id="cb61-9"><a href="#cb61-9"></a><span class="at">      </span><span class="fu">formation</span><span class="kw">:</span></span>
+<span id="cb61-10"><a href="#cb61-10"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb61-11"><a href="#cb61-11"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> /bin/bash</span></span>
+<span id="cb61-12"><a href="#cb61-12"></a><span class="at">        </span><span class="fu">comment</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;User formation&quot;</span></span>
+<span id="cb61-13"><a href="#cb61-13"></a><span class="at">      </span><span class="fu">deploy</span><span class="kw">:</span></span>
+<span id="cb61-14"><a href="#cb61-14"></a><span class="at">        </span><span class="fu">state</span><span class="kw">:</span><span class="at"> present</span></span>
+<span id="cb61-15"><a href="#cb61-15"></a><span class="at">      </span><span class="fu">dev01</span><span class="kw">:</span></span>
+<span id="cb61-16"><a href="#cb61-16"></a><span class="at">        </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> /bin/bash</span></span>
+<span id="cb61-17"><a href="#cb61-17"></a><span class="at">        </span><span class="fu">comment</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;User developpement&quot;</span></span>
+<span id="cb61-18"><a href="#cb61-18"></a><span class="co">        #password: hastaLaVista</span></span>
+<span id="cb61-19"><a href="#cb61-19"></a><span class="at">        </span><span class="fu">password</span><span class="kw">:</span><span class="at"> $6$saltY$eHxdhtGa3DL64gCbmNdEtaplBBjrRV0KMJfaw8JC3NeykBUaKklWYfaL5oCGZEiHchijpi/9XrPcyx18UH3fE/</span></span>
+<span id="cb61-20"><a href="#cb61-20"></a></span>
+<span id="cb61-21"><a href="#cb61-21"></a></span>
+<span id="cb61-22"><a href="#cb61-22"></a><span class="at">  </span><span class="fu">tasks</span><span class="kw">:</span></span>
+<span id="cb61-23"><a href="#cb61-23"></a></span>
+<span id="cb61-24"><a href="#cb61-24"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> I. Install list packages &quot;Debian Family&quot;</span></span>
+<span id="cb61-25"><a href="#cb61-25"></a><span class="at">    </span><span class="fu">ansible.builtin.apt</span><span class="kw">:</span></span>
+<span id="cb61-26"><a href="#cb61-26"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}={{ item.value.version | default (&#39;*&#39;) }}&quot;</span><span class="co"> # Permet de gérer les version | sinon default</span></span>
+<span id="cb61-27"><a href="#cb61-27"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb61-28"><a href="#cb61-28"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ list_packages | dict2items }}&quot;</span></span>
+<span id="cb61-29"><a href="#cb61-29"></a><span class="co">    # Ajout d&#39;une condition pour que la task ne soit exécutée QUE quand la variable &quot;liste_packages&quot; est définie</span></span>
+<span id="cb61-30"><a href="#cb61-30"></a><span class="at">    </span><span class="fu">when</span><span class="kw">:</span><span class="at"> liste_package is defined and ansible_os_family == &#39;Debian&#39;</span></span>
+<span id="cb61-31"><a href="#cb61-31"></a></span>
+<span id="cb61-32"><a href="#cb61-32"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> II. Install list packages sur &quot;RedHat Family&quot;</span></span>
+<span id="cb61-33"><a href="#cb61-33"></a><span class="at">    </span><span class="fu">ansible.builtin.yum</span><span class="kw">:</span></span>
+<span id="cb61-34"><a href="#cb61-34"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}-{{ item.value.version | default (&#39;*&#39;) }}&quot;</span><span class="co"> # Permet de gérer les version | sinon default</span></span>
+<span id="cb61-35"><a href="#cb61-35"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state }}&quot;</span></span>
+<span id="cb61-36"><a href="#cb61-36"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ list_packages | dict2items }}&quot;</span></span>
+<span id="cb61-37"><a href="#cb61-37"></a><span class="co">    # Ajout d&#39;une condition pour que la task ne soit exécutée QUE quand la variable &quot;liste_packages&quot; est définie</span></span>
+<span id="cb61-38"><a href="#cb61-38"></a><span class="at">    </span><span class="fu">when</span><span class="kw">:</span><span class="at"> liste_package is defined and ansible_os_family == &#39;RedHat&#39;</span></span>
+<span id="cb61-39"><a href="#cb61-39"></a></span>
+<span id="cb61-40"><a href="#cb61-40"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> III. Parcours Structure Données</span></span>
+<span id="cb61-41"><a href="#cb61-41"></a><span class="at">    </span><span class="fu">ansible.builtin.user</span><span class="kw">:</span></span>
+<span id="cb61-42"><a href="#cb61-42"></a><span class="at">      </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.key }}&quot;</span></span>
+<span id="cb61-43"><a href="#cb61-43"></a><span class="at">      </span><span class="fu">state</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.state | default(omit) }}&quot;</span></span>
+<span id="cb61-44"><a href="#cb61-44"></a><span class="at">      </span><span class="fu">shell</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.shell | default (&#39;*&#39;) }}&quot;</span></span>
+<span id="cb61-45"><a href="#cb61-45"></a><span class="at">      </span><span class="fu">comment</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.comment | default (&#39;*&#39;) }}&quot;</span></span>
+<span id="cb61-46"><a href="#cb61-46"></a><span class="co">      #password: &quot;{{ item.value.password | default (omit) | password_hash(&#39;sha512&#39;) }}&quot;</span></span>
+<span id="cb61-47"><a href="#cb61-47"></a><span class="at">      </span><span class="fu">password</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ item.value.password | default (omit) }}&quot;</span></span>
+<span id="cb61-48"><a href="#cb61-48"></a><span class="at">    </span><span class="fu">loop</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;{{ liste_users | dict2items }}&quot;</span></span>
+<span id="cb61-49"><a href="#cb61-49"></a></span>
+<span id="cb61-50"><a href="#cb61-50"></a><span class="co">...</span></span></code></pre></div>
+<h1 id="task-4-message-of-the-day">Task 4: “Message of the Day”</h1>
+<p>Pour copier un fichier via Ansible sur nos machines on utilise le module <code>ansible.builtin.copy</code>.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb62-1"><a href="#cb62-1"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> IV. Déploiement du &quot;Message of the Day&quot;</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a><span class="at">    </span><span class="fu">ansible.builtin.copy</span><span class="kw">:</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a><span class="at">      </span><span class="fu">dest</span><span class="kw">:</span><span class="at"> /etc/motd</span></span>
+<span id="cb62-4"><a href="#cb62-4"></a><span class="at">      </span><span class="fu">src</span><span class="kw">:</span><span class="at"> ./motd</span></span>
+<span id="cb62-5"><a href="#cb62-5"></a><span class="at">      </span><span class="fu">owner</span><span class="kw">:</span><span class="at"> root</span></span>
+<span id="cb62-6"><a href="#cb62-6"></a><span class="at">      </span><span class="fu">group</span><span class="kw">:</span><span class="at"> root</span></span></code></pre></div>
+<h2 id="gestion-des-copies-de-fichiers">Gestion des copies de fichiers</h2>
+<ul>
+<li><strong>Fichiers statiques:</strong> Ces fichiers seront identiques sur toutes machines
+<ul>
+<li>Module <code>copy</code></li>
+<li>Déclarer tous les paramètres !</li>
+<li>Paramètres <code>validate</code> et <code>backup</code>pour controler le contenu avant copie finale</li>
+</ul></li>
+</ul>
+<p>F<strong>ichier dynamiques =&gt; template</strong> : vont être modélisé au déclenchement du playbook grace à un mélange de texte et de <strong>variables</strong> et de <strong>facts</strong></p>
+<p>Ecriture au format <strong>jinja2</strong>:</p>
+<ul>
+<li>Site officiel: <a href="https://jinja.palletsprojects.com/en/3.0.x/" class="uri">https://jinja.palletsprojects.com/en/3.0.x/</a></li>
+<li>Cheatsheet: <a href="https://lzone.de/cheat-sheet/Jinja" class="uri">https://lzone.de/cheat-sheet/Jinja</a></li>
+</ul>
+<div class="info">
+<p>Les templates <em>(dynamiques)</em> seront écrit en Jinja et donc avec l’extension <code>.j2</code></p>
+</div>
+<h2 id="motd-dynamique">MOTD Dynamique</h2>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1"></a>{{ ansible_managed <span class="op">|</span> comment }}</span>
+<span id="cb63-2"><a href="#cb63-2"></a></span>
+<span id="cb63-3"><a href="#cb63-3"></a>{<span class="co"># Afficher la distribution =&gt; facts #}</span></span>
+<span id="cb63-4"><a href="#cb63-4"></a>Machine: {{ ansible_facts[<span class="st">&#39;distribution&#39;</span>] }} {{ ansible_facts[<span class="st">&#39;distribution_release&#39;</span>] }}</span>
+<span id="cb63-5"><a href="#cb63-5"></a></span>
+<span id="cb63-6"><a href="#cb63-6"></a>{<span class="co"># Lister les interfaces réseau #}</span></span>
+<span id="cb63-7"><a href="#cb63-7"></a>{{ ansible_facts[<span class="st">&#39;interfaces&#39;</span>] }}</span>
+<span id="cb63-8"><a href="#cb63-8"></a></span>
+<span id="cb63-9"><a href="#cb63-9"></a>{<span class="co"># Affichier l&#39;ip des interface réseaux sauf lo #}</span></span>
+<span id="cb63-10"><a href="#cb63-10"></a>{<span class="op">%</span> <span class="cf">for</span> myinterface <span class="kw">in</span> ansible_facts[<span class="st">&#39;interfaces&#39;</span>] <span class="op">%</span>}</span>
+<span id="cb63-11"><a href="#cb63-11"></a>{<span class="op">%</span> <span class="cf">if</span> <span class="kw">not</span> myinterface <span class="op">|</span> regex_search(<span class="st">&#39;^br.*&#39;</span>) <span class="op">%</span>}</span>
+<span id="cb63-12"><a href="#cb63-12"></a>Interface {{ myinterface }} : {{ ansible_facts[myinterface][<span class="st">&#39;ipv4&#39;</span>][<span class="st">&#39;address&#39;</span>] }}</span>
+<span id="cb63-13"><a href="#cb63-13"></a>{<span class="op">%</span> endif <span class="op">%</span>}</span>
+<span id="cb63-14"><a href="#cb63-14"></a>{<span class="op">%</span> endfor <span class="op">%</span>}</span>
+<span id="cb63-15"><a href="#cb63-15"></a></span>
+<span id="cb63-16"><a href="#cb63-16"></a></span>
+<span id="cb63-17"><a href="#cb63-17"></a>{<span class="co"># Afficher le groupe SUDO #}</span></span>
+<span id="cb63-18"><a href="#cb63-18"></a>Groupe sudo: {{ grp_sudo }}</span></code></pre></div>
+<h3 id="ajout-du-groupe-sudo">Ajout du Groupe <em>sudo</em></h3>
+<div class="sourceCode" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1"></a>{<span class="co"># Afficher le groupe SUDO #}</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a>{<span class="op">%</span> <span class="cf">if</span> [<span class="st">&quot;ansible_os_family == &#39;Debian&#39;&quot;</span>] <span class="op">%</span>}</span>
+<span id="cb64-3"><a href="#cb64-3"></a>Groupe sudo: sudo</span>
+<span id="cb64-4"><a href="#cb64-4"></a>{<span class="op">%</span> <span class="cf">elif</span> [<span class="st">&#39;grp_sudo&#39;</span>] <span class="kw">is</span> defined <span class="op">%</span>}</span>
+<span id="cb64-5"><a href="#cb64-5"></a>Groupe sudo: {{ grp_sudo }}</span>
+<span id="cb64-6"><a href="#cb64-6"></a>{<span class="op">%</span> <span class="cf">else</span> <span class="op">%</span>}</span>
+<span id="cb64-7"><a href="#cb64-7"></a>Groupe sudo: <span class="kw">not</span> defined</span>
+<span id="cb64-8"><a href="#cb64-8"></a>{<span class="op">%</span> endif <span class="op">%</span>}</span></code></pre></div>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<p>Options supplémentaires à l’appel du playbook</p>
+<ul>
+<li><code>--check</code> (dry-run/preview)</li>
+<li><code>--diff</code> (vue sur les changements dans un fichier ou templates)</li>
+<li><code>--syntax-check</code></li>
+</ul>
+<p>Linter :</p>
+<pre class="shell"><code>pip3 install ansible-lint
+ansible-lint requirements_playbook.yml </code></pre>
+<h1 id="ansible-vault">Ansible Vault</h1>
+<p>Encrytion de données =&gt; SECURITY</p>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/vault.html</a></p>
+<h1 id="rôles-structure">Rôles &amp; Structure</h1>
+<p>Permet de scinder la gestion de Ansible pour faciliter la gestion des projets.</p>
+<iframe src="2021-06-24-POEI-Ansible/Roles_and_Structures.pdf" width="100%" height="320px" allowfullscreen="yes">
+</iframe>
+<p>Doc officielle: <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html</a></p>
+<p>Dépôt de Rôles:<a href="https://galaxy.ansible.com/" class="uri">https://galaxy.ansible.com/</a></p>
+<h1 id="handlers">Handlers</h1>
+<p>Permet de programmer des actions en cas de changement.</p>
+<p>Exemple: Changement de configuration <em>(ssh, apache, etc)</em> puis redémarrage du service.</p>
+<p><strong>Handlers</strong>: running operations on change, <a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html</a></p>
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

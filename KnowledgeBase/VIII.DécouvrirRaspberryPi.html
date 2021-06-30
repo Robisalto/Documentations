@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <title>VIII. Découvrir Raspberry Pi</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">VIII. Découvrir Raspberry Pi</h1>
+<p class="author">David DEBRAY</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#bienvenue-dans-découvrir-raspberry-pi">Bienvenue dans « Découvrir Raspberry Pi »</a></li>
+</ul></li>
+<li><a href="#i.-découvrir-raspberry-pi-2">I. Découvrir Raspberry Pi 2</a>
+<ul>
+<li><a href="#i-i.-aborder-cette-formation">I-I. Aborder cette formation</a></li>
+<li><a href="#i-ii.-etudier-lhistorique-de-raspberry">I-II. Etudier l’historique de Raspberry</a></li>
+<li><a href="#i-iii.-définir-les-prérequis">I-III. Définir les prérequis</a></li>
+<li><a href="#i-iv.-comprendre-la-constitution-de-raspberry-pi-2">I-IV. Comprendre la constitution de Raspberry Pi 2</a></li>
+<li><a href="#i-v.-découvrir-noobs-et-le-système-dexploitation-rasbian">I-V. Découvrir NOOBS et le système d’exploitation Rasbian</a></li>
+<li><a href="#i-vi.-découvrir-les-logiciels-nécessaires-pour-linstallation">I-VI. Découvrir les logiciels nécessaires pour l’installation</a></li>
+<li><a href="#i-vii.-installer-un-os-depuis-une-carte-vierge">I-VII. Installer un OS depuis une carte vierge</a></li>
+<li><a href="#i-viii.-découvrir-le-matériel-de-raspberry-pi-2">I-VIII. Découvrir le matériel de Raspberry Pi 2</a></li>
+<li><a href="#i-ix.-comprendre-la-procédure-de-mise-sous-tension">I-IX. Comprendre la procédure de mise sous tension</a></li>
+<li><a href="#i-x.-configurer-son-os">I-X. Configurer son OS</a></li>
+<li><a href="#i-xi.-poursuivre-la-configuration-de-son-os">I-XI. Poursuivre la configuration de son OS</a></li>
+<li><a href="#i-xii.-explorer-lenvironnement-graphique-et-les-fichiers-de-commande">I-XII. Explorer l’environnement graphique et les fichiers de commande</a></li>
+</ul></li>
+<li><a href="#ii.-aborder-et-installer-raspberry-pi-avec-raspian">II. Aborder et installer Raspberry Pi avec Raspian</a>
+<ul>
+<li><a href="#ii-i.-comprendre-le-fonctionnement-de-sa-sd">II-I. Comprendre le fonctionnement de sa SD</a></li>
+<li><a href="#ii-ii.-se-connecter-à-internet-et-mettre-à-jour-son-os">II-II. Se connecter à Internet et mettre à jour son OS</a></li>
+<li><a href="#ii-iii.-ajouter-des-applications-sur-sa-carte-raspberry">II-III. Ajouter des applications sur sa carte Raspberry</a></li>
+<li><a href="#ii-iv.-découvrir-la-programmation-animée-avec-scratch">II-IV. Découvrir la programmation animée avec Scratch</a></li>
+<li><a href="#ii-v.-jouer-avec-les-cartes-hat">II-V. Jouer avec les cartes HAT</a></li>
+<li><a href="#ii-vi.-visualiser-le-résultat-des-cartes-hat">II-VI. Visualiser le résultat des cartes HAT</a></li>
+</ul></li>
+<li><a href="#iii.-comprendre-les-principes-de-base-de-linux">III. Comprendre les principes de base de Linux</a>
+<ul>
+<li><a href="#iii-i.-étudier-larborescence-de-linux-et-son-fonctionnement">III-I. Étudier l’arborescence de Linux et son fonctionnement</a></li>
+<li><a href="#iii-ii.-comprendre-les-lignes-de-commande-dans-un-os">III-II. Comprendre les lignes de commande dans un OS</a></li>
+<li><a href="#iii-iii.-comprendre-le-lien-entre-la-console-et-le-mode-graphique">III-III. Comprendre le lien entre la console et le mode graphique</a></li>
+<li><a href="#iii-iv.-effectuer-le-passage-en-mode-root">III-IV. Effectuer le passage en mode Root</a></li>
+<li><a href="#iii-v.-créer-des-groupes-dutilisateurs">III-V. Créer des groupes d’utilisateurs</a></li>
+<li><a href="#iii-vi.-gérer-les-droits-des-utilisateurs">III-VI. Gérer les droits des utilisateurs</a></li>
+<li><a href="#iii-vii.-choisir-sa-mémoire-de-stockage">III-VII. Choisir sa mémoire de stockage</a></li>
+<li><a href="#iii-viii.-formater-la-mémoire-de-stockage">III-VIII. Formater la mémoire de stockage</a></li>
+</ul></li>
+<li><a href="#iv.-mettre-en-place-un-site-web">IV. Mettre en place un site web</a>
+<ul>
+<li><a href="#iv-i.-découvrir-internet-et-le-réseau-lan">IV-I. Découvrir Internet et le réseau LAN</a></li>
+<li><a href="#iv-ii.-fixer-ladresse-ip">IV-II. Fixer l’adresse IP</a></li>
+<li><a href="#iv-iii.-comprendre-le-principe-du-protocole-ssh">IV-III. Comprendre le principe du protocole SSH</a></li>
+<li><a href="#iv-iv.-utiliser-winscp">IV-IV. Utiliser winSCP</a></li>
+<li><a href="#iv-v.-implanter-son-site-web">IV-V. Implanter son site web</a></li>
+<li><a href="#iv-vi.-installer-un-cms">IV-VI. Installer un CMS</a></li>
+<li><a href="#iv-vii.-prendre-le-contrôle-à-distance-de-raspberry-avec-vnc">IV-VII. Prendre le contrôle à distance de Raspberry avec VNC</a></li>
+<li><a href="#iv-viii.-comprendre-le-fonctionnement-de-la-caméra">IV-VIII. Comprendre le fonctionnement de la caméra</a></li>
+<li><a href="#iv-ix.-conclure-sur-raspberry-pi-2">IV-IX. Conclure sur Raspberry Pi 2</a></li>
+</ul></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="bienvenue-dans-découvrir-raspberry-pi">Bienvenue dans « Découvrir Raspberry Pi »</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\0-I. Bienvenue dans « Découvrir Raspberry Pi ».mp4" type="video/mp4">
+</video>
+<h1 id="i.-découvrir-raspberry-pi-2">I. Découvrir Raspberry Pi 2</h1>
+<h2 id="i-i.-aborder-cette-formation">I-I. Aborder cette formation</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-I. Aborder cette formation.mp4" type="video/mp4">
+</video>
+<h2 id="i-ii.-etudier-lhistorique-de-raspberry">I-II. Etudier l’historique de Raspberry</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-II. Etudier l'historique de Raspberry.mp4" type="video/mp4">
+</video>
+<h2 id="i-iii.-définir-les-prérequis">I-III. Définir les prérequis</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-III. Définir les prérequis.mp4" type="video/mp4">
+</video>
+<h2 id="i-iv.-comprendre-la-constitution-de-raspberry-pi-2">I-IV. Comprendre la constitution de Raspberry Pi 2</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-IV. Comprendre la constitution de Raspberry Pi 2.mp4" type="video/mp4">
+</video>
+<h2 id="i-v.-découvrir-noobs-et-le-système-dexploitation-rasbian">I-V. Découvrir NOOBS et le système d’exploitation Rasbian</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-V. Découvrir NOOBS et le système d'exploitation Rasbian.mp4" type="video/mp4">
+</video>
+<h2 id="i-vi.-découvrir-les-logiciels-nécessaires-pour-linstallation">I-VI. Découvrir les logiciels nécessaires pour l’installation</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-VI. Découvrir les logiciels nécessaires pour l'installation.mp4" type="video/mp4">
+</video>
+<h2 id="i-vii.-installer-un-os-depuis-une-carte-vierge">I-VII. Installer un OS depuis une carte vierge</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-VII. Installer un OS depuis une carte vierge.mp4" type="video/mp4">
+</video>
+<h2 id="i-viii.-découvrir-le-matériel-de-raspberry-pi-2">I-VIII. Découvrir le matériel de Raspberry Pi 2</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-VIII. Découvrir le matériel de Raspberry Pi 2.mp4" type="video/mp4">
+</video>
+<h2 id="i-ix.-comprendre-la-procédure-de-mise-sous-tension">I-IX. Comprendre la procédure de mise sous tension</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-IX. Comprendre la procédure de mise sous tension.mp4" type="video/mp4">
+</video>
+<h2 id="i-x.-configurer-son-os">I-X. Configurer son OS</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-X. Configurer son OS.mp4" type="video/mp4">
+</video>
+<h2 id="i-xi.-poursuivre-la-configuration-de-son-os">I-XI. Poursuivre la configuration de son OS</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-XI. Poursuivre la configuration de son OS.mp4" type="video/mp4">
+</video>
+<h2 id="i-xii.-explorer-lenvironnement-graphique-et-les-fichiers-de-commande">I-XII. Explorer l’environnement graphique et les fichiers de commande</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\I-XII. Explorer l'environnement graphique et les fichiers de commande.mp4" type="video/mp4">
+</video>
+<h1 id="ii.-aborder-et-installer-raspberry-pi-avec-raspian">II. Aborder et installer Raspberry Pi avec Raspian</h1>
+<h2 id="ii-i.-comprendre-le-fonctionnement-de-sa-sd">II-I. Comprendre le fonctionnement de sa SD</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\II-I. Comprendre le fonctionnement de sa SD.mp4" type="video/mp4">
+</video>
+<h2 id="ii-ii.-se-connecter-à-internet-et-mettre-à-jour-son-os">II-II. Se connecter à Internet et mettre à jour son OS</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\II-II. Se connecter à Internet et mettre à jour son OS.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iii.-ajouter-des-applications-sur-sa-carte-raspberry">II-III. Ajouter des applications sur sa carte Raspberry</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\II-III. Ajouter des applications sur sa carte Raspberry.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iv.-découvrir-la-programmation-animée-avec-scratch">II-IV. Découvrir la programmation animée avec Scratch</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\II-IV. Découvrir la programmation animée avec Scratch.mp4" type="video/mp4">
+</video>
+<h2 id="ii-v.-jouer-avec-les-cartes-hat">II-V. Jouer avec les cartes HAT</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\II-V. Jouer avec les cartes HAT.mp4" type="video/mp4">
+</video>
+<h2 id="ii-vi.-visualiser-le-résultat-des-cartes-hat">II-VI. Visualiser le résultat des cartes HAT</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\II-VI. Visualiser le résultat des cartes HAT.mp4" type="video/mp4">
+</video>
+<h1 id="iii.-comprendre-les-principes-de-base-de-linux">III. Comprendre les principes de base de Linux</h1>
+<h2 id="iii-i.-étudier-larborescence-de-linux-et-son-fonctionnement">III-I. Étudier l’arborescence de Linux et son fonctionnement</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-I. Étudier l'arborescence de Linux et son fonctionnement.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ii.-comprendre-les-lignes-de-commande-dans-un-os">III-II. Comprendre les lignes de commande dans un OS</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-II. Comprendre les lignes de commande dans un OS.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iii.-comprendre-le-lien-entre-la-console-et-le-mode-graphique">III-III. Comprendre le lien entre la console et le mode graphique</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-III. Comprendre le lien entre la console et le mode graphique.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iv.-effectuer-le-passage-en-mode-root">III-IV. Effectuer le passage en mode Root</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-IV. Effectuer le passage en mode Root.mp4" type="video/mp4">
+</video>
+<h2 id="iii-v.-créer-des-groupes-dutilisateurs">III-V. Créer des groupes d’utilisateurs</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-V. Créer des groupes d'utilisateurs.mp4" type="video/mp4">
+</video>
+<h2 id="iii-vi.-gérer-les-droits-des-utilisateurs">III-VI. Gérer les droits des utilisateurs</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-VI. Gérer les droits des utilisateurs.mp4" type="video/mp4">
+</video>
+<h2 id="iii-vii.-choisir-sa-mémoire-de-stockage">III-VII. Choisir sa mémoire de stockage</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-VII. Choisir sa mémoire de stockage.mp4" type="video/mp4">
+</video>
+<h2 id="iii-viii.-formater-la-mémoire-de-stockage">III-VIII. Formater la mémoire de stockage</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\III-VIII. Formater la mémoire de stockage.mp4" type="video/mp4">
+</video>
+<h1 id="iv.-mettre-en-place-un-site-web">IV. Mettre en place un site web</h1>
+<h2 id="iv-i.-découvrir-internet-et-le-réseau-lan">IV-I. Découvrir Internet et le réseau LAN</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-I. Découvrir Internet et le réseau LAN.mp4" type="video/mp4">
+</video>
+<h2 id="iv-ii.-fixer-ladresse-ip">IV-II. Fixer l’adresse IP</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-II. Fixer l'adresse IP.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iii.-comprendre-le-principe-du-protocole-ssh">IV-III. Comprendre le principe du protocole SSH</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-III. Comprendre le principe du protocole SSH.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iv.-utiliser-winscp">IV-IV. Utiliser winSCP</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-IV. Utiliser winSCP.mp4" type="video/mp4">
+</video>
+<h2 id="iv-v.-implanter-son-site-web">IV-V. Implanter son site web</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-V. Implanter son site web.mp4" type="video/mp4">
+</video>
+<h2 id="iv-vi.-installer-un-cms">IV-VI. Installer un CMS</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-VI. Installer un CMS.mp4" type="video/mp4">
+</video>
+<h2 id="iv-vii.-prendre-le-contrôle-à-distance-de-raspberry-avec-vnc">IV-VII. Prendre le contrôle à distance de Raspberry avec VNC</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-VII. Prendre le contrôle à distance de Raspberry avec VNC.mp4" type="video/mp4">
+</video>
+<h2 id="iv-viii.-comprendre-le-fonctionnement-de-la-caméra">IV-VIII. Comprendre le fonctionnement de la caméra</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-VIII. Comprendre le fonctionnement de la caméra.mp4" type="video/mp4">
+</video>
+<h2 id="iv-ix.-conclure-sur-raspberry-pi-2">IV-IX. Conclure sur Raspberry Pi 2</h2>
+<video width="1080" height="606" controls>
+<source src="VIII.DécouvrirRaspberryPi\IV-IX. Conclure sur Raspberry Pi 2.mp4" type="video/mp4">
+</video>
+<h1 id="certification">CERTIFICATION</h1>
+<p style="text-align: center; text-decoration-color: red">
+<a href="VIII.DécouvrirRaspberryPi\CertificateOfCompletion_Decouvrir%20Raspberry%20Pi.pdf">CertificateOfCompletion_Decouvrir Raspberry Pi.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="VIII.DécouvrirRaspberryPI.pdf">Découvrir Raspberry Pi - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

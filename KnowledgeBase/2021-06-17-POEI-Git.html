@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Bruno GUERIN" />
+  <meta name="dcterms.date" content="2021-06-17" />
+  <title>POEI DevOps - Git</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Git</h1>
+<p class="author">Bruno GUERIN</p>
+<p class="date">2021-06-17</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#doc-source-pdf">Doc Source <em>(PDF)</em></a></li>
+<li><a href="#i.-installation-de-git">I. Installation de Git</a>
+<ul>
+<li><a href="#i.i.-utilisation-de-git">I.I. Utilisation de Git</a></li>
+</ul></li>
+<li><a href="#ii.-cheatsheets">II. Cheatsheets</a></li>
+<li><a href="#iii.-notions-de-bases">III. Notions de bases</a>
+<ul>
+<li><a href="#iii-i.-les-3-zones">III-I. Les 3 zones</a></li>
+<li><a href="#iii-ii.-start-from-scratch">III-II. <em>“Start From Scratch”</em></a>
+<ul>
+<li><a href="#iii-ii-i.-schéma-flux">III-II-I. Schéma Flux</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ii.-les-branches">II. Les Branches</a></li>
+<li><a href="#se-connecter-via-ssh">Se connecter via SSH</a></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h4 id="formation-linux-administration-bases-et-services">Formation Linux Administration: Bases et Services</h4>
+<p>Animée par Bruno GUERIN de DAWAN Toulouse, 14H du 17/06/21 au 18/06/21. (bguerin@dawan.fr) Formateur Dawan (Linux, réseau et bases de données)</p>
+<hr />
+<h4 id="petits-liens-utiles">Petits liens utiles</h4>
+<ul>
+<li><p>Pour le lulz: <a href="https://gource.io/"><strong>Gource</strong></a> est un outil de visualisation du déroulement d’un projet et des commits réalisés.</p></li>
+<li><p><strong><em>Git Cheatsheet:</em></strong> <a href="http://ndpsoftware.com/git-cheatsheet.html#loc=workspace" class="uri">http://ndpsoftware.com/git-cheatsheet.html#loc=workspace</a></p></li>
+<li><p>Learn Git in 15 Minutes: <a href="https://www.youtube.com/watch?v=USjZcfj8yxE" class="uri">https://www.youtube.com/watch?v=USjZcfj8yxE</a></p></li>
+<li><p>Getting Git Right: <a href="https://www.atlassian.com/fr/git" class="uri">https://www.atlassian.com/fr/git</a></p></li>
+</ul>
+<h1 id="doc-source-pdf">Doc Source <em>(PDF)</em></h1>
+<iframe src="2021-06-17-POEI-Git/Presentation_Git.pdf" width="1200px" height="800px" allowfullscreen="yes">
+</iframe>
+<h1 id="i.-installation-de-git">I. Installation de Git</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">apt</span> install git gpg</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co"># gpg: outil de chiffrage pour les transferts sécurisés</span></span></code></pre></div>
+<h2 id="i.i.-utilisation-de-git">I.I. Utilisation de Git</h2>
+<h5 id="git-help">Git –help</h5>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos$ git --help</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">usage</span> : git [--version] [--help] [-C <span class="op">&lt;</span>chemin<span class="op">&gt;</span>] [-c <span class="op">&lt;</span>nom<span class="op">&gt;</span>=<span class="op">&lt;</span>valeur<span class="op">&gt;</span>]</span>
+<span id="cb2-3"><a href="#cb2-3"></a>           [<span class="ex">--exec-path</span>[=<span class="op">&lt;</span>chemin<span class="op">&gt;</span>]] [--html-path] [--man-path] [--info-path]</span>
+<span id="cb2-4"><a href="#cb2-4"></a>           [<span class="ex">-p</span> <span class="kw">|</span> <span class="ex">--paginate</span> <span class="kw">|</span> <span class="ex">-P</span> <span class="kw">|</span> <span class="ex">--no-pager</span>] [--no-replace-objects] [--bare]</span>
+<span id="cb2-5"><a href="#cb2-5"></a>           [<span class="ex">--git-dir</span>=<span class="op">&lt;</span>chemin<span class="op">&gt;</span>] [--work-tree=<span class="op">&lt;</span>chemin<span class="op">&gt;</span>] [--namespace=<span class="op">&lt;</span>nom<span class="op">&gt;</span>]</span>
+<span id="cb2-6"><a href="#cb2-6"></a>           <span class="op">&lt;</span><span class="ex">commande</span><span class="op">&gt;</span> [<span class="op">&lt;</span>args<span class="op">&gt;</span>]</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="ex">Ci-dessous</span> les commandes Git habituelles dans diverses situations :</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="ex">d</span>émarrer une zone de travail (voir aussi : git help tutorial)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>   <span class="ex">clone</span>      Cloner un dépôt dans un nouveau répertoire</span>
+<span id="cb2-12"><a href="#cb2-12"></a>   <span class="ex">init</span>       Créer un dépôt Git vide ou réinitialiser un existant</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a><span class="ex">travailler</span> sur la modification actuelle (voir aussi : git help revisions)</span>
+<span id="cb2-15"><a href="#cb2-15"></a>   <span class="ex">add</span>        Ajouter le contenu de fichiers dans l<span class="st">&#39;index</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a><span class="st">   mv         Déplacer ou renommer un fichier, un répertoire, ou un lien symbolique</span></span>
+<span id="cb2-17"><a href="#cb2-17"></a><span class="st">   reset      Réinitialiser la HEAD courante à l&#39;</span>état spécifié</span>
+<span id="cb2-18"><a href="#cb2-18"></a>   <span class="fu">rm</span>         Supprimer des fichiers de la copie de travail et de l<span class="st">&#39;index</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a></span>
+<span id="cb2-20"><a href="#cb2-20"></a><span class="st">examiner l&#39;</span>historique et l<span class="st">&#39;état (voir aussi : git help revisions)</span></span>
+<span id="cb2-21"><a href="#cb2-21"></a><span class="st">   bisect     Trouver par recherche binaire la modification qui a introduit un bogue</span></span>
+<span id="cb2-22"><a href="#cb2-22"></a><span class="st">   grep       Afficher les lignes correspondant à un motif</span></span>
+<span id="cb2-23"><a href="#cb2-23"></a><span class="st">   log        Afficher l&#39;</span>historique des validations</span>
+<span id="cb2-24"><a href="#cb2-24"></a>   <span class="ex">show</span>       Afficher différents types d<span class="st">&#39;objets</span></span>
+<span id="cb2-25"><a href="#cb2-25"></a><span class="st">   status     Afficher l&#39;</span>état de la copie de travail</span>
+<span id="cb2-26"><a href="#cb2-26"></a></span>
+<span id="cb2-27"><a href="#cb2-27"></a><span class="ex">agrandir</span>, marquer et modifier votre historique</span>
+<span id="cb2-28"><a href="#cb2-28"></a>   <span class="ex">branch</span>     Lister, créer ou supprimer des branches</span>
+<span id="cb2-29"><a href="#cb2-29"></a>   <span class="ex">checkout</span>    Basculer de branche ou restaurer la copie de travail</span>
+<span id="cb2-30"><a href="#cb2-30"></a>   <span class="ex">commit</span>     Enregistrer les modifications dans le dépôt</span>
+<span id="cb2-31"><a href="#cb2-31"></a>   <span class="fu">diff</span>       Afficher les changements entre les validations, entre validation et copie de travail, etc</span>
+<span id="cb2-32"><a href="#cb2-32"></a>   <span class="ex">merge</span>      Fusionner deux ou plusieurs historiques de développement ensemble</span>
+<span id="cb2-33"><a href="#cb2-33"></a>   <span class="ex">rebase</span>     Réapplication des commits sur le sommet de l<span class="st">&#39;autre base</span></span>
+<span id="cb2-34"><a href="#cb2-34"></a><span class="st">   tag        Créer, lister, supprimer ou vérifier un objet d&#39;</span>étiquette signé avec GPG</span>
+<span id="cb2-35"><a href="#cb2-35"></a></span>
+<span id="cb2-36"><a href="#cb2-36"></a><span class="ex">collaborer</span> (voir aussi : git help workflows)</span>
+<span id="cb2-37"><a href="#cb2-37"></a>   <span class="ex">fetch</span>      Télécharger les objets et références depuis un autre dépôt</span>
+<span id="cb2-38"><a href="#cb2-38"></a>   <span class="ex">pull</span>       Rapatrier et intégrer un autre dépôt ou une branche locale</span>
+<span id="cb2-39"><a href="#cb2-39"></a>   <span class="ex">push</span>       Mettre à jour les références distantes ainsi que les objets associés</span>
+<span id="cb2-40"><a href="#cb2-40"></a></span>
+<span id="cb2-41"><a href="#cb2-41"></a><span class="st">&#39;git help -a&#39;</span> <span class="ex">et</span> <span class="st">&#39;git help -g&#39;</span> listent les sous-commandes disponibles et</span>
+<span id="cb2-42"><a href="#cb2-42"></a><span class="ex">quelques</span> concepts. Voir <span class="st">&#39;git help &lt;commande&gt;&#39;</span> ou <span class="st">&#39;git help &lt;concept&gt;&#39;</span></span>
+<span id="cb2-43"><a href="#cb2-43"></a><span class="ex">pour</span> en lire plus à propos d<span class="st">&#39;une commande spécifique ou d&#39;</span>un concept.</span></code></pre></div>
+<ul>
+<li><code>git reset</code>: récupère tous les fichiers d’un (seul) commit</li>
+<li><code>git checkout</code>: permet de récupérer un seul fichier d’un commit</li>
+</ul>
+<h1 id="ii.-cheatsheets">II. Cheatsheets</h1>
+<p><strong>Cheatsheet <em>(Interactive)</em></strong>:</p>
+<iframe src="http://ndpsoftware.com/git-cheatsheet.html#loc=workspace" width="1200px" height="800px" allowfullscreen="yes">
+</iframe>
+<p><strong>Cheatsheet <em>(PDF)</em></strong>:</p>
+<iframe src="2021-06-17-POEI-Git/GIT-cheat-sheet.pdf" width="1200px" height="800px" allowfullscreen="yes">
+</iframe>
+<h1 id="iii.-notions-de-bases">III. Notions de bases</h1>
+<h2 id="iii-i.-les-3-zones">III-I. Les 3 zones</h2>
+<div class="warning">
+Il est essentiel de bien comprendre et maitrîser la connaissance des <strong>3 zones</strong>
+</div>
+<ol type="1">
+<li><p><strong><em>Working Directory</em></strong>: C’est la zone de travail. Les fichiers tout juste modifiés sont ici.</p></li>
+<li><p><strong><em>Index</em></strong>: Zone qui permet de stocker les modifications séléctionnées en vue d’être commitées.</p></li>
+<li><p><strong><em>Local Repository</em></strong>: Code commité, prêt à être envoyé sur un serveur distant.</p></li>
+</ol>
+<p><img src="2021-06-17-POEI-Git/3zones.png" /></p>
+<p>Flow détaillé:</p>
+<p><img src="2021-06-17-POEI-Git/3zones_1.png" /></p>
+<h2 id="iii-ii.-start-from-scratch">III-II. <em>“Start From Scratch”</em></h2>
+<p>Lors du début d’un projet <em>Git</em>, il faut suivre les étapes suivantes:</p>
+<ol type="1">
+<li>Créé un dossier propre au projet</li>
+<li>Initialiser le projet avec <code>git init</code></li>
+<li>Ajouter le contenu du projet dans git avec <code>git add .</code></li>
+<li>Puis un premier commit avec: <code>git commit -m "Commit Initial"</code></li>
+<li>README.md</li>
+<li>.gitignore à remplir pour ignorer fichier(s) et/ou dossier(s). Pour ignorer un dossier il faut mettre un <strong>/</strong>:</li>
+</ol>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">.gitignore</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="ex">dossier_a_ignorer/</span></span></code></pre></div>
+<h3 id="iii-ii-i.-schéma-flux">III-II-I. Schéma Flux</h3>
+<p><img src="2021-06-17-POEI-Git/git-pretty.png" /></p>
+<h1 id="ii.-les-branches">II. Les Branches</h1>
+<p><img src="2021-06-17-POEI-Git/evolution_des_branches.png" /></p>
+<p>Pour plus de détails, consulter: <a href="https://git-scm.com/book/fr/v2/Les-branches-avec-Git-Branches-et-fusions%C2%A0%3A-les-bases" class="uri">https://git-scm.com/book/fr/v2/Les-branches-avec-Git-Branches-et-fusions%C2%A0%3A-les-bases</a></p>
+<ul>
+<li><p>Changer de branch: <code>git checkout -b branch_name</code></p></li>
+<li><p>Voir les branches:</p></li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos/labo$ git branch</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">*</span> dev-dd</span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="ex">main</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos/labo$ git branch -a</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="ex">*</span> dev-dd</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="ex">main</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="ex">remotes/origin/HEAD</span> -<span class="op">&gt;</span> origin/main</span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="ex">remotes/origin/akim</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="ex">remotes/origin/br</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>  <span class="ex">remotes/origin/branch-loubna</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="ex">remotes/origin/chafea</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>  <span class="ex">remotes/origin/charles</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>  <span class="ex">remotes/origin/dev-alicia</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  <span class="ex">remotes/origin/dev-bob</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>  <span class="ex">remotes/origin/dev-dd</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>  <span class="ex">remotes/origin/main</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>  <span class="ex">remotes/origin/margaux</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>  <span class="ex">remotes/origin/ouardia.br</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a></span></code></pre></div>
+<ul>
+<li>Merge branches:</li>
+</ul>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos/labo$ git merge</span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">dev-dd</span>                 origin/akim            origin/dev-alicia      origin/margaux</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="ex">FETCH_HEAD</span>             origin/br              origin/dev-bob         origin/ouardia.br</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="ex">HEAD</span>                   origin/branch-loubna   origin/dev-dd</span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="ex">main</span>                   origin/chafea          origin/HEAD</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="ex">ORIG_HEAD</span>              origin/charles         origin/main</span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos/labo$ git merge origin/dev-alicia origin/dev-dd</span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="ex">Merge</span> made by the <span class="st">&#39;recursive&#39;</span> strategy.</span>
+<span id="cb5-9"><a href="#cb5-9"></a> <span class="ex">DD.sh</span> <span class="kw">|</span> <span class="ex">6</span> ++++--</span>
+<span id="cb5-10"><a href="#cb5-10"></a> <span class="ex">1</span> file changed, 4 insertions(+), <span class="ex">2</span> deletions(-)</span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos/labo$ vi DD.sh</span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="ex">stagiaire@debian</span>:~/Scripts/GitRepos/labo$ ll</span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="ex">total</span> 104K</span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="ex">1044510</span> drwxr-x--- 3 stagiaire stagiaire 4,0K juin  18 12:29 ./</span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="ex">1044561</span> drwxr-x--- 3 stagiaire stagiaire 4,0K juin  18 10:44 ../</span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="ex">1044663</span> -rw-r----- 1 stagiaire stagiaire    6 juin  18 10:42 akim</span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="ex">1044664</span> -rw-r----- 1 stagiaire stagiaire   94 juin  18 11:55 data.txt</span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="ex">1044658</span> -rwxr-x--- 1 stagiaire stagiaire   88 juin  18 12:29 DD.sh*</span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="ex">1044665</span> -rw-r----- 1 stagiaire stagiaire   45 juin  18 11:55 fichier.ch</span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="ex">1044511</span> drwxr-x--- 8 stagiaire stagiaire 4,0K juin  18 12:28 .git/</span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="ex">1044666</span> -rw-r----- 1 stagiaire stagiaire   26 juin  18 10:42 job.sh</span>
+<span id="cb5-22"><a href="#cb5-22"></a><span class="ex">1044768</span> -rw-r----- 1 stagiaire stagiaire  60K juin  18 11:55 linux.md</span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="ex">1044767</span> -rw-r----- 1 stagiaire stagiaire    8 juin  18 11:55 Margaux</span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="ex">1044769</span> -rw-r----- 1 stagiaire stagiaire   13 juin  18 11:55 ouardia</span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="ex">1044662</span> -rw-r----- 1 stagiaire stagiaire   36 juin  18 11:55 README.md</span></code></pre></div>
+<h1 id="se-connecter-via-ssh">Se connecter via SSH</h1>
+<p>Voir <a href="https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh" class="uri">https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh</a></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">stagiaire@debian</span>:~$ ssh-keygen -t ed25519</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">Generating</span> public/private ed25519 key pair.</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">Enter</span> file in which to save the key (/home/stagiaire/.ssh/id_ed25519)<span class="bu">:</span> github_ed25519</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="ex">Enter</span> passphrase (empty for no passphrase)<span class="bu">:</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">Enter</span> same passphrase again:</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="ex">Your</span> identification has been saved in github_ed25519.</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">Your</span> public key has been saved in github_ed25519.pub.</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="ex">The</span> key fingerprint is:</span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="ex">SHA256</span>:KFs7NciyVgGcubmQbBe7Y2+l0SPC3vuQfC7Km22DQ/c stagiaire@debian</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="ex">The</span> key<span class="st">&#39;s randomart image is:</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="st">+--[ED25519 256]--+</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="st">|   ..o           |</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="st">|    =.           |</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a><span class="st">| . . =.          |</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a><span class="st">|  = =. +         |</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a><span class="st">| . +oo*.S        |</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="st">|    OO+++.       |</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="st">|   ++B**..       |</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="st">|   o+oO=E        |</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a><span class="st">|    =*o=o        |</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a><span class="st">+----[SHA256]-----+</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">stagiaire@debian</span>:~$ ll sshkeys/</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">total</span> 168K</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">1044679</span> drwxr-x--- 2 stagiaire stagiaire 4,0K juin  18 16:29 ./</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="ex">1044500</span> drwxr-xr-x 9 stagiaire stagiaire 156K juin  18 16:29 ../</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">1044869</span> -rw------- 1 stagiaire stagiaire  464 juin  18 16:27 github_ed25519</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="ex">1044871</span> -rw-r----- 1 stagiaire stagiaire   98 juin  18 16:27 github_ed25519.pub</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span></code></pre></div>
+<p>Puis on créé un fichier <code>config</code> dans <code>~/.shh</code> qui contient le chemin de la clé:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">Host</span> github.com</span>
+<span id="cb8-2"><a href="#cb8-2"></a>   <span class="ex">IdentityFile</span> ~/sshkeys/github_ed25519</span></code></pre></div>
+<p>Puis dans GitHub, voir: <a href="https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account" class="uri">https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account</a></p>
+<p><img src="https://docs.github.com/assets/images/help/settings/userbar-account-settings.png" /></p>
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

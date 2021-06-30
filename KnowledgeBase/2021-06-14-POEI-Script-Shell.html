@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Bruno GUERIN" />
+  <meta name="dcterms.date" content="2021-06-14" />
+  <title>POEI DevOps - Script Shell</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Script Shell</h1>
+<p class="author">Bruno GUERIN</p>
+<p class="date">2021-06-14</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#i.-notion-de-script-shell">I. Notion de Script Shell</a>
+<ul>
+<li><a href="#i-i.-nature-dun-script">I-I. Nature d’un Script</a></li>
+<li><a href="#i-ii.-execution-dun-script">I-II. Execution d’un Script</a></li>
+<li><a href="#i-iii.-composant-dun-script">I-III. Composant d’un Script</a></li>
+<li><a href="#ptiquizz-n1">Pti’Quizz n°1</a></li>
+</ul></li>
+<li><a href="#ii.-gestion-des-variables">II. Gestion des variables</a>
+<ul>
+<li><a href="#ii-i.-types-de-variables">II-I. Types de variables</a>
+<ul>
+<li><a href="#ii-i-i.-variables-denvironnement">II-I-I. Variables d’environnement</a></li>
+<li><a href="#ii-i-ii.-variables-automatiques">II-I-II. Variables automatiques</a></li>
+<li><a href="#ii-i-iii.-variables-positionnelles">II-I-III. Variables positionnelles</a></li>
+<li><a href="#ii-i-iv.-variables-utilisateur">II-I-IV. Variables utilisateur</a></li>
+</ul></li>
+<li><a href="#ii-ii.-création-modification-et-suppression-dune-variable">II-II. Création, modification et suppression d’une variable</a></li>
+<li><a href="#ptiquizz-n2-variables">Pti’Quizz n°2 <em>(Variables)</em></a></li>
+</ul></li>
+<li><a href="#ii.-gestion-des-chaînes-de-caractères">II. Gestion des chaînes de caractères</a>
+<ul>
+<li><a href="#ptiquizz-n3">Pti’Quizz n°3</a></li>
+<li><a href="#ii-iv.-opérations-arithmétiques">II-IV. Opérations arithmétiques</a></li>
+</ul></li>
+<li><a href="#iii.-structures-de-contrôle">III. Structures de contrôle</a>
+<ul>
+<li><a href="#iii-i.-structure-dexecution-conditionnelle">III-I. Structure d’execution conditionnelle</a>
+<ul>
+<li><a href="#iii-i.i.-la-structure-if">III-I.I. La structure <code>if</code></a></li>
+<li><a href="#iii-i-ii.-la-structure-case">III-I-II. La structure <code>case</code></a></li>
+</ul></li>
+<li><a href="#iii-ii.-structure-dexecution-itérative-boucles">III-II. Structure d’execution itérative <em>(boucles)</em></a>
+<ul>
+<li><a href="#iii-ii-i.-la-boucle-for">III-II-I. La boucle <code>for</code></a></li>
+<li><a href="#iii-ii-ii.-boucles-while-et-until">III-II-II. Boucles <code>while</code> et <code>until</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#iv.-les-fonctions">IV. Les fonctions</a>
+<ul>
+<li><a href="#iv-i.-création-de-fonctions">IV-I. Création de fonctions</a></li>
+<li><a href="#iv-ii.-création-de-fichier-de-fonction">IV-II. Création de fichier de fonction</a>
+<ul>
+<li><a href="#ptiquizz-n6">Pti’Quizz n°6</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#exportation-de-variables">Exportation de variables</a></li>
+<li><a href="#utilisation-des-expressions-régulières">Utilisation des expressions régulières</a>
+<ul>
+<li><a href="#ptiquizz-n7">Pti’Quizz n°7</a></li>
+</ul></li>
+<li><a href="#tips-tricks"><strong><em>Tips &amp; Tricks</em></strong></a>
+<ul>
+<li><a href="#tutoriel-vim">Tutoriel VIM</a>
+<ul>
+<li><a href="#petite-présentation-de-vi">Petite présentation de vi:</a></li>
+<li><a href="#vi-cheatsheet"><strong><em>vi</em></strong> Cheatsheet</a></li>
+<li><a href="#options-de-vim">Options de vim</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#questions">Questions</a></li>
+<li><a href="#idéés-de-scripts-shell">Idéés de <strong>Scripts Shell</strong></a>
+<ul>
+<li><a href="#liste-3-dates">Liste 3 dates</a></li>
+<li><a href="#script-de-mise-à-jour-serveur">Script de mise à jour serveur</a></li>
+<li><a href="#calculatrice">Calculatrice</a></li>
+<li><a href="#pour-optscripts">Pour <code>/opt/Scripts</code></a></li>
+<li><a href="#ptiquizz-n8">Pti’Quizz n°8</a></li>
+<li><a href="#ptiquizz-n9">Pti’Quizz n°9</a></li>
+</ul></li>
+<li><a href="#exercices-scripts-shell">Exercices Scripts Shell</a></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h4 id="formation-linux-administration-bases-et-services">Formation Linux Administration: Bases et Services</h4>
+<p>Animée par Bruno GUERIN de DAWAN Toulouse, 21H du 14/06/21 au 17/06/21. (bguerin@dawan.fr) Formateur Dawan (Linux, réseau et bases de données)</p>
+<h4 id="enregistrement-du-2021-06-15">Enregistrement du 2021-06-15</h4>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="2021-06-14-POEI-Script-Shell\CapG-Linux-s24-mardi.mp4" type="video/mp4">
+</video>
+</p>
+<hr />
+<h1 id="i.-notion-de-script-shell">I. Notion de Script Shell</h1>
+<p>Ce que l’on fait en ligne de commande peut tout à fait être réalisé par un script. Ce qu’un script fait peut tout à fait être réalisé en ligne de commande. Le gros avantage d’un script est que l’on écrit les commandes qu’une seule fois !</p>
+<p>Cela apporte :</p>
+<ul>
+<li>simplicité de gestion</li>
+<li>maintenance</li>
+<li>évolution</li>
+<li>…</li>
+</ul>
+<h2 id="i-i.-nature-dun-script">I-I. Nature d’un Script</h2>
+<p>Un script shell n’est qu’un fichier texte contenant un ensemble d’éléments interprétés par le shell lors de l’exécution d’un script.</p>
+<p><strong><em>Remarque :</em></strong> les extensions .sh, .bash ou autres ne sont en aucun cas obligatoires.</p>
+<h2 id="i-ii.-execution-dun-script">I-II. Execution d’un Script</h2>
+<div class="warning">
+S’agissant d’un fichier texte, celui-ci n’aura pas le droit x par défaut. Son exécution en tant que commande n’est pas directement possible.
+</div>
+<p>On peut la déclencher par la commande : <code>bash nom_du_script</code></p>
+<p>En ajoutant le droit x, si possible, on peut alors lancer le script directement par son nom : <code>./nom_du_script</code> (si dans le répertoire courant).</p>
+<p>Par précaution, il est conseillé de systématiquement mettre en ligne 1, la chaîne <code>"#!"</code> <em>(shebang)</em> suivie du chemin d’accès vers la commande exploitant le reste du fichier.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">...</span></span></code></pre></div>
+<h2 id="i-iii.-composant-dun-script">I-III. Composant d’un Script</h2>
+<ol type="1">
+<li>Shebang (Impérativement sur la première ligne)</li>
+<li>Commentaires (toutes chaîne débutant par un #, ignorée jusqu’à la fin de la ligne)</li>
+<li>Lignes vides</li>
+<li>Instructions</li>
+<li>Gestion de variables</li>
+<li>Structures de contrôle</li>
+<li>Définition de fonctions</li>
+</ol>
+<h2 id="ptiquizz-n1">Pti’Quizz n°1</h2>
+<p>Faire un script affichant le sortie suivante:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">Date</span> du jour</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">-------------</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a> <span class="ex">2021-06-14</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">date</span> <span class="st">&quot; +%Y-%m-%d&quot;</span> <span class="co"># Année-Mois-Jour</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">date</span> <span class="st">&quot; +%F&quot;</span> <span class="co"># Full date</span></span></code></pre></div>
+<div class="info">
+Ne pas oublier de rendre le script exécutable: <code>chmod +x dateDuJour.sh</code>
+</div>
+<h1 id="ii.-gestion-des-variables">II. Gestion des variables</h1>
+<p>Une variable est une zone mémoire dans laquelle pourra être stocké un contenu (par défaut sous forme d’une chaîne de caractères).</p>
+<p>Exemple simple:</p>
+<ol type="1">
+<li>Création et affectation de la variable f1 avec le contenu “data.txt”</li>
+<li><strong>f1=data.txt</strong></li>
+<li>Utilisation de la variable</li>
+<li><code>cat $f1</code> (ce qui revient à faire cat data.txt)</li>
+</ol>
+<h2 id="ii-i.-types-de-variables">II-I. Types de variables</h2>
+<p>4 types de variables:</p>
+<h3 id="ii-i-i.-variables-denvironnement">II-I-I. Variables d’environnement</h3>
+<p>La commande <strong><code>env</code></strong> permet de les afficher. Gérer par le Shell et éventuellement modifiables par l’utilisateur.</p>
+<p>Comme par exemple: <code>PATH</code>, <code>LANG</code>, <code>TZ</code>, <code>PWD</code>, <code>$PS1</code>, etc.</p>
+<p>Leurs nom est en majuscules.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">SHELL=</span>/bin/bash</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="va">PWD=</span>/home/stagiaire/Scripts</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="va">LOGNAME=</span>stagiaire</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="va">XDG_SESSION_TYPE=</span>tty</span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="va">HOME=</span>/home/stagiaire</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="va">LANG=</span>fr_FR.UTF-8</span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="va">LS_COLORS=</span>rs=<span class="ex">0</span>:di=01<span class="kw">;</span><span class="ex">34</span>:ln=01<span class="kw">;</span><span class="ex">36</span>:mh=00:pi=40<span class="kw">;</span><span class="ex">33</span>:so=01<span class="kw">;</span><span class="ex">35</span>:do=01<span class="kw">;</span><span class="ex">35</span>:bd=40<span class="kw">;</span><span class="ex">33</span><span class="kw">;</span><span class="ex">01</span>:cd=40<span class="kw">;</span><span class="ex">33</span><span class="kw">;</span><span class="ex">01</span>:or=40<span class="kw">;</span><span class="ex">31</span><span class="kw">;</span><span class="ex">01</span>:mi=00:su=37<span class="kw">;</span><span class="ex">41</span>:sg=30<span class="kw">;</span><span class="ex">43</span>:ca=30<span class="kw">;</span><span class="ex">41</span>:tw=30<span class="kw">;</span><span class="ex">42</span>:ow=34<span class="kw">;</span><span class="ex">42</span>:st=37<span class="kw">;</span><span class="ex">44</span>:ex=01<span class="kw">;</span><span class="ex">32</span>:*.tar=01<span class="kw">;</span><span class="ex">31</span>:*.tgz=01<span class="kw">;</span><span class="ex">31</span>:*.arc=01<span class="kw">;</span><span class="ex">31</span>:*.arj=01<span class="kw">;</span><span class="ex">31</span>:*.taz=01<span class="kw">;</span><span class="ex">31</span>:*.lha=01<span class="kw">;</span><span class="ex">31</span>:*.lz4=01<span class="kw">;</span><span class="ex">31</span>:*.lzh=01<span class="kw">;</span><span class="ex">31</span>:*.lzma=01<span class="kw">;</span><span class="ex">31</span>:*.tlz=01<span class="kw">;</span><span class="ex">31</span>:*.txz=01<span class="kw">;</span><span class="ex">31</span>:*.tzo=01<span class="kw">;</span><span class="ex">31</span>:*.t7z=01<span class="kw">;</span><span class="ex">31</span>:*.zip=01<span class="kw">;</span><span class="ex">31</span>:*.z=01<span class="kw">;</span><span class="ex">31</span>:*.dz=01<span class="kw">;</span><span class="ex">31</span>:*.gz=01<span class="kw">;</span><span class="ex">31</span>:*.lrz=01<span class="kw">;</span><span class="ex">31</span>:*.lz=01<span class="kw">;</span><span class="ex">31</span>:*.lzo=01<span class="kw">;</span><span class="ex">31</span>:*.xz=01<span class="kw">;</span><span class="ex">31</span>:*.zst=01<span class="kw">;</span><span class="ex">31</span>:*.tzst=01<span class="kw">;</span><span class="ex">31</span>:*.bz2=01<span class="kw">;</span><span class="ex">31</span>:*.bz=01<span class="kw">;</span><span class="ex">31</span>:*.tbz=01<span class="kw">;</span><span class="ex">31</span>:*.tbz2=01<span class="kw">;</span><span class="ex">31</span>:*.tz=01<span class="kw">;</span><span class="ex">31</span>:*.deb=01<span class="kw">;</span><span class="ex">31</span>:*.rpm=01<span class="kw">;</span><span class="ex">31</span>:*.jar=01<span class="kw">;</span><span class="ex">31</span>:*.war=01<span class="kw">;</span><span class="ex">31</span>:*.ear=01<span class="kw">;</span><span class="ex">31</span>:*.sar=01<span class="kw">;</span><span class="ex">31</span>:*.rar=01<span class="kw">;</span><span class="ex">31</span>:*.alz=01<span class="kw">;</span><span class="ex">31</span>:*.ace=01<span class="kw">;</span><span class="ex">31</span>:*.zoo=01<span class="kw">;</span><span class="ex">31</span>:*.cpio=01<span class="kw">;</span><span class="ex">31</span>:*.7z=01<span class="kw">;</span><span class="ex">31</span>:*.rz=01<span class="kw">;</span><span class="ex">31</span>:*.cab=01<span class="kw">;</span><span class="ex">31</span>:*.wim=01<span class="kw">;</span><span class="ex">31</span>:*.swm=01<span class="kw">;</span><span class="ex">31</span>:*.dwm=01<span class="kw">;</span><span class="ex">31</span>:*.esd=01<span class="kw">;</span><span class="ex">31</span>:*.jpg=01<span class="kw">;</span><span class="ex">35</span>:*.jpeg=01<span class="kw">;</span><span class="ex">35</span>:*.mjpg=01<span class="kw">;</span><span class="ex">35</span>:*.mjpeg=01<span class="kw">;</span><span class="ex">35</span>:*.gif=01<span class="kw">;</span><span class="ex">35</span>:*.bmp=01<span class="kw">;</span><span class="ex">35</span>:*.pbm=01<span class="kw">;</span><span class="ex">35</span>:*.pgm=01<span class="kw">;</span><span class="ex">35</span>:*.ppm=01<span class="kw">;</span><span class="ex">35</span>:*.tga=01<span class="kw">;</span><span class="ex">35</span>:*.xbm=01<span class="kw">;</span><span class="ex">35</span>:*.xpm=01<span class="kw">;</span><span class="ex">35</span>:*.tif=01<span class="kw">;</span><span class="ex">35</span>:*.tiff=01<span class="kw">;</span><span class="ex">35</span>:*.png=01<span class="kw">;</span><span class="ex">35</span>:*.svg=01<span class="kw">;</span><span class="ex">35</span>:*.svgz=01<span class="kw">;</span><span class="ex">35</span>:*.mng=01<span class="kw">;</span><span class="ex">35</span>:*.pcx=01<span class="kw">;</span><span class="ex">35</span>:*.mov=01<span class="kw">;</span><span class="ex">35</span>:*.mpg=01<span class="kw">;</span><span class="ex">35</span>:*.mpeg=01<span class="kw">;</span><span class="ex">35</span>:*.m2v=01<span class="kw">;</span><span class="ex">35</span>:*.mkv=01<span class="kw">;</span><span class="ex">35</span>:*.webm=01<span class="kw">;</span><span class="ex">35</span>:*.ogm=01<span class="kw">;</span><span class="ex">35</span>:*.mp4=01<span class="kw">;</span><span class="ex">35</span>:*.m4v=01<span class="kw">;</span><span class="ex">35</span>:*.mp4v=01<span class="kw">;</span><span class="ex">35</span>:*.vob=01<span class="kw">;</span><span class="ex">35</span>:*.qt=01<span class="kw">;</span><span class="ex">35</span>:*.nuv=01<span class="kw">;</span><span class="ex">35</span>:*.wmv=01<span class="kw">;</span><span class="ex">35</span>:*.asf=01<span class="kw">;</span><span class="ex">35</span>:*.rm=01<span class="kw">;</span><span class="ex">35</span>:*.rmvb=01<span class="kw">;</span><span class="ex">35</span>:*.flc=01<span class="kw">;</span><span class="ex">35</span>:*.avi=01<span class="kw">;</span><span class="ex">35</span>:*.fli=01<span class="kw">;</span><span class="ex">35</span>:*.flv=01<span class="kw">;</span><span class="ex">35</span>:*.gl=01<span class="kw">;</span><span class="ex">35</span>:*.dl=01<span class="kw">;</span><span class="ex">35</span>:*.xcf=01<span class="kw">;</span><span class="ex">35</span>:*.xwd=01<span class="kw">;</span><span class="ex">35</span>:*.yuv=01<span class="kw">;</span><span class="ex">35</span>:*.cgm=01<span class="kw">;</span><span class="ex">35</span>:*.emf=01<span class="kw">;</span><span class="ex">35</span>:*.ogv=01<span class="kw">;</span><span class="ex">35</span>:*.ogx=01<span class="kw">;</span><span class="ex">35</span>:*.aac=00<span class="kw">;</span><span class="ex">36</span>:*.au=00<span class="kw">;</span><span class="ex">36</span>:*.flac=00<span class="kw">;</span><span class="ex">36</span>:*.m4a=00<span class="kw">;</span><span class="ex">36</span>:*.mid=00<span class="kw">;</span><span class="ex">36</span>:*.midi=00<span class="kw">;</span><span class="ex">36</span>:*.mka=00<span class="kw">;</span><span class="ex">36</span>:*.mp3=00<span class="kw">;</span><span class="ex">36</span>:*.mpc=00<span class="kw">;</span><span class="ex">36</span>:*.ogg=00<span class="kw">;</span><span class="ex">36</span>:*.ra=00<span class="kw">;</span><span class="ex">36</span>:*.wav=00<span class="kw">;</span><span class="ex">36</span>:*.oga=00<span class="kw">;</span><span class="ex">36</span>:*.opus=00<span class="kw">;</span><span class="ex">36</span>:*.spx=00<span class="kw">;</span><span class="ex">36</span>:*.xspf=00<span class="kw">;</span><span class="ex">36</span>:</span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="va">SSH_CONNECTION=</span>10.0.2.2 <span class="ex">61664</span> 10.0.2.15 22</span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="va">XDG_SESSION_CLASS=</span>user</span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="va">TERM=</span>xterm-256color</span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="va">USER=</span>stagiaire</span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="va">DISPLAY=</span>localhost:10.0</span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="va">SHLVL=</span>1</span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="va">XDG_SESSION_ID=</span>132</span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="va">XDG_RUNTIME_DIR=</span>/run/user/1000</span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="va">SSH_CLIENT=</span>10.0.2.2 <span class="ex">61664</span> 22</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="va">PATH=</span>/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="va">MAIL=</span>/var/mail/stagiaire</span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="va">SSH_TTY=</span>/dev/pts/0</span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="va">_=</span>/usr/bin/env</span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="va">OLDPWD=</span>/home/stagiaire/Scripts/IP</span>
+<span id="cb4-22"><a href="#cb4-22"></a></span></code></pre></div>
+<h3 id="ii-i-ii.-variables-automatiques">II-I-II. Variables automatiques</h3>
+<p>Créées et gérées par le SHELL, <strong>non modifiables par l’utilisateur</strong>. Leur nom est un seul caractère.</p>
+<p>Les principales sont:</p>
+<ol type="1">
+<li><p><code>?</code>: code retour de la dernière commande</p></li>
+<li><p><code>*</code>: Liste des arguments du script</p></li>
+<li><p><code>#</code>: Nombre d’arguments du script</p></li>
+<li><p><code>$</code>: PID du shell courant</p></li>
+</ol>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">$$</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">27689</span></span></code></pre></div>
+<h3 id="ii-i-iii.-variables-positionnelles">II-I-III. Variables positionnelles</h3>
+<p>Arguments du script/commande. Gérées par le SHELL, éventuellement modifiables à l’aide de la commande <code>set</code>.</p>
+<p>Leur nom est un nombre indiquant le rang de l’argument.::q</p>
+<p>Il convient de s’assurer de la présence des arguments afin de couper court à d’éventuelles erreurs liées à l’absence de ceux-ci.</p>
+<ul>
+<li><code>$0</code>: Nom du script ou du fichier</li>
+<li><code>$1</code>: 1er argument du script</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co"># .VI permet de créer d&#39;autoriser l&#39;execution par défaut d&#39;un script en le créant avec la commande: ./VI nom_du_script.sh</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="ex">vi</span> <span class="va">$1</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="fu">chmod</span> +x <span class="va">$1</span></span></code></pre></div>
+<h3 id="ii-i-iv.-variables-utilisateur">II-I-IV. Variables utilisateur</h3>
+<p>Créées et gérées par l’utilisateur suivant les besoins.</p>
+<p>Leur nom est composé de tout caractère alphanumérique et de <code>_</code>, mais <strong>ne peut pas débuter par un chiffre</strong>.</p>
+<div class="warning">
+Bien que les majuscules soient autorisées, attention à ne pas écraser une variable préexistante.
+</div>
+<p>La durée de vie d’une variable est limité à la session ou au temps d’execution du script <em>(sauf si renseigner dans un fichier de configuration)</em>.</p>
+<h2 id="ii-ii.-création-modification-et-suppression-dune-variable">II-II. Création, modification et suppression d’une variable</h2>
+<p>Le Bash n’est ni déclaratif, ni typé.</p>
+<h5 id="création">Création:</h5>
+<p>La variable existe dès lors qu’on lui assigne un contenu. Afin d’éviter de courir le risque de manipuler, sans le savoir, une variable inexistante, il peut être utile de positionner l’option du shell <strong>nounset</strong>.</p>
+<h5 id="modification">Modification:</h5>
+<p>La modification se fait en lui assignant un autre contenu.</p>
+<p>Assignation de contenu à une variable:</p>
+<ul>
+<li><strong>non-interactif</strong>: <code>var=contenu</code> AUCUN ESPACE !</li>
+</ul>
+<div class="alert">
+Attention aux espaces lors de l’assignation d’une variable !
+</div>
+<p><img src="2021-06-14-POEI-Script-Shell/modifVariable1.png" /></p>
+<ul>
+<li><strong>interactif</strong>: On demande à l’utilisateur de remplir un contenu</li>
+</ul>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a>    <span class="bu">read</span> <span class="va">nom</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a>    <span class="ex">ou</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="bu">read</span> -p <span class="st">&quot;Votre choix: &quot;</span> <span class="va">nom</span></span></code></pre></div>
+<h5 id="suppression">Suppression:</h5>
+<p>La suppression se fait en utilisant la commande <code>unset</code>.</p>
+<h2 id="ptiquizz-n2-variables">Pti’Quizz n°2 <em>(Variables)</em></h2>
+<div class="question">
+Consigne : un script prenant un argument et affichant le nombre d’arguments effectivement reçus et la valeur de l’argument reçu en gérant le cas où l’argument n’existe pas.
+</div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># --------------------- NbArguments.sh --------------------- # </span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># Consigne :</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># un script prenant un argument et affichant le nombre d arguments effectivement reçu$</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># et la valeur de l argument reçu en gérant le cas où l argument n&#39;existe pas.</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="bu">echo</span> <span class="st">&quot;Script: </span><span class="va">$0</span><span class="st">&quot;</span> <span class="co"># Nom du script</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="bu">echo</span> <span class="st">&quot;--------------&quot;</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="kw">set</span> <span class="ex">-o</span> nounset <span class="co"># Permet de d&#39;empêcher le démarrage du script si aucun argument n&#39;est presént</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="bu">echo</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="bu">echo</span> -n <span class="st">&quot;Nombre d&#39;argument(s) reçu(s):  &quot;</span> <span class="va">$#</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="bu">echo</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="bu">echo</span> -n <span class="st">&quot;Valeur de l&#39;argument N°1:      &quot;</span> <span class="va">$1</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="bu">echo</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">set</span> <span class="ex">-o</span> nounset (identique à -u)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>        <span class="ex">-u</span>  Traite les variables non définies comme des erreurs lors de la substitution.</span></code></pre></div>
+<h1 id="ii.-gestion-des-chaînes-de-caractères">II. Gestion des chaînes de caractères</h1>
+<p>Par défaut, toute variable voit son contenu en tant que chaîne de caractères.</p>
+<p>Le shell dispose d’un certain nombre de constructions syntaxiques de manipulations de chaînes de caractères :</p>
+<ul>
+<li><code>echo ${#var}</code> : longueur de la chaîne contenue dans la variable <strong>var</strong>.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ var=blaBliBlou</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${#var}</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="ex">10</span></span></code></pre></div>
+<ul>
+<li><code>echo ${var^}</code>: Première lettre en majuscule.</li>
+</ul>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${var^}</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">BlaBliBlou</span></span></code></pre></div>
+<ul>
+<li><code>echo ${var^^}</code>: Toutes les lettres en majuscules</li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${var^^}</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">BLABLIBLOU</span></span></code></pre></div>
+<ul>
+<li><code>echo ${var,}</code>: Première lettre en minuscule</li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${var,}</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="ex">blaBliBlou</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a></span></code></pre></div>
+<ul>
+<li><code>echo ${var,,}</code>: Toutes les lettres en minuscule</li>
+</ul>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${var,,}</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="ex">blabliblou</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a></span></code></pre></div>
+<ul>
+<li><code>echo ${var/str1/str2}</code>: remplace la <strong>première occurence</strong> de <code>str1</code> par <code>str2</code></li>
+</ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${var/</span>l<span class="va">/</span>Y<span class="va">}</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ex">bYaBliBlou</span></span></code></pre></div>
+<ul>
+<li><code>echo ${var//str1/str2}</code>: remplace <strong>toutes les occurences</strong> de <code>str1</code> par <code>str2</code>.</li>
+</ul>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ echo <span class="va">${var//</span>l<span class="va">/</span>Z<span class="va">}</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">bZaBZiBZou</span></span></code></pre></div>
+<ul>
+<li><p><code>echo ${var%modèle}</code>: renvoie le contenu moins la plus petite chaîne correspondant au modèle en partant de la fin</p></li>
+<li><p><code>echo ${var%%modèle}</code>: renvoie le contenu moins la plus grande chaîne correspondant au modèle en partant de la fin</p></li>
+<li><p><code>echo ${var#modèle}</code>: renvoie le contenu moins la plus petite chaîne correspondant au modèle en partant du début</p></li>
+<li><p><code>echo ${var##modèle}</code>: renvoie le contenu moins la plus grande chaîne correspondant au modèle en partant du début</p></li>
+</ul>
+<h2 id="ptiquizz-n3">Pti’Quizz n°3</h2>
+<div class="question">
+Créer les scritps <strong>basename.sh</strong> et <strong>dirname.sh</strong> mimant les deux commandes basename et dirname de Linux.
+</div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="co"># basename et dirname dans le même script</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="bu">echo</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="bu">echo</span> <span class="st">&quot;Nom du Script: &quot;</span> <span class="va">$0</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="bu">echo</span> <span class="st">&quot;----------------------------------------&quot;</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="bu">echo</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="kw">set</span> <span class="ex">-o</span> nounset</span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="bu">echo</span> <span class="st">&quot;Nom du fichier: &quot;</span>   <span class="va">$1</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a><span class="bu">echo</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a></span>
+<span id="cb17-13"><a href="#cb17-13"></a><span class="bu">echo</span> <span class="st">&quot;le BASENAME du fichier est : &quot;</span>    <span class="va">${1##</span>*/<span class="va">}</span></span>
+<span id="cb17-14"><a href="#cb17-14"></a><span class="bu">echo</span></span>
+<span id="cb17-15"><a href="#cb17-15"></a></span>
+<span id="cb17-16"><a href="#cb17-16"></a><span class="bu">echo</span> <span class="st">&quot;le DIRNAME du fichier est : &quot;</span>     <span class="va">${1%</span>/*<span class="va">}</span></span>
+<span id="cb17-17"><a href="#cb17-17"></a><span class="bu">echo</span></span>
+<span id="cb17-18"><a href="#cb17-18"></a></span></code></pre></div>
+<p><strong><em>Résultat:</em></strong></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">stagiaire@debian</span>:~/Scripts$ ./basename.sh /usr/bin/nano</span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="ex">Nom</span> du Script:  ./basename.sh</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="ex">----------------------------------------</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="ex">Nom</span> du fichier:  /usr/bin/nano</span>
+<span id="cb18-7"><a href="#cb18-7"></a></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="ex">le</span> BASENAME du fichier est :  nano</span>
+<span id="cb18-9"><a href="#cb18-9"></a></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="ex">le</span> DIRNAME du fichier est :  /usr/bin</span>
+<span id="cb18-11"><a href="#cb18-11"></a></span></code></pre></div>
+<div class="warning">
+Attention de ne pas mettre <code>${$var}</code> : Ne marche pas
+</div>
+<p>Autre technique:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="bu">read</span> -p <span class="st">&quot;Chemin d&#39;accès à traiter: &quot;</span> <span class="va">path</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="va">path=${path%%</span> *<span class="va">}</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a></span>
+<span id="cb19-6"><a href="#cb19-6"></a></span>
+<span id="cb19-7"><a href="#cb19-7"></a><span class="bu">echo</span> <span class="st">&quot;Basename du fichier :   &quot;</span> <span class="va">${path##</span>*/<span class="va">}</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a><span class="bu">echo</span> <span class="st">&quot;Dirname du fichier :    &quot;</span> <span class="va">${path%</span>/*<span class="va">}</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a></span></code></pre></div>
+<ul>
+<li><p><code>${var:-valeur}</code>: retourne le contenu de var, si elle existe et n’est pas nulle, sinon retourne valeur (NB: var est inchangée). -&gt; utile pour la notion de valeur par défaut.</p></li>
+<li><p><code>${var:=valeur}</code>: idem que précédemment mais en affectant également la variable avec valeur. Non autorisé sur les variables positionnelles (arguments).</p></li>
+<li><p><code>${var:?message}</code>: renvoie la valeur de la variable var si définie et non nulle sinon arrêt du script avec le message indiqué.</p></li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="va">arg=${1:?</span>Il manque un argument<span class="va">}</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="bu">echo</span> <span class="va">${arg%</span>/*<span class="va">}</span></span></code></pre></div>
+<h2 id="ii-iv.-opérations-arithmétiques">II-IV. Opérations arithmétiques</h2>
+<p>Par défaut, le contenu d’une variable est considéré en tant que chaîne de caractères. Donc, historiquement, les opérations arithmétiques n’étaient supportées sauf à utiliser la commande <strong><em>expr</em></strong> (commande externe).</p>
+<p>Aujourd’hui, les shells disposent d’une syntaxe d’opérations arithmétiques entières.</p>
+<p><strong><em>Syntaxe:</em></strong></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="va">var=</span>10</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="kw">((</span>var=var+10<span class="kw">))</span></span></code></pre></div>
+<p><strong><em>Opérateurs supportés:</em></strong></p>
+<ul>
+<li><code>+</code>: addition</li>
+<li><code>-</code>: soustraction</li>
+<li><code>/</code> (entière)</li>
+<li><code>*</code>: multiplication</li>
+<li><code>%</code>: le <strong>reste</strong> de la division entière</li>
+<li><code>=</code>: signe égal</li>
+<li><code>op=</code>:</li>
+<li></li>
+<li><code>++</code> : opérateur d’<strong>incrémentation</strong> (ajout de 1 à la variable) -&gt; ((var++)) la variable est incrémentée de 1 ((var=var+1))</li>
+<li><code>--</code> : opérateur de <strong>décrémentation</strong> (retrait de 1 à la variable).</li>
+</ul>
+<h1 id="iii.-structures-de-contrôle">III. Structures de contrôle</h1>
+<p>Les structures de contrôle permettent de rompre la linéarité/séquentialité des commandes dans un script.</p>
+<h2 id="iii-i.-structure-dexecution-conditionnelle">III-I. Structure d’execution conditionnelle</h2>
+<h3 id="iii-i.i.-la-structure-if">III-I.I. La structure <code>if</code></h3>
+<p>Voir: <a href="https://www.commandeslinux.fr/structure-de-controle-if/" class="uri">https://www.commandeslinux.fr/structure-de-controle-if/</a></p>
+<h5 id="syntaxe-1">Syntaxe 1</h5>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">if</span> <span class="ex">cmd</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="kw">then</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb22-4"><a href="#cb22-4"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Dans cette première syntaxe, si la commande cmd se passe bien <em>(retourne la valeur 0)</em> alors les instructions qui se trouvent après le mot clé then sont exécutées.</p>
+<h5 id="syntaxe-2">Syntaxe 2</h5>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">if</span> <span class="ex">cmd</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">then</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="kw">else</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Dans cette deuxième syntaxe, si la commande cmd se passe bien (retourne la valeur 0) alors les instructions qui se trouvent après le mot clé then sont exécutées sinon ce sont les instructions qui se trouvent après le mots clé else qui sont exécutées.</p>
+<h5 id="syntaxe-3">Syntaxe 3</h5>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">if</span> <span class="ex">cmd1</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="kw">then</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>   <span class="ex">instructions1</span><span class="kw">;</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="kw">elif</span> <span class="ex">cmd2</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="kw">then</span></span>
+<span id="cb24-6"><a href="#cb24-6"></a>   <span class="ex">instructions2</span><span class="kw">;</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="kw">else</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>   <span class="ex">instructions4</span><span class="kw">;</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Dans cette troisième syntaxe, si la commande cmd1 se passe bien (retourne la valeur 0) alors les instructions1 qui se trouvent après le mot clé then sont exécutées, sinon, si la commande cmd2 se passe bien (retourne la valeur 0) alors ce sont les instructions2 qui sont exécutées; Sinon exécutions des instructions4.</p>
+<h5 id="syntaxe-4">Syntaxe 4</h5>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">if</span> <span class="ex">cmd</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="kw">then</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="kw">elif</span> <span class="ex">cmd</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="kw">then</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="kw">elif</span> <span class="ex">cmd</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="kw">then</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="kw">else</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb25-12"><a href="#cb25-12"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Le fonctionnement reste le même que dans la syntaxe 3. Mais on a ajouté une ligne elif cmd. Il est possible d’en rajouter autant que nécessaire. Attention cependant à garder un code lisible et compréhensible.</p>
+<h5 id="syntaxe-avec-lopérateur-logique-ou">Syntaxe avec l’opérateur logique OU</h5>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="kw">if</span> <span class="ex">cmd</span> <span class="kw">||</span> <span class="ex">cmd2</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="kw">then</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Dans cette syntaxe, nous utilisons l’opérateur logique <strong>OU</strong>. Ce dernier est représenté par la séquence de caractères <code>||</code>.La condition if sera vérifier si l’une des commandes cmd ou cmd2 retourne sans erreur (code retour 0).</p>
+<h5 id="syntaxe-avec-lopérateur-logique-et">Syntaxe avec l’opérateur logique ET</h5>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="kw">if</span> <span class="ex">cmd</span> <span class="kw">&amp;&amp;</span> <span class="ex">cmd2</span></span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="kw">then</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>   <span class="ex">instructions</span><span class="kw">;</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="kw">fi</span></span></code></pre></div>
+<p>Dans cette syntaxe, nous utilisons l’opérateur logique ET. Ce dernier est représenté par la séquence de caractères &amp;&amp;. La condition if sera vérifier si les commandes cmd et cmd2 retourne la valeur vrai (code retour 0).</p>
+<h4 id="exemples">Exemples</h4>
+<h5 id="comparer-le-contenu-dune-variable-avec-une-chaîne-de-caractères">Comparer le contenu d’une variable avec une chaîne de caractères</h5>
+<p>Nous souhaitons ici comparer le contenu de la variable $var avec la chaîne de caractères « bonjour » et afficher ok sur la sortie standard si ces dernières sont identiques. Voici à quoi ressemble notre code :</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$var</span> <span class="ot">=</span> <span class="st">&quot;bonjour&quot;</span><span class="bu"> ]</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="kw">then</span></span>
+<span id="cb28-3"><a href="#cb28-3"></a>   <span class="bu">echo</span> <span class="st">&quot;ok&quot;</span><span class="kw">;</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="comparer-le-contenu-dune-variable-avec-un-entier">Comparer le contenu d’une variable avec un entier</h5>
+<p>Nous souhaitons comparer le contenu de notre variable avec un entier. Pour cela il est nécessaire d’utiliser le mot clé -eq. Voici à quoi ressemble notre code si nous comparons la variable $var à l’entier 5.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$var</span> <span class="ot">-eq</span> 5<span class="bu"> ]</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="kw">then</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>   <span class="bu">echo</span> <span class="st">&quot;var est égale à 5&quot;</span><span class="kw">;</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="kw">else</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>   <span class="bu">echo</span> <span class="st">&quot;var ne vaut pas 5&quot;</span><span class="kw">;</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="exploiter-le-résultat-de-la-commande-grep">Exploiter le résultat de la commande grep</h5>
+<p>Dans cet exemple nous utilisons le fichier /etc/passwd qui contient les informations relatives aux comptes utilisateurs existants sur le système, nous faisons appelle à la commande grep pour rechercher si romain est présent ou non dans ce fichier. Suivant la valeur de retour de grep (valeur de retour : 0 ou 1) alors on affiche un message différent. Voici le code :</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw">if</span> <span class="fu">grep</span> romain /etc/passwd</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="kw">then</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>   <span class="bu">echo</span> <span class="st">&quot;romain possède un compte&quot;</span><span class="kw">;</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a><span class="kw">else</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a>   <span class="bu">echo</span> <span class="st">&quot;romain ne possède pas de compte&quot;</span><span class="kw">;</span></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="vérifier-lexistence-dun-répertoire">Vérifier l’existence d’un répertoire</h5>
+<p>L’option -d permet de tester si un répertoire existe. Dans cet exemple, si le répertoire /mnt n’existe pas alors il est créé.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">!</span> <span class="ot">-d</span> /mnt<span class="bu"> ]</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="kw">then</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>   <span class="fu">mkdir</span> /mnt</span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="lopérateur-logique-ou">L’opérateur logique OU</h5>
+<p>L’opérateur logique OU est représenté par la séquence de caractères <code>||</code>. Dans cet exemple si la variable $var est égale à 4 ou 5 alors l’instruction sera réalisée (la chaîne ok sera affichée sur la sortie standard). Voici le code source :</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$var</span> <span class="ot">-eq</span> 5<span class="bu"> ]</span> <span class="kw">||</span><span class="bu"> [</span> <span class="va">$var</span> <span class="ot">-eq</span> 4<span class="bu"> ]</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="kw">then</span> </span>
+<span id="cb32-3"><a href="#cb32-3"></a>   <span class="bu">echo</span> ok</span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="lopérateur-logique-et">L’opérateur logique ET</h5>
+<p>L’opérateur logique ET est représenté par la séquence de caractères &amp;&amp;. Dans cet exemple, si la variable $USER est egale à root et si la variable $var est égale à 5 alors la condition est vérifiée, l’instruction echo ok est alors réalisée, la chaîne ok est affichée sur la sortie standard. Voici le code source de l’exemple :</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$USER</span> <span class="ot">=</span> <span class="st">&#39;root&#39;</span><span class="bu"> ]</span> <span class="kw">&amp;&amp;</span><span class="bu"> [</span> <span class="va">$var</span> <span class="ot">-eq</span> 5<span class="bu"> ]</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="kw">then</span> </span>
+<span id="cb33-3"><a href="#cb33-3"></a>   <span class="bu">echo</span> ok</span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="intervalle-numérique">Intervalle numérique</h5>
+<p>Si la variable $val est inférieure à 127 et supérieure à 0 alors la condition est vérifiée.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$val</span> <span class="ot">-lt</span> 127<span class="bu"> ]</span> <span class="kw">&amp;&amp;</span><span class="bu"> [</span> <span class="va">$val</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="kw">then</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>   <span class="bu">echo</span> <span class="st">&quot;La variable val est comprise entre 0 et 127&quot;</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="chaînes-de-caractères-différentes">Chaînes de caractères différentes</h5>
+<p>Le mot clé <code>!=</code> permet de comparer deux chaînes et retourne vrai (code retour 0) si elles sont différentes. Dans l’exemple ci-dessous nous vérifions que la variable $USER ne soit pas égale à root, dans ce cas la condition est vérifiée. Voici le code :</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$USER</span> <span class="ot">!=</span> <span class="st">&#39;root&#39;</span><span class="bu"> ]</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="kw">then</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>   <span class="bu">echo</span> <span class="st">&quot;La variable </span><span class="va">$USER</span><span class="st"> n&#39;est pas égale à root&quot;</span></span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="entiers-différents">Entiers différents</h5>
+<p>Pour vérifier que deux entiers soient différents, il faut utiliser le mot clé <code>-ne</code> (not egal). Dans l’exemple ci-dessous la condiftion est vérifiée lorsque la variable $var n’est pas égale à 6.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="va">$var</span> <span class="ot">-ne</span> 6<span class="bu"> ]</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="kw">then</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>   <span class="bu">echo</span> <span class="st">&quot;la variable </span><span class="va">$var</span><span class="st"> n&#39;est pas égale à 6&quot;</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="vérifier-si-un-fichier-est-existant">Vérifier si un fichier est existant</h5>
+<p>Dans l’exemple ci-dessous la condition est vérifiée lorsque le fichier /etc/passwd existe.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-f</span> /etc/passwd<span class="bu"> ]</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="kw">then</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>   <span class="bu">echo</span> <span class="st">&quot;Le fichier existe&quot;</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="tester-si-une-chaîne-est-vide">Tester si une chaîne est vide</h5>
+<p>Pour tester si une chaîne est vide nous utilisons dans cet exemple l’option <code>-z</code>. La condition est vérifiée si la variable $var contient une chaîne vide.Voici le code source :</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-z</span> <span class="va">$var</span><span class="bu"> ]</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="kw">then</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>   <span class="bu">echo</span> <span class="st">&quot;variable </span><span class="va">$var</span><span class="st"> vide&quot;</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="vérifier-si-un-fichier-est-accessible-en-lecture">Vérifier si un fichier est accessible en lecture</h5>
+<p>Pour vérifier si un fichier est lisible, il est nécessaire d’utiliser l’option <code>-r</code>. Exemple :</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-r</span> /etc/passwd<span class="bu"> ]</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a><span class="kw">then</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>   <span class="bu">echo</span> <span class="st">&quot;le fichier /etc/passwd est accessible en lecture&quot;</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="vérifier-si-un-fichier-est-accessible-en-écriture">Vérifier si un fichier est accessible en écriture</h5>
+<p>Pour vérifier si un fichier est écriture (afin de savoir si il est modifiable) vous pouvez utiliser l’option l’option <code>-w</code>. Exemple :</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-w</span> /etc/passwd<span class="bu"> ]</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a><span class="kw">then</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>   <span class="bu">echo</span> <span class="st">&quot;le fichier /etc/passwd est accessible en écriture&quot;</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a><span class="kw">fi</span></span></code></pre></div>
+<h3 id="iii-i-ii.-la-structure-case">III-I-II. La structure <code>case</code></h3>
+<h4 id="ptiquizz-n4">Pti’Quizz n°4</h4>
+<div class="question">
+Script affichant la liste ‘violet’,‘pyrénées’,‘chat’ et demandant à l’utilisateur de choisir. Indiquer si son choix concerne une couleur, une montagne ou un animal.
+</div>
+<h5 id="avec-if">Avec <code>if</code>:</h5>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1"></a></span>
+<span id="cb41-2"><a href="#cb41-2"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a></span>
+<span id="cb41-4"><a href="#cb41-4"></a></span>
+<span id="cb41-5"><a href="#cb41-5"></a><span class="bu">echo</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a><span class="bu">echo</span> <span class="st">&quot;1. Violet&quot;</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a><span class="bu">echo</span> <span class="st">&quot;2. Pyrénées&quot;</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a><span class="bu">echo</span> <span class="st">&quot;3. Chat&quot;</span></span>
+<span id="cb41-9"><a href="#cb41-9"></a></span>
+<span id="cb41-10"><a href="#cb41-10"></a><span class="bu">read</span> -p <span class="st">&quot;Faites un choix:       &quot;</span> <span class="va">choix</span></span>
+<span id="cb41-11"><a href="#cb41-11"></a></span>
+<span id="cb41-12"><a href="#cb41-12"></a></span>
+<span id="cb41-13"><a href="#cb41-13"></a><span class="kw">if [[</span> <span class="va">$choix</span> <span class="ot">-eq</span> 1<span class="kw"> ]]</span> <span class="kw">||</span> [[<span class="va">${choix,,}</span>  = <span class="ex">violet</span>]] <span class="co"># On mets $choix en miniuscule</span></span>
+<span id="cb41-14"><a href="#cb41-14"></a><span class="kw">then</span></span>
+<span id="cb41-15"><a href="#cb41-15"></a> <span class="bu">echo</span> <span class="st">&quot;Vous avez choisi:    Violet !&quot;</span><span class="kw">;</span></span>
+<span id="cb41-16"><a href="#cb41-16"></a><span class="kw">elif [[</span> <span class="va">$choix</span> <span class="ot">-eq</span> 2<span class="kw"> ]]</span> <span class="kw">||</span> [[<span class="va">${choix,,}</span>  = <span class="ex">pyr</span>énées]]</span>
+<span id="cb41-17"><a href="#cb41-17"></a><span class="kw">then</span></span>
+<span id="cb41-18"><a href="#cb41-18"></a> <span class="bu">echo</span> <span class="st">&quot;Vous avez choisi:    Pyrénées :D&quot;</span><span class="kw">;</span></span>
+<span id="cb41-19"><a href="#cb41-19"></a><span class="kw">elif [[</span> <span class="va">$choix</span> <span class="ot">-eq</span> 3<span class="kw"> ]]</span> <span class="kw">||</span> [[<span class="va">${choix,,}</span>  = <span class="ex">chat</span>]]</span>
+<span id="cb41-20"><a href="#cb41-20"></a><span class="kw">then</span></span>
+<span id="cb41-21"><a href="#cb41-21"></a> <span class="bu">echo</span> <span class="st">&quot;Vous avez choisi:    Chat ^^&quot;</span><span class="kw">;</span></span>
+<span id="cb41-22"><a href="#cb41-22"></a><span class="kw">else</span></span>
+<span id="cb41-23"><a href="#cb41-23"></a> <span class="bu">echo</span> <span class="st">&quot;Vous ne savez pas lire...&quot;</span><span class="kw">;</span></span>
+<span id="cb41-24"><a href="#cb41-24"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="avec-case">Avec <code>case</code>:</h5>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="bu">echo</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="bu">echo</span> <span class="st">&quot;1. Violet&quot;</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="bu">echo</span> <span class="st">&quot;2. Pyrénées&quot;</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="bu">echo</span> <span class="st">&quot;3. Chat&quot;</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a></span>
+<span id="cb42-8"><a href="#cb42-8"></a><span class="bu">read</span> -p <span class="st">&quot;Faites un choix:       &quot;</span> <span class="va">choix</span></span>
+<span id="cb42-9"><a href="#cb42-9"></a></span>
+<span id="cb42-10"><a href="#cb42-10"></a><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${choix,,}</span><span class="st">&quot;</span><span class="kw"> in</span></span>
+<span id="cb42-11"><a href="#cb42-11"></a>        1<span class="kw">|</span>violet<span class="kw">)</span> <span class="bu">echo</span> <span class="st">&quot;Vous avez choisi:      Violet !&quot;</span><span class="kw">;;</span></span>
+<span id="cb42-12"><a href="#cb42-12"></a>        <span class="ex">2</span><span class="kw">|</span><span class="ex">pyr</span>énées) <span class="bu">echo</span> <span class="st">&quot;Vous avez choisi:      Pyrénées :D&quot;</span><span class="kw">;;</span></span>
+<span id="cb42-13"><a href="#cb42-13"></a>        <span class="ex">3</span><span class="kw">|</span><span class="ex">chat</span>) <span class="bu">echo</span> <span class="st">&quot;Vous avez choisi:      Chat ^^&quot;</span><span class="kw">;;</span></span>
+<span id="cb42-14"><a href="#cb42-14"></a>        <span class="ex">*</span>) <span class="bu">echo</span> <span class="st">&quot;Vous ne savez pas lire...      &quot;</span> <span class="kw">&amp;&amp;</span> <span class="bu">echo</span><span class="kw">;;</span></span>
+<span id="cb42-15"><a href="#cb42-15"></a><span class="kw">esac</span></span></code></pre></div>
+<h2 id="iii-ii.-structure-dexecution-itérative-boucles">III-II. Structure d’execution itérative <em>(boucles)</em></h2>
+<h3 id="iii-ii-i.-la-boucle-for">III-II-I. La boucle <code>for</code></h3>
+<h5 id="variante-n-1">Variante n° 1</h5>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a></span>
+<span id="cb43-3"><a href="#cb43-3"></a><span class="va">db=</span><span class="st">&quot;db1 db2 db3&quot;</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a></span>
+<span id="cb43-5"><a href="#cb43-5"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$db</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a><span class="kw">do</span></span>
+<span id="cb43-7"><a href="#cb43-7"></a>    <span class="bu">echo</span> <span class="va">$i</span></span>
+<span id="cb43-8"><a href="#cb43-8"></a><span class="kw">done</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a></span>
+<span id="cb43-10"><a href="#cb43-10"></a><span class="bu">echo</span> <span class="st">&quot;Fini !&quot;</span></span></code></pre></div>
+<h5 id="variante-n-2">Variante n° 2</h5>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="kw">for((</span>j=0;j&lt;10;j++<span class="kw">))</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a><span class="kw">do</span></span>
+<span id="cb44-5"><a href="#cb44-5"></a>    <span class="bu">echo</span> <span class="va">$j</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a><span class="kw">done</span></span></code></pre></div>
+<h3 id="iii-ii-ii.-boucles-while-et-until">III-II-II. Boucles <code>while</code> et <code>until</code></h3>
+<ul>
+<li><p><code>while</code>: Tant que la condition est vraie, le(s) commande(s) continuent de s’executer.</p></li>
+<li><p><code>until</code>: Tant que la condition n’est pas vraie, le(s) commande(s) continuent de s’executer.</p></li>
+</ul>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a>==<span class="op">&gt;</span> <span class="ex">while.sh</span> <span class="op">&lt;</span>==</span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a></span>
+<span id="cb45-4"><a href="#cb45-4"></a><span class="kw">while [[</span> <span class="va">$(</span><span class="fu">who</span><span class="kw">|</span><span class="fu">grep</span> -c ^bob<span class="va">)</span> <span class="ot">=</span> 0<span class="kw"> ]]</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a><span class="kw">do</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>    <span class="bu">echo</span> <span class="st">&quot;Bob pas connecté&quot;</span></span>
+<span id="cb45-7"><a href="#cb45-7"></a>    <span class="fu">sleep</span> 1</span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="kw">done</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a></span>
+<span id="cb45-10"><a href="#cb45-10"></a><span class="bu">echo</span> <span class="st">&quot;Bob est maintenant connecté&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a>==<span class="op">&gt;</span> <span class="ex">until.sh</span> <span class="op">&lt;</span>==</span>
+<span id="cb46-2"><a href="#cb46-2"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a></span>
+<span id="cb46-4"><a href="#cb46-4"></a><span class="kw">until [[</span> <span class="va">$(</span><span class="fu">who</span><span class="kw">|</span><span class="fu">grep</span> -c ^bob<span class="va">)</span> <span class="ot">=</span> 1<span class="kw"> ]]</span></span>
+<span id="cb46-5"><a href="#cb46-5"></a><span class="kw">do</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a>    <span class="bu">echo</span> <span class="st">&quot;Bob pas connecté&quot;</span></span>
+<span id="cb46-7"><a href="#cb46-7"></a>    <span class="fu">sleep</span> 1</span>
+<span id="cb46-8"><a href="#cb46-8"></a><span class="kw">done</span></span>
+<span id="cb46-9"><a href="#cb46-9"></a></span>
+<span id="cb46-10"><a href="#cb46-10"></a><span class="bu">echo</span> <span class="st">&quot;Bob est maintenant connecté&quot;</span></span></code></pre></div>
+<h5 id="parenthèse-sur-la-gestion-différenciée-des-variables-et">Parenthèse sur la gestion différenciée des variables * et @</h5>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a>==<span class="op">&gt;</span> <span class="ex">liste1.sh</span> <span class="op">&lt;</span>==</span>
+<span id="cb47-2"><a href="#cb47-2"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a></span>
+<span id="cb47-4"><a href="#cb47-4"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st"> argument(s) reçu(s)&quot;</span></span>
+<span id="cb47-5"><a href="#cb47-5"></a></span>
+<span id="cb47-6"><a href="#cb47-6"></a><span class="ex">./liste2.sh</span> <span class="st">&quot;</span><span class="va">$*</span><span class="st">&quot;</span></span>
+<span id="cb47-7"><a href="#cb47-7"></a><span class="ex">./liste2.sh</span> <span class="st">&quot;</span><span class="va">$@</span><span class="st">&quot;</span></span>
+<span id="cb47-8"><a href="#cb47-8"></a></span>
+<span id="cb47-9"><a href="#cb47-9"></a>==<span class="op">&gt;</span> <span class="ex">liste2.sh</span> <span class="op">&lt;</span>==</span>
+<span id="cb47-10"><a href="#cb47-10"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb47-11"><a href="#cb47-11"></a></span>
+<span id="cb47-12"><a href="#cb47-12"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st"> argument(s) reçu(s)&quot;</span></span>
+<span id="cb47-13"><a href="#cb47-13"></a><span class="va">nb=</span>1</span>
+<span id="cb47-14"><a href="#cb47-14"></a><span class="kw">for</span> <span class="ex">i</span></span>
+<span id="cb47-15"><a href="#cb47-15"></a><span class="kw">do</span></span>
+<span id="cb47-16"><a href="#cb47-16"></a>    <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$nb</span><span class="st">: </span><span class="va">$i</span><span class="st">&quot;</span></span>
+<span id="cb47-17"><a href="#cb47-17"></a>    <span class="kw">((</span>nb++<span class="kw">))</span></span>
+<span id="cb47-18"><a href="#cb47-18"></a><span class="kw">done</span></span>
+<span id="cb47-19"><a href="#cb47-19"></a></span></code></pre></div>
+<h4 id="ptiquizz-n5">Pti’Quizz n°5</h4>
+<div class="question">
+Faire un script nommé “nano” requierant un argument devant être le nom d’un fichier à créer en lui positionnant automatiquement le droit d’exécution. Ce script invoquera l’éditeur nano sur le fichier dont le nom est l’argument fourni (dont on s’assurera de la présence, faute de quoi le script se termine par un message d’erreur à votre choix)) pour une fois enregistré, lui positionner le droit d’exécution à condition que cela ne soit pas déjà le cas.
+</div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="fu">clear</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a></span>
+<span id="cb48-5"><a href="#cb48-5"></a><span class="co">#set -o nounset</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a><span class="kw">if [[</span> <span class="va">$#</span> <span class="ot">=</span> 0<span class="kw"> ]]</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a><span class="kw">then</span></span>
+<span id="cb48-8"><a href="#cb48-8"></a>        <span class="bu">read</span> -p <span class="st">&quot;Entrez un nom pour le fichier:         &quot;</span> <span class="va">nom_fichier</span></span>
+<span id="cb48-9"><a href="#cb48-9"></a>        <span class="kw">until [[</span> <span class="va">$nom_fichier</span> =~ [0-9a-zA-Z]<span class="kw"> ]]</span></span>
+<span id="cb48-10"><a href="#cb48-10"></a>                <span class="kw">do</span></span>
+<span id="cb48-11"><a href="#cb48-11"></a>                        <span class="bu">echo</span> <span class="st">&quot;Erreur de saisie... &quot;</span></span>
+<span id="cb48-12"><a href="#cb48-12"></a>                        <span class="bu">exit</span> 1</span>
+<span id="cb48-13"><a href="#cb48-13"></a>                <span class="kw">done</span></span>
+<span id="cb48-14"><a href="#cb48-14"></a>        <span class="kw">set</span> <span class="va">$nom_fichier</span> <span class="co"># Place la valeur de &quot;nom_fichier&quot; dans &quot;1&quot;</span></span>
+<span id="cb48-15"><a href="#cb48-15"></a><span class="kw">fi</span></span>
+<span id="cb48-16"><a href="#cb48-16"></a></span>
+<span id="cb48-17"><a href="#cb48-17"></a></span>
+<span id="cb48-18"><a href="#cb48-18"></a><span class="co"># Test intégrité ARG1</span></span>
+<span id="cb48-19"><a href="#cb48-19"></a><span class="kw">until [[</span> <span class="va">$1</span> =~ [0-9a-zA-Z]<span class="kw"> ]]</span></span>
+<span id="cb48-20"><a href="#cb48-20"></a>        <span class="kw">do</span></span>
+<span id="cb48-21"><a href="#cb48-21"></a>                <span class="bu">echo</span> <span class="st">&quot;Erreur de saisie...&quot;</span></span>
+<span id="cb48-22"><a href="#cb48-22"></a>                <span class="bu">exit</span> 2</span>
+<span id="cb48-23"><a href="#cb48-23"></a>        <span class="kw">done</span></span>
+<span id="cb48-24"><a href="#cb48-24"></a></span>
+<span id="cb48-25"><a href="#cb48-25"></a></span>
+<span id="cb48-26"><a href="#cb48-26"></a><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-x</span> <span class="va">$1</span><span class="bu"> ]</span></span>
+<span id="cb48-27"><a href="#cb48-27"></a><span class="kw">then</span></span>
+<span id="cb48-28"><a href="#cb48-28"></a>        <span class="bu">echo</span> <span class="st">&quot;Le fichier </span><span class="va">$1</span><span class="st"> est présent &amp; Executable&quot;</span></span>
+<span id="cb48-29"><a href="#cb48-29"></a><span class="kw">elif</span><span class="bu"> [</span> <span class="ot">-f</span> <span class="va">$1</span><span class="bu"> ]</span></span>
+<span id="cb48-30"><a href="#cb48-30"></a><span class="kw">then</span></span>
+<span id="cb48-31"><a href="#cb48-31"></a>        <span class="bu">echo</span> <span class="st">&quot;Le fichier </span><span class="va">$1</span><span class="st"> est présent mais il n&#39;est pas exécutable.&quot;</span></span>
+<span id="cb48-32"><a href="#cb48-32"></a>        <span class="bu">echo</span> <span class="st">&quot;attribution du droit d exécution:&quot;</span></span>
+<span id="cb48-33"><a href="#cb48-33"></a>        <span class="fu">chmod</span> a+x <span class="va">$1</span></span>
+<span id="cb48-34"><a href="#cb48-34"></a><span class="kw">else</span></span>
+<span id="cb48-35"><a href="#cb48-35"></a>        <span class="bu">echo</span> <span class="st">&quot;Le fichier n existe pas...&quot;</span></span>
+<span id="cb48-36"><a href="#cb48-36"></a>        <span class="bu">echo</span> <span class="st">&quot;Création du fichier et attribution des droits d&#39;exécution:&quot;</span></span>
+<span id="cb48-37"><a href="#cb48-37"></a>        <span class="fu">touch</span> <span class="va">$1</span> <span class="kw">&amp;&amp;</span> <span class="fu">chmod</span> a+x <span class="va">$1</span></span>
+<span id="cb48-38"><a href="#cb48-38"></a><span class="kw">fi</span></span>
+<span id="cb48-39"><a href="#cb48-39"></a></span>
+<span id="cb48-40"><a href="#cb48-40"></a></span>
+<span id="cb48-41"><a href="#cb48-41"></a><span class="bu">echo</span></span>
+<span id="cb48-42"><a href="#cb48-42"></a><span class="co"># Affiche les droits du fichier $1</span></span>
+<span id="cb48-43"><a href="#cb48-43"></a><span class="fu">ls</span> -al <span class="kw">|</span> <span class="fu">grep</span> <span class="va">$1</span></span>
+<span id="cb48-44"><a href="#cb48-44"></a><span class="bu">echo</span></span>
+<span id="cb48-45"><a href="#cb48-45"></a></span>
+<span id="cb48-46"><a href="#cb48-46"></a> </span></code></pre></div>
+<div class="info">
+<p>Pour plus d’information sur la commande <code>test</code>, voir:</p>
+<a href="http://www.commandeslinux.fr/commande-test/" class="uri">http://www.commandeslinux.fr/commande-test/</a>
+</div>
+<h1 id="iv.-les-fonctions">IV. Les fonctions</h1>
+<h2 id="iv-i.-création-de-fonctions">IV-I. Création de fonctions</h2>
+<p>Une fonction s’écrit avec la syntaxe suivante:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">fonction_1()</span><span class="kw">{</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="co"># On mets ici le code</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a>  <span class="bu">echo</span> <span class="st">&quot;Je suis une fonction qui s&#39;appelle: </span><span class="va">$0</span><span class="st">, et j&#39;ai </span><span class="va">$#</span><span class="st"> arguments&quot;</span></span>
+<span id="cb49-4"><a href="#cb49-4"></a><span class="kw">}</span></span></code></pre></div>
+<h2 id="iv-ii.-création-de-fichier-de-fonction">IV-II. Création de fichier de fonction</h2>
+<h3 id="ptiquizz-n6">Pti’Quizz n°6</h3>
+<div class=question>
+<p>Dans un fichier de fonctions, créer la fonction readline nécessitant les deux arguments suivants :</p>
+<ul>
+<li><p>le nom d’un fichier (dont on s’assurera de l’existence et de l’accès en lecture ;-))</p></li>
+<li><p>le numéro de la ligne de ce fichier que l’on souhaite afficher</p>
+</div></li>
+</ul>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1"></a><span class="co"># Fichier FONCTION</span></span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="fu">readline()</span><span class="kw">{</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a>        <span class="bu">echo</span> <span class="st">&quot; Fichier: </span><span class="va">$1</span><span class="st"> &quot;</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a>        <span class="kw">if [[</span> <span class="va">$#</span> <span class="ot">-ne</span> 2<span class="kw"> ]]</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a>        <span class="kw">then</span></span>
+<span id="cb50-6"><a href="#cb50-6"></a>          <span class="bu">echo</span> <span class="st">&quot;Erreur sur le nombre d&#39;arguments (2)&quot;</span></span>
+<span id="cb50-7"><a href="#cb50-7"></a>          <span class="bu">exit</span> 1</span>
+<span id="cb50-8"><a href="#cb50-8"></a>        <span class="kw">elif [[</span> <span class="ot">!</span> <span class="ot">-r</span> <span class="va">$1</span> || <span class="ot">!</span> <span class="va">$2</span> =~ ^[0-9]+$<span class="kw"> ]]</span></span>
+<span id="cb50-9"><a href="#cb50-9"></a>          <span class="kw">then</span></span>
+<span id="cb50-10"><a href="#cb50-10"></a>          <span class="bu">echo</span> <span class="st">&quot;Erreur de saisie des arguments&quot;</span> </span>
+<span id="cb50-11"><a href="#cb50-11"></a>          <span class="bu">echo</span> <span class="st">&quot;arg1: nom de fichier, arg2: n° de ligne&quot;</span></span>
+<span id="cb50-12"><a href="#cb50-12"></a>          <span class="bu">exit</span> 2</span>
+<span id="cb50-13"><a href="#cb50-13"></a>        <span class="kw">else</span></span>
+<span id="cb50-14"><a href="#cb50-14"></a>          <span class="co">#cat -n $1 | grep &quot;^[0-9]?[0-9]{3}&quot; </span></span>
+<span id="cb50-15"><a href="#cb50-15"></a>          <span class="fu">head</span> -n <span class="va">$2</span> <span class="va">$1</span> <span class="kw">|</span> <span class="fu">tail</span> -1</span>
+<span id="cb50-16"><a href="#cb50-16"></a>       <span class="kw">fi</span></span>
+<span id="cb50-17"><a href="#cb50-17"></a><span class="kw">}</span></span>
+<span id="cb50-18"><a href="#cb50-18"></a></span>
+<span id="cb50-19"><a href="#cb50-19"></a><span class="co"># ----------------------------------------------------------------------------- #</span></span>
+<span id="cb50-20"><a href="#cb50-20"></a></span>
+<span id="cb50-21"><a href="#cb50-21"></a></span>
+<span id="cb50-22"><a href="#cb50-22"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb50-23"><a href="#cb50-23"></a></span>
+<span id="cb50-24"><a href="#cb50-24"></a><span class="kw">set</span> <span class="ex">-o</span> nounset</span>
+<span id="cb50-25"><a href="#cb50-25"></a></span>
+<span id="cb50-26"><a href="#cb50-26"></a><span class="bu">source</span> ./quizzFonction.fct</span>
+<span id="cb50-27"><a href="#cb50-27"></a></span>
+<span id="cb50-28"><a href="#cb50-28"></a><span class="ex">readline</span> <span class="va">$1</span> <span class="va">$2</span></span>
+<span id="cb50-29"><a href="#cb50-29"></a></span>
+<span id="cb50-30"><a href="#cb50-30"></a></span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="co"># Solutions Valentin &amp; Alicia</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a></span>
+<span id="cb51-4"><a href="#cb51-4"></a><span class="fu">readline()</span><span class="kw">{</span></span>
+<span id="cb51-5"><a href="#cb51-5"></a></span>
+<span id="cb51-6"><a href="#cb51-6"></a>        <span class="kw">if [[</span> <span class="va">$#</span> <span class="ot">-ne</span> 2 || <span class="ot">!</span> <span class="ot">-r</span> <span class="va">$1</span><span class="kw"> ]]</span></span>
+<span id="cb51-7"><a href="#cb51-7"></a>        <span class="kw">then</span></span>
+<span id="cb51-8"><a href="#cb51-8"></a>                <span class="bu">echo</span> <span class="st">&quot;Il manque un argument ou vous n&#39;avez pas le droit de lire ce fichier&quot;</span></span>
+<span id="cb51-9"><a href="#cb51-9"></a>                <span class="bu">exit</span> 1</span>
+<span id="cb51-10"><a href="#cb51-10"></a>        <span class="kw">else</span></span>
+<span id="cb51-11"><a href="#cb51-11"></a></span>
+<span id="cb51-12"><a href="#cb51-12"></a>     <span class="va">Ln=$(</span><span class="fu">wc</span> -l <span class="va">$1)</span></span>
+<span id="cb51-13"><a href="#cb51-13"></a></span>
+<span id="cb51-14"><a href="#cb51-14"></a>     <span class="va">L=${Ln%</span> *<span class="va">}</span></span>
+<span id="cb51-15"><a href="#cb51-15"></a></span>
+<span id="cb51-16"><a href="#cb51-16"></a>     <span class="co">#   echo &quot;Le fichier contient $L lignes&quot;</span></span>
+<span id="cb51-17"><a href="#cb51-17"></a></span>
+<span id="cb51-18"><a href="#cb51-18"></a>     <span class="kw">if [[</span> <span class="va">$2</span> <span class="ot">-le</span> <span class="va">$L</span><span class="kw"> ]]</span></span>
+<span id="cb51-19"><a href="#cb51-19"></a></span>
+<span id="cb51-20"><a href="#cb51-20"></a>     <span class="kw">then</span></span>
+<span id="cb51-21"><a href="#cb51-21"></a></span>
+<span id="cb51-22"><a href="#cb51-22"></a>          <span class="bu">echo</span> -n <span class="st">&quot;La ligne </span><span class="va">$2</span><span class="st"> est : &quot;</span></span>
+<span id="cb51-23"><a href="#cb51-23"></a></span>
+<span id="cb51-24"><a href="#cb51-24"></a>          <span class="fu">head</span> -<span class="va">$2</span> <span class="va">$1</span> <span class="kw">|</span> <span class="fu">tail</span> -1</span>
+<span id="cb51-25"><a href="#cb51-25"></a></span>
+<span id="cb51-26"><a href="#cb51-26"></a>     <span class="kw">else</span> <span class="bu">echo</span> <span class="st">&quot;Le fichier </span><span class="va">$1</span><span class="st"> ne contient que </span><span class="va">$L</span><span class="st"> lignes&quot;</span></span>
+<span id="cb51-27"><a href="#cb51-27"></a></span>
+<span id="cb51-28"><a href="#cb51-28"></a>       <span class="kw">fi</span></span>
+<span id="cb51-29"><a href="#cb51-29"></a></span>
+<span id="cb51-30"><a href="#cb51-30"></a>        <span class="kw">fi</span></span>
+<span id="cb51-31"><a href="#cb51-31"></a><span class="kw">}</span></span>
+<span id="cb51-32"><a href="#cb51-32"></a></span></code></pre></div>
+<h1 id="exportation-de-variables">Exportation de variables</h1>
+<p>Par défaut, les variables d’un script ne sont pas propagées dans les éventuels scripts-fils.</p>
+<p>Pour ce faire, il suffit de définir comme exportables les variables voulues par : <code>export nom_variable</code></p>
+<h1 id="utilisation-des-expressions-régulières">Utilisation des expressions régulières</h1>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1"></a><span class="co"># Rechercher les fichier dont le nom contient entre 3 et 5 caractères</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="kw">for</span> <span class="fu">file</span> in *</span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="kw">do</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>   <span class="kw">if [[</span> <span class="va">${#file}</span> <span class="ot">-ge</span> 3 &amp;&amp; <span class="va">${#file}</span> <span class="ot">-le</span> 5<span class="kw"> ]]</span> <span class="co"># Sans REGEX</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a>   <span class="kw">then</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a>      <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st"> (</span><span class="va">${#file}</span><span class="st">)&quot;</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a>   <span class="kw">fi</span></span>
+<span id="cb52-9"><a href="#cb52-9"></a><span class="kw">done</span></span>
+<span id="cb52-10"><a href="#cb52-10"></a></span>
+<span id="cb52-11"><a href="#cb52-11"></a><span class="co"># -------------------------------------------------------------- #</span></span>
+<span id="cb52-12"><a href="#cb52-12"></a></span>
+<span id="cb52-13"><a href="#cb52-13"></a><span class="kw">for</span> <span class="fu">file</span> in *</span>
+<span id="cb52-14"><a href="#cb52-14"></a><span class="kw">do</span></span>
+<span id="cb52-15"><a href="#cb52-15"></a>   <span class="kw">if [[</span> <span class="va">${#file}</span> =~ ^.<span class="dt">{3,5}</span>$<span class="kw"> ]]</span> <span class="co"># Avec REGEX</span></span>
+<span id="cb52-16"><a href="#cb52-16"></a>   <span class="kw">then</span></span>
+<span id="cb52-17"><a href="#cb52-17"></a>      <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st"> (</span><span class="va">${#file}</span><span class="st">)&quot;</span></span>
+<span id="cb52-18"><a href="#cb52-18"></a>   <span class="kw">fi</span></span>
+<span id="cb52-19"><a href="#cb52-19"></a><span class="kw">done</span></span></code></pre></div>
+<h3 id="ptiquizz-n7">Pti’Quizz n°7</h3>
+<div class="question">
+Intégrer dans le quizz n°6 la vérification de la nature numérique du deuxième arguement de la fonction readline.
+</div>
+<p>Vérification numérique avec regex: <code>$2 =~ ^[0-9]+$</code>, <strong>True</strong> si <code>$2</code> est un nombre.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a></span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="fu">readline()</span><span class="kw">{</span></span>
+<span id="cb53-4"><a href="#cb53-4"></a>        <span class="kw">if [[</span> <span class="va">$#</span> <span class="ot">-ne</span> 2<span class="kw"> ]]</span></span>
+<span id="cb53-5"><a href="#cb53-5"></a>        <span class="kw">then</span></span>
+<span id="cb53-6"><a href="#cb53-6"></a>          <span class="bu">echo</span> <span class="st">&quot;Erreur sur le nombre d&#39;arguments (2)&quot;</span></span>
+<span id="cb53-7"><a href="#cb53-7"></a>          <span class="bu">exit</span> 1</span>
+<span id="cb53-8"><a href="#cb53-8"></a>        <span class="kw">elif [[</span> <span class="ot">!</span> <span class="ot">-r</span> <span class="va">$1</span> || <span class="ot">!</span> <span class="va">$2</span> =~ ^[0-9]+$<span class="kw"> ]]</span></span>
+<span id="cb53-9"><a href="#cb53-9"></a>        <span class="kw">then</span></span>
+<span id="cb53-10"><a href="#cb53-10"></a>          <span class="bu">echo</span> <span class="st">&quot;Erreur de saisie des arguments&quot;</span></span>
+<span id="cb53-11"><a href="#cb53-11"></a>          <span class="bu">echo</span> <span class="st">&quot;arg1: nom de fichier, arg2: n° de ligne&quot;</span></span>
+<span id="cb53-12"><a href="#cb53-12"></a>          <span class="bu">exit</span> 2</span>
+<span id="cb53-13"><a href="#cb53-13"></a>        <span class="kw">else</span></span>
+<span id="cb53-14"><a href="#cb53-14"></a>          <span class="bu">echo</span></span>
+<span id="cb53-15"><a href="#cb53-15"></a>          <span class="bu">echo</span> <span class="st">&quot;Nom du fichier: </span><span class="va">$1</span><span class="st">&quot;</span></span>
+<span id="cb53-16"><a href="#cb53-16"></a>          <span class="bu">echo</span> <span class="st">&quot;Contenu de la ligne n° </span><span class="va">$2</span><span class="st">:&quot;</span></span>
+<span id="cb53-17"><a href="#cb53-17"></a>          <span class="bu">echo</span></span>
+<span id="cb53-18"><a href="#cb53-18"></a>          <span class="fu">head</span> -n <span class="va">$2</span> <span class="va">$1</span> <span class="kw">|</span> <span class="fu">tail</span> -1</span>
+<span id="cb53-19"><a href="#cb53-19"></a>          <span class="bu">echo</span></span>
+<span id="cb53-20"><a href="#cb53-20"></a>        <span class="kw">fi</span></span>
+<span id="cb53-21"><a href="#cb53-21"></a><span class="kw">}</span></span>
+<span id="cb53-22"><a href="#cb53-22"></a></span>
+<span id="cb53-23"><a href="#cb53-23"></a>}</span>
+<span id="cb53-24"><a href="#cb53-24"></a></span></code></pre></div>
+<hr />
+<h1 id="tips-tricks"><strong><em>Tips &amp; Tricks</em></strong></h1>
+<h5 id="récupérer-le-nom-du-script">Récupérer le nom du Script</h5>
+<div class="info">
+<p><code>echo "Fin de $0"</code> permet d’afficher “Fin de <em>nom_du_script</em>”</p>
+Cela peut être utile pour afficher ou récupérer le nom du script.
+</div>
+<h5 id="rappel-de-largument-précédent-dans-une-commande">Rappel de l’argument précédent dans une commande</h5>
+<p><img src="2021-06-14-POEI-Script-Shell/SHELL-Tips1.png" /></p>
+<p><strong><em>Rappel sur les arguments:</em></strong></p>
+<p>$0 The name of the bash script.</p>
+<p>$1, <span class="math inline">2...</span>n The bash script arguments.</p>
+<p>$$ The process id of the current shell.</p>
+<p>$# The total number of arguments passed to the script.</p>
+<p>$@ The value of all the arguments passed to the script.</p>
+<p>$? The exit status of the last executed command.</p>
+<p>$! The process id of the last executed command.</p>
+<h5 id="commande-test">Commande <code>test</code></h5>
+<p>La commande <code>test</code> permet test de vérifier le type d’un fichier, et comparer des valeurs.</p>
+<p>NOM test - Vérifier le type d’un fichier, et comparer des valeurs.</p>
+<p>SYNOPSIS test [expr] test {–help,–version}</p>
+<p>DESCRIPTION Cette page de manuel documente la version GNU de test.</p>
+<pre><code>   Remarquez que la  plupart  des  shells  ont  une  commande
+   interne  avec  le  même  nom  et des fonctionnalités simi­
+   laires.
+
+   test renvoie une valeur  0  (vrai)  ou  1  (faux)  suivant
+   l&#39;évaluation de l&#39;expression conditionnelle expr.
+
+   Les  expressions  peuvent  être  unaires  ou binaires. Les
+   expressions unaires sont généralement utilisées pour exam­
+   iner  le  statut  d&#39;un  fichier.   Il existe également des
+   opérateurs de chaînes de caractères, et des opérateurs  de
+   comparaison numérique.
+
+   -b fichier
+          Vrai si le fichier existe et est spécial bloc.
+   -c fichier
+          Vrai si le fichier existe et est spécial caractère.
+   -d fichier
+          Vrai si le fichier existe et est un répertoire.
+   -e fichier
+          Vrai si le fichier existe.
+   -f fichier
+          Vrai si le fichier existe et est un  fichier  ordi­
+          naire.
+   -g fichier
+          Vrai  si  le  fichier  existe  et a son bit Set-GID
+          positionné.
+   -k fichier
+          Vrai si le fichier existe et a son bit Sticky posi­
+          tionné.
+   -L fichier
+          Vrai  si  le  fichier existe et est un lien symbol­
+          ique.
+   -p fichier
+          Vrai si le fichier existe et est un tube nommé.
+   -r fichier
+          Vrai si le fichier existe et est lisible.
+   -s fichier
+          Vrai  si  le  fichier  existe  et  a   une   taille
+          supérieure à zéro.
+   -S fichier
+          Vrai si le fichier existe et est une socket.</code></pre>
+<h2 id="tutoriel-vim">Tutoriel VIM</h2>
+<p><a href="https://www.openvim.com/" class="uri">https://www.openvim.com/</a></p>
+<h3 id="petite-présentation-de-vi">Petite présentation de vi:</h3>
+<p>Créé par Bill Joy à partir des éditeurs ed et ex. Bill Joy a été responsable du Stanford University Network, a participé au développement de BSD (Unix…) et a créer la société SUN.</p>
+<p><strong><em>Vi</em></strong> premier éditeur pleine page sous Unix. Vi est un logiciel propriétaire à code fermé. Sous Linux plusieurs clones sont disponibles : elvis, nvi, vim (vi improved).</p>
+<p>Sous Linux vim est généralement préinstallé. Sous Debian c’est la version vim-tiny qui est installée par défaut (très/trop limitée) il est donc conseillé d’installer vim par <code>apt install vim</code>.</p>
+<p>Ce qui déroute le plus est l’utilisation du clavier.</p>
+<p><strong><em>2 modes:</em></strong></p>
+<ul>
+<li>Mode <code>commande</code>: Permet d’utiliser les racourcis de vim <em>(mode par défaut)</em> .</li>
+<li>mode <code>saisie</code>: Permet de taper du texte dans le fichier.</li>
+</ul>
+<p><strong><em>Basculer entre les 2 modes:</em></strong></p>
+<ul>
+<li>commande =&gt; saisie: touche <code>i</code> insertion</li>
+</ul>
+<h4 id="se-déplacer-dans-vi">Se déplacer dans <strong><em>vi</em></strong></h4>
+<p>Pour se déplacer on utilise les touches <code>h</code>, <code>j</code>, <code>k</code>, <code>l</code>.</p>
+<p><img src="2021-06-14-POEI-Script-Shell/vim_keymap.jpg" /></p>
+<h3 id="vi-cheatsheet"><strong><em>vi</em></strong> Cheatsheet</h3>
+<p><img src="2021-06-14-POEI-Script-Shell/vim_cheat_sheet01.jpg" /></p>
+<div class="info">
+Pour afficher les lignes dans vi on utilise la commande <code>:set number</code>
+</div>
+<ul>
+<li><p><strong>Commandes ed:</strong> Ne s’affichent pas et sont auto-validantes</p></li>
+<li><p><strong>Commandes ex:</strong> Débutent par un <code>:</code> s’affichant en bas à gauche de la fenêtre et doivent validées pour être exécutées.</p></li>
+</ul>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1"></a>    <span class="ex">D</span>éplacements     Copies     Suppressions (couper)   <span class="ex">Remplacements</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a></span>
+<span id="cb55-3"><a href="#cb55-3"></a>          <span class="ex">nh</span>            nyh                ndh                  nch</span>
+<span id="cb55-4"><a href="#cb55-4"></a></span>
+<span id="cb55-5"><a href="#cb55-5"></a>          <span class="ex">nj</span>            nyj                ndj                  ncj</span>
+<span id="cb55-6"><a href="#cb55-6"></a></span>
+<span id="cb55-7"><a href="#cb55-7"></a>          <span class="ex">nk</span></span>
+<span id="cb55-8"><a href="#cb55-8"></a></span>
+<span id="cb55-9"><a href="#cb55-9"></a>          <span class="fu">nl</span></span>
+<span id="cb55-10"><a href="#cb55-10"></a></span>
+<span id="cb55-11"><a href="#cb55-11"></a>          <span class="ex">nw</span></span>
+<span id="cb55-12"><a href="#cb55-12"></a></span>
+<span id="cb55-13"><a href="#cb55-13"></a>          <span class="ex">nb</span></span>
+<span id="cb55-14"><a href="#cb55-14"></a></span>
+<span id="cb55-15"><a href="#cb55-15"></a>          <span class="ex">nfc</span></span>
+<span id="cb55-16"><a href="#cb55-16"></a></span>
+<span id="cb55-17"><a href="#cb55-17"></a>          <span class="ex">nFc</span></span>
+<span id="cb55-18"><a href="#cb55-18"></a></span>
+<span id="cb55-19"><a href="#cb55-19"></a>          <span class="ex">0</span></span>
+<span id="cb55-20"><a href="#cb55-20"></a></span>
+<span id="cb55-21"><a href="#cb55-21"></a>          $</span></code></pre></div>
+<ul>
+<li>Commande <code>p</code> : <strong>paste</strong> -&gt; coller</li>
+<li>Commande <code>nyy</code> : copie des <strong>n</strong> lignes à partir de la ligne courante (sens de la lecture)</li>
+<li>Commande <code>ndd</code> : suppression des <strong>n</strong> lignes à partir de la ligne courante (sens de la lecture).</li>
+<li>Commande <code>u</code> : <strong>undo</strong> -&gt; annuler</li>
+</ul>
+<p><strong>Exemples:</strong> - <code>nyh</code>: Copie des n caractères à gauche du curseur - <code>nyk</code>: Copie des n lignes précédentes, en plus de la ligne courante</p>
+<p><strong>Quitter:</strong> - <code>:q</code> -&gt; sortir si aucune modification ou si toutes les modifications ont été enregistrées - <code>:q!</code> -&gt; sortir en abandonnant les modifications - <code>:w</code> -&gt; sauvegarder - <code>:wq</code> -&gt; sauvegarder et quitter - <code>:x</code> -&gt; idem - <code>:w</code> nom - <code>:n1,n2w</code> nom -&gt; écrire les lignes n1 à n2 dans le fichier nom</p>
+<h3 id="options-de-vim">Options de vim</h3>
+<ul>
+<li><p>Liste des options et leur statut: <code>:set all</code></p></li>
+<li><p>Activation d’une option: <code>:set option</code></p></li>
+<li><p>Désactivation: <code>:set nooption</code></p></li>
+</ul>
+<p><strong>Pour activer/désactiver par défaut :</strong></p>
+<p>Mettre la commande set adpatée <em>(sans le :)</em> dans le fichier <code>~/.vimrc</code>.</p>
+<h1 id="questions">Questions</h1>
+<ul>
+<li><p>fg/bg</p></li>
+<li><p>nice</p></li>
+</ul>
+<hr />
+<h1 id="idéés-de-scripts-shell">Idéés de <strong>Scripts Shell</strong></h1>
+<h2 id="liste-3-dates">Liste 3 dates</h2>
+<ol type="1">
+<li>Lister les fichiers d’un répertoire avec leur 3 dates (modification, lecture, modification des attributs).</li>
+</ol>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a></span>
+<span id="cb56-3"><a href="#cb56-3"></a><span class="fu">clear</span></span>
+<span id="cb56-4"><a href="#cb56-4"></a></span>
+<span id="cb56-5"><a href="#cb56-5"></a><span class="kw">for</span> <span class="ex">f</span> in *</span>
+<span id="cb56-6"><a href="#cb56-6"></a><span class="kw">do</span></span>
+<span id="cb56-7"><a href="#cb56-7"></a> <span class="bu">echo</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb56-8"><a href="#cb56-8"></a> <span class="bu">echo</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb56-9"><a href="#cb56-9"></a> <span class="fu">stat</span> <span class="st">&quot;</span><span class="va">$f</span><span class="st">&quot;</span></span>
+<span id="cb56-10"><a href="#cb56-10"></a> <span class="bu">echo</span> <span class="st">&quot; &quot;</span></span>
+<span id="cb56-11"><a href="#cb56-11"></a> <span class="bu">echo</span> <span class="st">&quot;----------------------------------------------------------------------&quot;</span></span>
+<span id="cb56-12"><a href="#cb56-12"></a><span class="kw">done</span></span></code></pre></div>
+<p>Résultat:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1"></a></span>
+<span id="cb57-2"><a href="#cb57-2"></a>  <span class="ex">Fichier</span> : bla.txt</span>
+<span id="cb57-3"><a href="#cb57-3"></a>   <span class="ex">Taille</span> : 19          Blocs : 8          Blocs d<span class="st">&#39;E/S : 4096   fichier</span></span>
+<span id="cb57-4"><a href="#cb57-4"></a><span class="st">Périphérique : 801h/2049d       Inœud : 1044512     Liens : 1</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a><span class="st">Accès : (0777/-rwxrwxrwx)  UID : ( 1000/stagiaire)   GID : ( 1000/stagiaire)</span></span>
+<span id="cb57-6"><a href="#cb57-6"></a><span class="st"> Accès : 2021-06-07 17:46:48.100588972 +0200</span></span>
+<span id="cb57-7"><a href="#cb57-7"></a><span class="st">Modif. : 2021-06-07 17:46:48.100588972 +0200</span></span>
+<span id="cb57-8"><a href="#cb57-8"></a><span class="st">Changt : 2021-06-07 17:47:16.304551490 +0200</span></span>
+<span id="cb57-9"><a href="#cb57-9"></a><span class="st">  Créé : -</span></span>
+<span id="cb57-10"><a href="#cb57-10"></a></span>
+<span id="cb57-11"><a href="#cb57-11"></a><span class="st">----------------------------------------------------------------------</span></span>
+<span id="cb57-12"><a href="#cb57-12"></a></span>
+<span id="cb57-13"><a href="#cb57-13"></a></span>
+<span id="cb57-14"><a href="#cb57-14"></a><span class="st">  Fichier : Scripts</span></span>
+<span id="cb57-15"><a href="#cb57-15"></a><span class="st">   Taille : 4096        Blocs : 8          Blocs d&#39;</span>E/S : 4096   répertoire</span>
+<span id="cb57-16"><a href="#cb57-16"></a><span class="ex">P</span>ériphérique : 801h/2049d       Inœud : 1044515     Liens : 2</span>
+<span id="cb57-17"><a href="#cb57-17"></a><span class="ex">Acc</span>ès : (0755/drwxr-xr-x)  <span class="ex">UID</span> : ( 1000/stagiaire)   <span class="ex">GID</span> : ( 1000/stagiaire)</span>
+<span id="cb57-18"><a href="#cb57-18"></a> <span class="ex">Acc</span>ès : 2021-06-08 09:43:37.400370418 +0200</span>
+<span id="cb57-19"><a href="#cb57-19"></a><span class="ex">Modif.</span> : 2021-06-08 09:47:13.255528315 +0200</span>
+<span id="cb57-20"><a href="#cb57-20"></a><span class="ex">Changt</span> : 2021-06-08 09:47:13.255528315 +0200</span>
+<span id="cb57-21"><a href="#cb57-21"></a>  <span class="ex">Cr</span>éé : -</span>
+<span id="cb57-22"><a href="#cb57-22"></a></span>
+<span id="cb57-23"><a href="#cb57-23"></a><span class="ex">----------------------------------------------------------------------</span></span></code></pre></div>
+<h2 id="script-de-mise-à-jour-serveur">Script de mise à jour serveur</h2>
+<p>crontab vérifie mises à jour disponibles</p>
+<p><a href="https://www.tecmint.com/using-shell-script-to-automate-linux-system-maintenance-tasks/" class="uri">https://www.tecmint.com/using-shell-script-to-automate-linux-system-maintenance-tasks/</a></p>
+<h2 id="calculatrice">Calculatrice</h2>
+<h2 id="pour-optscripts">Pour <code>/opt/Scripts</code></h2>
+<ul>
+<li>Vérifie si il existe un fichier <code>*.sh</code> qui n’est pas exécutable</li>
+<li>Lui donner les droits d’execution</li>
+<li>tâche Cron. Si possible sur un changement</li>
+</ul>
+<h2 id="ptiquizz-n8">Pti’Quizz n°8</h2>
+<p>Faire un script listant les fichiers d’un répertoire avec leurs trois dates en présentant les résultats avec le format suivant :</p>
+<p>date dernier accès date dernière modif date changt attribut nom du fichier</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="bu">echo</span></span>
+<span id="cb58-3"><a href="#cb58-3"></a><span class="kw">if [[</span> <span class="va">$#</span> <span class="ot">=</span> 0<span class="kw"> ]]</span></span>
+<span id="cb58-4"><a href="#cb58-4"></a><span class="kw">then</span></span>
+<span id="cb58-5"><a href="#cb58-5"></a>   <span class="bu">echo</span> <span class="st">&quot;Pas d&#39;argument... Pas de réponse !&quot;</span></span>
+<span id="cb58-6"><a href="#cb58-6"></a>   <span class="bu">echo</span> <span class="st">&quot;Rentrez le nom d&#39;un dossier&quot;</span></span>
+<span id="cb58-7"><a href="#cb58-7"></a>   <span class="bu">echo</span></span>
+<span id="cb58-8"><a href="#cb58-8"></a></span>
+<span id="cb58-9"><a href="#cb58-9"></a><span class="kw">elif [[</span> <span class="ot">-d</span> <span class="va">$1</span><span class="kw"> ]]</span></span>
+<span id="cb58-10"><a href="#cb58-10"></a>   <span class="kw">then</span></span>
+<span id="cb58-11"><a href="#cb58-11"></a>      <span class="bu">echo</span> <span class="st">&quot;traitement du dossier </span><span class="va">$1</span><span class="st"> :&quot;</span></span>
+<span id="cb58-12"><a href="#cb58-12"></a>      <span class="bu">echo</span> <span class="st">&quot;------------------------------------------&quot;</span></span>
+<span id="cb58-13"><a href="#cb58-13"></a>      <span class="kw">for</span> <span class="fu">file</span> in <span class="va">$1</span>/*</span>
+<span id="cb58-14"><a href="#cb58-14"></a></span>
+<span id="cb58-15"><a href="#cb58-15"></a>      <span class="kw">do</span></span>
+<span id="cb58-16"><a href="#cb58-16"></a>         <span class="fu">stat</span> --format <span class="st">&quot;%n %x %y %z %n&quot;</span> <span class="st">&quot;</span><span class="va">$file</span><span class="st">&quot;</span></span>
+<span id="cb58-17"><a href="#cb58-17"></a> <span class="kw">done</span></span>
+<span id="cb58-18"><a href="#cb58-18"></a><span class="kw">fi</span></span></code></pre></div>
+<h5 id="autre-proposition">Autre proposition</h5>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb59-2"><a href="#cb59-2"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$1</span>/*</span>
+<span id="cb59-3"><a href="#cb59-3"></a><span class="kw">do</span></span>
+<span id="cb59-4"><a href="#cb59-4"></a>    <span class="va">lm=$(</span><span class="fu">ls</span> -l  --time-style=long-iso <span class="st">&quot;</span><span class="va">$i</span><span class="st">&quot;</span><span class="kw">|</span><span class="fu">tr</span> -s <span class="st">&quot; &quot;</span><span class="kw">|</span><span class="fu">cut</span> -d<span class="st">&quot; &quot;</span> -f6,7<span class="va">)</span></span>
+<span id="cb59-5"><a href="#cb59-5"></a>    <span class="va">la=$(</span><span class="fu">ls</span> -lu --time-style=long-iso <span class="st">&quot;</span><span class="va">$i</span><span class="st">&quot;</span><span class="kw">|</span><span class="fu">tr</span> -s <span class="st">&quot; &quot;</span><span class="kw">|</span><span class="fu">cut</span> -d<span class="st">&quot; &quot;</span> -f6,7<span class="va">)</span></span>
+<span id="cb59-6"><a href="#cb59-6"></a>    <span class="va">lc=$(</span><span class="fu">ls</span> -lc --time-style=long-iso <span class="st">&quot;</span><span class="va">$i</span><span class="st">&quot;</span><span class="kw">|</span><span class="fu">tr</span> -s <span class="st">&quot; &quot;</span><span class="kw">|</span><span class="fu">cut</span> -d<span class="st">&quot; &quot;</span> -f6,7<span class="va">)</span></span>
+<span id="cb59-7"><a href="#cb59-7"></a></span>
+<span id="cb59-8"><a href="#cb59-8"></a>    <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$lm</span><span class="st"> </span><span class="va">$la</span><span class="st"> </span><span class="va">$lc</span><span class="st"> </span><span class="va">$i</span><span class="st">&quot;</span></span>
+<span id="cb59-9"><a href="#cb59-9"></a><span class="kw">done</span></span></code></pre></div>
+<h2 id="ptiquizz-n9">Pti’Quizz n°9</h2>
+<p><em>Script d’installation de service et de vérification d’état.</em></p>
+<p><strong>Notion de service:</strong> Processus mettant des ressources à disposition de clients</p>
+<h1 id="exercices-scripts-shell">Exercices Scripts Shell</h1>
+<p><a href="https://ineumann.developpez.com/tutoriels/linux/exercices-shell/#LIII-A" class="uri">https://ineumann.developpez.com/tutoriels/linux/exercices-shell/#LIII-A</a></p>
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

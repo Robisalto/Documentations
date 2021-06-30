@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Madecraft and Sam Pettus" />
+  <title>Using Python For Automation</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Using Python For Automation</h1>
+<p class="author">Madecraft and Sam Pettus</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#automate-everything-with-python">Automate everything with Python</a></li>
+<li><a href="#course-prerequisites">Course prerequisites</a></li>
+</ul></li>
+<li><a href="#i.-automate-file-folder-and-terminal-interactions">I. Automate File, Folder, and Terminal Interactions</a>
+<ul>
+<li><a href="#i-i.-using-python-for-file-automation">I-I. Using Python for file automation</a></li>
+<li><a href="#i-ii.-how-to-read-files">I-II. How to read files</a></li>
+<li><a href="#i-iii.-how-to-write-files">I-III. How to write files</a></li>
+<li><a href="#i-iv.-executing-terminal-commands">I-IV. Executing terminal commands</a></li>
+<li><a href="#i-v.-organising-directories">I-V. Organising directories</a></li>
+</ul></li>
+<li><a href="#ii.-web-scraping-with-beautifulsoup">II. Web Scraping with BeautifulSoup</a>
+<ul>
+<li><a href="#ii-i-the-value-of-web-scraping">II-I The value of web scraping</a>
+<ul>
+<li><a href="#libraries-for-web-scraping">Libraries for Web Scraping</a></li>
+</ul></li>
+<li><a href="#ii-ii.-creating-a-request-and-parsing">II-II. Creating a request and parsing</a></li>
+<li><a href="#ii-iii.-exploring-html-structure">II-III. Exploring HTML structure</a>
+<ul>
+<li><a href="#website">Website:</a></li>
+</ul></li>
+<li><a href="#ii-iv.-how-to-isolate-data">II-IV. How to isolate data</a></li>
+<li><a href="#ii-v.-preparing-for-paginated-scraping">II-V. Preparing for paginated scraping</a>
+<ul>
+<li><a href="#website-1">Website:</a></li>
+</ul></li>
+<li><a href="#ii-vi.-scraping-paginated-content">II-VI. Scraping paginated content</a></li>
+</ul></li>
+<li><a href="#iii.-automate-web-browsing-with-selenium">III. Automate Web Browsing with Selenium</a>
+<ul>
+<li><a href="#iii-i.-automating-web-browsing">III-I. Automating Web Browsing</a></li>
+<li><a href="#iii-ii.-basic-browser-interactions">III-II. Basic browser interactions</a></li>
+</ul></li>
+<li><a href="#iv.-automate-with-apis">IV. Automate with APIs</a>
+<ul>
+<li><a href="#iv-i.-understanding-api-calls">IV-I. Understanding API calls</a>
+<ul>
+<li><a href="#api">API:</a></li>
+</ul></li>
+<li><a href="#iv-ii.-creating-api-requests">IV-II. Creating API requests</a></li>
+<li><a href="#iv-iii.-parsing-through-json">IV-III. Parsing through JSON</a></li>
+<li><a href="#iv-iv.-using-api-keys">IV-IV. Using API keys</a></li>
+<li><a href="#iv-v.-linking-api-calls">IV-V. Linking API calls</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#next-steps">Next Steps</a>
+<ul>
+<li><a href="#documentations">Documentations</a></li>
+</ul></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="automate-everything-with-python">Automate everything with Python</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\0-I.Automate everything with Python.mp4" type="video/mp4">
+</video>
+<h2 id="course-prerequisites">Course prerequisites</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\0-II.Course prerequisites.mp4" type="video/mp4">
+</video>
+<h1 id="i.-automate-file-folder-and-terminal-interactions">I. Automate File, Folder, and Terminal Interactions</h1>
+<h2 id="i-i.-using-python-for-file-automation">I-I. Using Python for file automation</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\I-I. Using Python for file automation.mp4" type="video/mp4">
+</video>
+<h2 id="i-ii.-how-to-read-files">I-II. How to read files</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\I-II. How to read files.mp4" type="video/mp4">
+</video>
+<h2 id="i-iii.-how-to-write-files">I-III. How to write files</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\I-III. How to write files.mp4" type="video/mp4">
+</video>
+<h2 id="i-iv.-executing-terminal-commands">I-IV. Executing terminal commands</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\I-IV. Executing terminal commands.mp4" type="video/mp4">
+</video>
+<h2 id="i-v.-organising-directories">I-V. Organising directories</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\I-V. Organising directories.mp4" type="video/mp4">
+</video>
+<h1 id="ii.-web-scraping-with-beautifulsoup">II. Web Scraping with BeautifulSoup</h1>
+<h2 id="ii-i-the-value-of-web-scraping">II-I The value of web scraping</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\II-I The value of web scraping.mp4" type="video/mp4">
+</video>
+<h3 id="libraries-for-web-scraping">Libraries for Web Scraping</h3>
+<ul>
+<li>BeautfulSoup</li>
+<li>lxml</li>
+<li>Requests</li>
+</ul>
+<h2 id="ii-ii.-creating-a-request-and-parsing">II-II. Creating a request and parsing</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\II-I The value of web scraping.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iii.-exploring-html-structure">II-III. Exploring HTML structure</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\II-III. Exploring HTML structure.mp4" type="video/mp4">
+</video>
+<h3 id="website">Website:</h3>
+<p><a href="http://quotes.toscrape.com/">http://quotes.toscrape.com/</a></p>
+<h2 id="ii-iv.-how-to-isolate-data">II-IV. How to isolate data</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\II-IV. How to isolate data.mp4" type="video/mp4">
+</video>
+<h2 id="ii-v.-preparing-for-paginated-scraping">II-V. Preparing for paginated scraping</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\II-V. Preparing for paginated scraping.mp4" type="video/mp4">
+</video>
+<h3 id="website-1">Website:</h3>
+<p><a href="https://scrapingclub.com/">https://scrapingclub.com/</a></p>
+<h2 id="ii-vi.-scraping-paginated-content">II-VI. Scraping paginated content</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\II-VI. Scraping paginated content.mp4" type="video/mp4">
+</video>
+<h1 id="iii.-automate-web-browsing-with-selenium">III. Automate Web Browsing with Selenium</h1>
+<h2 id="iii-i.-automating-web-browsing">III-I. Automating Web Browsing</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\III-I. Automating Web Browsing.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ii.-basic-browser-interactions">III-II. Basic browser interactions</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\III-II. Basic browser interactions.mp4" type="video/mp4">
+</video>
+<ul>
+<li><a href="https://www.seleniumeasy.com/test/basic-first-form-demo.html">https://www.seleniumeasy.com/test/basic-first-form-demo.html</a></li>
+<li><h2 id="iii-iii.-handling-drap-and-drop">III-III. Handling drap and drop</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\III-III. Handling drap and drop.mp4" type="video/mp4">
+</video></li>
+<li><a href="http://dhtmlgoodies.com/index.html?page=dragDrop">http://dhtmlgoodies.com/index.html?page=dragDrop</a></li>
+<li><h2 id="iii-iv.-selenium-wait-functions">III-IV. Selenium wait functions</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\III-IV. Selenium wait functions.mp4" type="video/mp4">
+</video>
+<h2 id="iii-v.-selenium-explicit-wait-functions">III-V. Selenium explicit wait functions</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\III-V. Selenium explicit wait functions.mp4" type="video/mp4">
+</video></li>
+</ul>
+<h1 id="iv.-automate-with-apis">IV. Automate with APIs</h1>
+<h2 id="iv-i.-understanding-api-calls">IV-I. Understanding API calls</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\IV-I. Understanding API calls.mp4" type="video/mp4">
+</video>
+<h3 id="api">API:</h3>
+<p>Application Programming Interface</p>
+<h2 id="iv-ii.-creating-api-requests">IV-II. Creating API requests</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\IV-II. Creating API requests.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iii.-parsing-through-json">IV-III. Parsing through JSON</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\IV-III. Parsing through JSON.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iv.-using-api-keys">IV-IV. Using API keys</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\IV-IV. Using API keys.mp4" type="video/mp4">
+</video>
+<h2 id="iv-v.-linking-api-calls">IV-V. Linking API calls</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\IV-V. Linking API calls.mp4" type="video/mp4">
+</video>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="next-steps">Next Steps</h2>
+<video width="600" height="337" controls>
+<source src="UsingPythonForAutomation\Conclusion-Next Steps.mp4" type="video/mp4">
+</video>
+<h3 id="documentations">Documentations</h3>
+<ul>
+<li><a href="https://requests.readthedocs.io/en/master/">Requests</a></li>
+<li><a href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/">BeautifulSoup</a></li>
+<li><a href="https://www.selenium.dev/documentation/en/">Selenium</a></li>
+</ul>
+<h2 id="certification">CERTIFICATION</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="UsingPythonForAutomation\CertificateOfCompletion_Using%20Python%20for%20Automation.pdf">CertificateOfCompletion_Using Python for Automation.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="UsingPythonForAutomation.pdf">Using Python For Automation - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

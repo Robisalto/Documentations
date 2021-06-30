@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <title>Jekyll setup</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Jekyll setup</h1>
+<p class="author">David DEBRAY</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#sources-bibliography">Sources &amp; Bibliography</a></li>
+<li><a href="#steps">Steps</a></li>
+</ul></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<hr />
+<h2 id="introduction">Introduction</h2>
+<p>Pour simplifier le <strong><em>bordel</em></strong> lié à l’installation de <a href="https://www.ruby-lang.org/en/">Ruby</a> et à la maintenance des mises à jour, etc.</p>
+<p>=&gt; J’utiliserai pour ma Documentation une solution plus adaptée et plus intéressante, <a href="https://www.docker.com/products/docker-desktop">Docker</a>!</p>
+<h3 id="sources-bibliography">Sources &amp; Bibliography</h3>
+<ul>
+<li><a href="https://habd.as/post/simple-websites-jekyll-docker/" class="uri">https://habd.as/post/simple-websites-jekyll-docker/</a></li>
+<li><a href="https://odewahn.github.io/docker-jumpstart/" class="uri">https://odewahn.github.io/docker-jumpstart/</a></li>
+<li><a href="https://mademistakes.com/work/jekyll-themes/" class="uri">https://mademistakes.com/work/jekyll-themes/</a></li>
+</ul>
+<h3 id="steps">Steps</h3>
+<pre><code>steps
+│
+└───Create Docker Image
+    │   
+    |    Install Docker
+    |     Clone Jekyll seed
+    |      Configure Docker host container
+    |       Install Ruby dependencies
+    |        Build and run container image locally
+    |         Connect to Jekyll site
+    |   
+    └──────────Configure Server for Docker deployments
+               │
+               │    Create Docker Droplet
+               │     Create New User
+               │      Add SSH Key for Deployer
+    
+</code></pre>
+<hr />
+<p style="text-align: center">
+<a href="template.pdf">Jekyll setup - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

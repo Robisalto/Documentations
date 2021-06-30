@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Arthur Ulfeldt" />
+  <title>Graphite and Grafana - Visualizing Application Performance</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Graphite and Grafana - Visualizing Application Performance</h1>
+<p class="author">Arthur Ulfeldt</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#introduction-monitoring-and-visualizing-system-performance">Introduction-Monitoring and visualizing system performance</a></li>
+<li><a href="#introduction-what-you-should-know">Introduction-What you should know</a></li>
+<li><a href="#introduction-exercise-files">Introduction-Exercise files</a></li>
+</ul></li>
+<li><a href="#i.-metrics-gathering-with-statsd">I. Metrics Gathering with StatsD</a>
+<ul>
+<li><a href="#i-i.-statsd-overview">I-I. StatsD overview</a></li>
+<li><a href="#i-ii.-installing-statsd">I-II. Installing StatsD</a></li>
+<li><a href="#i-iii.-configuring-statsd">I-III. Configuring StatsD</a></li>
+<li><a href="#i-iv.-types-of-metrics">I-IV. Types of metrics</a></li>
+<li><a href="#i-v.-adding-statsd-to-an-application">I-V. Adding StatsD to an application</a></li>
+<li><a href="#i-vi.-first-look-with-statsd-and-grafana">I-VI. First look with StatsD and Grafana</a></li>
+</ul></li>
+<li><a href="#ii.-graphite-metrics-aggregation">II. Graphite: Metrics Aggregation</a>
+<ul>
+<li><a href="#ii-i.-graphite-basics-and-components">II-I. Graphite basics and components</a></li>
+<li><a href="#ii-ii.-installing-graphite">II-II. Installing Graphite</a></li>
+<li><a href="#ii-iii.-setting-up-the-graphite-web-database">II-III. Setting up the Graphite-web database</a></li>
+<li><a href="#ii-iv.-carbon-overview">II-IV. Carbon overview</a></li>
+<li><a href="#ii-v.-configuring-carbon">II-V. Configuring carbon</a></li>
+<li><a href="#iivi.-configuring-graphite-web">II–VI. Configuring Graphite-web</a></li>
+<li><a href="#ii-vii.-whisper-files">II-VII. Whisper files</a></li>
+<li><a href="#ii-viii.-verifying-the-system">II-VIII. Verifying the system</a></li>
+<li><a href="#ii-ix.-the-graphite-ui">II-IX. The Graphite UI</a></li>
+<li><a href="#ii-x.-graphite-scaling-and-performance">II-X. Graphite scaling and performance</a></li>
+</ul></li>
+<li><a href="#iii.-grafana-metrics-visualization">III. Grafana: Metrics Visualization</a>
+<ul>
+<li><a href="#iii-i.-grafana-basics">III-I. Grafana basics</a></li>
+<li><a href="#iii-ii.-installing-grafana">III-II. Installing Grafana</a></li>
+<li><a href="#iii-iii.-grafana-security-basics">III-III. Grafana security basics</a></li>
+<li><a href="#iii-iv.-adding-data-sources">III-IV. Adding data sources</a></li>
+<li><a href="#iii-v.-creating-dashboards">III-V. Creating dashboards</a></li>
+<li><a href="#iii-vi.-additional-dashboard-configurations">III-VI. Additional dashboard configurations</a></li>
+<li><a href="#iii-vii.-deep-dive-grafana-panel-types">III-VII. Deep dive Grafana panel types</a></li>
+<li><a href="#iii-viii.-high-availability-grafana">III-VIII. High-availability Grafana</a></li>
+</ul></li>
+<li><a href="#iv.-using-graphite-and-grafana-together">IV. Using Graphite and Grafana together</a>
+<ul>
+<li><a href="#iv-i.-the-graphite-render-endpoint">IV-I. The Graphite render endpoint</a></li>
+<li><a href="#iv-ii.-building-graphite-queries">IV-II. Building Graphite queries</a></li>
+<li><a href="#iv-iii.-interpreting-graphs">IV-III. Interpreting graphs</a></li>
+<li><a href="#iv-iv.-example-dashboards">IV-IV. Example dashboards</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#next-steps">Next steps</a></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="introduction-monitoring-and-visualizing-system-performance">Introduction-Monitoring and visualizing system performance</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\Introduction-Monitoring and visualizing system performance.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="introduction-what-you-should-know">Introduction-What you should know</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\Introduction-What you should know.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="introduction-exercise-files">Introduction-Exercise files</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\Introduction-Exercise files.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="i.-metrics-gathering-with-statsd">I. Metrics Gathering with StatsD</h1>
+<h2 id="i-i.-statsd-overview">I-I. StatsD overview</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\I-I. StatsD overview.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-ii.-installing-statsd">I-II. Installing StatsD</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\I-II. Installing StatsD.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iii.-configuring-statsd">I-III. Configuring StatsD</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\I-III. Configuring StatsD.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iv.-types-of-metrics">I-IV. Types of metrics</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\I-IV. Types of metrics.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-v.-adding-statsd-to-an-application">I-V. Adding StatsD to an application</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\I-V. Adding StatsD to an application.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-vi.-first-look-with-statsd-and-grafana">I-VI. First look with StatsD and Grafana</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\I-VI. First look with StatsD and Grafana.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="ii.-graphite-metrics-aggregation">II. Graphite: Metrics Aggregation</h1>
+<h2 id="ii-i.-graphite-basics-and-components">II-I. Graphite basics and components</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-I. Graphite basics and components.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-ii.-installing-graphite">II-II. Installing Graphite</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-II. Installing Graphite.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iii.-setting-up-the-graphite-web-database">II-III. Setting up the Graphite-web database</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-III. Setting up the Graphite-web database.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iv.-carbon-overview">II-IV. Carbon overview</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-IV. Carbon overview.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-v.-configuring-carbon">II-V. Configuring carbon</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-V. Configuring carbon.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iivi.-configuring-graphite-web">II–VI. Configuring Graphite-web</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II--VI. Configuring Graphite-web.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-vii.-whisper-files">II-VII. Whisper files</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-VII. Whisper files.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-viii.-verifying-the-system">II-VIII. Verifying the system</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-VIII. Verifying the system.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-ix.-the-graphite-ui">II-IX. The Graphite UI</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-IX. The Graphite UI.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-x.-graphite-scaling-and-performance">II-X. Graphite scaling and performance</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\II-X. Graphite scaling and performance.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="iii.-grafana-metrics-visualization">III. Grafana: Metrics Visualization</h1>
+<h2 id="iii-i.-grafana-basics">III-I. Grafana basics</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-I. Grafana basics.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-ii.-installing-grafana">III-II. Installing Grafana</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-II. Installing Grafana.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iii.-grafana-security-basics">III-III. Grafana security basics</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-III. Grafana security basics.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iv.-adding-data-sources">III-IV. Adding data sources</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-IV. Adding data sources.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-v.-creating-dashboards">III-V. Creating dashboards</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-V. Creating dashboards.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vi.-additional-dashboard-configurations">III-VI. Additional dashboard configurations</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-VI. Additional dashboard configurations.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vii.-deep-dive-grafana-panel-types">III-VII. Deep dive Grafana panel types</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-VII. Deep dive Grafana panel types.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-viii.-high-availability-grafana">III-VIII. High-availability Grafana</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\III-VIII. High-availability Grafana.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="iv.-using-graphite-and-grafana-together">IV. Using Graphite and Grafana together</h1>
+<h2 id="iv-i.-the-graphite-render-endpoint">IV-I. The Graphite render endpoint</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\IV-I. The Graphite render endpoint.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-ii.-building-graphite-queries">IV-II. Building Graphite queries</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\IV-II. Building Graphite queries.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iii.-interpreting-graphs">IV-III. Interpreting graphs</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\IV-III. Interpreting graphs.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iv.-example-dashboards">IV-IV. Example dashboards</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\IV-IV. Example dashboards.mp4" type="video/mp4">
+</video>
+</p>
+<hr />
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="next-steps">Next steps</h2>
+<video width="600" height="337" controls>
+<source src="Graphite&Grafana\Conclusion-Next steps.mp4" type="video/mp4">
+</video>
+<h2 id="certification">CERTIFICATION</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="Graphite&amp;Grafana\CertificateOfCompletion_Graphite%20and%20Grafana%20-%20Visualizing%20Application%20Performance.pdf">CertificateOfCompletion_Graphite and Grafana - Visualizing Application Performance.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="Graphite&amp;Grafana.pdf">Graphite and Grafana - Visualizing Application Performance - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

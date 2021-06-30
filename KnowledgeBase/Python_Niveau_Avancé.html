@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Omar SOUISSI" />
+  <title>Python - Niveau Avancé</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Python - Niveau Avancé</h1>
+<p class="author">Omar SOUISSI</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#i.-aborder-le-langage-python">I. Aborder le langage Python</a>
+<ul>
+<li><a href="#i-i.-maîtriser-python">I-I. Maîtriser Python</a></li>
+<li><a href="#i-ii.-connaître-les-prérequis">I-II. Connaître les prérequis</a></li>
+<li><a href="#i-iii.-découvrir-lenvironnement-de-travail">I-III. Découvrir l’environnement de travail</a></li>
+<li><a href="#i-iv.-quizz">I-IV. QUIZZ</a></li>
+</ul></li>
+<li><a href="#ii.-appréhender-les-meilleures-pratiques">II. Appréhender les meilleures pratiques</a>
+<ul>
+<li><a href="#ii-i.-employer-les-appellations-adéquates">II-I. Employer les appellations adéquates</a></li>
+<li><a href="#ii-ii.-ecrire-un-code-propre">II-II. Ecrire un code propre</a></li>
+<li><a href="#ii-iii.-gérer-les-exceptions">II-III. Gérer les exceptions</a></li>
+<li><a href="#ii-iv.-tirer-parti-des-compréhensions">II-IV. Tirer parti des compréhensions</a></li>
+<li><a href="#ii-v.-utiliser-les-compréhensions-avec-dictionnaires">II-V. Utiliser les compréhensions avec dictionnaires</a></li>
+<li><a href="#ii-vi.-quizz">II-VI. QUIZZ</a></li>
+</ul></li>
+<li><a href="#iii.-passer-à-lutilisation-avancée-des-fonctions">III. Passer à l’utilisation avancée des fonctions</a>
+<ul>
+<li><a href="#iii-i.-créer-une-fonction">III-I. Créer une fonction</a></li>
+<li><a href="#iii-ii.-connaître-les-fonctions-natives-de-python">III-II. Connaître les fonctions natives de Python</a></li>
+<li><a href="#iii-iii.-maîtriser-lutilisation-des-arguments">III-III. Maîtriser l’utilisation des arguments</a></li>
+<li><a href="#iii-iv.-comprendre-le-logging-avec-python">III-IV. Comprendre le logging avec Python</a></li>
+<li><a href="#iii-v.-utiliser-une-fonction-lambda">III-V. Utiliser une fonction lambda</a></li>
+<li><a href="#iii-vi.-quizz">III-VI. QUIZZ</a></li>
+</ul></li>
+<li><a href="#iv.-aller-plus-loin-dans-lutilisation-des-classes">IV. Aller plus loin dans l’utilisation des classes</a>
+<ul>
+<li><a href="#iv-i.-construire-une-classe">IV-I. Construire une classe</a></li>
+<li><a href="#iv-ii.-aborder-la-notion-dhéritage">IV-II. Aborder la notion d’héritage</a></li>
+<li><a href="#iv-iii.-comprendre-le-polymorphisme">IV-III. Comprendre le polymorphisme <a name="IV-III. Comprendre le polymorphisme"></a></a></li>
+<li><a href="#iv-iv.-gérer-laccès-aux-attributs">IV-IV. Gérer l’accès aux attributs</a></li>
+<li><a href="#iv-v.-mieux-utiliser-les-classes">IV-V. Mieux utiliser les classes</a></li>
+<li><a href="#iv-vi.-quizz">IV-VI. QUIZZ</a></li>
+</ul></li>
+<li><a href="#v.-mettre-en-oeuvre-les-décorateurs">V. Mettre en oeuvre les décorateurs</a>
+<ul>
+<li><a href="#v-i.-comprendre-lintérêt-des-décorateurs">V-I. Comprendre l’intérêt des décorateurs</a></li>
+<li><a href="#v-ii.-utiliser-les-décorateurs">V-II. Utiliser les décorateurs</a></li>
+<li><a href="#v-iii.-exploiter-les-décorateurs-multiples">V-III. Exploiter les décorateurs multiples</a></li>
+<li><a href="#v-iv.-gérer-les-arguments-avec-les-décorateurs">V-IV. Gérer les arguments avec les décorateurs</a></li>
+<li><a href="#v-vii.-utiliser-la-librairie-functools">V-VII. Utiliser la librairie functools</a></li>
+<li><a href="#v-viii.-quizz">V-VIII. QUIZZ</a></li>
+</ul></li>
+<li><a href="#vi.-tirer-parti-des-itérateurs-et-des-générateurs">VI. Tirer parti des itérateurs et des générateurs</a>
+<ul>
+<li><a href="#vi-i.-comprendre-lintérêt-des-itérateurs-et-des-générateurs">VI-I. Comprendre l’intérêt des itérateurs et des générateurs</a></li>
+<li><a href="#vi-ii.-mettre-en-pratique-les-itérateurs-basiques">VI-II. Mettre en pratique les itérateurs basiques</a></li>
+<li><a href="#vi-iii.-découvrir-le-module-itertools">VI-III. Découvrir le module itertools</a></li>
+<li><a href="#vi-iv.-employer-les-générateurs-basiques">VI-IV. Employer les générateurs basiques</a></li>
+<li><a href="#vi-v.-quizz">VI-V. QUIZZ</a></li>
+</ul></li>
+<li><a href="#vii.-conclusion">VII. Conclusion</a>
+<ul>
+<li><a href="#vii-i.-conclure-sur-lutilisation-avancée-du-langage-python">VII-I. Conclure sur l’utilisation avancée du langage Python</a></li>
+<li><a href="#vii-ii.-certification">VII-II. CERTIFICATION</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\0.Introduction.mp4" type="video/mp4">
+</video>
+<h1 id="i.-aborder-le-langage-python">I. Aborder le langage Python</h1>
+<h2 id="i-i.-maîtriser-python">I-I. Maîtriser Python</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\I-I.Maîtriser_Python.mp4" type="video/mp4">
+</video>
+<h2 id="i-ii.-connaître-les-prérequis">I-II. Connaître les prérequis</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\I-II. Connaître les prérequis.mp4" type="video/mp4">
+</video>
+<h2 id="i-iii.-découvrir-lenvironnement-de-travail">I-III. Découvrir l’environnement de travail</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\I-III. Découvrir l'environnement de travail.mp4" type="video/mp4">
+</video>
+<h2 id="i-iv.-quizz">I-IV. QUIZZ</h2>
+<ol type="1">
+<li>Un des avantages de Python est _____. <code>la gestion des ressources automatisée</code></li>
+<li>Un notebook Jupyter propose deux modes : un mode Édition et un mode _____. <code>Commande</code></li>
+</ol>
+<hr />
+<h1 id="ii.-appréhender-les-meilleures-pratiques">II. Appréhender les meilleures pratiques</h1>
+<h2 id="ii-i.-employer-les-appellations-adéquates">II-I. Employer les appellations adéquates</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\II-I. Employer les appellations adéquates.mp4" type="video/mp4">
+</video>
+<h2 id="ii-ii.-ecrire-un-code-propre">II-II. Ecrire un code propre</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\II-II. Ecrire un code propre.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iii.-gérer-les-exceptions">II-III. Gérer les exceptions</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\II-III. Gérer les exceptions.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iv.-tirer-parti-des-compréhensions">II-IV. Tirer parti des compréhensions</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\II-IV. Tirer parti des compréhensions.mp4" type="video/mp4">
+</video>
+<h2 id="ii-v.-utiliser-les-compréhensions-avec-dictionnaires">II-V. Utiliser les compréhensions avec dictionnaires</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\II-V. Utiliser les compréhensions avec dictionnaires.mp4" type="video/mp4">
+</video>
+<h2 id="ii-vi.-quizz">II-VI. QUIZZ</h2>
+<ol type="1">
+<li>Pour gérer les exceptions, on peut utiliser la syntaxe _____. <code>try...except</code></li>
+<li>En Python, les compréhensions fonctionnent avec des _____. <code>listes</code></li>
+<li>La compréhension sur un dictionnaire peut remplacer une fonction _____. <code>map()</code></li>
+<li>Le nom d’une fonction interne d’une classe devrait commencer par _____. <code>_</code></li>
+<li>Le PEP 8 indique : « Préférer _____ ». <code>la jointure à la concaténation</code></li>
+</ol>
+<hr />
+<h1 id="iii.-passer-à-lutilisation-avancée-des-fonctions">III. Passer à l’utilisation avancée des fonctions</h1>
+<h2 id="iii-i.-créer-une-fonction">III-I. Créer une fonction</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\III-I. Créer une fonction.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ii.-connaître-les-fonctions-natives-de-python">III-II. Connaître les fonctions natives de Python</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\III-II. Connaître les fonctions natives de Python.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iii.-maîtriser-lutilisation-des-arguments">III-III. Maîtriser l’utilisation des arguments</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\III-III. Maîtriser l'utilisation des arguments.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iv.-comprendre-le-logging-avec-python">III-IV. Comprendre le logging avec Python</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\III-IV. Comprendre le logging avec Python.mp4" type="video/mp4">
+</video>
+<h2 id="iii-v.-utiliser-une-fonction-lambda">III-V. Utiliser une fonction lambda</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\III-V. Utiliser une fonction lambda.mp4" type="video/mp4">
+</video>
+<h2 id="iii-vi.-quizz">III-VI. QUIZZ</h2>
+<ol type="1">
+<li>_____ les fonctions est une bonne pratique. <code>Décomposer</code></li>
+<li>Python utilise le symbole _____ pour indiquer la partie imaginaire d’un nombre complexe. <code>j</code></li>
+<li>Pour forcer Python 3 à exiger l’envoi à une fonction d’arguments explicitement nommés, on utilise le signe _____. <code>*</code></li>
+<li>Parmi les niveaux du module logging de Python, on trouve _____. <code>WARNING</code></li>
+<li>Pour séparer les arguments du corps d’une fonction lambda, on utilise le signe _____. <code>:</code></li>
+</ol>
+<hr />
+<h1 id="iv.-aller-plus-loin-dans-lutilisation-des-classes">IV. Aller plus loin dans l’utilisation des classes</h1>
+<h2 id="iv-i.-construire-une-classe">IV-I. Construire une classe</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\IV-I. Construire une classe.mp4" type="video/mp4">
+</video>
+<h2 id="iv-ii.-aborder-la-notion-dhéritage">IV-II. Aborder la notion d’héritage</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\IV-II. Aborder la notion d'héritage.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iii.-comprendre-le-polymorphisme">IV-III. Comprendre le polymorphisme <a name="IV-III. Comprendre le polymorphisme"></a></h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\IV-III. Comprendre le polymorphisme.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iv.-gérer-laccès-aux-attributs">IV-IV. Gérer l’accès aux attributs</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\IV-IV. Gérer l'accès aux attributs.mp4" type="video/mp4">
+</video>
+<h2 id="iv-v.-mieux-utiliser-les-classes">IV-V. Mieux utiliser les classes</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\IV-V. Mieux utiliser les classes.mp4" type="video/mp4">
+</video>
+<h2 id="iv-vi.-quizz">IV-VI. QUIZZ</h2>
+<ol type="1">
+<li>Pas _____, pas de classe ! <code>de méthode</code></li>
+<li>Le premier paramètre d’une méthode de classe est toujours _____. <code>SELF</code></li>
+<li>La fonction _____ permet de savoir si une classe est enfant d’une classe parente. <code>issubclass()</code></li>
+<li>La fonction <strong>str</strong>() est une fonction _____. <code>magique</code> =&gt; <a href="##%20IV-III.%20Comprendre%20le%20polymorphisme">IV-III. Comprendre le polymorphisme</a></li>
+<li>En Python, on ne peut pas accéder directement à un attribut, il faut utiliser les fonctions setter ou getter. <code>FAUX</code></li>
+</ol>
+<hr />
+<h1 id="v.-mettre-en-oeuvre-les-décorateurs">V. Mettre en oeuvre les décorateurs</h1>
+<h2 id="v-i.-comprendre-lintérêt-des-décorateurs">V-I. Comprendre l’intérêt des décorateurs</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\V-I. Comprendre l'intérêt des décorateurs.mp4" type="video/mp4">
+</video>
+<h2 id="v-ii.-utiliser-les-décorateurs">V-II. Utiliser les décorateurs</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\V-II. Utiliser les décorateurs.mp4" type="video/mp4">
+</video>
+<h2 id="v-iii.-exploiter-les-décorateurs-multiples">V-III. Exploiter les décorateurs multiples</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\V-III. Exploiter les décorateurs multiples.mp4" type="video/mp4">
+</video>
+<h2 id="v-iv.-gérer-les-arguments-avec-les-décorateurs">V-IV. Gérer les arguments avec les décorateurs</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\V-IV. Gérer les arguments avec les décorateurs.mp4" type="video/mp4">
+</video>
+<h2 id="v-vii.-utiliser-la-librairie-functools">V-VII. Utiliser la librairie functools</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\V-VII. Utiliser la librairie functools.mp4" type="video/mp4">
+</video>
+<h2 id="v-viii.-quizz">V-VIII. QUIZZ</h2>
+<ol type="1">
+<li>Un décorateur prend _____ en argument. <code>une fonction</code></li>
+<li>Le module functools comporte le décorateur _____. <code>wraps</code></li>
+<li>Pour indiquer un décorateur en préfixe d’un appel de fonction, on utilise le symbole _____. <code>@</code></li>
+<li>En utilisant des décorateurs multiples, l’ordre est important. <code>VRAI</code></li>
+<li>On peut gérer _____ de la fonction dans un décorateur. <code>les arguments</code></li>
+</ol>
+<hr />
+<h1 id="vi.-tirer-parti-des-itérateurs-et-des-générateurs">VI. Tirer parti des itérateurs et des générateurs</h1>
+<h2 id="vi-i.-comprendre-lintérêt-des-itérateurs-et-des-générateurs">VI-I. Comprendre l’intérêt des itérateurs et des générateurs</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\VI-I. Comprendre l'intérêt des itérateurs et des générateurs.mp4" type="video/mp4">
+</video>
+<h2 id="vi-ii.-mettre-en-pratique-les-itérateurs-basiques">VI-II. Mettre en pratique les itérateurs basiques</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\VI-II. Mettre en pratique les itérateurs basiques.mp4" type="video/mp4">
+</video>
+<h2 id="vi-iii.-découvrir-le-module-itertools">VI-III. Découvrir le module itertools</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\VI-III. Découvrir le module itertools.mp4" type="video/mp4">
+</video>
+<h2 id="vi-iv.-employer-les-générateurs-basiques">VI-IV. Employer les générateurs basiques</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\VI-IV. Employer les générateurs basiques.mp4" type="video/mp4">
+</video>
+<h2 id="vi-v.-quizz">VI-V. QUIZZ</h2>
+<ol type="1">
+<li>Les dictionnaires font partie des _____. <code>itérables</code></li>
+<li>Une classe itérateur doit contenir la méthode _____. <code>__next__()</code></li>
+<li>Le générateur comporte l’instruction _____. <code>yield</code></li>
+<li>Le module itertools intègre un traitement des _____. <code>permutations</code></li>
+</ol>
+<h1 id="vii.-conclusion">VII. Conclusion</h1>
+<h2 id="vii-i.-conclure-sur-lutilisation-avancée-du-langage-python">VII-I. Conclure sur l’utilisation avancée du langage Python</h2>
+<video width="600" height="337" controls>
+<source src="PythonNiveauAvance\VII-I. Conclure sur l'utilisation avancée du langage Python.mp4" type="video/mp4">
+</video>
+<h2 id="vii-ii.-certification">VII-II. CERTIFICATION</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="PythonNiveauAvance\CertificateOfCompletion_Python%20Niveau%20avance.pdf">CertificateOfCompletion_Python Niveau avance.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="Python-NiveauAvancé.pdf">Python: Niveau Avancé - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <title>LINUX</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">LINUX</h1>
+<p class="author">David DEBRAY</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#suspend-wakeup-automatically">Suspend &amp; Wakeup Automatically</a>
+<ul>
+<li><a href="#using-rtcwake">Using RTCWAKE</a>
+<ul>
+<li><a href="#script-from-askubuntu.com">Script from <span>AskUbuntu.com</span></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#notifications-using-telegram">Notifications using <strong>Telegram</strong></a>
+<ul>
+<li><a href="#requirements">Requirements</a></li>
+</ul></li>
+<li><a href="#start-scripts-on-system-reboot-using-cron">Start Scripts on System Reboot using <strong>CRON</strong></a></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="suspend-wakeup-automatically">Suspend &amp; Wakeup Automatically</h1>
+<h2 id="using-rtcwake">Using RTCWAKE</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sudo</span> rtcwake -m disk --date 06:00</span></code></pre></div>
+<ul>
+<li><a href="https://www.maketecheasier.com/alarm-automatically-power-on-linux/">https://www.maketecheasier.com/alarm-automatically-power-on-linux/</a></li>
+</ul>
+<h3 id="script-from-askubuntu.com">Script from <a href="https://askubuntu.com/questions/61708/automatically-sleep-and-wake-up-at-specific-times">AskUbuntu.com</a></h3>
+<p>This script is called <strong>suspend_until</strong> see <code>/opt/Scripts</code>. This script can be executed as <strong>Root without Password</strong>. See the contents of <code>visudo</code> or <code>/etc/sudoers</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># --------------------- My Scripts --------------------- #</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># ------------------------------------------------------ #</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># All scripts below can be executed as ROOT without      #</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># PASSWORD. Be careful...                                #</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># ------------------------------------------------------ #</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="ex">david</span> ALL=(ALL) <span class="ex">NOPASSWD</span>: /opt/Scripts/MountShares.sh</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="ex">david</span> ALL=(ALL) <span class="ex">NOPASSWD</span>: /opt/Scripts/suspend_until.sh</span></code></pre></div>
+<h1 id="notifications-using-telegram">Notifications using <strong>Telegram</strong></h1>
+<p><a href="https://www.assistanz.com/get-server-notification-telegram-app/">https://www.assistanz.com/get-server-notification-telegram-app/</a></p>
+<h2 id="requirements">Requirements</h2>
+<ol type="1">
+<li>ChatID</li>
+<li>Token</li>
+</ol>
+<p>Example:</p>
+<pre class="shell"><code>#!/bin/bash
+
+TOKEN=&lt;TOKEN&gt;
+CHAT_ID=&lt;CHAT_ID&gt;
+MESSAGE=&quot;Hello World&quot;
+URL=&quot;https://api.telegram.org/bot$TOKEN/sendMessage&quot;
+
+curl -s -X POST $URL -d chat_id=$CHAT_ID -d text=&quot;$MESSAGE&quot;</code></pre>
+<h1 id="start-scripts-on-system-reboot-using-cron">Start Scripts on System Reboot using <strong>CRON</strong></h1>
+<p>Example of crontab:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># --------------------- My Scripts -------------------- #</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Mount Shares from Vali on Startup</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">@reboot</span> /opt/Scripts/MountShares.sh</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># VNC Server</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="ex">@reboot</span> /opt/Scripts/StartVNCServer.sh</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="co"># PRTG Monitoring</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="ex">@reboot</span> /opt/Scripts/AZGARD_Autostart.sh</span></code></pre></div>
+<p style="text-align: center">
+<a href="LINUX.pdf">LINUX - Version PDF</a>
+</p>
+<hr />
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ernest Mueller and James Wickett" />
+  <title>DevOps Foundations</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">DevOps Foundations</h1>
+<p class="author">Ernest Mueller and James Wickett</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#welcome">Welcome</a></li>
+<li><a href="#i.-devops-basics">I. DevOps Basics</a>
+<ul>
+<li><a href="#i-i.-what-is-devops">I-I. What is DevOps?</a></li>
+<li><a href="#i-ii.-devops-core-values-cams">I-II. DevOps core values: CAMS</a></li>
+<li><a href="#i-iii.-devops-principles-the-three-ways">I-III. DevOps principles: The three ways</a>
+<ul>
+<li><a href="#i-iii-i.-systems-thinking">I-III-I. <strong>Systems Thinking:</strong></a></li>
+<li><a href="#i-iii-ii.-amplifing-feedback-loops">I-III-II. <strong>Amplifing Feedback Loops:</strong></a></li>
+<li><a href="#i-iii-iiii.-culture-of-continuous-experimentation-and-learning">I-III-IIII. <strong>Culture of continuous experimentation and learning</strong></a></li>
+</ul></li>
+<li><a href="#i-iv.-your-devops-playbook">I-IV. Your DevOps playbook</a></li>
+<li><a href="#i-vi.-10-practices-for-devops-success-10-through-6">I-VI. 10 practices for DevOps success (10 through 6)</a></li>
+<li><a href="#i-vii.-10-practices-for-devops-success-5-through-1">I-VII. 10 practices for DevOps success (5 through 1)</a></li>
+<li><a href="#i-v.-devops-tools-the-cart-or-the-horse">I-V. DevOps tools: The cart or the horse?</a></li>
+<li><a href="#i-vi.-quizz">I-VI. Quizz</a>
+<ul>
+<li><a href="#lets-say-your-companys-server-went-down-for-a-few-days-due-to-a-hurricane.-how-would-having-a-status-page-affect-your-companys-reputation-throughout-the-outage">3. Let’s say your company’s server went down for a few days due to a hurricane. How would having a status page affect your company’s reputation throughout the outage?</a></li>
+<li><a href="#when-considering-the-people-over-process-over-tools-methodology-why-is-it-important-to-focus-on-people-first">4. When considering the People over Process over Tools methodology, why is it important to focus on People first?</a></li>
+<li><a href="#what-are-the-five-levels-of-devops-practice">5. What are the five levels of DevOps practice?</a></li>
+<li><a href="#tools-are-launched-daily-for-diverse-purposes.-which-qualities-should-you-look-for-in-a-tool-before-combining-it-into-a-toolchain">6. Tools are launched daily for diverse purposes. Which qualities should you look for in a tool before combining it into a toolchain?</a></li>
+<li><a href="#suppose-you-want-to-test-the-resilience-of-your-companys-e-commerce-website-in-preparation-for-the-holiday-shopping-season.-how-would-having-a-chaos-monkey-test-the-abilities-of-your-servers">7. Suppose you want to test the resilience of your company’s e-commerce website in preparation for the holiday shopping season. How would having a Chaos Monkey test the abilities of your servers?</a></li>
+<li><a href="#how-can-you-implement-experimentation-and-learning-in-your-work-environment">8. How can you implement experimentation and learning in your work environment?</a></li>
+<li><a href="#what-are-the-four-values-in-the-cams-model">9. What are the four values in the CAMS model?</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ii.-devops-a-culture-problem">II. DevOps: A Culture Problem</a>
+<ul>
+<li><a href="#ii-i.-the-it-crowd-and-the-coming-storm">II-I. The IT crowd and the coming storm</a></li>
+<li><a href="#ii-ii.-use-your-words">II-II. Use your words</a></li>
+<li><a href="#ii-iii.-do-unto-others">II-III. Do unto others</a></li>
+<li><a href="#ii-iv.-throwing-things-over-walls">II-IV. Throwing things over walls</a></li>
+<li><a href="#ii-v.-kaizen-continuous-improvement">II-V. Kaizen Continuous improvement</a></li>
+<li><a href="#ii-vi.-quizz">II-VI. QUIZZ</a></li>
+</ul></li>
+<li><a href="#iii.-the-building-blocks-of-devops">III. The Building Blocks of DevOps</a>
+<ul>
+<li><a href="#iii-i.-devops-building-block-agile">III-I. DevOps building block: Agile</a></li>
+<li><a href="#iii-ii.-devops-building-block-lean">III-II. DevOps building block: Lean</a></li>
+<li><a href="#iii-iii.-itil-itsm-and-the-sdlc">III-III. ITIL, ITSM, and the SDLC</a></li>
+<li><a href="#iii-iv.-quizz">III-IV. QUIZZ</a></li>
+</ul></li>
+<li><a href="#iv.-infrastrucutre-automation">IV. Infrastrucutre Automation</a>
+<ul>
+<li><a href="#iv-i.-infrastructure-as-code">IV-I. Infrastructure as code</a></li>
+<li><a href="#iv-ii.-golden-image-to-foil-ball">IV-II. Golden image to foil ball</a></li>
+<li><a href="#iv-iii.-immutable-deployment">IV-III. Immutable deployment</a></li>
+<li><a href="#iv-iv.-your-infrastructure-toolchain">IV-IV. Your infrastructure toolchain</a></li>
+<li><a href="#iv-v.-quizz">IV-V. QUIZZ</a></li>
+</ul></li>
+<li><a href="#v.-continuous-delivery">V. Continuous Delivery</a>
+<ul>
+<li><a href="#v-i.-small-fast-better">V-I. Small + fast = better</a></li>
+<li><a href="#v-ii.-continuous-integration-practices">V-II. Continuous integration practices</a></li>
+<li><a href="#v-iii.-the-continuous-delivery-pipeline">V-III. The continuous delivery pipeline</a></li>
+<li><a href="#v-iv.-the-role-of-qa">V-IV. The role Of QA</a></li>
+<li><a href="#v-v.-your-ci-toolchain">V-V. Your CI toolchain</a></li>
+<li><a href="#v-vi.-quizz">V-VI. QUIZZ</a></li>
+</ul></li>
+<li><a href="#vi.-reliability-engineering">VI. Reliability Engineering</a>
+<ul>
+<li><a href="#vi-i.-engineering-doesnt-end-with-deployment">VI-I. Engineering doesn’t end with deployment</a></li>
+<li><a href="#vi-ii.-design-for-operation-theory">VI-II. Design for operation (Theory)</a></li>
+<li><a href="#vi-iii.-design-for-operation-practice">VI-III. Design for operation (Practice)</a></li>
+<li><a href="#vi-iv.-operate-for-design-metrics-and-monitoring">VI-IV. Operate for design: Metrics and monitoring</a></li>
+<li><a href="#vi-v.-operate-for-design-logging">VI-V. Operate for design: Logging</a></li>
+<li><a href="#vi-vi.-your-sre-toolchain">VI-VI. Your SRE toolchain</a></li>
+<li><a href="#v-vi.-quizz-1">V-VI. QUIZZ</a></li>
+</ul></li>
+<li><a href="#vii.-additionnal-devops-resources">VII. Additionnal DevOps Resources</a>
+<ul>
+<li><a href="#vii-i.-unicorns-horses-and-donkeys-oh-my">VII-I. Unicorns, horses, and donkeys, oh my</a></li>
+<li><a href="#vii-ii.-the-10-best-devops-books-you-need-to-read">VII-II. The 10 best DevOps books you need to read</a></li>
+<li><a href="#vii-iii.-navigating-the-series-of-tubes">VII-III. Navigating The Series of Tubes</a></li>
+<li><a href="#vii-iv.-quizz">VII-IV. QUIZZ</a></li>
+</ul></li>
+<li><a href="#viii.-the-future-of-devops">VIII. The Future of DevOps</a>
+<ul>
+<li><a href="#viii-i.cloud-to-containers-to-serverless-solutions">VIII-I.Cloud to containers to serverless solutions</a></li>
+<li><a href="#viii-ii.-the-rugged-frontier-of-devops-security">VIII-II. The rugged frontier of DevOps: Security</a></li>
+<li><a href="#viii-iii.-quizz">VIII-III. QUIZZ</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#next-steps-am-i-a-devop-now">Next steps: Am I a DevOp now?</a></li>
+<li><a href="#resources">Resources</a></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="welcome">Welcome</h1>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\Welcome.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="i.-devops-basics">I. DevOps Basics</h1>
+<h2 id="i-i.-what-is-devops">I-I. What is DevOps?</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-I. What is DevOps.mp4" type="video/mp4">
+</video>
+<h2 id="i-ii.-devops-core-values-cams">I-II. DevOps core values: CAMS</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-II. DevOps core values CAMS.mp4" type="video/mp4">
+</video>
+<ul>
+<li><strong>C</strong>: Culture</li>
+<li><strong>A</strong>: Automation</li>
+<li><strong>M</strong>: Measurement</li>
+<li><strong>S</strong>: Sharing (feedback loop)</li>
+</ul>
+<h2 id="i-iii.-devops-principles-the-three-ways">I-III. DevOps principles: The three ways</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-III. DevOps principles The three ways.mp4" type="video/mp4">
+</video>
+<h3 id="i-iii-i.-systems-thinking">I-III-I. <strong>Systems Thinking:</strong></h3>
+<p>Overall results are prioritize, you must understand the whole system to improve it.</p>
+<h3 id="i-iii-ii.-amplifing-feedback-loops">I-III-II. <strong>Amplifing Feedback Loops:</strong></h3>
+<p>Short effective feedback loops are the key.</p>
+<h3 id="i-iii-iiii.-culture-of-continuous-experimentation-and-learning">I-III-IIII. <strong>Culture of continuous experimentation and learning</strong></h3>
+<p>Repetition of pratice by tryouts and experience.</p>
+<h2 id="i-iv.-your-devops-playbook">I-IV. Your DevOps playbook</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-IV. Your DevOps playbook.mp4" type="video/mp4">
+</video>
+<p>People over Process over Tools.</p>
+<h2 id="i-vi.-10-practices-for-devops-success-10-through-6">I-VI. 10 practices for DevOps success (10 through 6)</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-VI. 10 practices for DevOps success (10 through 6).mp4" type="video/mp4">
+</video>
+<blockquote>
+<ol start="10" type="1">
+<li>Incident Command System</li>
+<li>Developper on Call</li>
+<li>Public Status Pages</li>
+<li>Blameless Postmortems</li>
+<li>Embedded Teams</li>
+</ol>
+</blockquote>
+<h2 id="i-vii.-10-practices-for-devops-success-5-through-1">I-VII. 10 practices for DevOps success (5 through 1)</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-VII. 10 practices for DevOps success (5 through 1).mp4" type="video/mp4">
+</video>
+<blockquote>
+<ol start="5" type="1">
+<li>The CLoud</li>
+<li>The Andon Cord</li>
+<li>Dependency Injection</li>
+<li>Blue/Green Deployment</li>
+<li>Chaos Monkey</li>
+</ol>
+</blockquote>
+<h2 id="i-v.-devops-tools-the-cart-or-the-horse">I-V. DevOps tools: The cart or the horse?</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\I-V. DevOps tools The cart or the horse.mp4" type="video/mp4">
+</video>
+<h2 id="i-vi.-quizz">I-VI. Quizz</h2>
+<p><span class="question">1. How would you summarize the key DevOps tenet? </span> <span class="answer">DevOps is a partnership of all the team members involved in software development and operations. DevOps is a collaboration between the development and operations team members.</span></p>
+<p><span class="question"> 2. DevOps unites team members from both the _____ and _____ to participate in the IT service lifecycle from design to ongoing support. </span> <span class="answer">“code side”; “system side”</span></p>
+<h3 id="lets-say-your-companys-server-went-down-for-a-few-days-due-to-a-hurricane.-how-would-having-a-status-page-affect-your-companys-reputation-throughout-the-outage">3. Let’s say your company’s server went down for a few days due to a hurricane. How would having a status page affect your company’s reputation throughout the outage?</h3>
+<p>Communicating on the status page throughout the outage will notify the users of the issues and deadline for resolution. It can improve the trust and satisfaction of the customers.</p>
+<h3 id="when-considering-the-people-over-process-over-tools-methodology-why-is-it-important-to-focus-on-people-first">4. When considering the People over Process over Tools methodology, why is it important to focus on People first?</h3>
+<p>You need a responsible individual with the appropriate skill set who knows the planning and implementation of the project and tools otherwise there will be wastage and inferior product and solution delivery.</p>
+<h3 id="what-are-the-five-levels-of-devops-practice">5. What are the five levels of DevOps practice?</h3>
+<p>values, principles, methods, practices, and tools</p>
+<h3 id="tools-are-launched-daily-for-diverse-purposes.-which-qualities-should-you-look-for-in-a-tool-before-combining-it-into-a-toolchain">6. Tools are launched daily for diverse purposes. Which qualities should you look for in a tool before combining it into a toolchain?</h3>
+<p>All of these :)</p>
+<h3 id="suppose-you-want-to-test-the-resilience-of-your-companys-e-commerce-website-in-preparation-for-the-holiday-shopping-season.-how-would-having-a-chaos-monkey-test-the-abilities-of-your-servers">7. Suppose you want to test the resilience of your company’s e-commerce website in preparation for the holiday shopping season. How would having a Chaos Monkey test the abilities of your servers?</h3>
+<p>The Chaos Monkey will interrupt normal operations for your server, forcing your engineers to find methods to make the server robust and tolerant to instance failures.</p>
+<h3 id="how-can-you-implement-experimentation-and-learning-in-your-work-environment">8. How can you implement experimentation and learning in your work environment?</h3>
+<p>Rotate your employees to attend conferences and share vital information with their colleagues.</p>
+<h3 id="what-are-the-four-values-in-the-cams-model">9. What are the four values in the CAMS model?</h3>
+<p>CAMS: Culture, Automation, Measurement, and Sharing</p>
+<h1 id="ii.-devops-a-culture-problem">II. DevOps: A Culture Problem</h1>
+<h2 id="ii-i.-the-it-crowd-and-the-coming-storm">II-I. The IT crowd and the coming storm</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\II-I. The IT crowd and the coming storm.mp4" type="video/mp4">
+</video>
+<h2 id="ii-ii.-use-your-words">II-II. Use your words</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\II-II. Use your words.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iii.-do-unto-others">II-III. Do unto others</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\II-III. Do unto others.mp4" type="video/mp4">
+</video>
+<h2 id="ii-iv.-throwing-things-over-walls">II-IV. Throwing things over walls</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\II-IV. Throwing things over walls.mp4" type="video/mp4">
+</video>
+<h2 id="ii-v.-kaizen-continuous-improvement">II-V. Kaizen Continuous improvement</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\II-V. Kaizen Continuous improvement.mp4" type="video/mp4">
+</video>
+<ul>
+<li><strong>Gemba</strong>: Go to the place of the process.</li>
+<li>The <strong>5 Whys</strong></li>
+</ul>
+<h2 id="ii-vi.-quizz">II-VI. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>Let’s say you need to tackle an important issue about a system failure. What important point should be discussed in the post mortem meeting?</li>
+</ol>
+</blockquote>
+<p>Explain that no one is to be assigned blame for the system failure in the meeting.</p>
+<p><em>It is important that your team members should not be assigned blame since the objective is to find a solution to the underlying cause</em>.</p>
+<blockquote>
+<ol start="2" type="1">
+<li>Companies need to tear down the _____ since it causes disunity and disharmony between the development and operations departments, instead of allowing them to collaborate collectively and align goals or objectives.</li>
+</ol>
+</blockquote>
+<p>Wall of Confusion</p>
+<p><em>Wall of confusion is a wall that blocks cooperation and a open line of communication between the operations and development teams.</em></p>
+<blockquote>
+<ol start="3" type="1">
+<li>DevOps supports the elimination of _____ because it can hamper collaboration, operations and morale within the company.</li>
+</ol>
+</blockquote>
+<p>Silos</p>
+<blockquote>
+<ol start="4" type="1">
+<li>Suppose your Dev team has frequent issues with an Ops Teams in your company. Blame is often tossed around between both groups. How would you solve this issue?</li>
+</ol>
+</blockquote>
+<p>Embed Ops engineers in your development teams, assign both teams to be in one chat room, and allow them to read each other’s source code.</p>
+<blockquote>
+<ol start="5" type="1">
+<li>Let’s say you want to employ the Kaizen cultural practice in your company. What are the four main factors in the Kaizen cycle?</li>
+</ol>
+</blockquote>
+<p>plan, do, check, and act</p>
+<h1 id="iii.-the-building-blocks-of-devops">III. The Building Blocks of DevOps</h1>
+<h2 id="iii-i.-devops-building-block-agile">III-I. DevOps building block: Agile</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\III-I. DevOps building block Agile.mp4" type="video/mp4">
+</video>
+<h2 id="iii-ii.-devops-building-block-lean">III-II. DevOps building block: Lean</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\III-I. DevOps building block Lean.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iii.-itil-itsm-and-the-sdlc">III-III. ITIL, ITSM, and the SDLC</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\III-II. ITIL, ITSM, and the SDLC.mp4" type="video/mp4">
+</video>
+<h2 id="iii-iv.-quizz">III-IV. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>Let’s say your colleague wants to know more about the central tenet of Lean. How would you explain it to them?</li>
+</ol>
+</blockquote>
+<p>The objective of lean is to ensure that value stream reaches the customer through products and services while eliminating waste.</p>
+<blockquote>
+<ol start="2" type="1">
+<li>DevOps is an extension of _____ infrastructure in which its process is _____.</li>
+</ol>
+</blockquote>
+<p>Agile; iterative</p>
+<p>DevOps has roots in Agile and the process are iterative which generates quick product or solution delivery.</p>
+<blockquote>
+<ol start="3" type="1">
+<li>Information Technology Infrastructure Library or ITIL provides a comprehensive process-model based approach of designing, managing, and controlling IT processes.</li>
+</ol>
+</blockquote>
+<p>TRUE</p>
+<h1 id="iv.-infrastrucutre-automation">IV. Infrastrucutre Automation</h1>
+<h2 id="iv-i.-infrastructure-as-code">IV-I. Infrastructure as code</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\IV-I. Infrastructure as code.mp4" type="video/mp4">
+</video>
+<h2 id="iv-ii.-golden-image-to-foil-ball">IV-II. Golden image to foil ball</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\IV-II. Golden image to foil ball.mp4" type="video/mp4">
+</video>
+<p><strong>Provisioning</strong> is the process of making a server ready for operation, including hardware, OS, system services, network connectivity.</p>
+<p><strong>Deployment</strong> is the process of automatically deploying and upgrading applications on a server.</p>
+<p><strong>Orchestration</strong> is the act of performing coordinated operations across multiple systems.</p>
+<p><strong>Configuration management</strong> is an overarching term dealing with change control ofsystem configuration after initial provision, but is often also applied to maintaining and upgrading application and application dependencies.</p>
+<p><strong>Imperative</strong> also known as “procedural,” this is an approach where commands desired to produce a state are defined and executed.</p>
+<p><strong>Declarative</strong> also known as “functional,” this is an approach where you define a desired state and the tool converges the existing system on the model.</p>
+<p><strong>Idempotent</strong> the ability to execute the CM procedure repeatedly and end up in the same state each time.</p>
+<p><strong>Self service</strong> is the ability for an end user to kick off one of these processes without having to go through other people.</p>
+<h2 id="iv-iii.-immutable-deployment">IV-III. Immutable deployment</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\IV-III. Immutable deployment.mp4" type="video/mp4">
+</video>
+<h2 id="iv-iv.-your-infrastructure-toolchain">IV-IV. Your infrastructure toolchain</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\IV-IV. Your infrastructure toolchain.mp4" type="video/mp4">
+</video>
+<h2 id="iv-v.-quizz">IV-V. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>Which of the following explains the concept of blue-green deployment?</li>
+</ol>
+</blockquote>
+<p>There are two identical production environments in which one is live (Blue) and the other is idle (Green). When new software is fully tested and deployed to Green, the router switches traffic from Blue to Green</p>
+<blockquote>
+<ol start="2" type="1">
+<li>Suppose you and your project manager are interested in the infrastructure as code approach. What is the chief issue that your team may face when utilizing the infrastructure as code approach?</li>
+</ol>
+</blockquote>
+<p>The mindset and habits of your team members.</p>
+<blockquote>
+<ol start="3" type="1">
+<li>Certain companies utilize immutable deployment, in which changes to the system are _____ as opposed to _____.</li>
+</ol>
+</blockquote>
+<p>replaced; updated</p>
+<blockquote>
+<ol start="4" type="1">
+<li>Which of the following explains the concept of containers?</li>
+</ol>
+</blockquote>
+<p>Containers are stand-alone software packages that contain runtime components to function independently.</p>
+<h1 id="v.-continuous-delivery">V. Continuous Delivery</h1>
+<h2 id="v-i.-small-fast-better">V-I. Small + fast = better</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\V-I. Small + fast = better.mp4" type="video/mp4">
+</video>
+<h2 id="v-ii.-continuous-integration-practices">V-II. Continuous integration practices</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\V-II. Continuous integration practices.mp4" type="video/mp4">
+</video>
+<h2 id="v-iii.-the-continuous-delivery-pipeline">V-III. The continuous delivery pipeline</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\V-III. The continuous delivery pipeline.mp4" type="video/mp4">
+</video>
+<h2 id="v-iv.-the-role-of-qa">V-IV. The role Of QA</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\V-IV. The role Of QA.mp4" type="video/mp4">
+</video>
+<h2 id="v-v.-your-ci-toolchain">V-V. Your CI toolchain</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\V-V. Your CI toolchain.mp4" type="video/mp4">
+</video>
+<h2 id="v-vi.-quizz">V-VI. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>Artifacts should be _____.</li>
+</ol>
+</blockquote>
+<p>built once and deployed as needed</p>
+<blockquote>
+<ol start="2" type="1">
+<li>What is a build log?</li>
+</ol>
+</blockquote>
+<p>It is a record of all the tests that were run along with their results.</p>
+<blockquote>
+<ol start="3" type="1">
+<li>Jenkins is an example of _____.</li>
+</ol>
+</blockquote>
+<p>a continuous integration tool</p>
+<blockquote>
+<ol start="4" type="1">
+<li>Suppose some of your tests are slow. Which procedures should you select to handle a slow test?</li>
+</ol>
+</blockquote>
+<ul>
+<li>Time-schedule monitoring</li>
+<li>Use non-blocking tests</li>
+<li>Use Monitoring</li>
+</ul>
+<blockquote>
+<ol start="5" type="1">
+<li>_____ describe when software is deployed quickly into production since the team members make sure the application goes through complete automated testing.</li>
+</ol>
+</blockquote>
+<p>Continuous deployments</p>
+<h1 id="vi.-reliability-engineering">VI. Reliability Engineering</h1>
+<h2 id="vi-i.-engineering-doesnt-end-with-deployment">VI-I. Engineering doesn’t end with deployment</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VI-I. Engineering doesn't end with deployment.mp4" type="video/mp4">
+</video>
+<h2 id="vi-ii.-design-for-operation-theory">VI-II. Design for operation (Theory)</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VI-II. Design for operation (Theory).mp4" type="video/mp4">
+</video>
+<ul>
+<li><a href="http://martinfowler.com/bliki/">Martin Fowler’s Architecture Descriptions</a></li>
+</ul>
+<h2 id="vi-iii.-design-for-operation-practice">VI-III. Design for operation (Practice)</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VI-III. Design for operation (Practice).mp4" type="video/mp4">
+</video>
+<h2 id="vi-iv.-operate-for-design-metrics-and-monitoring">VI-IV. Operate for design: Metrics and monitoring</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VI-IV. Operate for design Metrics and monitoring.mp4" type="video/mp4">
+</video>
+<h2 id="vi-v.-operate-for-design-logging">VI-V. Operate for design: Logging</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VI-V. Operate for design Logging.mp4" type="video/mp4">
+</video>
+<h2 id="vi-vi.-your-sre-toolchain">VI-VI. Your SRE toolchain</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VI-VI. Your SRE toolchain.mp4" type="video/mp4">
+</video>
+<h2 id="v-vi.-quizz-1">V-VI. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>Which pattern detects a threshold of failures and prevents further failure by stopping an application from repeatedly executing that action to protect the system?</li>
+</ol>
+</blockquote>
+<p>The Circuit Breaker Pattern</p>
+<blockquote>
+<ol start="2" type="1">
+<li>_____ refers to the average time your service recovers and restores services from disruptions, such as an outage.</li>
+</ol>
+</blockquote>
+<p><strong>MTTR</strong>: Mean Time To Recovery</p>
+<blockquote>
+<ol start="3" type="1">
+<li>Developers can find bottlenecks during the development process by using a _____ instead of employing the “black box” methodology.</li>
+</ol>
+</blockquote>
+<p>Code Profiler</p>
+<blockquote>
+<ol start="4" type="1">
+<li>Suppose your company is going to purchase a security monitoring tool. How should you select a security monitoring tool?</li>
+</ol>
+</blockquote>
+<p>It should match and integrate well with your system and should be functional when you launch new applications.</p>
+<p><em>The security monitoring tool should suit your system and is compatible with new deployments.</em></p>
+<blockquote>
+<ol start="5" type="1">
+<li>_____ places all log records in a secured storage area or location.</li>
+</ol>
+</blockquote>
+<p>Centralized logging</p>
+<blockquote>
+<ol start="6" type="1">
+<li>Let’s say your colleagues are debating whether to employ synthetic or real user monitoring. How is real user monitoring different than synthetic checks?</li>
+</ol>
+</blockquote>
+<p>Real user monitoring records all the actual end user’s engagement with the web application. Synthetic checks simulate how a user might interact with the application.</p>
+<h1 id="vii.-additionnal-devops-resources">VII. Additionnal DevOps Resources</h1>
+<h2 id="vii-i.-unicorns-horses-and-donkeys-oh-my">VII-I. Unicorns, horses, and donkeys, oh my</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VII-I. Unicorns, horses, and donkeys, oh my.mp4" type="video/mp4">
+</video>
+<ul>
+<li><a href="https://devopsdays.org/">DevOps Days</a></li>
+<li><a href="https://www.bmc.com/blogs/devops-conferences/">Conferences</a></li>
+</ul>
+<h2 id="vii-ii.-the-10-best-devops-books-you-need-to-read">VII-II. The 10 best DevOps books you need to read</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VII-II. The 10 best DevOps books you need to read.mp4" type="video/mp4">
+</video>
+<ul>
+<li>The Visible Ops Handbook: Implementing ITIL in 4 Practical and Auditable Steps, by Gene Kim, Kevin Behr, and George Spaffordhttps://www.amazon.com/Visible-Ops-Handbook-Implementing-Practical/dp/0975568612</li>
+<li>Continuous Delivery, by Jez Humble and David Farley <a href="https://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912">https://www.amazon.com/Continuous-Delivery-Deployment-Automation-Addison-Wesley/dp/0321601912</a></li>
+<li>Release It!, by Michael Nygard <a href="https://pragprog.com/book/mnee/release-it">https://pragprog.com/book/mnee/release-it</a></li>
+<li>Effective DevOps, by Jennifer Davis and Katherine Daniels <a href="http://shop.oreilly.com/product/0636920039846.do">http://shop.oreilly.com/product/0636920039846.do</a></li>
+<li>Lean Software Development: An Agile Toolkit, by Mary and Tom Poppendieck <a href="https://www.amazon.com/Lean-Software-Development-Agile-Toolkit/dp/0321150783">https://www.amazon.com/Lean-Software-Development-Agile-Toolkit/dp/0321150783</a></li>
+<li>Web Operations, by John Allspaw and Jesse Robbins <a href="https://www.amazon.com/Web-Operations-Keeping-Data-Time/dp/1449377440">https://www.amazon.com/Web-Operations-Keeping-Data-Time/dp/1449377440</a></li>
+<li>The Practice of Cloud System Administration, by Christine Hogan, Strata R. Chalup, and Thomas A. Limoncelli <a href="http://the-cloud-book.com/">http://the-cloud-book.com/</a></li>
+<li>The DevOps Handbook, by Gene Kim, Jez Humble, Patrick Debois, and John Willis <a href="http://itrevolution.com/devops-handbook">http://itrevolution.com/devops-handbook</a></li>
+<li>Leading the Transformation, by Gary Gruver and Tommy Mouser <a href="http://itrevolution.com/books/leading-the-transformation/">http://itrevolution.com/books/leading-the-transformation/</a> The Phoenix Project, by Gene Kim, Kevin Behr, George Spafford <a href="https://en.wikipedia.org/wiki/The_Phoenix_Project">https://en.wikipedia.org/wiki/The_Phoenix_Project</a></li>
+</ul>
+<h2 id="vii-iii.-navigating-the-series-of-tubes">VII-III. Navigating The Series of Tubes</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VII-III. Navigating The Series of Tubes.mp4" type="video/mp4">
+</video>
+<ul>
+<li>DevOps Weekly, by Gareth Rushgrove <a href="http://www.devopsweekly.com/">http://www.devopsweekly.com/</a> <span class="citation" data-cites="garethr">@garethr</span></li>
+<li>DevOps.com, Chief Editor: Alan Shimel <a href="http://devops.com/">http://devops.com/</a> <span class="citation" data-cites="devopsdotcom">@devopsdotcom</span><span class="citation" data-cites="ashimmy">@ashimmy</span></li>
+<li>DZone <a href="http://devops.com/">https://dzone.com/devops-tutorials-tools-news</a></li>
+<li>InfoQ <a href="http://devops.com/">https://www.infoq.com/devops/</a></li>
+</ul>
+<h2 id="vii-iv.-quizz">VII-IV. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>DevOpsDays, DevOps Enterprise Summit, and Velocity. are examples of _____.</li>
+</ol>
+</blockquote>
+<p>Conferences</p>
+<blockquote>
+<ol start="2" type="1">
+<li>Which leading social media network should an individual engage in to keep abreast of the DevOps news and development?</li>
+</ol>
+</blockquote>
+<p>Twitter</p>
+<blockquote>
+<ol start="3" type="1">
+<li>Let’s say your colleague is unable to attend a DevOps conference. How would you recommend she learn more about DevOps concepts?</li>
+</ol>
+</blockquote>
+<p>Introduce her to books and articles devoted to DevOps</p>
+<h1 id="viii.-the-future-of-devops">VIII. The Future of DevOps</h1>
+<h2 id="viii-i.cloud-to-containers-to-serverless-solutions">VIII-I.Cloud to containers to serverless solutions</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VIII-I.Cloud to containers to serverless solutions.mp4" type="video/mp4">
+</video>
+<h2 id="viii-ii.-the-rugged-frontier-of-devops-security">VIII-II. The rugged frontier of DevOps: Security</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\VIII-II. The rugged frontier of DevOps Security.mp4" type="video/mp4">
+</video>
+<p>Usually: 100:10:1 - 100 Developers - 10 Ops - 1 Security</p>
+<p><a href="https://digital.ai/technology/gauntlt">https://digital.ai/technology/gauntlt</a></p>
+<p><a href="https://ruggedsoftware.org/">The Rugged Manifesto</a></p>
+<h2 id="viii-iii.-quizz">VIII-III. QUIZZ</h2>
+<blockquote>
+<ol type="1">
+<li>What computing approach creates systems in the cloud instead of depending on servers?</li>
+</ol>
+</blockquote>
+<p>Serverless architecture</p>
+<blockquote>
+<ol start="2" type="1">
+<li>Suppose your company is weighing options on implementing private or public cloud. How would you explain the difference between public or private cloud?</li>
+</ol>
+</blockquote>
+<p>Private cloud is internally created, built, and operated by your own company. Public cloud is created by an individual or organization, such as Amazon Web Services, and they allow users from around the world to use their services.</p>
+<blockquote>
+<ol start="3" type="1">
+<li>Which manifesto, created in 2010 by security professionals, endorses the call for secure coding or programming?</li>
+</ol>
+</blockquote>
+<p><a href="https://github.com/planetlevel/rugged-software/raw/master/documents/Rugged-Handbook-v7.pdf">The Rugged Manifesto (PDF)</a></p>
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="next-steps-am-i-a-devop-now">Next steps: Am I a DevOp now?</h2>
+<video width="600" height="337" controls>
+<source src="DevOpsFoundations\Conclusion-Next steps Am I a DevOp now.mp4" type="video/mp4">
+</video>
+<h2 id="resources">Resources</h2>
+<p><a href="DevOpsFoundations\DevOpsFundamentalsCourseHandout.pdf">DevOpsFoundations.pdf</a></p>
+<h2 id="certification">CERTIFICATION</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="DevOpsFoundations\CertificateOfCompletion_DevOps%20Foundations.pdf">CertificateOfCompletion_DevOps Foundations.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="DevOpsFoundations.pdf">DevOps Foundations - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

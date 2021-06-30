@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY - Index des Documentations" />
+  <title>III. L’essentiel de Python</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">III. L’essentiel de Python</h1>
+<p class="subtitle">Devenir un développeur Python (26 Academy)</p>
+<p class="author">David DEBRAY - <a href="Index_des_Documentations.html">Index des Documentations</a></p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#i.-aborder-python">I. Aborder Python</a>
+<ul>
+<li><a href="#i-i.-profiter-des-fichiers-dexercise">I-I. Profiter des fichiers d’exercise</a></li>
+<li><a href="#i-iii.-choisir-son-environnement-de-développement-intégré">I-III. Choisir son environnement de développement intégré</a></li>
+<li><a href="#i-iv.-utiliser-python-comme-une-calculatrice">I-IV. Utiliser Python comme une calculatrice</a></li>
+<li><a href="#i-v.-définir-la-notion-de-variable">I-V. Définir la notion de variable</a></li>
+<li><a href="#i-vi.-aborder-la-logique-booléenne">I-VI. Aborder la logique booléenne</a></li>
+<li><a href="#i-vii.-sinitier-à-la-conversion-de-type">I-VII. S’initier à la conversion de type</a></li>
+<li><a href="#i-viii.-effectuer-des-opérations-booléenne-dans-python">I-VIII. Effectuer des opérations booléenne dans Python</a></li>
+<li><a href="#i-ix.-ecrire-un-script-dans-python">I-IX. Ecrire un script dans Python</a></li>
+<li><a href="#i-x.-découvrir-la-méthode-print">I-X. Découvrir la méthode <code>print()</code></a></li>
+</ul></li>
+<li><a href="#ii.-débuter-avec-les-structures-de-contrôle-et-les-fonctions">II. Débuter avec les structures de contrôle et les fonctions</a>
+<ul>
+<li><a href="#ii-i.-aborder-la-structure-conditionnelle-en-if">II-I. Aborder la structure conditionnelle en <code>IF</code></a></li>
+<li><a href="#ii-ii.-aborder-la-structure-conditionelle-en-if-elseif-else">II-II. Aborder la structure conditionelle en <code>if</code>, <code>elseif</code>, <code>else</code></a></li>
+<li><a href="#ii-iii.-travailler-avec-la-structure-ditération-while">II-III. Travailler avec la structure d’itération <code>while</code></a></li>
+<li><a href="#ii-iv.-découvrir-la-structure-ditération-for">II-IV. Découvrir la structure d’itération <code>for</code></a></li>
+<li><a href="#ii-v.-utiliser-les-instructions-break-et-continue">II-V. Utiliser les instructions <code>break</code> et <code>continue</code></a></li>
+<li><a href="#ii-vi.-comprendre-la-notion-de-fonction-sans-paramètre-dentrée">II-VI. Comprendre la notion de fonction sans paramètre d’entrée</a></li>
+<li><a href="#ii-vii.-définir-une-fonction-avec-un-paramètre-dentrée">II-VII. Définir une fonction avec un paramètre d’entrée</a></li>
+<li><a href="#ii-viii.-définir-une-fonction-avec-un-paramètre-de-retour">II-VIII. Définir une fonction avec un paramètre de retour</a></li>
+<li><a href="#ii-ix.-utiliser-la-fonction-lambda">II-IX. Utiliser la fonction <code>lambda</code></a></li>
+<li><a href="#ii-x.-manipuler-les-listes">II-X. Manipuler les Listes</a></li>
+<li><a href="#ii-xi.-manipuler-les-tuples">II-XI. Manipuler les Tuples</a></li>
+<li><a href="#ii-xii.-utiliser-les-dictionnaires">II-XII. Utiliser les Dictionnaires</a></li>
+</ul></li>
+<li><a href="#iii.-comprendre-la-programmation-orientée-objet-et-le-fonctionnement-des-classes">III. Comprendre la programmation orientée objet et le fonctionnement des classes</a>
+<ul>
+<li><a href="#iii-i.-utiliser-les-méthodes-natives-de-python">III-I. Utiliser les méthodes natives de Python</a></li>
+<li><a href="#iii-ii.-aborder-la-notion-dobjet">III-II. Aborder la notion d’objet</a></li>
+<li><a href="#iii-iii.-fragmenter-son-projet">III-III. Fragmenter son projet</a></li>
+<li><a href="#iii-iv.-définir-une-classe">III-IV. Définir une classe</a></li>
+<li><a href="#iii-v.-utiliser-des-constructeurs-des-accesseurs-et-des-mutateurs">III-V. Utiliser des constructeurs, des accesseurs et des mutateurs</a></li>
+<li><a href="#iii-vi.-comprendre-lhéritage-de-classe">III-VI. Comprendre l’héritage de classe</a></li>
+<li><a href="#iii-vii.-aborder-le-polymorphisme">III-VII. Aborder le Polymorphisme</a></li>
+<li><a href="#iii-viii.-gérer-les-paramètres-args-et-kwargs">III-VIII. Gérer les paramètres <code>ARGS</code> et <code>KWARGS</code></a></li>
+<li><a href="#iii-ix.-définir-les-exceptions">III-IX. Définir les exceptions</a></li>
+<li><a href="#iii-x.-gérer-les-exceptions">III-X. Gérer les exceptions</a></li>
+<li><a href="#iii-xi.-découvrir-le-principe-des-décorateurs">III-XI. Découvrir le principe des décorateurs</a></li>
+<li><a href="#iii-xii.-stocker-dans-des-fichiers">III-XII. Stocker dans des fichiers</a></li>
+<li><a href="#iii-xiii.-comprendre-les-itérateurs-et-les-énumérateurs">III-XIII. Comprendre les itérateurs et les énumérateurs</a></li>
+<li><a href="#iii-iv.-créer-un-exécutable-sous-windows">III-IV. Créer un exécutable sous Windows</a></li>
+<li><a href="#iii-v.-exporter-de-python-et-importer-dans-un-tableur">III-V. Exporter de Python et importer dans un tableur</a></li>
+<li><a href="#iii-vi.-chapter-quizz">III-VI. Chapter Quizz</a></li>
+</ul></li>
+<li><a href="#iv.-construire-un-interface-graphique-sous-tkinter">IV. Construire un interface graphique sous Tkinter</a>
+<ul>
+<li><a href="#iv-i.-insérer-des-widgets-sous-tkinter">IV-I. Insérer des widgets sous Tkinter</a></li>
+<li><a href="#iv-ii.-découvrir-des-widgets-pour-les-textures">IV-II. Découvrir des widgets pour les textures</a></li>
+<li><a href="#iv-iii.-installer-dautres-widgets">IV-III. Installer d’autres widgets</a></li>
+<li><a href="#iv-iv.-mettre-en-page-une-fenêtre-graphique">IV-IV. Mettre en page une fenêtre graphique</a></li>
+<li><a href="#iv-v.-ajouter-des-alertes-sous-forme-de-boite-de-message">IV-V. Ajouter des alertes sous forme de boite de message</a></li>
+<li><a href="#iv-vi.-gérer-linteractivité-avec-des-widgets">IV-VI. Gérer l’interactivité avec des widgets</a></li>
+<li><a href="#iv-vii.-utiliser-les-canvas">IV-VII. Utiliser les canvas</a></li>
+<li><a href="#iv-viii.-créer-un-jeu-de-tir">IV-VIII. Créer un jeu de tir</a></li>
+<li><a href="#iv-ix.-découvrir-la-bibliothèque-turtle">IV-IX. Découvrir la bibliothèque Turtle</a></li>
+<li><a href="#iv-x.-aborder-un-programme-de-jeu">IV-X. Aborder un programme de jeu</a></li>
+<li><a href="#iv-xi.-jouer-avec-le-temps-et-animer-simplement">IV-XI. Jouer avec le temps et animer simplement</a></li>
+<li><a href="#iv-xii.-installer-page-4.10">IV-XII. Installer Page 4.10</a></li>
+<li><a href="#iv-xiii.-construire-une-interface-graphique-et-générer-du-code">IV-XIII. Construire une interface graphique et générer du code</a></li>
+<li><a href="#iv-xiv.-effectuer-une-complétion-avec-un-code-dinteraction">IV-XIV. Effectuer une complétion avec un code d’interaction</a></li>
+<li><a href="#iv-xv.-chapter-quizz">IV-XV. Chapter Quizz</a></li>
+</ul></li>
+<li><a href="#v.-exploiter-la-data-science-avec-python">V. Exploiter la Data Science avec Python</a>
+<ul>
+<li><a href="#v-i.-utiliser-les-tableaux-de-données">V-I. Utiliser les tableaux de données</a></li>
+<li><a href="#v-ii.-passer-en-revue-quelques-notions-mathématiques">V-II. Passer en revue quelques notions mathématiques</a></li>
+<li><a href="#v-iii.-utiliser-les-fonctions-de-base-de-numpy">V-III. Utiliser les fonctions de base de <code>NumPy</code></a></li>
+<li><a href="#v-iv.-définir-les-lignes-trigonométriques">V-IV. Définir les lignes trigonométriques</a></li>
+<li><a href="#v-v.-travailler-avec-les-nombres-complexes">V-V. Travailler avec les nombres complexes</a></li>
+<li><a href="#v-vi.-résoudre-une-matrice">V-VI. Résoudre une matrice</a></li>
+<li><a href="#v-vii.-gérer-des-fichiers-avec-numpy">V-VII. Gérer des fichiers avec <code>NumPy</code></a></li>
+<li><a href="#v-viii.-aborder-la-bibliothèque-sympy">V-VIII. Aborder la bibliothèque <code>SymPy</code></a></li>
+<li><a href="#v-ix.-chapter-quizz">V-IX. Chapter Quizz</a></li>
+</ul></li>
+<li><a href="#vi.-construire-une-interface-graphique-sous-pyqt5">VI. Construire une interface graphique sous PyQt5</a>
+<ul>
+<li><a href="#vi-i.-installer-pyqt5-et-qt-designer">VI-I. Installer PyQt5 et Qt Designer</a></li>
+<li><a href="#vi-ii.-créer-une-fenêtre-sous-pyqt5">VI-II. Créer une fenêtre sous PyQt5</a></li>
+<li><a href="#vi-iii.-utiliser-des-widgets-sous-pyqt5">VI-III. Utiliser des widgets sous PyQt5</a></li>
+<li><a href="#vi-iv.-disposer-des-widgets">VI-IV. Disposer des widgets</a></li>
+<li><a href="#vi-v.-créer-une-interaction">VI-V. Créer une interaction</a></li>
+<li><a href="#vi-vi.-créer-des-messagebox-dans-pyqt5">VI-VI. Créer des messagebox dans PyQt5</a></li>
+<li><a href="#vi-vii.-découvrir-le-widget-slider">VI-VII. Découvrir le widget Slider</a></li>
+<li><a href="#vi-viii.-utiliser-le-widget-checkbox">VI-VIII. Utiliser le widget checkbox</a></li>
+<li><a href="#vi-ix.-utiliser-le-widget-radiobutton">VI-IX. Utiliser le widget Radiobutton</a></li>
+<li><a href="#vi-x.-sauvegarder-un-fichier">VI-X. Sauvegarder un fichier</a></li>
+<li><a href="#vi-xi.-tirer-parti-du-widget-menubar">VI-XI. Tirer parti du widget Menubar</a></li>
+<li><a href="#vi-xii.-utiliser-qtdesigner-pour-son-interface">VI-XII. Utiliser QtDesigner pour son interface</a></li>
+<li><a href="#vi-xiii.-charger-son-interface-à-la-volée-dans-python">VI-XIII. Charger son interface à la volée dans Python</a></li>
+<li><a href="#vi-xiv.-chapter-quizz">VI-XIV. Chapter Quizz</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#certification">Certification</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="i.-aborder-python">I. Aborder Python</h1>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I. Aborder Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-i.-profiter-des-fichiers-dexercise">I-I. Profiter des fichiers d’exercise</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-I. Profiter des fichiers d'exercice.mp4" type="video/mp4">
+</video>
+</p>
+## I-II. Découvrir Python
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source
+src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iii.-choisir-son-environnement-de-développement-intégré">I-III. Choisir son environnement de développement intégré</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iv.-utiliser-python-comme-une-calculatrice">I-IV. Utiliser Python comme une calculatrice</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-IV. Utiliser Python comme une calculatrice.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-v.-définir-la-notion-de-variable">I-V. Définir la notion de variable</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-V. Définir la notion de variable.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-vi.-aborder-la-logique-booléenne">I-VI. Aborder la logique booléenne</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-VI. Aborder la logique booléenne.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-vii.-sinitier-à-la-conversion-de-type">I-VII. S’initier à la conversion de type</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-VII. S'initier à la conversion de type.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-viii.-effectuer-des-opérations-booléenne-dans-python">I-VIII. Effectuer des opérations booléenne dans Python</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-VIII. Effectuer des opérations booléenne dans Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-ix.-ecrire-un-script-dans-python">I-IX. Ecrire un script dans Python</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-IX. Ecrire un script dans Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-x.-découvrir-la-méthode-print">I-X. Découvrir la méthode <code>print()</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\I-X. Découvrir la méthode print().mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="ii.-débuter-avec-les-structures-de-contrôle-et-les-fonctions">II. Débuter avec les structures de contrôle et les fonctions</h1>
+<h2 id="ii-i.-aborder-la-structure-conditionnelle-en-if">II-I. Aborder la structure conditionnelle en <code>IF</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-I. Aborder la structure conditionnelle en IF.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-ii.-aborder-la-structure-conditionelle-en-if-elseif-else">II-II. Aborder la structure conditionelle en <code>if</code>, <code>elseif</code>, <code>else</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-II. Aborder la structure conditionelle en if, elseif, else.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iii.-travailler-avec-la-structure-ditération-while">II-III. Travailler avec la structure d’itération <code>while</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-III. Travailler avec la structure d'itération while.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iv.-découvrir-la-structure-ditération-for">II-IV. Découvrir la structure d’itération <code>for</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-IV. Découvrir la structure d'itération for.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-v.-utiliser-les-instructions-break-et-continue">II-V. Utiliser les instructions <code>break</code> et <code>continue</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-V. Utiliser les instructions break et continue.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-vi.-comprendre-la-notion-de-fonction-sans-paramètre-dentrée">II-VI. Comprendre la notion de fonction sans paramètre d’entrée</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-VI. Comprendre la notion de fonction sans paramètre d'entrée.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-vii.-définir-une-fonction-avec-un-paramètre-dentrée">II-VII. Définir une fonction avec un paramètre d’entrée</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-VII. Définir une fonction avec un paramètre d'entrée.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-viii.-définir-une-fonction-avec-un-paramètre-de-retour">II-VIII. Définir une fonction avec un paramètre de retour</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-VIII. Définir une fonction avec un paramètre de retour.mp4" type="video/mp4">
+</video>
+</p>
+<blockquote>
+<p><strong>Attention à la portée globale d’une variable</strong></p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Portée globale d&#39;une variable</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a>rayon <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">def</span> valeurRayon():</span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="kw">global</span> rayon</span>
+<span id="cb1-5"><a href="#cb1-5"></a>    rayon<span class="op">=</span><span class="dv">20</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>    <span class="bu">print</span>(<span class="st">&quot;La valeur du rayon dans la fonction est :&quot;</span>,rayon)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># !!! La valeur &quot;10&quot; sera utilisée par le programme !!! #</span></span></code></pre></div>
+<h2 id="ii-ix.-utiliser-la-fonction-lambda">II-IX. Utiliser la fonction <code>lambda</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-IX. Utiliser la fonction lambda.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-x.-manipuler-les-listes">II-X. Manipuler les Listes</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-X. Manipuler les listes.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-xi.-manipuler-les-tuples">II-XI. Manipuler les Tuples</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-XI. Manipuler les Tuples.mp4" type="video/mp4">
+</video>
+</p>
+<blockquote>
+<p><strong>Un tuple est IMMUABLE!!! et plus rapide à executer qu’une liste.</strong></p>
+</blockquote>
+<p><a href="III.EssentielDePython\II-XIII.%20Manipuler%20les%20Tuples.py">Manipuler les Tuples.py</a></p>
+<h2 id="ii-xii.-utiliser-les-dictionnaires">II-XII. Utiliser les Dictionnaires</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\II-XII. Utiliser les Dictionnaires.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="iii.-comprendre-la-programmation-orientée-objet-et-le-fonctionnement-des-classes">III. Comprendre la programmation orientée objet et le fonctionnement des classes</h1>
+<h2 id="iii-i.-utiliser-les-méthodes-natives-de-python">III-I. Utiliser les méthodes natives de Python</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-I. Utiliser les méthodes natives de Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-ii.-aborder-la-notion-dobjet">III-II. Aborder la notion d’objet</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-II. Aborder la notion d'objet.mp4" type="video/mp4">
+</video>
+</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>  <span class="co"># Creation de Class</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">class</span> nomExpliciteDeClass: </span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="co"># Exemple de Class</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="kw">class</span> Rectangle(<span class="bu">object</span>):         <span class="co"># Définition</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>      <span class="co">&quot;Classe de rectangle&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>      <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, longueur <span class="op">=</span><span class="dv">0</span>, largeur <span class="op">=</span><span class="dv">0</span>): <span class="co"># CONSTRUCTEUR</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>          <span class="va">self</span>.cetteLongueur <span class="op">=</span> longueur</span>
+<span id="cb2-9"><a href="#cb2-9"></a>          <span class="va">self</span>.cetteLargeur <span class="op">=</span> largeur</span>
+<span id="cb2-10"><a href="#cb2-10"></a>          <span class="va">self</span>.ceNom <span class="op">=</span><span class="st">&quot;rectangle&quot;</span></span></code></pre></div>
+<h2 id="iii-iii.-fragmenter-son-projet">III-III. Fragmenter son projet</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-III. Fragmenter son projet.mp4" type="video/mp4">
+</video>
+</p>
+<ul>
+<li><p>Un fichier “main.py” va servir pour appeler les différentes classes.</p></li>
+<li><p>Chaque Classes est séparées dans un fichier différent</p></li>
+<li><p>Pour appeler les classes dans le fichier MAIN, on utilise:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>    <span class="im">from</span> NomDuFichierClass <span class="im">import</span> NomDeLaClasse</span></code></pre></div></li>
+</ul>
+<h2 id="iii-iv.-définir-une-classe">III-IV. Définir une classe</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-IV. Définir une classe.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-v.-utiliser-des-constructeurs-des-accesseurs-et-des-mutateurs">III-V. Utiliser des constructeurs, des accesseurs et des mutateurs</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-V. Utiliser des constructeurs, des accesseurs et des mutateurs.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vi.-comprendre-lhéritage-de-classe">III-VI. Comprendre l’héritage de classe</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-VI. Comprendre l'héritage de classe.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vii.-aborder-le-polymorphisme">III-VII. Aborder le Polymorphisme</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-VII. Aborder le Polymorphisme.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-viii.-gérer-les-paramètres-args-et-kwargs">III-VIII. Gérer les paramètres <code>ARGS</code> et <code>KWARGS</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-VIII. Gérer les paramètres ARGS et KWARGS.mp4" type="video/mp4">
+</video>
+</p>
+<blockquote>
+<p><strong>Note:</strong> Permet de passer des arguments à une fonction dynamiquement sans connaître à l’avance le nombre de paramètres. (Pas besoin de tout réécrire).</p>
+</blockquote>
+<h2 id="iii-ix.-définir-les-exceptions">III-IX. Définir les exceptions</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-IX. Définir les exceptions.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-x.-gérer-les-exceptions">III-X. Gérer les exceptions</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-X. Gérer les exceptions.mp4" type="video/mp4">
+</video>
+</p>
+<p>Pour signaler une exception <code>raise</code>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">def</span> maFonction(parametre):</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="cf">if</span> parametre <span class="kw">not</span> <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>):</span>
+<span id="cb4-3"><a href="#cb4-3"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;&#39;parametre&#39; ne peut prendre que les valeurs 1, 2 ou 3.&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># RAISE permet de signaler une erreur (exception)</span></span></code></pre></div>
+<p>Gérer des exceptions <code>try/except</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">def</span> plusieursExceptions():</span>
+<span id="cb5-2"><a href="#cb5-2"></a>    <span class="cf">try</span>:</span>
+<span id="cb5-3"><a href="#cb5-3"></a>        <span class="cf">return</span> menbreDeLaFamille[<span class="dv">100</span> <span class="op">/</span> ma_variable2]</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    <span class="co"># Est exécuté pour ces deux exceptions</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="cf">except</span> (<span class="pp">IndexError</span>, <span class="pp">ZeroDivisionError</span>):</span>
+<span id="cb5-6"><a href="#cb5-6"></a>        <span class="cf">return</span> <span class="bu">print</span>(<span class="st">&quot;Aïe, division par 0 et un index inconnu&quot;</span>)</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="co"># Est exécuté pour cette exception</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="cf">except</span> <span class="pp">TypeError</span>:</span>
+<span id="cb5-9"><a href="#cb5-9"></a>        <span class="bu">print</span>(<span class="st">&quot;Houlaaa, c&#39;est quoi cette histoire ? Mon indice est un float !&quot;</span>)</span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co"># </span></span></code></pre></div>
+<p>Si tout c’est bien passé on met à la fin du test:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># code...</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#else est le bloc exécuté si aucune exception n’est levée :</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="cf">else</span>:</span>
+<span id="cb6-4"><a href="#cb6-4"></a>        <span class="bu">print</span>(<span class="st">&#39;En fait, tout va bien.&#39;</span>)</span></code></pre></div>
+<p>Forcer un message à la fin:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># code...</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="cf">finally</span>:</span>
+<span id="cb7-3"><a href="#cb7-3"></a>        <span class="bu">print</span>(<span class="st">&quot;Finalement, c&#39;est Flash que je préfére !&quot;</span>)</span></code></pre></div>
+<h2 id="iii-xi.-découvrir-le-principe-des-décorateurs">III-XI. Découvrir le principe des décorateurs</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-XI. Découvrir le principe des décorateurs.mp4" type="video/mp4">
+</video>
+</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># ------- Définition des Fonctions ------- #</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co"># Fonction Décorateur &quot;Vérification&quot;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">def</span> verification(fonction):</span>
+<span id="cb8-4"><a href="#cb8-4"></a>  <span class="kw">def</span> wrapper(<span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb8-5"><a href="#cb8-5"></a>    <span class="cf">for</span> valeur <span class="kw">in</span> args:</span>
+<span id="cb8-6"><a href="#cb8-6"></a>      <span class="cf">if</span>(<span class="bu">type</span>(valeur) <span class="kw">is</span> <span class="kw">not</span> <span class="bu">int</span>):</span>
+<span id="cb8-7"><a href="#cb8-7"></a>        <span class="cf">raise</span> <span class="pp">TypeError</span>(<span class="st">&quot;L&#39;un des paramètres n&#39;est pas un entier!&quot;</span>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>    <span class="cf">return</span> fonction(<span class="op">*</span>args, <span class="op">**</span>kwargs)</span>
+<span id="cb8-9"><a href="#cb8-9"></a>  <span class="cf">return</span> wrapper</span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co"># Appel du décorateur</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="at">@verification</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="kw">def</span> addition(nombre1, nombre2):</span>
+<span id="cb8-15"><a href="#cb8-15"></a>    <span class="cf">return</span> nombre1 <span class="op">+</span> nombre2</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co"># ------- Programme ------- #</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>resultat <span class="op">=</span> addition(<span class="dv">1</span>, <span class="st">&quot;2&quot;</span>)</span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="bu">print</span>(<span class="st">&quot;L&#39;addition donne:&quot;</span>, resultat)</span></code></pre></div>
+<h2 id="iii-xii.-stocker-dans-des-fichiers">III-XII. Stocker dans des fichiers</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-XII. Stocker dans des fichiers.mp4" type="video/mp4">
+</video>
+</p>
+<p>Import des modules:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#       Zone des &#39;imports&#39; de modules</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># -----------------------------------------------</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="im">import</span> os</span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="im">import</span> os.path  <span class="co"># Importation de la bibliothèque os.path pour utiliser la fonction getsize()</span></span></code></pre></div>
+<p>Créer un fichier:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">def</span> creer_fichier(nom_fichier):</span>
+<span id="cb10-2"><a href="#cb10-2"></a>    f <span class="op">=</span> <span class="bu">open</span>(nom_fichier,<span class="st">&quot;w&quot;</span>)  <span class="co"># L&#39;ouverture du fichier en mode écriture.</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>                                <span class="co"># Si le fichier existe son contenu sera écrasé sinon il sera créé.</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>                                <span class="co"># Python va générer une erreur (exception) si le fichier en cours</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>                                <span class="co"># d&#39;utilisation par une autre application ou s&#39;il est ouvert.</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>    f.close()</span></code></pre></div>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Permet de choisir le répertoire de contenu du fichier</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>os.chdir(<span class="st">&quot;C:/Denis&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="bu">print</span>(os.getcwd())      <span class="co"># Permet de voir le chemin d&#39;accès du répertoire de travail</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a>f<span class="op">=</span><span class="bu">open</span>(<span class="st">&quot;texte1.txt&quot;</span>,<span class="st">&quot;w&quot;</span>) <span class="co"># Ouverture du fichier texte1 en mode écriture... Ce sont des / et non des \ comme dans Windows</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># Si le fichier existe son contenu sera écrasé, sinon il sera créé.</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># &quot;w&quot; est le mode d&#39;accès en écriture.</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co"># Python va générer une erreur (exception) si le fichier est en cours d&#39;utilisation par une autre application ou s&#39;il est ouvert.</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="co"># texte1.txt est le nom physique du fichier.</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a><span class="co"># f est le nom logique du fichier</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>ligne<span class="op">=</span><span class="st">&#39;Vive la formation sur Python 3.</span><span class="ch">\n</span><span class="st">&#39;</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a>ligne2<span class="op">=</span><span class="st">&quot;Votre formateur est ravi de vous accompagner dans cette formation !&quot;</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a>f.write(ligne) <span class="co"># La méthode write permet d&#39;écrire un texte dans le fichier f (1 seul paramètre).</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>f.write(ligne2)</span>
+<span id="cb11-14"><a href="#cb11-14"></a>f.close() <span class="co"># Fermeture du fichier</span></span></code></pre></div>
+<h2 id="iii-xiii.-comprendre-les-itérateurs-et-les-énumérateurs">III-XIII. Comprendre les itérateurs et les énumérateurs</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-XIII. Comprendre les itérateurs et les énumérateurs.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iv.-créer-un-exécutable-sous-windows">III-IV. Créer un exécutable sous Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-IV. Créer un exécutable sous Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-v.-exporter-de-python-et-importer-dans-un-tableur">III-V. Exporter de Python et importer dans un tableur</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\III-V. Exporter de Python et importer dans un tableur.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vi.-chapter-quizz">III-VI. Chapter Quizz</h2>
+<ol type="1">
+<li>Pour exporter vers Excel, il faut exporter en format _. <code>.CSV</code></li>
+<li>Le module cxFreeze permet de . <code>créer un exécutable</code></li>
+<li>Pour créer une classe itérable, on implémente les méthodes iter() et _. <code>next()</code></li>
+<li>Pour se positionner dans un répertoire, on utilise la méthode _. <code>os.chdir()</code></li>
+<li>Un décorateur applique _ sur une fonction. <code>une fonction</code></li>
+<li>Pour gérer les exceptions, on peut utiliser la structure _. <code>try...except</code></li>
+<li>Sur les listes, on peut recevoir une exception de type _. <code>IndexError</code></li>
+<li>Le paramètre *args se comporte comme _. <code>un tuple</code></li>
+<li>Le polymorphisme va de pair avec l’héritage. <code>VRAI</code></li>
+<li>Une classe peut _ d’une autre. <code>hériter</code></li>
+<li>Les variables de l’objet sont disponibles à l’intérieur de l’objet en les préfixant par le mot-clé <code>self</code></li>
+<li>Vous pouvez commenter votre classe avec des _. <code>docstrings</code></li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">def</span> kos_root():</span>
+<span id="cb12-2"><a href="#cb12-2"></a>    <span class="co">&quot;&quot;&quot;Return the pathname of the KOS root directory.&quot;&quot;&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="kw">global</span> _kos_root</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="cf">if</span> _kos_root: <span class="cf">return</span> _kos_root</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    ...</span></code></pre></div>
+<ol type="1">
+<li>Pour créer une classe de base, on peut la faire dériver de la classe _. <code>object</code></li>
+<li>Les variables membres d’une classe sont appelées des _. <code>attributs</code></li>
+<li>La méthode native qui permet de trier une liste s’appelle _. <code>sorted()</code></li>
+</ol>
+<h1 id="iv.-construire-un-interface-graphique-sous-tkinter">IV. Construire un interface graphique sous Tkinter</h1>
+<h2 id="iv-i.-insérer-des-widgets-sous-tkinter">IV-I. Insérer des widgets sous Tkinter</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-I. Insérer des widgets sous Tkinter.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-ii.-découvrir-des-widgets-pour-les-textures">IV-II. Découvrir des widgets pour les textures</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-II. Découvrir des widgets pour les textures.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iii.-installer-dautres-widgets">IV-III. Installer d’autres widgets</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-III. Installer d'autres widgets.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iv.-mettre-en-page-une-fenêtre-graphique">IV-IV. Mettre en page une fenêtre graphique</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-IV. Mettre en page une fenêtre graphique.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-v.-ajouter-des-alertes-sous-forme-de-boite-de-message">IV-V. Ajouter des alertes sous forme de boite de message</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-V. Ajouter des alertes sous forme de boite de message.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-vi.-gérer-linteractivité-avec-des-widgets">IV-VI. Gérer l’interactivité avec des widgets</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-VI. Gérer l'interactivité avec des widgets.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-vii.-utiliser-les-canvas">IV-VII. Utiliser les canvas</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-VII. Utiliser les canvas.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-viii.-créer-un-jeu-de-tir">IV-VIII. Créer un jeu de tir</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-VIII. Créer un jeu de tir.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-ix.-découvrir-la-bibliothèque-turtle">IV-IX. Découvrir la bibliothèque Turtle</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-IX. Découvrir la bibliothèque Turtle.mp4" type="video/mp4">
+</video>
+</p>
+<blockquote>
+<p><strong>Doc:</strong> Turtle documentation <a href="https://docs.python.org/3.2/library/turtle.html">https://docs.python.org/3.2/library/turtle.html</a></p>
+</blockquote>
+<h2 id="iv-x.-aborder-un-programme-de-jeu">IV-X. Aborder un programme de jeu</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-X. Aborder un programme de jeu.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-xi.-jouer-avec-le-temps-et-animer-simplement">IV-XI. Jouer avec le temps et animer simplement</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-XI. Jouer avec le temps et animer simplement.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-xii.-installer-page-4.10">IV-XII. Installer Page 4.10</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-XII. Installer Page 4.10.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-xiii.-construire-une-interface-graphique-et-générer-du-code">IV-XIII. Construire une interface graphique et générer du code</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-XIII. Construire une interface graphique et générer du code.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-xiv.-effectuer-une-complétion-avec-un-code-dinteraction">IV-XIV. Effectuer une complétion avec un code d’interaction</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\IV-XIV. Effectuer une complétion avec un code d'interaction.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-xv.-chapter-quizz">IV-XV. Chapter Quizz</h2>
+<ol type="1">
+<li>Le widget Messagebox comporte la méthode _. <code>askyesno</code></li>
+<li>Une zone de texte à saisir est un widget _. <code>Entry</code></li>
+<li>Page permet de faire _. <code>de la conception graphique</code></li>
+<li>Pour remplir avec une couleur, on utilise la méthode _. <code>fill()</code></li>
+<li>Pour importer des images, on utilise la méthode _. <code>PhotoImage()</code> 👎</li>
+<li>Le module Turtle est destiné aux _. <code>Enfants</code></li>
+<li>Le module _ permet de générer des valeurs aléatoires. <code>Random</code></li>
+<li>Le canevas est défini en pixels. <code>VRAI</code></li>
+<li>Pour définir qu’une barre de menu n’est pas détachable, on donne la valeur 0 à son paramètre _. <code>tearoff</code> 👎</li>
+<li>On peut définir un paramètre _ sur un objet Button. <code>Message</code> 👎</li>
+<li>Les objets de cadre sont de type _. <code>Frame</code></li>
+<li>Parmi les widgets graphiques, on trouve _. <code>Scale</code></li>
+<li>Pour lancer une fenêtre graphique, on utilise la méthode _. <code>mainloop()</code></li>
+<li>Tkinter est basé sur _. <code>TCL</code></li>
+</ol>
+<h1 id="v.-exploiter-la-data-science-avec-python">V. Exploiter la Data Science avec Python</h1>
+<h2 id="v-i.-utiliser-les-tableaux-de-données">V-I. Utiliser les tableaux de données</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-I. Utiliser les tableaux de données.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-ii.-passer-en-revue-quelques-notions-mathématiques">V-II. Passer en revue quelques notions mathématiques</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-II. Passer en revue quelques notions mathématiques.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-iii.-utiliser-les-fonctions-de-base-de-numpy">V-III. Utiliser les fonctions de base de <code>NumPy</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-III. Utiliser les fonctions de base de NumPy.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-iv.-définir-les-lignes-trigonométriques">V-IV. Définir les lignes trigonométriques</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-IV. Définir les lignes trigonométriques.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-v.-travailler-avec-les-nombres-complexes">V-V. Travailler avec les nombres complexes</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-V. Travailler avec les nombres complexes.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-vi.-résoudre-une-matrice">V-VI. Résoudre une matrice</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-VI. Résoudre une matrice.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-vii.-gérer-des-fichiers-avec-numpy">V-VII. Gérer des fichiers avec <code>NumPy</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\" type="video/mp4">
+</video>
+</p>
+<h2 id="v-viii.-aborder-la-bibliothèque-sympy">V-VIII. Aborder la bibliothèque <code>SymPy</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\V-VIII. Aborder la bibliothèque SymPy.mp4" type="video/mp4">
+</video>
+</p>
+<blockquote>
+<p><strong>Documentation:</strong> <a href="https://docs.sympy.org/latest/tutorial/">https://docs.sympy.org/latest/tutorial/</a></p>
+</blockquote>
+<h2 id="v-ix.-chapter-quizz">V-IX. Chapter Quizz</h2>
+<ol type="1">
+<li>Avec la bibliothèque SymPy, on peut effectuer _. <code>de la simplification d'expression fractionnelle</code></li>
+<li>La méthode save() de NumPy crée un fichier d’extension _. <code>.npy</code></li>
+<li>Une matrice nulle se crée avec la méthode NumPy matlib._. <code>zeroes{}</code></li>
+<li>Les définitions de fonction peuvent être surchargées. <code>VRAI</code></li>
+<li>Le _ d’un nombre complexe, c’est mettre la valeur imaginaire négative. <code>Conjugé</code></li>
+<li>La méthode math.degrees() demande des _. <code>radians</code></li>
+<li>Pour arrondir avec NumPy, on utilise la méthode _. <code>around()</code> 👎</li>
+<li>Un nombre complexe comporte une partie _. <code>imaginaire</code></li>
+<li>Pour définir le type d’un tableau NumPy, on utilise le paramètre _. <code>dtype</code></li>
+</ol>
+<h1 id="vi.-construire-une-interface-graphique-sous-pyqt5">VI. Construire une interface graphique sous PyQt5</h1>
+<h2 id="vi-i.-installer-pyqt5-et-qt-designer">VI-I. Installer PyQt5 et Qt Designer</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-I. Installer PyQt5 et Qt Designer.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-ii.-créer-une-fenêtre-sous-pyqt5">VI-II. Créer une fenêtre sous PyQt5</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-II. Créer une fenêtre sous PyQt5.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-iii.-utiliser-des-widgets-sous-pyqt5">VI-III. Utiliser des widgets sous PyQt5</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-III. Utiliser des widgets sous PyQt5.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-iv.-disposer-des-widgets">VI-IV. Disposer des widgets</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-IV. Disposer des widgets.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-v.-créer-une-interaction">VI-V. Créer une interaction</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-V. Créer une interaction.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-vi.-créer-des-messagebox-dans-pyqt5">VI-VI. Créer des messagebox dans PyQt5</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-VI. Créer des messagebox dans PyQt5.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-vii.-découvrir-le-widget-slider">VI-VII. Découvrir le widget Slider</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-VII. Découvrir le widget Slider.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-viii.-utiliser-le-widget-checkbox">VI-VIII. Utiliser le widget checkbox</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-VIII. Utiliser le widget checkbox.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-ix.-utiliser-le-widget-radiobutton">VI-IX. Utiliser le widget Radiobutton</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-IX. Utiliser le widget Radiobutton.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-x.-sauvegarder-un-fichier">VI-X. Sauvegarder un fichier</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-X. Sauvegarder un fichier.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-xi.-tirer-parti-du-widget-menubar">VI-XI. Tirer parti du widget Menubar</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-XI. Tirer parti du widget Menubar.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-xii.-utiliser-qtdesigner-pour-son-interface">VI-XII. Utiliser QtDesigner pour son interface</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-XII. Utiliser QtDesigner pour son interface.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-xiii.-charger-son-interface-à-la-volée-dans-python">VI-XIII. Charger son interface à la volée dans Python</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\VI-XIII. Charger son interface à la volée dans Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vi-xiv.-chapter-quizz">VI-XIV. Chapter Quizz</h2>
+<ol type="1">
+<li>Une boîte de dialogue PyQt5 provient de la classe mère _. <code>QDialog</code></li>
+<li>Avec PyQt5, on peut positionner des objets dans un _. <code>GridLayout</code></li>
+<li>Dans les menus, on ajoute des _. <code>actions</code></li>
+<li>On peut récupérer le contenu d’une zone d’édition avec la méthode _. <code>toPlainText()</code></li>
+<li>En PyQt5, il faut créer des groupes de boutons radio. <code>FAUX</code></li>
+<li>Pour définir le texte d’une zone de saisie, on utilise la méthode _. <code>setText</code></li>
+<li>Parmi les widgets de compteurs, on trouve _. <code>QLCDNumber</code></li>
+<li>Le widget qui permet l’édition d’un texte s’appelle _. <code>QLineEdit</code></li>
+<li>Pour ajouter une interaction à un bouton, on crée _. <code>une connexion</code></li>
+<li>PyQt5 comporte un système de grilles explicite. <code>FAUX</code></li>
+<li>PyQt5 est composé de _. <code>QtWidgets</code></li>
+<li>Pour utiliser PyQt5, il faut instancier un objet _. <code>QApplication</code></li>
+<li>PyQT permet de créer _. <code>des interfaces graphiques</code></li>
+</ol>
+<h1 id="conclusion">Conclusion</h1>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="III.EssentielDePython\Conclusion.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="certification">Certification</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="III.EssentielDePython\CertificateOfCompletion_Lessentiel%20de%20Python%203.pdf">CertificateOfCompletion_Lessentiel de Python 3.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="template.pdf">Template - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

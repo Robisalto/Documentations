@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Bruno GUERIN" />
+  <meta name="dcterms.date" content="2021-06-07" />
+  <title>POEI DevOps - Linux</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Linux</h1>
+<p class="author">Bruno GUERIN</p>
+<p class="date">2021-06-07</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#formation-linux-administration-bases-et-services">Formation Linux Administration: Bases et Services</a>
+<ul>
+<li><a href="#le-groupe">Le groupe:</a></li>
+</ul></li>
+<li><a href="#installation-de-lenvironnement-de-travail">Installation de l’environnement de travail</a></li>
+<li><a href="#présentation-de-linux">Présentation de Linux</a>
+<ul>
+<li><a href="#quest-ce-que-linux">Qu’est-ce que Linux ?</a></li>
+<li><a href="#historique">Historique</a></li>
+<li><a href="#modèle-unix">Modèle UNIX</a></li>
+<li><a href="#caractéristiques-de-linux">Caractéristiques de Linux</a></li>
+<li><a href="#linux-lopensource">Linux &amp; l’OpenSource</a></li>
+</ul></li>
+<li><a href="#connexion-et-premières-commandes">Connexion et premières commandes</a>
+<ul>
+<li><a href="#structure-de-la-ligne-de-commande">Structure de la ligne de commande</a></li>
+<li><a href="#consulter-le-man">Consulter le MAN</a>
+<ul>
+<li><a href="#micro-quizz-man">Micro QUIZZ MAN</a></li>
+</ul></li>
+<li><a href="#propriétées-des-objets">Propriétées des objets</a></li>
+</ul></li>
+<li><a href="#les-inodes">Les INODES</a>
+<ul>
+<li><a href="#que-sont-les-inodes-sous-linux">Que sont les inodes sous Linux?</a></li>
+<li><a href="#quel-est-le-numéro-dinode">Quel est le numéro d’inode?</a></li>
+<li><a href="#gestion-des-liens-physiquessymboliques">Gestion des Liens Physiques/Symboliques</a></li>
+</ul></li>
+<li><a href="#gestion-des-droits-daccès">Gestion des droits d’accès</a>
+<ul>
+<li><a href="#significarion-des-3-droits">Significarion des 3 droits</a>
+<ul>
+<li><a href="#lecture-read">Lecture <em>(read)</em></a></li>
+<li><a href="#ecriture-write">Ecriture <em>(write)</em></a></li>
+<li><a href="#execution">Execution</a></li>
+<li><a href="#vérouillerbloquer-un-fichier">“Vérouiller/Bloquer” un fichier</a></li>
+</ul></li>
+<li><a href="#modification-des-droits">Modification des droits</a>
+<ul>
+<li><a href="#synatxe-avec-notation-symbolique">Synatxe avec Notation Symbolique</a></li>
+<li><a href="#syntaxe-avec-notation-octale">Syntaxe avec Notation Octale</a></li>
+</ul></li>
+<li><a href="#droits-par-défaut">Droits par défaut</a>
+<ul>
+<li><a href="#les-masques-les-plus-courants">Les masques les plus courants :</a></li>
+</ul></li>
+<li><a href="#droits-étendus">Droits étendus</a>
+<ul>
+<li><a href="#droit-setuid-4">Droit SetUID (4)</a></li>
+<li><a href="#droit-setgid-2">Droit SetGID (2)</a></li>
+<li><a href="#sticky-bit-1">Sticky Bit (1)</a></li>
+</ul></li>
+<li><a href="#micro-quizz">Micro-Quizz</a></li>
+</ul></li>
+<li><a href="#débuter-avec-le-shell">Débuter avec le Shell</a>
+<ul>
+<li><a href="#notion-de-shell">Notion de Shell</a></li>
+<li><a href="#prompt">Prompt</a></li>
+<li><a href="#alias">Alias</a></li>
+<li><a href="#enchaînement-de-commandes">Enchaînement de commandes</a>
+<ul>
+<li><a href="#enchaînement-inconditionnel">Enchaînement inconditionnel</a></li>
+<li><a href="#enchaînement-conditionnel">Enchaînement conditionnel</a></li>
+<li><a href="#enchainement-avancé">Enchainement avancé</a></li>
+<li><a href="#micro-quizz-1">Micro-QUIZZ</a></li>
+</ul></li>
+<li><a href="#redirection-des">Redirection d’E/S</a>
+<ul>
+<li><a href="#canal-dentrée">Canal d’entrée</a></li>
+<li><a href="#gestion-des-redirections-dentrée">Gestion des redirections d’entrée</a></li>
+<li><a href="#redirection-vers-ou-à-partir-dune-commande">Redirection vers ou à partir d’une commande</a></li>
+</ul></li>
+<li><a href="#caractères-spéciaux">Caractères spéciaux</a>
+<ul>
+<li><a href="#micro-quizz-sur-les-caractères-spéciaux">Micro-quizz sur les caractères spéciaux</a></li>
+</ul></li>
+<li><a href="#options">Options</a>
+<ul>
+<li><a href="#options-utiles">Options utiles</a></li>
+<li><a href="#options-étendues">Options étendues</a></li>
+</ul></li>
+<li><a href="#commandes-internesexternes">Commandes Internes/Externes</a></li>
+<li><a href="#fichiers-de-configuration">Fichiers de configuration</a></li>
+<li><a href="#gestion-de-lhistorique">Gestion de l’historique</a></li>
+<li><a href="#micro-tp-sur-le-bash">Micro-TP sur le bash</a></li>
+</ul></li>
+<li><a href="#les-commandes-essentielles">Les commandes essentielles</a>
+<ul>
+<li><a href="#gestion-de-répertoires">Gestion de répertoires</a></li>
+<li><a href="#se-déplacer-et-lister">Se déplacer et lister</a></li>
+<li><a href="#copier-déplacer-et-supprimer">Copier, déplacer et supprimer</a></li>
+<li><a href="#rechercher-des-fichiersrépertoires">Rechercher des fichiers/répertoires</a>
+<ul>
+<li><a href="#la-commande-find">La commande <code>Find</code></a></li>
+<li><a href="#la-commande-locate">La commande <code>locate</code>:</a></li>
+</ul></li>
+<li><a href="#commandes-de-gestion-de-contenu">Commandes de gestion de contenu</a>
+<ul>
+<li><a href="#affichage-de-fichier">Affichage de fichier</a></li>
+<li><a href="#comptage">Comptage</a></li>
+<li><a href="#tri">Tri</a></li>
+<li><a href="#transformation">Transformation</a></li>
+<li><a href="#extraction">Extraction</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#expressions-régulières">Expressions Régulières</a>
+<ul>
+<li><a href="#méta-caractères">Méta-caractères</a>
+<ul>
+<li><a href="#extensions-pcre">Extensions PCRE</a></li>
+</ul></li>
+<li><a href="#facteurs-doccurences">Facteurs d’occurences</a></li>
+<li><a href="#facteurs-doccurrences---gloutonnement">Facteurs d’occurrences - Gloutonnement</a></li>
+<li><a href="#ancrage">Ancrage</a></li>
+<li><a href="#caractères-divers">Caractères divers</a>
+<ul>
+<li><a href="#quizz">QUIZZ</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a>
+<ul>
+<li><a href="#actualisation-bash-profilerc">Actualisation BASH Profile/RC</a></li>
+<li><a href="#alias-1">Alias</a></li>
+<li><a href="#type">Type</a></li>
+<li><a href="#touch">Touch &amp;&amp; “&gt;”</a></li>
+<li><a href="#noclobber">Noclobber</a></li>
+<li><a href="#devnull">/DEV/NULL</a></li>
+<li><a href="#générateur-de-mot-de-passe">Générateur de mot de passe</a></li>
+</ul></li>
+<li><a href="#format-des-fichiers-texte-selon-les-os">Format des fichiers texte selon les OS</a></li>
+<li><a href="#recueil-de-commandes">Recueil de Commandes:</a></li>
+<li><a href="#questions">Questions</a></li>
+<li><a href="#idéés-de-scripts-shell">Idéés de <strong>Scripts Shell</strong></a>
+<ul>
+<li><a href="#liste-3-dates">Liste 3 dates</a></li>
+<li><a href="#script-de-mise-à-jour-serveur">Script de mise à jour serveur</a></li>
+</ul></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h2 id="formation-linux-administration-bases-et-services">Formation Linux Administration: Bases et Services</h2>
+<p>Animée par Bruno GUERIN de DAWAN Toulouse, 35H du 07/06/21 au 11/06/21. (bguerin@dawan.fr) Formateur Dawan (Linux, réseau et bases de données)</p>
+<h3 id="le-groupe">Le groupe:</h3>
+<h4 id="akim">Akim</h4>
+<p>Cursus microbiologie Connaissances/niveaux Linux : C2I (HTML,CSS), WAMP, quelques notions</p>
+<h4 id="alicia">Alicia</h4>
+<p>Chimie des matériaux - 6 mois ingénieure matériaux Connaissances/niveaux Linux : pas grand chose, qqs en Unix et bases en Python</p>
+<h4 id="blaise-maël">Blaise-Maël</h4>
+<p>Doctorat en physique nucléaire. Souhait en data-science/analyste (C++, compilation) Connaissances/niveaux Linux : Base utilisation, Shell (bash)</p>
+<h4 id="chafea">Chafea</h4>
+<p>Docteur en mécanique énergétique Connaissances/niveaux Linux : thèse avec Fortran, notions Linux Reconversion vers le numérique</p>
+<h4 id="charles">Charles</h4>
+<p>Ingénieur en génie des matériaux Envie d’autre chose Approche des micro-controleurs : Arduino Nano-compteur : Raspberry Un peu de PowerBI</p>
+<h4 id="david-debray">David Debray</h4>
+<p>Administrateur systèmes et réseaux Connaissances Linux, Raspberry et shell</p>
+<h4 id="david-pineda">David Pineda</h4>
+<p>Docteur en mathématiques Connaissances/niveaux Linux : bases de l’utilisation</p>
+<h4 id="erwan">Erwan</h4>
+<p>Communication (graphisme) Consultant en BI Un peu de Linux et de Shell et de beaucoup de choses.</p>
+<h4 id="loubna">Loubna</h4>
+<p>Formation informatiques (M2 développement logiciel) Domaine de l’assurance Reconversion informatique : développeur web (angular, js, java) Connaissances/niveaux Linux : Niveau utilisation</p>
+<h4 id="margaux">Margaux</h4>
+<p>Doctorat chimie analytique Reconversion informatique Connaissances/niveaux Linux : pas de Linux, codage sur R</p>
+<h4 id="ouardia">Ouardia</h4>
+<p>Docteur génie civil Connaissances/niveaux Linux : utilisation à la fac, bases SQL</p>
+<h4 id="anne">Anne</h4>
+<p>Docteur en chimie organique, enseignement Connaissances/niveaux Linux : utilisation à la fac</p>
+<h4 id="valentin">Valentin</h4>
+<p>Ingénierie des matériaux Chargé d’affaires Reconversion Connaissances/niveaux Linux : pas de compétence Linux, VBA et Python</p>
+<h4 id="vincent">Vincent</h4>
+<p>Master en biotechno Enseignement 5 ans Reconversion Formation 5 mois data analyst (Python , SQL) Souhait de relation client Connaissances/niveaux Linux : rien à part le mot Linux</p>
+<hr />
+<h1 id="installation-de-lenvironnement-de-travail">Installation de l’environnement de travail</h1>
+<ul>
+<li>Virtualbox</li>
+<li>Debian VM: <a href="https://mensuel.framapad.org/p/bsmgy3csgj-9nvn?lang=fr" class="uri">https://mensuel.framapad.org/p/bsmgy3csgj-9nvn?lang=fr</a></li>
+</ul>
+<h1 id="présentation-de-linux">Présentation de Linux</h1>
+<h2 id="quest-ce-que-linux">Qu’est-ce que Linux ?</h2>
+<p>Noyau d’un système d’exploitation. Pour trouver le noya sur un système on tape: <code>ls -l /boot</code>, on voie: <code>vmlinuz-4.19.0-13-amd64</code> qui est le noyau.</p>
+<ol type="1">
+<li>Noyau /Kernel: dans <code>/boot/vm*</code></li>
+</ol>
+<pre><code>stagiaire@debian:~$ ls /boot/vmlinuz-4.19.0-13-amd64
+/boot/vmlinuz-4.19.0-13-amd64</code></pre>
+<ol start="2" type="1">
+<li><p>Librairies, dans <code>/lib*</code></p></li>
+<li><p>Processus</p></li>
+</ol>
+<p><img src="2021-06-07-POEI-Linux\noyau.png" /></p>
+<p><img src="https://arles-linux.org/wp-content/uploads/2019/01/racine.jpg" /></p>
+<h2 id="historique">Historique</h2>
+<p>L’histoire débute en 1991 des suites des travaux du Finlandais Linus Torvalds dans la création d’un noyau pour un futur système d’exploitation. Il s’est inspiré très largement du modèle Unix. Aujourd’hui Linux est considéré non pas comme un Unix-based mais comme un Unix-Like. Aujourd’hui et depuis longtemps Linux a acquis ses lettres de noblesse dans le monde informatique et est un OS alternatif parfaitement crédible.</p>
+<p>Le nom Linux vient bien évidemment du prénom de son auteur originel à qui un proche a fait remarque l’étrange proximité phonétique avec le terme Unix.</p>
+<h2 id="modèle-unix">Modèle UNIX</h2>
+<p>Unix a été originellement conçu autour des principes suivants :</p>
+<ul>
+<li>Small is beautiful</li>
+<li>Ensemble de processus, chaque processus ne faisant qu’une chose mais bien</li>
+<li>Mécanisme de redirection d’E/S : association de processus</li>
+<li>Tout est flux/suite d’octets non structuré</li>
+</ul>
+<h2 id="caractéristiques-de-linux">Caractéristiques de Linux</h2>
+<ul>
+<li>32 et 64 bits</li>
+<li>Multithreading par défaut</li>
+<li>Multi-utilsateurs</li>
+<li>Multi-architectures
+<ul>
+<li>Intel/AMD</li>
+<li>ARM</li>
+<li>Sparc (SUN Oracle)</li>
+<li>Apollo (Compaq/HP)</li>
+<li>POWER (IBM)</li>
+<li>PPC (Apple/Motorola)</li>
+<li>etc.</li>
+</ul></li>
+<li>La plus petite machine Linux: <a href="http://www.picotux.com/" class="uri">http://www.picotux.com/</a></li>
+<li>Le plus gros: <a href="https://top500.org/lists/top500/2020/11/" class="uri">https://top500.org/lists/top500/2020/11/</a></li>
+</ul>
+<h2 id="linux-lopensource">Linux &amp; l’OpenSource</h2>
+<p>Bien que soumis à la GPL (issue du projet GNU) le noyau Linux ne fait pas partie de l’écosystème GNU, il le complète. Certains se battent pour que l’on d’un OS GNU/Linux.</p>
+<h1 id="connexion-et-premières-commandes">Connexion et premières commandes</h1>
+<p>Linux étant un système multi-utilisateur, la connexion au système nécessite une phase d’identification (login) et d’authentification (password par défaut) à l’issue de laquelle on est connecté et en contact à l’aide d’un shell. Shell : coquille (en anglais), interface entre le système et l’utilisateur.</p>
+<p><strong>Notion de prompt :</strong> Aujourd’hui le prompt par défaut d’une majorité de distributions (Installation de Linux : Debian, Ubuntu, Redhat, …) indique</p>
+<ul>
+<li>le nom de l’utilisateur</li>
+<li>le hostname : nom de la machine (rien à voir avec le nom de la distribution)</li>
+<li>la localisation du répertoire courant au sein de l’arborescence</li>
+<li>Le caractère <code>~</code> (tilde) indique la racine du répertoire personnel de l’utilisateur</li>
+</ul>
+<p class="info">
+la commande pwd permet toujours de savoir où l’on est.
+</p>
+<h2 id="structure-de-la-ligne-de-commande">Structure de la ligne de commande</h2>
+<p>Toute ligne de commande débute par le nom d’une commande (ex. date, whoami, logname, …). On peut donc dire que les commandes ont généralement un comportement par défaut. Vouloir modifier le comportement par défaut se fait à l’aide d’option(s) ou arguments transmis à celle-ci. Exemple de la commande date Celle-ci affiche la date et l’heure locales (selon le fuseau horaire). L’option -u donne l’heure UTC (date et heure internationales).</p>
+<p>Une option permet donc d’adapter le comportement d’une commande à un besoin précis. Une option est généralement introduite par un ‘-’ suivi d’une lettre (ex. -u)</p>
+<div class="info">
+<ul>
+<li>la même option dans deux commandes différentes n’implique le même comportement</li>
+<li>l’option -r de la commande ls inverse le sens de l’affichage</li>
+<li>l’option -r de la chmod implique la récursivité de la commande</li>
+<li>le même comportement dans deux commandes différentes peut être déclenché par deux options différentes</li>
+<li>la récursivité dans la commande ls est réalisée par l’option -R</li>
+<li>la récursivité dans la commande chmod est réalisée par l’option -r</li>
+</ul>
+</div>
+<p>Toujours, en cas de doute, consulter l’aide en ligne de la commande (man ls)</p>
+<pre class="bash="><code># Consulter le MANUEL d&#39;une commande:
+man ls
+
+# Regarder l&#39;HELP d&#39;une commande:
+ls --help</code></pre>
+<p>Une commande peut également être enrichie par des arguments ou imposer leur présence.</p>
+<p>Une commande peut également être enrichie par des arguments ou imposer leur présence. Un argument est une information à partir de laquelle va travailler un processus :</p>
+<ul>
+<li>nom de l’utilisateur dont veut les informations</li>
+<li>nom du compte que l’on veut créer</li>
+<li>nom du fichier à supprimer</li>
+<li>…</li>
+</ul>
+<div class="info">
+<p>Certaines commandes comme <strong>id</strong> ne demmande pas d’argument.</p>
+<p>Au contraire, d’autre commandes comme <strong>rm</strong> nécessitent un ou plusieurs arguments</p>
+</div>
+<div class="warning">
+Bien faire la différence entre option <strong>courte</strong> <code>-</code> et option <strong>longue</strong> <code>--</code>
+</div>
+<pre class="bash="><code>ls --directory # Affiche uniquement les répertoires
+
+ls -directory # Affiche ls avec les options -d -i -r -e -c -t -o -r -y</code></pre>
+<p>Contrevenants à cette distinction option courte (un tiret)/option longue (2 tirets)</p>
+<ul>
+<li>commande dd: dd if=… of=… conv=… count=…</li>
+<li>commande find: find -name “…” -type …</li>
+</ul>
+<p>NB : ici en ligne signifie l’aide disponible à partir de la ligne de commande ou tout autre manière d’y accéder (ex. firefox help:ls -&gt; l’aide installée sur le système.</p>
+<h2 id="consulter-le-man">Consulter le MAN</h2>
+<ul>
+<li><p>Pour consulter le <strong>man</strong> de ls: <code>man ls</code></p></li>
+<li><p>Pour consulter un <strong>numéro de section spécifique</strong> comme passwd(5): <code>man 5 passwd</code></p></li>
+<li><p>Pour** naviguer** dans le man:</p>
+<ul>
+<li>b: <em>backwards</em></li>
+<li>f: <em>forward</em></li>
+</ul></li>
+<li><p><strong>Recherche</strong> dans le man:</p>
+<ul>
+<li><code>/chaine</code> + Enter</li>
+<li><code>n</code>: occurence suivante</li>
+<li><code>N</code>: occurence précédente</li>
+<li><code>?chaine</code> sens de recherche inversé</li>
+</ul></li>
+<li><p>Rechercher les différents manuels par mot-clés: man<code>-k mot-clé</code></p>
+<ul>
+<li>Ou <code>apropos mot-clé</code></li>
+</ul></li>
+</ul>
+<p>Exemple:</p>
+<pre class="bash="><code># man -k remove
+# -------
+stagiaire@debian:~$ man -k remove
+remove-shell (8)     - Supprimer des interpréteurs de la liste des interpréteurs initiaux valables
+aa-remove-unknown (8) - remove unknown AppArmor profiles
+colrm (1)            - remove columns from a file
+cut (1)              - remove sections from each line of files
+delgroup (8)         - remove a user or group from the system
+deluser (8)          - remove a user or group from the system
+ipcrm (1)            - remove certain IPC resources
+kernel-install (8)   - Add and remove kernel and initramfs images to and from /boot
+modprobe (8)         - Add and remove modules from the Linux Kernel
+psfstriptable (1)    - remove the embedded Unicode character table from a console font
+py3clean (1)         - removes .pyc and .pyo files
+pyclean (1)          - removes .pyc and .pyo files
+remove-default-ispell (8) - remove default ispell dictionary
+remove-default-wordlist (8) - remove default wordlist
+rm (1)               - remove files or directories
+rmdir (1)            - remove empty directories
+rmmod (8)            - Simple program to remove a module from the Linux Kernel
+unlink (1)           - call the unlink function to remove the specified file
+update-rc.d (8)      - install and remove System-V style init script links</code></pre>
+<pre class="bash="><code># apropos remove
+# -------
+stagiaire@debian:~$ apropos remove
+remove-shell (8)     - Supprimer des interpréteurs de la liste des interpréteurs initiaux valables
+aa-remove-unknown (8) - remove unknown AppArmor profiles
+colrm (1)            - remove columns from a file
+cut (1)              - remove sections from each line of files
+delgroup (8)         - remove a user or group from the system
+deluser (8)          - remove a user or group from the system
+ipcrm (1)            - remove certain IPC resources
+kernel-install (8)   - Add and remove kernel and initramfs images to and from /boot
+modprobe (8)         - Add and remove modules from the Linux Kernel
+psfstriptable (1)    - remove the embedded Unicode character table from a console font
+py3clean (1)         - removes .pyc and .pyo files
+pyclean (1)          - removes .pyc and .pyo files
+remove-default-ispell (8) - remove default ispell dictionary
+remove-default-wordlist (8) - remove default wordlist
+rm (1)               - remove files or directories
+rmdir (1)            - remove empty directories
+rmmod (8)            - Simple program to remove a module from the Linux Kernel
+unlink (1)           - call the unlink function to remove the specified file
+update-rc.d (8)      - install and remove System-V style init script links
+</code></pre>
+<div class="warning">
+Bien vérifier la date du MAN ! Certaines traductions ne sont pas à jour… Ils peut y avoir des manques
+</div>
+<h3 id="micro-quizz-man">Micro QUIZZ MAN</h3>
+<div class="question">
+Dans quelle sections trouve-t-on les entrées des commandes suivantes:
+</div>
+<ul>
+<li><span class="question"> hostname: </span></li>
+<li><span class="answer"> man hostname = 1 </span></li>
+<li><span class="question"> ip: </span></li>
+<li><span class="answer"> man ip = 8 </span></li>
+<li><span class="question"> find: </span></li>
+<li><span class="answer"> man find = 1 </span></li>
+<li><span class="question"> tcp: </span></li>
+<li><span class="answer"> man tcp = 7 </span></li>
+</ul>
+<div class="question">
+Quel est l’intitulé de la section 7 ?
+</div>
+<div class="answer">
+man man: 7 ==&gt;&gt; Miscellaneous (including macro packages and conventions), e.g. man(7), groff(7)
+</div>
+<div class="question">
+Comment avoir l’équivalent en anglais ?
+</div>
+<div class="answer">
+LANG C man man
+</div>
+<div class="question">
+La commande <code>hostname</code> se suffit-elle à elle-même ?
+</div>
+<div class="answer">
+oui
+</div>
+<div class="question">
+Quel est le rôle de l’éventuel argument de cette commande ?
+</div>
+<div class="answer">
+Modifier le hostname courant (de manière non persistente).
+</div>
+<h2 id="propriétées-des-objets">Propriétées des objets</h2>
+<p>Informations sur les objets : <code>ls -alh</code></p>
+<pre class="bash="><code>stagiaire@debian:~$ ls -alh
+total 28K
+drwxr-xr-x 2 stagiaire stagiaire 4,0K juin   7 17:09 .
+drwxr-xr-x 3 root      root      4,0K déc.   9 08:59 ..
+-rw-r--r-- 1 stagiaire stagiaire  220 déc.   9 08:59 .bash_logout
+-rw-r--r-- 1 stagiaire stagiaire 3,5K déc.   9 08:59 .bashrc
+-rw------- 1 stagiaire stagiaire   41 juin   7 17:08 .lesshst
+-rw-r--r-- 1 stagiaire stagiaire  807 déc.   9 08:59 .profile
+-rw------- 1 stagiaire stagiaire  104 juin   7 17:09 .Xauthority</code></pre>
+<p><strong>De la droite vers la gauche :</strong></p>
+<ul>
+<li><p>nom des objets, par ordre alphabétique croissant</p></li>
+<li><p>la date de <strong>dernière modification</strong> (autres dates : date de dernièr accès (ls -lu), date de dernière modification des attributs (ls -lc) )</p></li>
+<li><p>taille des fichiers en <strong>octets</strong> (l’option <code>-h</code> permet de convertir la taille en l’unité la plus appropriée : K, M, G, …)</p></li>
+<li><p>le groupe propriétaire de l’objet</p></li>
+<li><p>le propriétaire de l’objet</p></li>
+<li><p>le nombre de liens physiques (nombre de noms permettant d’accéder à l’objet)</p></li>
+<li><p>la nature (premier caractère) de l’objet et les droits d’accès (9 caractères suivants)</p>
+<ul>
+<li>Nature
+<ul>
+<li>un tiret (<strong>-</strong>) indique un fichier standard (ayant un contenu exploitable : texte, image, son, vidéo, data, …</li>
+<li><strong>d</strong> : répertoire</li>
+<li><strong>l</strong> : lien symbolique (notion assez proche de la notion de raccourci sous Windows)</li>
+<li><strong>p</strong> : tube nommé (mécanisme de communication unidirectionnelle inter-processus (/dev/initctl)</li>
+<li><strong>s</strong>: socket unix (mécanisme de communication bidirectionnelle) (/run/dbus/system_bus_socket)</li>
+<li><strong>b</strong> : fichier d’interface avec le matériel en mode bufferisé (/dev/sda)</li>
+<li><strong>c</strong> : fichier d’interface avec le matériel, en accès direct (/dev/tty1)</li>
+</ul></li>
+</ul></li>
+<li><p>Droits d’accès:</p>
+<ul>
+<li>3 droits de l’user propriétaire (<strong>U</strong>ser)</li>
+<li>3 droits du groupe propriétaire (<strong>G</strong>roup)</li>
+<li>3 droits des autres utilisateurs (<strong>O</strong>ther)</li>
+</ul></li>
+</ul>
+<p>A retenir: <strong>UGO</strong></p>
+<h1 id="les-inodes">Les INODES</h1>
+<h2 id="que-sont-les-inodes-sous-linux">Que sont les inodes sous Linux?</h2>
+<p>Un inode est une structure de données. Il définit un fichier ou un répertoire sur le système de fichiers et est stocké dans l’entrée de répertoire. Les inodes pointent vers les blocs qui composent un fichier. L’inode contient toutes les données administratives nécessaires à la lecture d’un fichier. Les métadonnées de chaque fichier sont stockées dans des inodes dans une structure de table.</p>
+<h2 id="quel-est-le-numéro-dinode">Quel est le numéro d’inode?</h2>
+<p><img src="https://www.telephonetecno.com/wp-content/uploads/2020/12/1607932976_662_Que-sont-les-inodes-sous-Linux-et-comment-sont-ils-utilises.jpg" /></p>
+<p>Chaque inode de la structure Linux a un numéro unique qui lui est identifié. Il est également appelé numéro d’index et possède les attributs suivants:</p>
+<ul>
+<li>Taille</li>
+<li>Propriétaire</li>
+<li>Date / heure</li>
+<li>Autorisations et contrôle d’accès</li>
+<li>Emplacement sur le disque</li>
+<li>Types de fichier</li>
+<li>Nombre de liens</li>
+<li>Métadonnées supplémentaires sur le fichier</li>
+</ul>
+<p>Pour vérifier la liste des numéros d’inœuds, utilisez la commande suivante: <code>ls -i</code></p>
+<div class="info">
+Un fichier peut avoir <strong>plusieurs nom différents</strong> <em>(pièce d’identité)</em> mais <strong>une inode unique</strong> <em>(numéro de sécu)</em>
+</div>
+<p><a href="https://telephonetecno.com/que-sont-les-inodes-sous-linux-et-comment-sont-ils-utilises/" class="uri">https://telephonetecno.com/que-sont-les-inodes-sous-linux-et-comment-sont-ils-utilises/</a></p>
+<h2 id="gestion-des-liens-physiquessymboliques">Gestion des Liens Physiques/Symboliques</h2>
+<p>La gestion est réalisée à l’aide de la commande <code>ln</code> (link). Il n’est possible de créer des liens physiques :</p>
+<ul>
+<li><p>qu’au sein du même système de fichiers (espace des inodes)</p></li>
+<li><p>qu’avec des fichiers et non des répertoires (seul le noyau le peut)</p></li>
+</ul>
+<p>Ces deux limitations peuvent être dépassées à l’aide des liens symboliques.</p>
+<p><img src="2021-06-07-POEI-Linux\inode.png" /></p>
+<h1 id="gestion-des-droits-daccès">Gestion des droits d’accès</h1>
+<h2 id="significarion-des-3-droits">Significarion des 3 droits</h2>
+<h3 id="lecture-read">Lecture <em>(read)</em></h3>
+<ul>
+<li><strong>Fichier</strong>: Accès en lecture à son contenu.</li>
+<li><strong>Répertoire</strong>: Accès en lecture à son contenu, liste des objets contenus dans le répertoire.</li>
+</ul>
+<h3 id="ecriture-write">Ecriture <em>(write)</em></h3>
+<ul>
+<li><p><strong>Fichier</strong>: Modification du contenu d’un fichier. <span class="warning"> Le droit d’écriture n’implique pas forcément le droit de lecture! </span></p></li>
+<li><p><strong>Répertoire</strong>: Modification du contenu du répertoire : ajouter/supprimer des objets dans le répertoire <span class="warning"> Attention le droit d’écriture sur un <strong>répertoire</strong> permet de ajouter/supprimer n’importe quel fichier/dossier <strong>indépendament des droits sur le fichier !!!</strong> </span></p></li>
+</ul>
+<h3 id="execution">Execution</h3>
+<ul>
+<li><strong>Fichier</strong>: Droit de lancer un processus à partir d’un fichier (exécutable).</li>
+<li><strong>Répertoire</strong>:</li>
+</ul>
+<h3 id="vérouillerbloquer-un-fichier">“Vérouiller/Bloquer” un fichier</h3>
+<p><strong>Empêcher la suppression/modification d’un fichier par root</strong></p>
+<p>Pour empêcher la modification ou la suppression d’un fichier, y compris pour root, on peut utiliser la commande « chattr » qui permet de mettre en place des attributs avancés sur les fichiers.</p>
+<p>Pour bloquer un fichier :</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">chattr</span> +i fichier</span></code></pre></div>
+<p>Pour voir les attributs avancés d’un fichier :</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">lsattr</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">----i-----------</span> ./fichier</span></code></pre></div>
+<p>Pour débloquer un fichier:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">chattr</span> -i fichier</span></code></pre></div>
+<h2 id="modification-des-droits">Modification des droits</h2>
+<p>Commande <code>chmod [-R]</code> Qui Action Quoi Liste des objets subissant l’action.</p>
+<h3 id="synatxe-avec-notation-symbolique">Synatxe avec Notation Symbolique</h3>
+<p>Qui : u, g, o, ug, uo, ugo (a) Action : +, -, = Quoi : r, w, x, u, g, o, X, s, t</p>
+<h3 id="syntaxe-avec-notation-octale">Syntaxe avec Notation Octale</h3>
+<p>chmod [-R] XYZ liste des objets subissant l’action</p>
+<p>x = 1 w = 2 r = 4</p>
+<h2 id="droits-par-défaut">Droits par défaut</h2>
+<p>Le noyau Linux attribue :</p>
+<ul>
+<li><p>les droits 666 à tout fichier à l’issue de sa création</p></li>
+<li><p>les droits 777 à tout répertoire à l’issue de sa création</p></li>
+</ul>
+<p>Ce comportement est tempéré par l’existence du masque par défaut contenant la liste des droits à ne pas positionner sur les objets lors de leur création. Ce masque est défini au niveau de la session et est accessible et modifiable par la commande <code>umask</code>.</p>
+<p>La commande <code>umask</code> seule affiche la valeur du masque courant. La commande <code>umask</code> XYZ modifie le masque (cette modification ne persiste que jusqu’à la fin de la session).</p>
+<h3 id="les-masques-les-plus-courants">Les masques les plus courants :</h3>
+<ul>
+<li>Masque minimum standard : <code>0022</code>
+<ul>
+<li>fichiers: rw-r–r– / 644</li>
+<li>répertoires: rwxr-xr-x / 755</li>
+</ul></li>
+<li>Masque un peu plus sécure : <code>0027</code>
+<ul>
+<li>fichiers: rw-r—– / 640</li>
+<li>répertoires: rwxr-x— / 750</li>
+</ul></li>
+<li>Masque encore plus sécure : <code>0077</code>
+<ul>
+<li>fichiers: rw——- / 600</li>
+<li>répertoires: rwx—— / 700</li>
+</ul></li>
+</ul>
+<h2 id="droits-étendus">Droits étendus</h2>
+<div class="question">
+En tant que l’utilisateur stagiaire, vous est-il possible de lire le contenu du fichier /etc/shadow ?
+</div>
+<div class="answer">
+Non, car n’étant ni root ni membre du groupe shadow, on ne dispose pas du droit de lecture. Ce que confirme la commande <code>cat /etc/shadow</code>.
+</div>
+<div class="question">
+Pourquoi la commande cat n’a-t-elle pas accès au fichier /etc/shadow alors que la commande passwd y a accès quant à elle ?
+</div>
+<div class="answer">
+voir les droits sur /usr/bin/passwd…
+</div>
+<p><img src="2021-06-07-POEI-Linux\droitetendu.png" /></p>
+<h3 id="droit-setuid-4">Droit SetUID (4)</h3>
+<p>Se manisfeste par le caractère <code>'s'</code> au niveau du x du propriétaire d’un exécutable.</p>
+<h3 id="droit-setgid-2">Droit SetGID (2)</h3>
+<p>Se manifeste par le caractère <code>'s'</code> au niveau du x du groupe d’un exécutable ou d’un répertoire.</p>
+<h3 id="sticky-bit-1">Sticky Bit (1)</h3>
+<p>Limite le droit d’écriture dans sa fonction de suppression aux seuls objets dont on est propriétaire.</p>
+<p>Donne aux utilisateurs le droit d’écriture dans le répertoire, mais <strong>ils ne peuvent pas supprimer de fichiers dont il ne sont pas propriétaires</strong>.</p>
+<p>Se manifeste par le caractère <code>'t'</code> au niveau du x de <em>other</em> sur un répertoire.</p>
+<p>Les droits étendus se nottent avec le premier chiffre dans le cas d’une notation octale sur 4 chiffres.</p>
+<h2 id="micro-quizz">Micro-Quizz</h2>
+<div class="question">
+Transformer les notations symboliques suivantes en notations octales:
+</div>
+<pre class="bash="><code>- rwxrwxrwx =&gt; 777
+
+- rwxr-xr-x =&gt; 755
+
+- r-x-w---x =&gt; 521
+
+- --x--x--x =&gt; 111
+
+- --------- =&gt; 000</code></pre>
+<p>Droits étendus:</p>
+<pre class="bash="><code>- rwsr-sr-x =&gt; 6755
+
+- rwxrwxrwt =&gt; 1777
+
+- rwxrwxrwT =&gt; 1776</code></pre>
+<ul>
+<li><p>On additionne les <code>s</code> <em>user</em> et <em>group</em> entre eux, <code>s</code>(user)=4 et <code>s</code>(group)=2</p></li>
+<li><p><code>t</code> vaut 1</p></li>
+</ul>
+<div class="question">
+Transformer les notations octales suivantes en notation symboliques
+</div>
+<pre class="bash="><code>- 777 =&gt; rwx rwx rwx
+
+- 755 =&gt; rwx r-x r-x
+
+- 775 =&gt; rwx rwx r-x
+
+- 302 =&gt; -wx --- -w-
+
+- 644 =&gt; rw-r--r--
+
+- 600 =&gt; rw-------
+
+- 601 =&gt; rw------x</code></pre>
+<p><span class="info"> Au cas où: <a href="https://chmod-calculator.com/" class="uri">https://chmod-calculator.com/</a> </span></p>
+<div class="question">
+Quels masques permettraient d’obtenir les droits par défaut suivants ?
+</div>
+<pre class="bash="><code>- Fichier : 666 (répertoire : 777) =&gt; umask 0000
+
+- Fichier : 640 (répertoire : 750) =&gt; umask 0027
+
+- Fichier : 664 (répertoire : 775) =&gt; umask 0002
+
+- Fichier : 600 (répertoire : 700) =&gt; umask 0077
+
+- Fichier : 400 (répertoire : 500) =&gt; umask 0277</code></pre>
+<p>Par défaut: <code>777</code> <strong>répertoires</strong> et <code>666</code> <strong>fichiers</strong>.</p>
+<h1 id="débuter-avec-le-shell">Débuter avec le Shell</h1>
+<h2 id="notion-de-shell">Notion de Shell</h2>
+<p>C’est le processus servant d’interface entre l’utilisateur et le système. Il s’agit d’un nom générique pour les différents programmes ayant servi de shell tout au long de l’histoire d’Unix/Linux. Premier shell d’Unix : Shell Thompson Premier shell “évolué” : Bourne Shell (Steve Bourne) (System V - ATT) Shell de la branche BSD : C-Shell Évolution du Bourne Shell : Korn Shell Sous Linux, le shell par défaut est le <strong><em>Bash</em></strong> : Bourne Again Shell (quasi compatible avec le Korn Shell). D’autres aiment utiliser le ZSH, un autre shell disponible sur Linux.</p>
+<p>Petite histoire des langages : Initialement Unix a été écrit en BCPL. UN nouveau langage plus adapté a été créé : le langage B. Ce langage a été remanié en un nouveau langage : le langage C.</p>
+<h2 id="prompt">Prompt</h2>
+<p>Contient un certain nombre d’informations définies dans la variable PS1 (voir la section PROMPTING dans le man de bash pour plus d’infos). Toute modification de cette variable est perdue à la fin de la session sauf a être conservée dans l’un des fichiers de configuration du shell (cf. plus loin).</p>
+<p>Il est possible de modifier le prompt en utilisant la variable <code>PS1</code>.</p>
+<pre class="bash="><code>stagiaire@debian:~$ echo $PS1
+\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\u@\h:\w\$</code></pre>
+<p>Pour plus d’informations, voir:</p>
+<pre class="bash="><code>When executing interactively, bash displays the primary prompt
+PS1 when it is ready to read a command, and the secondary prompt
+PS2 when it needs more input to complete a command.  Bash
+       displays PS0 after it reads a command but before executing it.
+       Bash displays PS4 as described above before tracing each command
+       when the -x option is enabled.  Bash allows these prompt strings
+       to be customized by inserting a number of backslash-escaped
+       special characters that are decoded as follows:
+              \a     an ASCII bell character (07)
+              \d     the date in &quot;Weekday Month Date&quot; format (e.g., &quot;Tue
+                     May 26&quot;)
+              \D{format}
+                     the format is passed to strftime(3) and the result
+                     is inserted into the prompt string; an empty format
+                     results in a locale-specific time representation.
+                     The braces are required
+              \e     an ASCII escape character (033)
+              \h     the hostname up to the first `.&#39;
+              \H     the hostname
+              \j     the number of jobs currently managed by the shell
+              \l     the basename of the shell&#39;s terminal device name
+              \n     newline
+              \r     carriage return
+              \s     the name of the shell, the basename of $0 (the
+                     portion following the final slash)
+              \t     the current time in 24-hour HH:MM:SS format
+              \T     the current time in 12-hour HH:MM:SS format
+              \@     the current time in 12-hour am/pm format
+              \A     the current time in 24-hour HH:MM format
+              \u     the username of the current user
+              \v     the version of bash (e.g., 2.00)
+              \V     the release of bash, version + patch level (e.g.,
+                     2.00.0)
+              \w     the current working directory, with $HOME
+                     abbreviated with a tilde (uses the value of the
+                     PROMPT_DIRTRIM variable)
+              \W     the basename of the current working directory, with
+                     $HOME abbreviated with a tilde
+              \!     the history number of this command
+              \#     the command number of this command
+              \$     if the effective UID is 0, a #, otherwise a $
+              \nnn   the character corresponding to the octal number nnn
+              \\     a backslash
+              \[     begin a sequence of non-printing characters, which
+                     could be used to embed a terminal control sequence
+                     into the prompt
+              \]     end a sequence of non-printing characters
+</code></pre>
+<p><a href="https://man7.org/linux/man-pages/man1/bash.1.html" class="uri">https://man7.org/linux/man-pages/man1/bash.1.html</a></p>
+<h2 id="alias">Alias</h2>
+<p>Un alias est une sorte de raccourci sur une commande. Par exemple :</p>
+<p><code>alias diso='date "+%F %T"'</code></p>
+<p>Un alias n’est défini que le temps de la session, pour le conserver il est nécessaire de le faire persister dans l’un des fichiers de configuration.</p>
+<p>La commande <code>alias</code> seule donne la liste des alias courants La commande <code>unalias</code> est utilisée pour supprimer un alias.</p>
+<h2 id="enchaînement-de-commandes">Enchaînement de commandes</h2>
+<p>On va parler ici d’<strong>enchaînement séquentiels</strong> et pas d’exécution en parallèle.</p>
+<h3 id="enchaînement-inconditionnel">Enchaînement inconditionnel</h3>
+<p>Le point-virgule <code>;</code> permet un enchaînement <strong>inconditionnel</strong> de plusieurs commandes :</p>
+<p><code>cmd1 ; cmd2 ; cmd3...</code></p>
+<p>Les commandes sont séquentiellement exécutées, indépendamment de leur statut de fin. Si la commande 1 ne fonctionne pas les commandes suivantes seront quand même exécutées.</p>
+<p><img src="2021-06-07-POEI-Linux\enchainementcommande.png" /></p>
+<h3 id="enchaînement-conditionnel">Enchaînement conditionnel</h3>
+<ul>
+<li><p>La syntaxe <code>cmd1 &amp;&amp; cmd2</code> indique de lancer la cmd2 <strong>uniquement sur réussite</strong> de la commande précédente.</p></li>
+<li><p>La syntaxe <code>cmd1 || cmd2</code> indique de lancer la cmd2 <strong>uniquement sur échec</strong> de la commande précédente.</p></li>
+</ul>
+<h3 id="enchainement-avancé">Enchainement avancé</h3>
+<p>Il est possible de mélanger les deux types:</p>
+<p><img src="2021-06-07-POEI-Linux\enchainementConditionnel.png" /></p>
+<div class="warning">
+Faire bien attention à l’enchaînement des commandes pour éviter les bêtises…
+</div>
+<h3 id="micro-quizz-1">Micro-QUIZZ</h3>
+<p><span class="question"> Dans quelles situations la commande cmd3 sera-t-elle lancée ? </span></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">cmd1</span> <span class="kw">&amp;&amp;</span> <span class="ex">cmd2</span> <span class="kw">&amp;&amp;</span> <span class="ex">cmd3</span> :</span></code></pre></div>
+<div class="answer">
+il faut que cmd1 et cmd2 réussissent
+</div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">cmd1</span> <span class="kw">||</span> <span class="ex">cmd2</span> <span class="kw">||</span> <span class="ex">cmd3</span> :</span></code></pre></div>
+<div class="answer">
+il faut que cmd1 et cmd2 échouent toutes les deux
+</div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">cmd1</span> <span class="kw">&amp;&amp;</span> <span class="ex">cmd2</span> <span class="kw">||</span> <span class="ex">cmd3</span> : il faut que cmd1 OK et cmd2 KO</span></code></pre></div>
+<div class="answer">
+cmd1 échoue OU cmd2 échoue.
+</div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="ex">cmd1</span> <span class="kw">&amp;&amp;</span> <span class="ex">cmd2</span> <span class="kw">||</span> <span class="ex">cmd3</span> : il faut que cmd1 OK et cmd2 KO</span></code></pre></div>
+<div class="answer">
+cmd1 KO ET cmd2 OK OU cmd1 OK ET cmd2 KO
+</div>
+<h2 id="redirection-des">Redirection d’E/S</h2>
+<p>Les canaux d’E/S (Entrée / Sortie)</p>
+<p>Toute commande peut disposer des canaux d’E/S suivants :</p>
+<ul>
+<li>0 : canal d’entrée</li>
+<li>1 : canal de sortie des résultats</li>
+<li>2 : canal d’erreur</li>
+</ul>
+<p><img src="2021-06-07-POEI-Linux\redirectionES.png" /></p>
+<p>n°<code>&gt;</code> fichier : redirection du canal n° vers le fichier.</p>
+<ul>
+<li>si le fichier n’existe pas, il est créé</li>
+<li>si le fichier existe, son contenu est écrasé par le résultat de la commande</li>
+<li>si le n° du canal n’est pas précisé, il s’agira du canal 1</li>
+</ul>
+<p>n° <code>&gt;&gt;</code> fichier : redirection en ajout du canal n° vers le fichier</p>
+<ul>
+<li>si le fichier n’existe pas, il est créé</li>
+<li>si le fichier existe, le résultat de la commande y est ajouté à la fin</li>
+</ul>
+<p><strong>Toutes les commandes disposent d’un canal d’erreur.</strong></p>
+<ul>
+<li>Certaines commandes n’ont <strong>que le canal de sortie</strong>
+<ul>
+<li>ls</li>
+<li>date</li>
+<li>who</li>
+<li>echo</li>
+</ul></li>
+<li>Certaines commandes n’ont <strong>que le canal d’entrée</strong>
+<ul>
+<li>lp</li>
+<li>write</li>
+<li>wall</li>
+</ul></li>
+<li>Certaines commandes ont <strong>les trois canaux</strong> (on appelle ces commandes des <strong>filtres</strong>)
+<ul>
+<li>cat</li>
+<li>cut</li>
+<li>grep</li>
+<li>wc</li>
+<li>tr</li>
+</ul></li>
+</ul>
+<h3 id="canal-dentrée">Canal d’entrée</h3>
+<p>Le canal est à ne pas confondre avec la ligne de commande et notamment les arguments. Le canal d’entrée est le moyen par lequel le shell transmet un flux d’octets vers le processus. Il ne s’agit donc pas d’argument (un argument est une information à partir de laquelle va travailler un processus : nom de fichier, un nom d’utilisateur, une date, une chaîne).</p>
+<h3 id="gestion-des-redirections-dentrée">Gestion des redirections d’entrée</h3>
+<h4 id="redirection-simple">Redirection simple</h4>
+<p>Redirection vers, ou à partir de fichier.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">cmd</span> <span class="op">&lt;</span> fichier</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="ex">***Here</span> Document (plus utilisé dans les scripts)<span class="ex">***</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="ex">cmd</span> <span class="op">&lt;&lt; EOF</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>...</span>
+<span id="cb20-7"><a href="#cb20-7"></a>...</span>
+<span id="cb20-8"><a href="#cb20-8"></a>...</span>
+<span id="cb20-9"><a href="#cb20-9"></a><span class="op">EOF</span></span></code></pre></div>
+<h3 id="redirection-vers-ou-à-partir-dune-commande">Redirection vers ou à partir d’une commande</h3>
+<p>Pour rediriger le résultat d’une commande dans une autre commande, on utilise le <strong><em>pipe</em></strong>: <code>|</code></p>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># Nombre de lignes contenues dans le fichier /etc/passwd</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">cat</span> /etc/passwd <span class="kw">|</span> <span class="fu">wc</span> -l</span></code></pre></div>
+<h2 id="caractères-spéciaux">Caractères spéciaux</h2>
+<p>Les caractères spéciaux sont des caractères déclenchant un traitement particulier de la part du Shell. Ceux-ci sont recherchés une fois la commande validée et en amont de son exécution.</p>
+<ul>
+<li><p>Caractères de redirection : <code>&lt;,&lt;&lt;,&gt;,&gt;&gt;,&lt;|, |</code></p></li>
+<li><p>Caractères de protections : <code>"...", '...', \</code></p></li>
+<li><p>“…” : protection faible (protège de tout sauf des constructions à base de $)</p></li>
+<li><p>‘…’ : protection forte (protège de tout)</p></li>
+<li><p>: déspécialise le caractère immédiatement suivant</p></li>
+<li><p>Modèles de noms de fichiers</p></li>
+<li><ul>
+<li>: n’importe quelle chaîne de caractères, y compris la chaîne vide</li>
+</ul></li>
+<li><p>b*c : bc bac banc blanc broc “b c”</p></li>
+<li><p>? : n’importe quel caractère</p></li>
+<li><p>ls -l j?.sh</p></li>
+<li><p>[…] : un seul caractère, parmi ceux de la liste entre crochets</p></li>
+<li><p>ls -l j[3456].sh</p></li>
+<li><p>[^...] : un seul caractère, hormis ceux de la liste entre crochets (peut être écrit [!…])</p></li>
+<li><p>ls -l j[^3456].sh</p></li>
+<li><p>Il y en a d’autres : (), [], [[]], (()), {}, &amp;&amp;, ||, &amp;,</p></li>
+</ul>
+<h5 id="caractères-spéciaux-signification">Caractères spéciaux Signification:</h5>
+<ul>
+<li><code>#</code> Commentaire.</li>
+<li><code>/</code> Séparateur dans les chemins.</li>
+<li><code>~</code> Répertoire HOME.</li>
+<li><code>$</code> Substitution de valeur.</li>
+<li><code></code> Protection du caractère suivant.</li>
+<li><code>'</code> Guillemet (quote). Protection forte.</li>
+<li><code>"</code> Guillemet. Protection faible.</li>
+<li><code>&amp;</code> Execution en arrière-plan.</li>
+<li><code>&lt;</code> Redirection de flot d’entrée.</li>
+<li><code>&gt;</code> Redirection de flot de sortie.</li>
+<li><code>|</code> Tube de flots d’entrée/sortie standards.</li>
+<li><code>\</code> protection du 1er caratère suivant</li>
+</ul>
+<h5 id="les-jokers-caractères-correspondance">Les jokers Caractères Correspondance:</h5>
+<ul>
+<li><code>?</code> 1 seul caractère quelconque.</li>
+<li><code>*</code> une suite de caractères quelconques (vide compris).</li>
+<li><code>[ensemble]</code> 1 seul caractère qui existe dans l’ensemble.</li>
+<li><code>[!ensemble]</code> 1 seul caractère qui n’existe pas dans l’ensemble.</li>
+</ul>
+<p>Source: <a href="http://www.progmatique.fr/article-50-Shell-liste-caracteres-speciaux-jokers.html" class="uri">http://www.progmatique.fr/article-50-Shell-liste-caracteres-speciaux-jokers.html</a></p>
+<h3 id="micro-quizz-sur-les-caractères-spéciaux">Micro-quizz sur les caractères spéciaux</h3>
+<div class="question">
+Comment modéliser les noms de fichiers suivants :
+</div>
+<ul>
+<li><p>Se terminant par <strong>.sh</strong> =&gt; <code>*.sh</code></p></li>
+<li><p>Commençant par <strong>u</strong> =&gt; <code>u*</code></p></li>
+<li><p>Commençant par une majuscule: <code>[A-Z]*</code></p></li>
+<li><p>Commençant par un chiffre ou une minuscule et se terminant par .c: <code>[-az0-9]*.c</code> correspond à <code>abc...xyz0123...789</code></p></li>
+<li><p>Contenant un chiffre en deuxième position: <code>?[0-9]*</code></p></li>
+</ul>
+<h2 id="options">Options</h2>
+<p>un option permet d’adapter le compoprtement du <strong><em>bash</em></strong>.</p>
+<p><strong>Options historiques</strong> : se gèrent à l’aide de la commande set [+-]o La liste et l’état des options est donnée par set -o. Une option est activée par : set -o nom Une option est désactivée par : set +o nom</p>
+<h3 id="options-utiles">Options utiles</h3>
+<ul>
+<li><strong>noclobber</strong> : évite l’écrasement d’un fichier en cas de simple redirection</li>
+<li><strong>xtrace</strong> : affiche les étapes de traitement d’une commande à l’écran</li>
+<li><strong>errexit</strong> : stoppe un script en cas d’erreur</li>
+<li><strong>ignoreeof</strong> : désactive la fonctionnalité de déconnexion de la combinaison ^D (EOF)</li>
+<li><strong>nounset</strong> : provoque une erreur lors de l’accès à une variable non initialisée</li>
+</ul>
+<h3 id="options-étendues">Options étendues</h3>
+<p>La commande shopt affiche les options étendues avec leur statut Une option étendue est activée par shopt -s nom Elle est désactivée par shopt -u nom</p>
+<p>Les options étendues s’active avec la commande <strong><em>shopt</em></strong>.</p>
+<p>Voir: <a href="https://www.computerhope.com/unix/bash/shopt.htm" class="uri">https://www.computerhope.com/unix/bash/shopt.htm</a></p>
+<h2 id="commandes-internesexternes">Commandes Internes/Externes</h2>
+<p>Une commande <strong>interne</strong> (au shell) est une commande dont le code est <strong>contenu dans le code du shell bash</strong>. Son exécution se déroule au sein du processus bash.</p>
+<p>Une commande <strong>externe</strong> est une commande dont le code se trouve dans un fichier de même nom que la commande (en cela il y a génération d’un processus).</p>
+<div class="info">
+La commande type permet de savoir si on a à faire à une commande externe ou interne en donnant la priorité aux commandes internes.
+</div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># Commande Interne</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="bu">type</span> cd</span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="bu">cd</span> est une primitive du shell</span>
+<span id="cb22-4"><a href="#cb22-4"></a></span>
+<span id="cb22-5"><a href="#cb22-5"></a><span class="co"># Commande Externe</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a><span class="bu">type</span> tree</span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="ex">tree</span> est /usr/bin/tree</span>
+<span id="cb22-8"><a href="#cb22-8"></a></span>
+<span id="cb22-9"><a href="#cb22-9"></a></span></code></pre></div>
+<h2 id="fichiers-de-configuration">Fichiers de configuration</h2>
+<p>Plusieurs fichiers de configuration sont exploitables par le shell, dans l’ordre suivant lors de la connexion :</p>
+<ul>
+<li><code>/etc/profile</code>: fichier global de configuration du Shell, ne peut être modififé que par le root.</li>
+</ul>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="ex">stagiaire@debian</span>:~$ cat /etc/profile</span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="co"># /etc/profile: system-wide .profile file for the Bourne shell (sh(1))</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="co"># and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="ex">...</span></span></code></pre></div>
+<p>Dans le répertoire personnel, le shell recherche l’un des fichiers suivants, il utilisera le premier trouvé :</p>
+<ul>
+<li><p>.bash_profile (généralement utilisé par les distributions Redhat)</p></li>
+<li><p>.bash_login</p></li>
+<li><p>.profile (généralement utilisé par les distributions Debian/Ubuntu)</p></li>
+</ul>
+<p>Les Shells interactifs ouvert après la connexion exploitent le fichier <code>.bashrc</code></p>
+<h2 id="gestion-de-lhistorique">Gestion de l’historique</h2>
+<p>Le shell gère un historique des commandes saisies. Pendant la session, l’historique conserve en mémoire un nombre de commandes indiqué par la variable HISTSIZE. Par défaut 1000 (sur Debian).</p>
+<p>À la fin de la session, l’historique mémoire est persisté dans le fichier dont le nom est donné par la variable HISTFILE. Par défaut, il s’agit de .bash_history. Dans ce fichier sera conservé un nombre de commandes indiqué par la variable HISTFILESIZE. Par défaut 2000 (sur Debian).</p>
+<p>La commande history permet l’affichage de l’historique de session. Dès lors que la variable HISTTIMEFORMAT est définie, le shell stocke un horodatage pour chaque commande sous forme d’un timestamp UNIX (nombre de secondes écoulées depuis le 01 janvier 1970).</p>
+<h2 id="micro-tp-sur-le-bash">Micro-TP sur le bash</h2>
+<p>Créer, de manière persistente, les alias suivants :</p>
+<ul>
+<li>Un alias nommé <code>'llt'</code> affichant le contenu d’un répertoire par ordre chronologique croissant (du plus ancien au plus récent)</li>
+</ul>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="bu">echo</span> <span class="st">&quot;alias llt = &#39;ls -alrt&#39;&quot;</span> <span class="op">&gt;&gt;</span> ~/.bashrc <span class="kw">&amp;&amp;</span> <span class="bu">source</span> .bashrc</span>
+<span id="cb24-2"><a href="#cb24-2"></a></span>
+<span id="cb24-3"><a href="#cb24-3"></a><span class="ex">stagiaire@debian</span>:~$ llt</span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="ex">total</span> 208</span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire    807 déc.   9  2020 .profile</span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire    220 déc.   9  2020 .bash_logout</span>
+<span id="cb24-7"><a href="#cb24-7"></a><span class="ex">drwxr-xr-x</span> 3 root      root        4096 déc.   9  2020 ..</span>
+<span id="cb24-8"><a href="#cb24-8"></a><span class="ex">-rwxrwxrwx</span> 1 stagiaire stagiaire     19 juin   7 17:46 bla.txt</span>
+<span id="cb24-9"><a href="#cb24-9"></a><span class="ex">drwxr-xr-x</span> 3 stagiaire stagiaire   4096 juin   7 17:49 .local</span>
+<span id="cb24-10"><a href="#cb24-10"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire     20 juin   8 10:29 f1.txt</span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="ex">drwxr-xr-x</span> 3 stagiaire stagiaire   4096 juin   8 14:10 dir1</span>
+<span id="cb24-12"><a href="#cb24-12"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire     42 juin   9 12:21 test.log</span>
+<span id="cb24-13"><a href="#cb24-13"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire      0 juin   9 12:21 test.err</span>
+<span id="cb24-14"><a href="#cb24-14"></a><span class="ex">-rw-------</span> 1 stagiaire stagiaire   1073 juin   9 16:33 .bash_history</span>
+<span id="cb24-15"><a href="#cb24-15"></a><span class="ex">-rw-------</span> 1 stagiaire stagiaire    156 juin   9 16:33 .Xauthority</span>
+<span id="cb24-16"><a href="#cb24-16"></a><span class="ex">drwxr-xr-x</span> 2 stagiaire stagiaire   4096 juin  10 09:18 Scripts</span>
+<span id="cb24-17"><a href="#cb24-17"></a><span class="ex">-rw-------</span> 1 stagiaire stagiaire     89 juin  10 09:27 .lesshst</span>
+<span id="cb24-18"><a href="#cb24-18"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire   3544 juin  10 10:04 .bashrc</span>
+<span id="cb24-19"><a href="#cb24-19"></a><span class="ex">drwxr-xr-x</span> 5 stagiaire stagiaire 159744 juin  10 10:04 .</span></code></pre></div>
+<ul>
+<li>Un alias nommé <code>'lls'</code> affichant le contenu d’un répertoire en fonction de la taille croissante, lisible de la manière la plus pratique (faire en sorte que la taille soit affichée avec le suffixe le plus approprié)</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="bu">echo</span> <span class="st">&quot;alias lls = &#39;ls -alhrS&#39;&quot;</span> <span class="op">&gt;&gt;</span> ~/.bashrc <span class="kw">&amp;&amp;</span> <span class="bu">source</span> .bashrc</span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="ex">stagiaire@debian</span>:~$ lls</span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="ex">total</span> 208K</span>
+<span id="cb25-6"><a href="#cb25-6"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire    0 juin   9 12:21 test.err</span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="ex">-rwxrwxrwx</span> 1 stagiaire stagiaire   19 juin   7 17:46 bla.txt</span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire   20 juin   8 10:29 f1.txt</span>
+<span id="cb25-9"><a href="#cb25-9"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire   42 juin   9 12:21 test.log</span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="ex">-rw-------</span> 1 stagiaire stagiaire   89 juin  10 09:27 .lesshst</span>
+<span id="cb25-11"><a href="#cb25-11"></a><span class="ex">-rw-------</span> 1 stagiaire stagiaire  156 juin   9 16:33 .Xauthority</span>
+<span id="cb25-12"><a href="#cb25-12"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire  220 déc.   9  2020 .bash_logout</span>
+<span id="cb25-13"><a href="#cb25-13"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire  807 déc.   9  2020 .profile</span>
+<span id="cb25-14"><a href="#cb25-14"></a><span class="ex">-rw-------</span> 1 stagiaire stagiaire 1,1K juin   9 16:33 .bash_history</span>
+<span id="cb25-15"><a href="#cb25-15"></a><span class="ex">-rw-r--r--</span> 1 stagiaire stagiaire 3,5K juin  10 10:04 .bashrc</span>
+<span id="cb25-16"><a href="#cb25-16"></a><span class="ex">drwxr-xr-x</span> 2 stagiaire stagiaire 4,0K juin  10 09:18 Scripts</span>
+<span id="cb25-17"><a href="#cb25-17"></a><span class="ex">drwxr-xr-x</span> 3 stagiaire stagiaire 4,0K juin   7 17:49 .local</span>
+<span id="cb25-18"><a href="#cb25-18"></a><span class="ex">drwxr-xr-x</span> 3 stagiaire stagiaire 4,0K juin   8 14:10 dir1</span>
+<span id="cb25-19"><a href="#cb25-19"></a><span class="ex">drwxr-xr-x</span> 3 root      root      4,0K déc.   9  2020 ..</span>
+<span id="cb25-20"><a href="#cb25-20"></a><span class="ex">drwxr-xr-x</span> 5 stagiaire stagiaire 156K juin  10 10:04 .</span></code></pre></div>
+<ul>
+<li>Configurer votre environnement, de manière persistente, afin:
+<ul>
+<li>de protéger vos fichiers d’un écrasement intempestif lors de redirections</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a><span class="bu">echo</span> <span class="st">&quot;set -o noclobber&quot;</span> <span class="op">&gt;&gt;</span> ~/.bashrc <span class="kw">&amp;&amp;</span> <span class="bu">source</span> .bashrc</span>
+<span id="cb26-2"><a href="#cb26-2"></a></span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="ex">stagiaire@debian</span>:~$ echo <span class="st">&quot;bla&quot;</span> <span class="op">&gt;</span> f1</span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="ex">stagiaire@debian</span>:~$ <span class="op">&gt;</span>f1</span>
+<span id="cb26-5"><a href="#cb26-5"></a><span class="ex">-bash</span>: f1 : impossible d<span class="st">&#39;écraser le fichier existant</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a></span></code></pre></div>
+<ul>
+<li>d’interdire la fin de session par la combinaison ^D</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a><span class="ex">stagiaire@debian</span>:~$ echo <span class="st">&quot;set -o ignoreeof&quot;</span> <span class="op">&gt;&gt;</span> ~/.bashrc</span>
+<span id="cb27-2"><a href="#cb27-2"></a><span class="ex">stagiaire@debian</span>:~$ source .bashrc</span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="ex">stagiaire@debian</span>:~$ Utilisez « logout » pour quitter le shell.</span></code></pre></div>
+<ul>
+<li>de définir l’umask à 0027</li>
+</ul>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1"></a><span class="bu">echo</span> <span class="st">&quot;umask 0027&quot;</span> <span class="op">&gt;&gt;</span> ~/.bashrc <span class="kw">&amp;&amp;</span> <span class="bu">source</span> .bashrc</span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a> <span class="fu">mkdir</span> BOU <span class="kw">&amp;&amp;</span> <span class="fu">touch</span> bou </span>
+<span id="cb28-4"><a href="#cb28-4"></a></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="ex">-rwxrwxrwx</span> 1 stagiaire stagiaire     19 juin   7 17:46 bla.txt</span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="ex">-rw-r-----</span> 1 stagiaire stagiaire      0 juin  10 10:39 bou</span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="ex">drwxr-x---</span> 2 stagiaire stagiaire   4096 juin  10 10:39 BOU</span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="ex">drwxr-xr-x</span> 3 stagiaire stagiaire   4096 juin   8 14:10 dir1</span></code></pre></div>
+<h1 id="les-commandes-essentielles">Les commandes essentielles</h1>
+<h2 id="gestion-de-répertoires">Gestion de répertoires</h2>
+<ul>
+<li><code>mkdir</code> : création de répertoire. L’option <code>-p</code> permet de créer, le cas échéant, les répertoires parents.</li>
+<li><code>rmdir</code> : suppression de répertoire à condition qu’il soit vide.</li>
+</ul>
+<h2 id="se-déplacer-et-lister">Se déplacer et lister</h2>
+<ul>
+<li><code>cd</code> : change directory (cd - alterne entre le courant et le dernier ; cd seul retourne dans le home directory)</li>
+<li><code>ls</code> : liste le contenu d’un répertoire ou la présence/info d’un fichier.</li>
+</ul>
+<h2 id="copier-déplacer-et-supprimer">Copier, déplacer et supprimer</h2>
+<ul>
+<li><code>cp</code> : copie fichiers/répertoires</li>
+<li><code>mv</code> : déplace/renomme</li>
+<li><code>rm</code> : supprime (de manière irréversible)</li>
+</ul>
+<p>Ces trois commandes s’exécutent sans confirmation (l’option -i évite le risque de perte de fichier)</p>
+<p>On utilise la récursivité avec l’option: <code>-r</code></p>
+<h2 id="rechercher-des-fichiersrépertoires">Rechercher des fichiers/répertoires</h2>
+<p><em>Ici on recherche indépendement du contenu.</em></p>
+<h3 id="la-commande-find">La commande <code>Find</code></h3>
+<ul>
+<li><code>find</code>: Permet de rechercher des objets, à partir d’un ou plusieurs répertoires, sur la base d’un ensemble de critères pour ensuite effectuer une ou plusieurs actions sur les objets trouvés.</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># Syntaxe</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">find</span> [-H] [-L] [-P] [-D debugopts] [-Olevel] [starting-point...] [expression]</span>
+<span id="cb29-3"><a href="#cb29-3"></a></span>
+<span id="cb29-4"><a href="#cb29-4"></a></span>
+<span id="cb29-5"><a href="#cb29-5"></a></span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="co"># Recherche dans plusieurs répertoires</span></span>
+<span id="cb29-8"><a href="#cb29-8"></a><span class="fu">find</span> rep1 rep2 ...</span></code></pre></div>
+<h4 id="recherche-par-type">Recherche par <strong><em>type</em></strong></h4>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">find</span> -type [d<span class="kw">|</span><span class="ex">f</span>]</span>
+<span id="cb30-2"><a href="#cb30-2"></a><span class="co">## IS NOT:</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="fu">find</span> ! -type [d<span class="kw">|</span><span class="ex">f</span>]</span>
+<span id="cb30-4"><a href="#cb30-4"></a></span></code></pre></div>
+<p>types: f,d,l,s,p,b,c</p>
+<h4 id="recherche-par-nom">Recherche par <strong><em>nom</em></strong></h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">find</span> -name <span class="st">&quot;*.sh&quot;</span></span></code></pre></div>
+<p><span class="info"> L’option <code>-name</code> doit s’utiliser toujours avec les guillements. </span></p>
+<h4 id="recherche-par-taille">Recherche par <strong><em>taille</em></strong></h4>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># Trouve les fichiers de plus de 20M:</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">find</span> / -type f -size +20M -exec ls -lh {} <span class="dt">\;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a></span>
+<span id="cb32-4"><a href="#cb32-4"></a></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="fu">find</span> / -type f -size +20M -type d <span class="dt">\(</span>! -name DATA<span class="dt">\)</span> -exec ls -lh {} <span class="dt">\;</span></span></code></pre></div>
+<ul>
+<li>-size x: exactement la taille</li>
+<li>-size +x: plus grand que x</li>
+<li>-size -x: plus petit que x</li>
+</ul>
+<h4 id="recherche-par-usergroup">Recherche par <strong><em>user/group</em></strong></h4>
+<ul>
+<li>-perm</li>
+<li>-user</li>
+<li>-group</li>
+<li>-nouser</li>
+<li>-nogroup</li>
+</ul>
+<h4 id="exemples">Exemples</h4>
+<p>Combiner, recherche de dossier dont le nom se fini par un chiffre:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">find</span> -type d -name <span class="st">&quot;*[0-9]&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">find</span> / -xdev -type f -name <span class="st">&quot;*.tmp&quot;</span> -atime +7 -exec rm {} <span class="dt">\;</span></span></code></pre></div>
+<p><span class="info"> L’option <code>-atime</code> utilise des tranches de 24h, ci-dessus: <em>7x24h</em> </span></p>
+<p><span class="info"> L’option <code>-xdev</code> permet de rester sur le système de fichier courant (évite de parcourir les volumes montés) et permet donc une recherche beaucoup plus performante !!! </span></p>
+<h3 id="la-commande-locate">La commande <code>locate</code>:</h3>
+<p>Recherche effectuée non pas à partir de l’arborescence mais auprès d’une base mise à jour quotidiennement (/var/lib/mlocate/mlocate.db).</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a></span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="ex">stagiaire@debian</span>:~$ ll /etc/cron.daily/</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="ex">total</span> 44K</span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="ex">652810</span> drwxr-xr-x  2 root root 4,0K juin  10 14:24 ./</span>
+<span id="cb35-5"><a href="#cb35-5"></a><span class="ex">652801</span> drwxr-xr-x 74 root root 4,0K juin  10 14:24 ../</span>
+<span id="cb35-6"><a href="#cb35-6"></a><span class="ex">657272</span> -rwxr-xr-x  1 root root  311 mai   19  2019 0anacron*</span>
+<span id="cb35-7"><a href="#cb35-7"></a><span class="ex">652848</span> -rwxr-xr-x  1 root root 1,5K mai   12  2020 apt-compat*</span>
+<span id="cb35-8"><a href="#cb35-8"></a><span class="ex">652990</span> -rwxr-xr-x  1 root root  355 déc.  29  2017 bsdmainutils*</span>
+<span id="cb35-9"><a href="#cb35-9"></a><span class="ex">652811</span> -rwxr-xr-x  1 root root 1,2K avril 19  2019 dpkg*</span>
+<span id="cb35-10"><a href="#cb35-10"></a><span class="ex">653039</span> -rwxr-xr-x  1 root root  377 août  29  2018 logrotate*</span>
+<span id="cb35-11"><a href="#cb35-11"></a><span class="ex">653404</span> -rwxr-xr-x  1 root root 1,1K févr. 10  2019 man-db*</span>
+<span id="cb35-12"><a href="#cb35-12"></a><span class="ex">652910</span> -rwxr-xr-x  1 root root  543 nov.  14  2018 mlocate*</span>
+<span id="cb35-13"><a href="#cb35-13"></a><span class="ex">652891</span> -rwxr-xr-x  1 root root  249 sept. 27  2017 passwd*</span>
+<span id="cb35-14"><a href="#cb35-14"></a><span class="ex">652995</span> -rw-r--r--  1 root root  102 oct.  11  2019 .placeholder</span></code></pre></div>
+<h4 id="installation">Installation:</h4>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1"></a><span class="ex">root@debian</span>:/home/stagiaire#  apt install mlocate</span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a><span class="ex">root@debian</span>:/home/stagiaire# updatedb</span>
+<span id="cb36-4"><a href="#cb36-4"></a></span>
+<span id="cb36-5"><a href="#cb36-5"></a></span>
+<span id="cb36-6"><a href="#cb36-6"></a><span class="ex">stagiaire@debian</span>:~$ locate bla</span>
+<span id="cb36-7"><a href="#cb36-7"></a><span class="ex">/etc/bindresvport.blacklist</span></span>
+<span id="cb36-8"><a href="#cb36-8"></a><span class="ex">/home/stagiaire/bla.txt</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a><span class="ex">/usr/lib/modprobe.d/fbdev-blacklist.conf</span></span>
+<span id="cb36-10"><a href="#cb36-10"></a><span class="ex">/usr/lib/modules/4.19.0-13-amd64/kernel/drivers/media/pci/cx88/cx88-blackbird.ko</span></span>
+<span id="cb36-11"><a href="#cb36-11"></a><span class="ex">/usr/lib/modules/4.19.0-13-amd64/kernel/net/ipv4/tcp_hybla.ko</span></span>
+<span id="cb36-12"><a href="#cb36-12"></a><span class="ex">/usr/sbin/setvesablank</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a><span class="ex">/usr/share/initramfs-tools/scripts/init-top/blacklist</span></span>
+<span id="cb36-14"><a href="#cb36-14"></a><span class="ex">/usr/share/man/man8/setvesablank.8.gz</span></span>
+<span id="cb36-15"><a href="#cb36-15"></a><span class="ex">/usr/share/mime/x-content/blank-bd.xml</span></span>
+<span id="cb36-16"><a href="#cb36-16"></a><span class="ex">/usr/share/mime/x-content/blank-cd.xml</span></span>
+<span id="cb36-17"><a href="#cb36-17"></a><span class="ex">/usr/share/mime/x-content/blank-dvd.xml</span></span>
+<span id="cb36-18"><a href="#cb36-18"></a><span class="ex">/usr/share/mime/x-content/blank-hddvd.xml</span></span>
+<span id="cb36-19"><a href="#cb36-19"></a><span class="ex">/usr/share/zoneinfo/Africa/Casablanca</span></span>
+<span id="cb36-20"><a href="#cb36-20"></a><span class="ex">/usr/share/zoneinfo/posix/Africa/Casablanca</span></span>
+<span id="cb36-21"><a href="#cb36-21"></a><span class="ex">/usr/share/zoneinfo/right/Africa/Casablanca</span></span>
+<span id="cb36-22"><a href="#cb36-22"></a></span></code></pre></div>
+<h4 id="avantageinconvénient">Avantage/Inconvénient</h4>
+<ul>
+<li><p>Avantage : extrême rapidité</p></li>
+<li><p>Inconvénients :</p>
+<ul>
+<li>n’a aucune connaissance des fichiers postérieurs à la mise à jour de la base.</li>
+<li>continue de retourner les fichiers supprimés jusqu’à la prochaine mise à jour.</li>
+</ul></li>
+</ul>
+<h4 id="utilisation">Utilisation</h4>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">locate</span> whatever_you_are_looking_for_^^</span></code></pre></div>
+<p>exemple:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1"></a><span class="ex">stagiaire@debian</span>:~$ locate *.sh</span>
+<span id="cb38-2"><a href="#cb38-2"></a><span class="ex">/boot/grub/i386-pc/modinfo.sh</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a><span class="ex">/etc/console-setup/cached_setup_font.sh</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="ex">/etc/console-setup/cached_setup_keyboard.sh</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="ex">/etc/console-setup/cached_setup_terminal.sh</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a><span class="ex">/etc/init.d/console-setup.sh</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a><span class="ex">/etc/init.d/hwclock.sh</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a><span class="ex">/etc/init.d/keyboard-setup.sh</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a><span class="ex">/etc/profile.d/bash_completion.sh</span></span>
+<span id="cb38-10"><a href="#cb38-10"></a><span class="ex">/etc/rc0.d/K01hwclock.sh</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a><span class="ex">/etc/rc2.d/S01console-setup.sh</span></span>
+<span id="cb38-12"><a href="#cb38-12"></a><span class="ex">/etc/rc3.d/S01console-setup.sh</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a><span class="ex">/etc/rc4.d/S01console-setup.sh</span></span>
+<span id="cb38-14"><a href="#cb38-14"></a><span class="ex">/etc/rc5.d/S01console-setup.sh</span></span>
+<span id="cb38-15"><a href="#cb38-15"></a><span class="ex">/etc/rc6.d/K01hwclock.sh</span></span>
+<span id="cb38-16"><a href="#cb38-16"></a><span class="ex">/etc/rcS.d/S01hwclock.sh</span></span>
+<span id="cb38-17"><a href="#cb38-17"></a><span class="ex">/etc/rcS.d/S01keyboard-setup.sh</span></span>
+<span id="cb38-18"><a href="#cb38-18"></a><span class="ex">/etc/wpa_supplicant/action_wpa.sh</span></span>
+<span id="cb38-19"><a href="#cb38-19"></a><span class="ex">/etc/wpa_supplicant/functions.sh</span></span>
+<span id="cb38-20"><a href="#cb38-20"></a><span class="ex">/etc/wpa_supplicant/ifupdown.sh</span></span>
+<span id="cb38-21"><a href="#cb38-21"></a><span class="ex">/home/stagiaire/BOU/BOU.sh</span></span>
+<span id="cb38-22"><a href="#cb38-22"></a><span class="ex">/home/stagiaire/Scripts/3-date.sh</span></span>
+<span id="cb38-23"><a href="#cb38-23"></a><span class="ex">/home/stagiaire/Scripts/3-date_v2.sh</span></span>
+<span id="cb38-24"><a href="#cb38-24"></a><span class="ex">/home/stagiaire/Scripts/alias.sh</span></span>
+<span id="cb38-25"><a href="#cb38-25"></a><span class="ex">/home/stagiaire/Scripts/loop.sh</span></span>
+<span id="cb38-26"><a href="#cb38-26"></a><span class="ex">/usr/bin/gettext.sh</span></span>
+<span id="cb38-27"><a href="#cb38-27"></a><span class="ex">/usr/lib/console-setup/console-setup.sh</span></span>
+<span id="cb38-28"><a href="#cb38-28"></a><span class="ex">/usr/lib/console-setup/keyboard-setup.sh</span></span>
+<span id="cb38-29"><a href="#cb38-29"></a><span class="ex">/usr/lib/grub/i386-pc/modinfo.sh</span></span>
+<span id="cb38-30"><a href="#cb38-30"></a><span class="ex">/usr/lib/ifupdown/settle-dad.sh</span></span>
+<span id="cb38-31"><a href="#cb38-31"></a><span class="ex">/usr/lib/ifupdown/wait-for-ll6.sh</span></span>
+<span id="cb38-32"><a href="#cb38-32"></a><span class="ex">/usr/lib/ifupdown/wait-online.sh</span></span>
+<span id="cb38-33"><a href="#cb38-33"></a><span class="ex">/usr/lib/init/vars.sh</span></span>
+<span id="cb38-34"><a href="#cb38-34"></a><span class="ex">/usr/share/debconf/confmodule.sh</span></span>
+<span id="cb38-35"><a href="#cb38-35"></a><span class="ex">/usr/share/doc/cron/examples/cron-tasks-review.sh</span></span>
+<span id="cb38-36"><a href="#cb38-36"></a><span class="ex">/usr/share/doc/ifupdown/examples/check-mac-address.sh</span></span>
+<span id="cb38-37"><a href="#cb38-37"></a><span class="ex">/usr/share/doc/ifupdown/examples/get-mac-address.sh</span></span>
+<span id="cb38-38"><a href="#cb38-38"></a><span class="ex">/usr/share/doc/ifupdown/examples/pcmcia-compat.sh</span></span>
+<span id="cb38-39"><a href="#cb38-39"></a><span class="ex">/usr/share/doc/ifupdown/examples/ping-places.sh</span></span>
+<span id="cb38-40"><a href="#cb38-40"></a><span class="ex">/usr/share/doc/netcat-traditional/examples/scripts/dist.sh</span></span>
+<span id="cb38-41"><a href="#cb38-41"></a><span class="ex">/usr/share/os-prober/common.sh</span></span></code></pre></div>
+<h2 id="commandes-de-gestion-de-contenu">Commandes de gestion de contenu</h2>
+<p>Ces commandes peuvent travailler à partir d’un ou plusieurs fichiers ou à partir de l’entrée standard pour produire un résultat à partir des octets récupérés (fichier/entrée standard). À ce sujet on parle de filtres.</p>
+<h3 id="affichage-de-fichier">Affichage de fichier</h3>
+<ul>
+<li><code>cat</code>: <a href="https://man7.org/linux/man-pages/man1/cat.1.html" class="uri">https://man7.org/linux/man-pages/man1/cat.1.html</a></li>
+</ul>
+<p><span class="info"> Option intéressante: on peut compter les lignes avec <code>cat -n</code> </span></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1"></a><span class="ex">NAME</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>       <span class="fu">cat</span> - concatenate files and print on the standard output</span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="ex">SYNOPSIS</span> </span>
+<span id="cb39-5"><a href="#cb39-5"></a></span>
+<span id="cb39-6"><a href="#cb39-6"></a>       <span class="fu">cat</span> [OPTION]... [FILE]...</span>
+<span id="cb39-7"><a href="#cb39-7"></a></span>
+<span id="cb39-8"><a href="#cb39-8"></a><span class="ex">DESCRIPTION</span> </span>
+<span id="cb39-9"><a href="#cb39-9"></a></span>
+<span id="cb39-10"><a href="#cb39-10"></a>       <span class="ex">Concatenate</span> FILE(s) <span class="ex">to</span> standard output.</span>
+<span id="cb39-11"><a href="#cb39-11"></a></span>
+<span id="cb39-12"><a href="#cb39-12"></a>       <span class="ex">With</span> no FILE, or when FILE is -, read standard input.</span>
+<span id="cb39-13"><a href="#cb39-13"></a></span>
+<span id="cb39-14"><a href="#cb39-14"></a>       <span class="ex">-A</span>, --show-all</span>
+<span id="cb39-15"><a href="#cb39-15"></a>              <span class="ex">equivalent</span> to -vET</span>
+<span id="cb39-16"><a href="#cb39-16"></a></span>
+<span id="cb39-17"><a href="#cb39-17"></a>       <span class="ex">-b</span>, --number-nonblank</span>
+<span id="cb39-18"><a href="#cb39-18"></a>              <span class="ex">number</span> nonempty output lines, overrides -n</span>
+<span id="cb39-19"><a href="#cb39-19"></a></span>
+<span id="cb39-20"><a href="#cb39-20"></a>       <span class="ex">-e</span>     equivalent to -vE</span>
+<span id="cb39-21"><a href="#cb39-21"></a></span>
+<span id="cb39-22"><a href="#cb39-22"></a>       <span class="ex">-E</span>, --show-ends</span>
+<span id="cb39-23"><a href="#cb39-23"></a>              <span class="ex">display</span> $ at end of each line</span>
+<span id="cb39-24"><a href="#cb39-24"></a></span>
+<span id="cb39-25"><a href="#cb39-25"></a>       <span class="ex">-n</span>, --number</span>
+<span id="cb39-26"><a href="#cb39-26"></a>              <span class="ex">number</span> all output lines</span>
+<span id="cb39-27"><a href="#cb39-27"></a></span>
+<span id="cb39-28"><a href="#cb39-28"></a>       <span class="ex">-s</span>, --squeeze-blank</span>
+<span id="cb39-29"><a href="#cb39-29"></a>              <span class="ex">suppress</span> repeated empty output lines</span>
+<span id="cb39-30"><a href="#cb39-30"></a></span>
+<span id="cb39-31"><a href="#cb39-31"></a>       <span class="ex">-t</span>     equivalent to -vT</span>
+<span id="cb39-32"><a href="#cb39-32"></a></span>
+<span id="cb39-33"><a href="#cb39-33"></a>       <span class="ex">-T</span>, --show-tabs</span>
+<span id="cb39-34"><a href="#cb39-34"></a>              <span class="ex">display</span> TAB characters as ^I</span>
+<span id="cb39-35"><a href="#cb39-35"></a></span>
+<span id="cb39-36"><a href="#cb39-36"></a>       <span class="ex">-u</span>     (ignored)</span>
+<span id="cb39-37"><a href="#cb39-37"></a></span>
+<span id="cb39-38"><a href="#cb39-38"></a>       <span class="ex">-v</span>, --show-nonprinting</span>
+<span id="cb39-39"><a href="#cb39-39"></a>              <span class="ex">use</span> ^ and M- notation, except for LFD and TAB</span>
+<span id="cb39-40"><a href="#cb39-40"></a></span>
+<span id="cb39-41"><a href="#cb39-41"></a>       <span class="ex">--help</span> display this help and exit</span>
+<span id="cb39-42"><a href="#cb39-42"></a></span>
+<span id="cb39-43"><a href="#cb39-43"></a>       <span class="ex">--version</span></span>
+<span id="cb39-44"><a href="#cb39-44"></a>              <span class="ex">output</span> version information and exit</span>
+<span id="cb39-45"><a href="#cb39-45"></a></span></code></pre></div>
+<ul>
+<li><code>less</code>: <a href="https://man7.org/linux/man-pages/man1/less.1.html" class="uri">https://man7.org/linux/man-pages/man1/less.1.html</a></li>
+</ul>
+<div class="info">
+<p>La commande <code>less</code> possède toutes les capacités de <code>more</code> avec des options en plus ! :D</p>
+<p>On peut oublier la commande <code>more</code> et la remplacée par <code>less</code>.</p>
+</div>
+<blockquote>
+<p><strong><em>less</em></strong> does more than <strong><em>more</em></strong> :D</p>
+</blockquote>
+<ul>
+<li><p><code>head</code>: Affichage des <strong>premières</strong> lignes d’un flux (fichier/entrée standard), 10 par défaut.</p></li>
+<li><p><code>tail</code>: Affichage des <strong>dernières</strong> lignes d’un flux (fichier/entrée standard), 10 par défaut.</p>
+<ul>
+<li><code>tail -5</code>: les 5 dernières lignes</li>
+<li><code>tail -n +5</code>: les dernières lignes à partir de la ligne n°5</li>
+</ul></li>
+</ul>
+<h3 id="comptage">Comptage</h3>
+<ul>
+<li><code>wc</code>: nombre de lignes (-l), de mots (-w) et d’octets (-c)</li>
+</ul>
+<h3 id="tri">Tri</h3>
+<p>Pour trier le contenu de fichier(s) on utilise la commande <code>sort</code></p>
+<ul>
+<li>Par défaut le tri se fait sur le premier champ. Le séparateur par défaut est “espace” ou “tab”.</li>
+<li>L’option <code>-r</code> inverse l’ordre.</li>
+</ul>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">sort</span> -t<span class="st">&quot; &quot;</span> -k2,2 -k1,1r fichier.text</span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="co"># Trie sur le 2ème champ, puis sur le premier en sens inverse</span></span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">sort</span> -k1,1n Nombres.txt </span></code></pre></div>
+<p>Pour tenir compte des caractères spéciaux on utilisera <code>LANG=C</code> qui repose sur le code ASCII. Cependant dans ASCII les masjuscules arrivent avant les minuscules. On utilisera donc aussi l’option <code>-f, --ignore-case</code></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1"></a><span class="ex">stagiaire@debian</span>:~$ LANG=C sort -f bla.txt</span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="ex">5165dbhgdh</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="bu">:</span>!<span class="kw">;;</span><span class="ex">**</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="ex">azerty</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a><span class="ex">cdsqoijsd</span></span>
+<span id="cb42-7"><a href="#cb42-7"></a><span class="ex">csodvcownfvmsoigmlg</span></span>
+<span id="cb42-8"><a href="#cb42-8"></a><span class="ex">csqdovsdfomsdfp</span>^^i</span>
+<span id="cb42-9"><a href="#cb42-9"></a><span class="ex">lm</span>:!:svi</span>
+<span id="cb42-10"><a href="#cb42-10"></a><span class="ex">qsock364157389</span></span></code></pre></div>
+<div class="warning">
+<p>Ne pas utiliser de redirection directe dans le fichier à trier !!</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">sort</span> listATrier <span class="op">&gt;</span> ListATrier</span></code></pre></div>
+Le fichier sera écrasé par du vide !!!
+</div>
+<h3 id="transformation">Transformation</h3>
+<p>La commande <code>tr</code>: <code>tr liste1 liste2</code></p>
+<p>Exemples:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># Caesar cipher encoding</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="bu">echo</span> <span class="st">&quot;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&quot;</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;[A-Z]&#39;</span> <span class="st">&#39;[X-ZA-W]&#39;</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a><span class="co"># output: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD</span></span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a><span class="co"># Caesar cipher decoding</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a><span class="bu">echo</span> <span class="st">&quot;QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD&quot;</span> <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;[X-ZA-W]&#39;</span> <span class="st">&#39;[A-Z]&#39;</span></span>
+<span id="cb44-7"><a href="#cb44-7"></a><span class="co"># output: THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG</span></span>
+<span id="cb44-8"><a href="#cb44-8"></a> </span>
+<span id="cb44-9"><a href="#cb44-9"></a></span>
+<span id="cb44-10"><a href="#cb44-10"></a><span class="bu">echo</span> <span class="st">&quot;AaBbCcDd&quot;</span> <span class="kw">|</span> <span class="fu">tr</span> [:upper:] [:lower:] </span>
+<span id="cb44-11"><a href="#cb44-11"></a><span class="co"># output: </span></span>
+<span id="cb44-12"><a href="#cb44-12"></a><span class="ex">aabbccdd</span></span></code></pre></div>
+<h3 id="extraction">Extraction</h3>
+<p>Pour extraire des données de fichiers on utilise les commandes <code>cut</code> et <code>grep</code>.</p>
+<h4 id="la-commande-cut">la commande <code>cut</code></h4>
+<p>NAME</p>
+<pre><code>   cut - remove sections from each line of files</code></pre>
+<p>SYNOPSIS</p>
+<pre><code>   cut OPTION... [FILE]...</code></pre>
+<p>DESCRIPTION</p>
+<pre><code>   Print selected parts of lines from each FILE to standard output.
+
+   With no FILE, or when FILE is -, read standard input.
+
+   Mandatory arguments to long options are mandatory for short
+   options too.
+
+   -b, --bytes=LIST
+          select only these bytes
+
+   -c, --characters=LIST
+          select only these characters
+
+   -d, --delimiter=DELIM
+          use DELIM instead of TAB for field delimiter
+
+   -f, --fields=LIST
+          select only these fields;  also print any line that
+          contains no delimiter character, unless the -s option is
+          specified
+
+   -n     (ignored)
+
+   --complement
+          complement the set of selected bytes, characters or fields
+
+   -s, --only-delimited
+          do not print lines not containing delimiters
+
+   --output-delimiter=STRING
+          use STRING as the output delimiter the default is to use
+          the input delimiter
+
+   -z, --zero-terminated
+          line delimiter is NUL, not newline
+
+   --help display this help and exit
+
+   --version
+          output version information and exit
+
+   Use one, and only one of -b, -c or -f.  Each LIST is made up of
+   one range, or many ranges separated by commas.  Selected input is
+   written in the same order that it is read, and is written exactly
+   once.  Each range is one of:
+
+   N      N&#39;th byte, character or field, counted from 1
+
+   N-     from N&#39;th byte, character or field, to end of line
+
+   N-M    from N&#39;th to M&#39;th (included) byte, character or field
+
+   -M     from first to M&#39;th (included) byte, character or field</code></pre>
+<p><a href="https://man7.org/linux/man-pages/man1/cut.1.html" class="uri">https://man7.org/linux/man-pages/man1/cut.1.html</a></p>
+<h4 id="la-commande-grep">La commande <code>grep</code></h4>
+<ul>
+<li><p><code>--color</code>: pour afficher les couleurs de résultat.</p></li>
+<li><p><code>-c</code>: pour retourner le nombre de ligne(s) contenant l’expression de recherchée.</p></li>
+<li><p><code>-v</code>: inverser la recherche</p></li>
+<li><p><code>-e</code>: recherche étendue, expression(s) régulière(s)</p></li>
+</ul>
+<p class="info">
+Ne pas utiliser <code>egrep</code> mais bien <code>grep -e</code> ou <code>grep -E</code> pour les expressions étendues
+</p>
+<p>Exemple:</p>
+<p><img src="2021-06-07-POEI-Linux\grep.png" /></p>
+<h1 id="expressions-régulières">Expressions Régulières</h1>
+<p>Les expressions régulières sont utilisées par plusieurs utilitaires et languages de programmation différents <em>(grep, egrep, vi, sed, awk, perl, php, python, powershell, …)</em></p>
+<p><strong><em>Il est essentiel de les maîtriser</em></strong></p>
+<p>Précautions d’écriture:</p>
+<p>• Doit faire juste ce qui lui est demandé ; • Ne doit pas en faire de trop ; • Doit en faire suffisamment.</p>
+<h2 id="méta-caractères">Méta-caractères</h2>
+<ul>
+<li><p><code>.</code>: Caractère <strong><em>Joker</em></strong> il remplace n’importe quoi <em>(équivalent de </em> dans le Shell)*</p></li>
+<li><p><code>[…]</code>: N’importe quel caractère présent dans la liste entre crochets ;</p>
+<ul>
+<li>La liste n’est pas une chaîne</li>
+<li>Possibilité d’indiquer une étendue par ex. [m-t] pour [mnopqrst]</li>
+</ul></li>
+<li><p><code>[^…]</code> N’importe quel caractère non présent dans la liste ;</p></li>
+</ul>
+<h3 id="extensions-pcre">Extensions PCRE</h3>
+<ul>
+<li><code>\w</code> tout caractère alphanumérique et le caractère _ (souligné) ;</li>
+<li><code>\d</code> tout chiffre</li>
+<li><code>\s</code> tout caractère d’espacement</li>
+<li><code>\W</code> négation de <code>\w</code></li>
+<li><code>\D</code> négation de <code>\d</code></li>
+<li><code>\S</code> négation de <code>\s</code></li>
+</ul>
+<p>NB: tout méta-caractère ne vaut que pour une et une seule occurrence.</p>
+<h2 id="facteurs-doccurences">Facteurs d’occurences</h2>
+<ul>
+<li>Permettent de préciser le nombre d’occurrences d’un motif</li>
+<li>s’appliquent toujours au caractère/motif immédiatement précédent.</li>
+</ul>
+<h5 id="syntaxe-de-base">Syntaxe de base</h5>
+<ul>
+<li><p><code>\{n1,n2\}</code> <em>(ERB – NB : les  et les {} doivent être protégés du SHELL)</em></p></li>
+<li><p><code>{n1,n2}</code> <em>(ERE/PCRE – NB : les {} doivent être protégées du SHELL)</em></p></li>
+</ul>
+<p><strong><em>De n1 à n2 occurrences du caractères/motif précédent.</em></strong></p>
+<h5 id="variations">Variations</h5>
+<p>(présentées avec la syntaxe ERE mais existent en ERB)</p>
+<ul>
+<li><code>{n1,}</code> ⇒ Au moins n1 occurrences</li>
+<li><code>{n1}</code> ⇒ Exactement n1 occurrences (!!!)</li>
+</ul>
+<h5 id="simplifications">Simplifications</h5>
+<p>(spécifiques aux ERE/PCRE)</p>
+<ul>
+<li><code>*</code> ⇒ {0,}</li>
+<li><code>?</code> ⇒ {0,1}</li>
+<li><code>+</code> ⇒ {1,}</li>
+</ul>
+<h2 id="facteurs-doccurrences---gloutonnement">Facteurs d’occurrences - Gloutonnement</h2>
+<p><strong>Gloutonnement</strong> ⇒ Faire correspondre le maximum d’occurrences</p>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1"></a><span class="ex">bab</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a><span class="ex">baaab</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a><span class="ex">baaaaaab</span></span></code></pre></div>
+<p>Voici une expression gloutonne:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a>$ <span class="fu">grep</span> -E --color ‘ba+’ regex.txt</span>
+<span id="cb49-2"><a href="#cb49-2"></a><span class="ex">bab</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a><span class="ex">baab</span></span>
+<span id="cb49-4"><a href="#cb49-4"></a><span class="ex">baaaaaab</span></span></code></pre></div>
+<p><strong>Limitations du gloutonement</strong> <em>(spécifiques aux PCRE)</em></p>
+<p>Le caractère <code>?</code> suffixant un facteur d’occurrences en limite le gloutonnement.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1"></a>$ <span class="fu">grep</span> -E --color ‘ba+’ regex.txtbabbaabbaaaaaab$ grep -P --color ‘ba+?’ regex.txt</span>
+<span id="cb50-2"><a href="#cb50-2"></a><span class="ex">bab</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a><span class="ex">baab</span></span>
+<span id="cb50-4"><a href="#cb50-4"></a><span class="ex">baaaaaab</span></span></code></pre></div>
+<h2 id="ancrage">Ancrage</h2>
+<p>Les motifs d’ancrage permettent de symboliser le début et la fin d’une ligne : - <code>^</code>: symbolise un début de ligne (si placé en début d’expression) - <code>$</code>: symbolise la fin d’une ligne (si placé en fin d’expression)</p>
+<p>Exemples</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1"></a>^[<span class="ex">A-Z</span>]  <span class="co"># Chaîne débutant par une majuscule</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>^<span class="ex">Bob</span>$   <span class="co"># Chaîne ne contenant que ‘Bob’</span></span>
+<span id="cb51-3"><a href="#cb51-3"></a>^$      <span class="co"># Chaîne vide</span></span>
+<span id="cb51-4"><a href="#cb51-4"></a>[<span class="ex">0-9</span>]$  <span class="co"># Chaîne se terminant par un chiffre</span></span></code></pre></div>
+<p>Remarque:</p>
+<p>Il est vivement conseillé d’utiliser les motifs d’ancrage chaque fois que cela est une évidence, cela limitera les situations d’expressions trop larges !</p>
+<h2 id="caractères-divers">Caractères divers</h2>
+<ul>
+<li><p><code>\</code> : permet de déspécialiser un caractère spécial</p></li>
+<li><p><code>|</code> : indique l’alternative (ERE)</p></li>
+<li><p><code>()</code>: limitation de motif, mémorisation dans les références arrières</p></li>
+</ul>
+<p><img src="2021-06-07-POEI-Linux\grep_limitation.png" /></p>
+<ul>
+<li><code>\n</code>: référence arrière,</li>
+</ul>
+<h3 id="quizz">QUIZZ</h3>
+<h4 id="find">FIND</h4>
+<div class="question">
+Que font les deux commandes, y a-t-il une différence ?
+</div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">find</span> / -type f <span class="kw">|</span> <span class="fu">wc</span> -l  <span class="co"># Nombre de fichiers trouvés par find</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a></span>
+<span id="cb52-3"><a href="#cb52-3"></a><span class="fu">find</span> / -type f -exec wc -l {} <span class="dt">\;</span> <span class="co"># nombre de lignes pour CHACUN des fichiers trouvés.</span></span></code></pre></div>
+<h4 id="head-tail">HEAD / TAIL</h4>
+<div class="question">
+Comment afficher la 6ème ligne du fichier /etc/passwd ?
+</div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1"></a><span class="ex">stagiaire@debian</span>:~$ head -6 /etc/passwd <span class="kw">|</span> <span class="fu">tail</span> -1</span>
+<span id="cb53-2"><a href="#cb53-2"></a><span class="ex">games</span>:x:5:60:games:/usr/games:/usr/sbin/nologin</span>
+<span id="cb53-3"><a href="#cb53-3"></a></span></code></pre></div>
+<h4 id="sort-cut">SORT &amp; CUT</h4>
+<div class="question">
+Quel est le nom du plus vieil objet du répertoire /usr/bin ?
+</div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1"></a><span class="co"># LS par ordre de temps inversé:</span></span>
+<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">ls</span> -alh --sort=time /usr/bin/</span>
+<span id="cb54-3"><a href="#cb54-3"></a></span>
+<span id="cb54-4"><a href="#cb54-4"></a><span class="fu">tail</span> -1 <span class="co"># On récupère la dernière ligne</span></span>
+<span id="cb54-5"><a href="#cb54-5"></a></span>
+<span id="cb54-6"><a href="#cb54-6"></a><span class="fu">tr</span> -s <span class="st">&quot; &quot;</span> <span class="co"># on squeeze pour retirer les espace inutiles</span></span>
+<span id="cb54-7"><a href="#cb54-7"></a></span>
+<span id="cb54-8"><a href="#cb54-8"></a><span class="fu">cut</span> -d<span class="st">&quot; &quot;</span> -f5,9 <span class="co"># on récupère le champ n°5&amp;9</span></span>
+<span id="cb54-9"><a href="#cb54-9"></a></span>
+<span id="cb54-10"><a href="#cb54-10"></a></span>
+<span id="cb54-11"><a href="#cb54-11"></a><span class="co">#### commande finale:</span></span>
+<span id="cb54-12"><a href="#cb54-12"></a><span class="ex">stagiaire@debian</span>:~$ ls -alh --sort=time /usr/bin/ <span class="kw">|</span> <span class="fu">tail</span> -1 <span class="kw">|</span> <span class="fu">tr</span> -s <span class="st">&quot; &quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -d<span class="st">&quot; &quot;</span> -f5,9</span>
+<span id="cb54-13"><a href="#cb54-13"></a><span class="ex">120K</span> mawk</span>
+<span id="cb54-14"><a href="#cb54-14"></a></span>
+<span id="cb54-15"><a href="#cb54-15"></a></span>
+<span id="cb54-16"><a href="#cb54-16"></a><span class="co"># Marche aussi avec l&#39;option --size ^^</span></span>
+<span id="cb54-17"><a href="#cb54-17"></a><span class="fu">ls</span> -sth /usr/bin <span class="kw">|</span> <span class="fu">tail</span> -1</span>
+<span id="cb54-18"><a href="#cb54-18"></a></span></code></pre></div>
+<div class="answer">
+Le plus vieux fichier du répertoire /usr/bin est: <code>120K mawk</code>
+</div>
+<div class="question">
+Quel est le nom de l’utilisateur (/etc/passwd) ayant l’uid (3e champ) le plus élevé ?
+</div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">cut</span> -d<span class="st">&quot;:&quot;</span> -f3,1 /etc/passwd <span class="kw">|</span> <span class="fu">sort</span> -t: -k2n <span class="kw">|</span> <span class="fu">tail</span> -1 <span class="kw">|</span> <span class="fu">cut</span> -d: -f1</span>
+<span id="cb55-2"><a href="#cb55-2"></a></span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="co"># output: nobody</span></span></code></pre></div>
+<h4 id="expressions-régulières-1">Expressions régulières</h4>
+<p><embed src="2021-06-07-POEI-Linux\regex.pdf" /></p>
+<p>Constituer les trois expressions régulières suivantes :</p>
+<h5 id="modéliser-un-nombre-entier-positif-sans-indication-de-signe">Modéliser un nombre entier positif (sans indication de signe)</h5>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">grep</span> -E <span class="st">&quot;^[0-9]+$&quot;</span> grep.exo</span></code></pre></div>
+<h5 id="modéliser-un-nombre-entier-relatif-positifnégatif">Modéliser un nombre entier relatif (positif/négatif)</h5>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1"></a><span class="fu">grep</span> -E <span class="st">&quot;^[+-]?[0-9]+$&quot;</span> grep.exo</span></code></pre></div>
+<h5 id="modéliser-un-réel-partie-décimale-à-votre-convenance">Modéliser un réel (partie décimale à votre convenance)</h5>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">grep</span> -E <span class="st">&quot;^[+-]?[0-9]+(\.[0-9]+)?$&quot;</span> grep.exo</span></code></pre></div>
+<h5 id="modéliser-un-nombre-de-0-à-255">Modéliser un nombre de 0 à 255 ?</h5>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1"></a>    <span class="fu">grep</span> --color -E <span class="st">&quot;^([1-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$&quot;</span> grep.txt</span></code></pre></div>
+<h5 id="modéliser-une-adresse-ipv4-avec-interdiction-de-copier-sur-internet">Modéliser une adresse IPv4 (avec interdiction de copier sur internet)</h5>
+<ul>
+<li>Pour info, une adresse IPv4 est composée de 4 nombres de 0 à 255, séparés par des points.</li>
+</ul>
+<blockquote>
+<p><strong>Grep IP Adresses:</strong> Match from <code>0.0.0.0</code> to <code>999.999.999.999</code></p>
+<p>Command: <code>$ grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}" file.txt</code></p>
+<p><strong>Match on ly IPv4 Adresses:</strong></p>
+<p><code>$ grep -E -o "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)" file.txt</code></p>
+<p><cite> –https://www.shellhacks.com/regex-find-ip-addresses-file-grep/ </cite></p>
+</blockquote>
+<div class="info">
+Pour simplifier on peut mettre l’expression régulière dans une variable ;)
+</div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1"></a><span class="ex">IP_Check</span> = 25[0-5]<span class="kw">|</span><span class="ex">2</span>[0-4][0-9]<span class="kw">|</span>[<span class="ex">01</span>]?[0-9][0-9]?</span>
+<span id="cb60-2"><a href="#cb60-2"></a></span>
+<span id="cb60-3"><a href="#cb60-3"></a></span>
+<span id="cb60-4"><a href="#cb60-4"></a></span></code></pre></div>
+<h5 id="dans-usrbin-combien-y-a-t-il-de-fichiers-dont-le-nom-est-composé-de-3-à-5-caractères">Dans /usr/bin, combien y a-t-il de fichiers dont le nom est composé de 3 à 5 caractères ?</h5>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb61-1"><a href="#cb61-1"></a><span class="fu">ls</span> -lA /usr/bin <span class="kw">|</span> <span class="fu">tr</span> -s <span class="st">&quot; &quot;</span> <span class="kw">|</span> <span class="fu">cut</span> -d<span class="st">&quot; &quot;</span> -f 9 <span class="kw">|</span> <span class="fu">grep</span> -E <span class="st">&quot;^(\w){3,5}$&quot;</span> <span class="kw">|</span> <span class="fu">wc</span> -l</span></code></pre></div>
+<p>On utilise l’option <code>-A</code> pour exclure les dossiers <code>.</code> et <code>..</code> <em>(qui sont créés par défaut)</em>.</p>
+<p>En utilisant <code>find</code>:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb62-1"><a href="#cb62-1"></a><span class="va">sp=</span>/usr/bin ; <span class="fu">find</span> <span class="va">$sp</span> -regextype egrep -regex <span class="st">&quot;</span><span class="va">${sp%</span>/<span class="va">}</span><span class="st">/.{3,5}&quot;</span> <span class="kw">|</span> <span class="fu">wc</span> -l</span></code></pre></div>
+<h5 id="dans-le-fichier-etcprofile-combien-y-a-t-il-de-ligne-vides-deux-solutions">Dans le fichier /etc/profile, combien y a-t-il de ligne vides (deux solutions) ?</h5>
+<h5 id="représenter-un-numéro-minéralogique">Représenter un numéro minéralogique</h5>
+<ul>
+<li>nouvelle forme</li>
+<li>ancienne forme (si vous voulez)</li>
+</ul>
+<hr />
+<h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
+<h2 id="actualisation-bash-profilerc">Actualisation BASH Profile/RC</h2>
+<p>En cas de changement, du profil dans <strong><em>bashrc</em></strong> on peut actualiser le Shell en faisant:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb63-1"><a href="#cb63-1"></a><span class="bu">source</span> .bashrc</span>
+<span id="cb63-2"><a href="#cb63-2"></a></span>
+<span id="cb63-3"><a href="#cb63-3"></a><span class="co"># Marche aussi:</span></span>
+<span id="cb63-4"><a href="#cb63-4"></a><span class="bu">.</span> <span class="ex">.bashrc</span></span></code></pre></div>
+<h2 id="alias-1">Alias</h2>
+<p>La commande <code>alias</code> liste l’ensemble des <strong>alias disponibles</strong>.</p>
+<h2 id="type">Type</h2>
+<p>La commande <code>type</code> est très partique pour déterminer la nature d’un objet.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb64-1"><a href="#cb64-1"></a><span class="bu">type</span> cd</span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="bu">cd</span> est une primitive du shell</span>
+<span id="cb64-3"><a href="#cb64-3"></a><span class="bu">type</span> tree</span>
+<span id="cb64-4"><a href="#cb64-4"></a><span class="ex">tree</span> est /usr/bin/tree</span>
+<span id="cb64-5"><a href="#cb64-5"></a></span></code></pre></div>
+<h2 id="touch">Touch &amp;&amp; “&gt;”</h2>
+<p>Comparaison entre la commande <code>touch</code> et <code>&gt;</code></p>
+<pre class="bash="><code>i=0;time while [ $i -lt 10000 ]; do touch $i; ((i=i+1)); done
+rm 0* 1* 2* 3* 4* 5* 6* 7* 8* 9*
+i=0;time while [ $i -lt 10000 ]; do &gt; $i; ((i=i+1)); done
+rm 0* 1* 2* 3* 4* 5* 6* 7* 8* 9*
+</code></pre>
+<p>Résultat:</p>
+<pre class="bash="><code>
+stagiaire@debian:~$ i=0;time while [ $i -lt 10000 ]; do touch $i; ((i=i+1)); done
+
+real    0m6,193s
+user    0m4,580s
+sys     0m1,582s
+
+
+stagiaire@debian:~$ i=0;time while [ $i -lt 10000 ]; do &gt; $i; ((i=i+1)); done
+
+real    0m0,242s
+user    0m0,151s
+sys     0m0,089s
+</code></pre>
+<p><code>&gt;</code> est beaucoup plus rapide et donc beaucoup plus performant <strong>0,242s</strong> au lieu de <strong>6,193s</strong> pour <strong>touch</strong></p>
+<h2 id="noclobber">Noclobber</h2>
+<p><code>date &gt; date.log</code> écrasera automatiquement le fichier <em>date.log</em> si il existe.</p>
+<p>Pour éviter de supprimer des fichiers par erreur, on utilisera l’option <strong>noclobber</strong>.</p>
+<ul>
+<li><code>set -o noclobber</code>: active l’option de protection</li>
+<li><code>set +o noclobber</code>: désactive l’option de protection</li>
+</ul>
+<p>Pour vérifier l’état:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb67-1"><a href="#cb67-1"></a><span class="ex">stagiaire@debian</span>:~$ set -o</span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="ex">allexport</span>       off</span>
+<span id="cb67-3"><a href="#cb67-3"></a><span class="ex">braceexpand</span>     on</span>
+<span id="cb67-4"><a href="#cb67-4"></a><span class="ex">emacs</span>           on</span>
+<span id="cb67-5"><a href="#cb67-5"></a><span class="ex">errexit</span>         off</span>
+<span id="cb67-6"><a href="#cb67-6"></a><span class="ex">errtrace</span>        off</span>
+<span id="cb67-7"><a href="#cb67-7"></a><span class="ex">functrace</span>       off</span>
+<span id="cb67-8"><a href="#cb67-8"></a><span class="ex">hashall</span>         on</span>
+<span id="cb67-9"><a href="#cb67-9"></a><span class="ex">histexpand</span>      on</span>
+<span id="cb67-10"><a href="#cb67-10"></a><span class="bu">history</span>         on</span>
+<span id="cb67-11"><a href="#cb67-11"></a><span class="ex">ignoreeof</span>       off</span>
+<span id="cb67-12"><a href="#cb67-12"></a><span class="ex">interactive-comments</span>    on</span>
+<span id="cb67-13"><a href="#cb67-13"></a><span class="ex">keyword</span>         off</span>
+<span id="cb67-14"><a href="#cb67-14"></a><span class="ex">monitor</span>         on</span>
+<span id="cb67-15"><a href="#cb67-15"></a><span class="ex">noclobber</span>       off</span>
+<span id="cb67-16"><a href="#cb67-16"></a><span class="ex">noexec</span>          off</span>
+<span id="cb67-17"><a href="#cb67-17"></a><span class="ex">noglob</span>          off</span>
+<span id="cb67-18"><a href="#cb67-18"></a><span class="ex">nolog</span>           off</span>
+<span id="cb67-19"><a href="#cb67-19"></a><span class="ex">notify</span>          off</span>
+<span id="cb67-20"><a href="#cb67-20"></a><span class="ex">nounset</span>         off</span>
+<span id="cb67-21"><a href="#cb67-21"></a><span class="ex">onecmd</span>          off</span>
+<span id="cb67-22"><a href="#cb67-22"></a><span class="ex">physical</span>        off</span>
+<span id="cb67-23"><a href="#cb67-23"></a><span class="ex">pipefail</span>        off</span>
+<span id="cb67-24"><a href="#cb67-24"></a><span class="ex">posix</span>           off</span>
+<span id="cb67-25"><a href="#cb67-25"></a><span class="ex">privileged</span>      off</span>
+<span id="cb67-26"><a href="#cb67-26"></a><span class="ex">verbose</span>         off</span>
+<span id="cb67-27"><a href="#cb67-27"></a><span class="ex">vi</span>              off</span>
+<span id="cb67-28"><a href="#cb67-28"></a><span class="ex">xtrace</span>          off</span></code></pre></div>
+<h2 id="devnull">/DEV/NULL</h2>
+<p>Dans le cas où l’on souhaite se débarasser d’une partie des sorties d’une commande, on peut utiliser <code>/dev/null</code>.</p>
+<ul>
+<li>Si on veut éliminer les erreurs:</li>
+</ul>
+<div class="sourceCode" id="cb68"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb68-1"><a href="#cb68-1"></a><span class="ex">stagiaire@debian</span>:~$ find /etc/ -type f -name <span class="st">&quot;*.cfg&quot;</span> <span class="op">2&gt;</span>/dev/null</span>
+<span id="cb68-2"><a href="#cb68-2"></a><span class="ex">/etc/default/grub.d/init-select.cfg</span></span>
+<span id="cb68-3"><a href="#cb68-3"></a><span class="ex">/etc/perl/Net/libnet.cfg</span></span>
+<span id="cb68-4"><a href="#cb68-4"></a><span class="ex">/etc/dpkg/dpkg.cfg</span></span></code></pre></div>
+<ul>
+<li>Si on veut garder les erreurs:</li>
+</ul>
+<div class="sourceCode" id="cb69"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">find</span> /etc/ -type f -name <span class="st">&quot;*.cfg&quot;</span> <span class="op">1&gt;</span>/dev/null</span></code></pre></div>
+<h2 id="générateur-de-mot-de-passe">Générateur de mot de passe</h2>
+<div class="sourceCode" id="cb70"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">cat</span> /dev/urandom <span class="kw">|</span> <span class="fu">tr</span> -dc <span class="st">&quot;a-z0-9A-Z-</span><span class="va">$*</span><span class="st">µ?._&amp;#=)@ &quot;</span> <span class="kw">|</span> <span class="fu">head</span> -c 32<span class="kw">;</span> <span class="bu">echo</span></span></code></pre></div>
+<h1 id="format-des-fichiers-texte-selon-les-os">Format des fichiers texte selon les OS</h1>
+<ul>
+<li><p><strong>Windows</strong> : simulation parfaite des machines à écrire (Retour-chariot/nouvelle ligne : CR LF)</p></li>
+<li><p><strong>Unix/Linux</strong> : simplification par la suppression du CR : seul le LF est nécessaire</p></li>
+<li><p><strong>Mac</strong> : simplification par la suppression de LF : seul le CR est nécessaire</p></li>
+<li><p>Limites des principaux systèmes de fichiers de Linux <strong><em>ext4</em></strong> (Debian, Ubuntu, …)</p>
+<ul>
+<li><p>Taille du FS : 1Eo en théorie (16To en pratique)</p></li>
+<li><p>Taille d’un fichier : 2 To</p></li>
+</ul></li>
+<li><p><strong><em>xfs</em></strong> (Redhat, CentOS, …)</p>
+<ul>
+<li><p>Taille du FS : 9 Eo</p></li>
+<li><p>Taille d’un fichier : 9 Eo (pile de DVD de 2000km de haut !)</p></li>
+</ul></li>
+<li><h2 id="btrfs-fedora-suse"><strong><em>btrfs</em></strong> (Fedora, Suse, …)</h2></li>
+</ul>
+<hr />
+<h1 id="recueil-de-commandes">Recueil de Commandes:</h1>
+<ul>
+<li><p>date</p></li>
+<li><p>pwd: print working directory</p></li>
+<li><p>hostname: nom de la machine/système</p></li>
+<li><p>whoami: nom de l’utilisateur courant</p></li>
+<li><p>logname: identité de connexion - peut être différente de l’identité courante</p></li>
+<li><p>stat: Affiche les informations</p></li>
+</ul>
+<div class="sourceCode" id="cb71"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb71-1"><a href="#cb71-1"></a><span class="ex">stagiaire@debian</span>:~$ stat bla.txt</span>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="ex">Fichier</span> : bla.txt</span>
+<span id="cb71-3"><a href="#cb71-3"></a>   <span class="ex">Taille</span> : 19          Blocs : 8          Blocs dE/S : 4096   fichier</span>
+<span id="cb71-4"><a href="#cb71-4"></a><span class="ex">P</span>ériphérique : 801h/2049d       Inœud : 1044512     Liens : 1</span>
+<span id="cb71-5"><a href="#cb71-5"></a><span class="ex">Acc</span>ès : (0777/-rwxrwxrwx)  <span class="ex">UID</span> : ( 1000/stagiaire)   <span class="ex">GID</span> : ( 1000/stagiaire)</span>
+<span id="cb71-6"><a href="#cb71-6"></a> <span class="ex">Acc</span>ès : 2021-06-08 10:34:16.255266611 +0200</span>
+<span id="cb71-7"><a href="#cb71-7"></a><span class="ex">Modif.</span> : 2021-06-07 17:46:48.100588972 +0200</span>
+<span id="cb71-8"><a href="#cb71-8"></a><span class="ex">Changt</span> : 2021-06-07 17:47:16.304551490 +0200</span>
+<span id="cb71-9"><a href="#cb71-9"></a>  <span class="ex">Cr</span>éé : -</span></code></pre></div>
+<dl>
+<dt><strong><em>file</em></strong>:</dt>
+<dd>Affiche les informations de type de fichier
+</dd>
+</dl>
+<div class="sourceCode" id="cb72"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb72-1"><a href="#cb72-1"></a><span class="ex">stagiaire@debian</span>:~$ file bla.txt</span>
+<span id="cb72-2"><a href="#cb72-2"></a><span class="ex">bla.txt</span>: ASCII text</span>
+<span id="cb72-3"><a href="#cb72-3"></a><span class="ex">stagiaire@debian</span>:~$ file Scripts/3-date.sh</span>
+<span id="cb72-4"><a href="#cb72-4"></a><span class="ex">Scripts</span>/3-date.sh: <span class="ex">UTF-8</span> Unicode text</span></code></pre></div>
+<dl>
+<dt><strong><em>LSOF:</em></strong></dt>
+<dd>Liste tous les fichiers ouverts.
+</dd>
+</dl>
+<h5 id="lien-utile">Lien Utile</h5>
+<p><a href="https://www.man7.org/linux/man-pages/man1/man.1.html" class="uri">https://www.man7.org/linux/man-pages/man1/man.1.html</a></p>
+<h1 id="questions">Questions</h1>
+<ul>
+<li><p>fg/bg</p></li>
+<li><p>nice</p></li>
+</ul>
+<h1 id="idéés-de-scripts-shell">Idéés de <strong>Scripts Shell</strong></h1>
+<div class="info">
+<p><code>echo "Fin de $0"</code> permet d’afficher “Fin de <em>nom_du_script</em>”</p>
+Cela peut être utile pour afficher ou récupérer le nom du script.
+</div>
+<h2 id="liste-3-dates">Liste 3 dates</h2>
+<ol type="1">
+<li>Lister les fichiers d’un répertoire avec leur 3 dates (modification, lecture, modification des attributs).</li>
+</ol>
+<pre class="bash="><code> #!/bin/bash
+
+clear
+
+for f in *
+do
+ echo &quot; &quot;
+ echo &quot; &quot;
+ stat &quot;$f&quot;
+ echo &quot; &quot;
+ echo &quot;----------------------------------------------------------------------&quot;
+done</code></pre>
+<p>Résultat:</p>
+<pre class="bash="><code>
+  Fichier : bla.txt
+   Taille : 19          Blocs : 8          Blocs d&#39;E/S : 4096   fichier
+Périphérique : 801h/2049d       Inœud : 1044512     Liens : 1
+Accès : (0777/-rwxrwxrwx)  UID : ( 1000/stagiaire)   GID : ( 1000/stagiaire)
+ Accès : 2021-06-07 17:46:48.100588972 +0200
+Modif. : 2021-06-07 17:46:48.100588972 +0200
+Changt : 2021-06-07 17:47:16.304551490 +0200
+  Créé : -
+
+----------------------------------------------------------------------
+
+
+  Fichier : Scripts
+   Taille : 4096        Blocs : 8          Blocs d&#39;E/S : 4096   répertoire
+Périphérique : 801h/2049d       Inœud : 1044515     Liens : 2
+Accès : (0755/drwxr-xr-x)  UID : ( 1000/stagiaire)   GID : ( 1000/stagiaire)
+ Accès : 2021-06-08 09:43:37.400370418 +0200
+Modif. : 2021-06-08 09:47:13.255528315 +0200
+Changt : 2021-06-08 09:47:13.255528315 +0200
+  Créé : -
+
+----------------------------------------------------------------------
+</code></pre>
+<h2 id="script-de-mise-à-jour-serveur">Script de mise à jour serveur</h2>
+<p>crontab vérifie mises à jour disponibles</p>
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

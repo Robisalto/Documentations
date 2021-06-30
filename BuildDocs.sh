@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /mnt/c/Users/david/MyDocuments/Documentations/
+cd /mnt/c/Users/david/GitHub/Documentations/
 clear
 echo " " > nav.txt
 ls -R | grep  "md" > nav.txt

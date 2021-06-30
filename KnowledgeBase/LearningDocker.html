@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Arthur Ulfeldt" />
+  <title>Learning Docker</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Learning Docker</h1>
+<p class="author">Arthur Ulfeldt</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#why-create-containers-using-docker">Why create containers using Docker?</a></li>
+<li><a href="#what-you-should-know">What you should know</a></li>
+<li><a href="#what-is-docker">What is Docker?</a></li>
+<li><a href="#using-the-exercise-files">Using the exercise files</a></li>
+<li><a href="#chapter-quizz">Chapter Quizz</a></li>
+</ul></li>
+<li><a href="#i.-installing-docker">I. Installing Docker</a>
+<ul>
+<li><a href="#i-i.-setting-up-docker">I-I. Setting up Docker</a></li>
+<li><a href="#i-ii.-docker-desktop">I-II. Docker Desktop</a></li>
+<li><a href="#i-iii.-install-docker-on-mac">I-III. Install Docker on Mac</a></li>
+<li><a href="#i-iv.-install-docker-on-windows">I-IV. Install Docker on Windows</a></li>
+<li><a href="#i-v.-install-docker-on-linux">I-V. Install Docker on Linux</a></li>
+<li><a href="#i-vi.-chapter-quizz">I-VI. Chapter Quizz</a>
+<ul>
+<li><a href="#question-1-of-5">Question 1 of 5</a></li>
+<li><a href="#question-2-of-5">Question 2 of 5</a></li>
+<li><a href="#question-3-of-5">Question 3 of 5</a></li>
+<li><a href="#question-4-of-5">Question 4 of 5</a></li>
+<li><a href="#question-5-of-5">Question 5 of 5</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ii.-using-docker">II. Using Docker</a>
+<ul>
+<li><a href="#ii-i.-the-docker-flow-images-to-containers">II-I. The Docker flow: Images to containers</a></li>
+<li><a href="#ii-ii.-the-docker-flow-containers-to-images">II-II. The Docker flow: Containers to images</a></li>
+<li><a href="#ii-iii.-run-processes-in-containers">II-III. Run processes in containers</a></li>
+<li><a href="#ii-iv.-manage-containers">II-IV. Manage containers</a></li>
+<li><a href="#ii-v.-exposing-ports">II-V. Exposing ports</a></li>
+<li><a href="#ii-vi.-container-networking">II-VI. Container networking</a></li>
+<li><a href="#ii-vii.-legacy-linking">II-VII. Legacy linking</a></li>
+<li><a href="#ii-viii.-images">II-VIII. Images</a></li>
+<li><a href="#ii-ix.-volumes">II-IX. Volumes</a></li>
+<li><a href="#ii-x.-docker-registries">II-X. Docker registries</a></li>
+<li><a href="#ii-xi.-chapter-quizz">II-XI. Chapter Quizz</a>
+<ul>
+<li><a href="#question-1-of-9">Question 1 of 9</a></li>
+<li><a href="#question-2-of-9">Question 2 of 9</a></li>
+<li><a href="#question-3-of-9">Question 3 of 9</a></li>
+<li><a href="#question-4-of-9">Question 4 of 9</a></li>
+<li><a href="#question-5-of-9">Question 5 of 9</a></li>
+<li><a href="#question-6-of-9">Question 6 of 9</a></li>
+<li><a href="#question-7-of-9">Question 7 of 9</a></li>
+<li><a href="#question-8-of-9">Question 8 of 9</a></li>
+<li><a href="#question-9-of-9">Question 9 of 9</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#iii.-building-docker-images">III. Building Docker Images</a>
+<ul>
+<li><a href="#iii-i.-what-are-dockerfiles">III-I. What are Dockerfiles?</a></li>
+<li><a href="#iii-ii.-building-dockerfiles">III-II. Building Dockerfiles</a></li>
+<li><a href="#iii-iii.-dockerfile-syntax">III-III. Dockerfile syntax</a></li>
+<li><a href="#iii-iv.-multi-project-docker-files">III-IV. Multi-project Docker files</a></li>
+<li><a href="#iii-v.-avoid-golden-images">III-V. Avoid golden images</a></li>
+<li><a href="#iii-vi.-chapter-quizz">III-VI. Chapter Quizz</a>
+<ul>
+<li><a href="#question-1-of-5-1">Question 1 of 5</a></li>
+<li><a href="#question-2-of-5-1">Question 2 of 5</a></li>
+<li><a href="#question-3-of-5-1">Question 3 of 5</a></li>
+<li><a href="#question-4-of-5-1">Question 4 of 5</a></li>
+<li><a href="#question-5-of-5-1">Question 5 of 5</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#iv.-under-the-hood">IV. Under the hood</a>
+<ul>
+<li><a href="#iv-i.-docker-the-program">IV-I. Docker the program</a></li>
+<li><a href="#iv-ii.-networking-and-namespaces">IV-II. Networking and namespaces</a></li>
+<li><a href="#iv-iii.-processes-and-cgroups">IV-III. Processes and cgroups</a></li>
+<li><a href="#iv-iv.-storage">IV-IV. Storage</a></li>
+<li><a href="#iv-v.-chapter-quizz">IV-V. Chapter Quizz</a>
+<ul>
+<li><a href="#question-1-of-4">Question 1 of 4</a></li>
+<li><a href="#question-2-of-4">Question 2 of 4</a></li>
+<li><a href="#question-3-of-4">Question 3 of 4</a></li>
+<li><a href="#question-4-of-4">Question 4 of 4</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#v.-orchestration-building-systems-with-docker">V. Orchestration: Building Systems with Docker</a>
+<ul>
+<li><a href="#v-i.-registries-in-detail">V-I. Registries in detail</a></li>
+<li><a href="#v-ii.-intro-to-orchestration">V-II. Intro to orchestration</a></li>
+<li><a href="#v-iii.-kubernetes-in-aws">V-III. Kubernetes in AWS</a></li>
+<li><a href="#v-iv.-google-kubernetes-engine">V-IV. Google Kubernetes Engine</a></li>
+<li><a href="#v-v.-chapter-quizz">V-V. Chapter Quizz</a>
+<ul>
+<li><a href="#question-1-of-4-1">Question 1 of 4</a></li>
+<li><a href="#question-2-of-4-1">Question 2 of 4</a></li>
+<li><a href="#question-3-of-4-1">Question 3 of 4</a></li>
+<li><a href="#question-4-of-4-1">Question 4 of 4</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#next-steps">Next steps</a></li>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="why-create-containers-using-docker">Why create containers using Docker?</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\Introduction-Why create containers using Docker.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="what-you-should-know">What you should know</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\Introduction-What you should know.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="what-is-docker">What is Docker?</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\Introduction-What is Docker.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="using-the-exercise-files">Using the exercise files</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\Introduction-Using the exercise files.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="chapter-quizz">Chapter Quizz</h2>
+<ol type="1">
+<li>Your server is running two containers. One of them is based on RedHat Linux. What does this say about the other container? <code>The other container can run any operating system.</code></li>
+<li>Which statement best describes Docker containers? <code>They are sealed, self-contained units of software that have everything needed to run a service.</code></li>
+<li>What experience is essential to use Docker? <code>command line usage and tools</code></li>
+</ol>
+<hr />
+<h1 id="i.-installing-docker">I. Installing Docker</h1>
+<h2 id="i-i.-setting-up-docker">I-I. Setting up Docker</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\I-I. Setting up Docker.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-ii.-docker-desktop">I-II. Docker Desktop</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\I-II. Docker Desktop.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iii.-install-docker-on-mac">I-III. Install Docker on Mac</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\I-III. Install Docker on Mac.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iv.-install-docker-on-windows">I-IV. Install Docker on Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\I-IV. Install Docker on Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-v.-install-docker-on-linux">I-V. Install Docker on Linux</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\I-V. Install Docker on Linux.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-vi.-chapter-quizz">I-VI. Chapter Quizz</h2>
+<h3 id="question-1-of-5">Question 1 of 5</h3>
+<p>Why should you consider running the following post-installation steps when installing Docker on a Linux machine?</p>
+<pre class="shell"><code>sudo groupadd docker
+sudo usermod -aG docker $USER</code></pre>
+<blockquote>
+<p>to allow non-root users to run Docker as well</p>
+</blockquote>
+<h3 id="question-2-of-5">Question 2 of 5</h3>
+<p>The command docker run hello-world fails on your Windows machine. Of the following possible issues, which is not contributing to this problem? &gt; The hello-world container does not support a Windows OS.</p>
+<h3 id="question-3-of-5">Question 3 of 5</h3>
+<p>You are trying to run the command ‘docker’ on your Mac terminal, and get an error that a socket is not available. What should your first troubleshooting step be? &gt; Check that Docker Desktop is running</p>
+<h3 id="question-4-of-5">Question 4 of 5</h3>
+<p>Which Docker tool is considered too old to support modern Docker functionality? &gt; Boot2Docker</p>
+<h3 id="question-5-of-5">Question 5 of 5</h3>
+<p>What is the name of the Docker client used from the terminal? &gt; docker</p>
+<h1 id="ii.-using-docker">II. Using Docker</h1>
+<h2 id="ii-i.-the-docker-flow-images-to-containers">II-I. The Docker flow: Images to containers</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-I. The Docker flow Images to containers.mp4" type="video/mp4">
+</video>
+</p>
+<pre class="shell"><code>docker run -ti ubuntu:latest bash
+# ti = Terminal Interactive</code></pre>
+<h2 id="ii-ii.-the-docker-flow-containers-to-images">II-II. The Docker flow: Containers to images</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\I-II. The Docker flow Containers to images.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iii.-run-processes-in-containers">II-III. Run processes in containers</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-III. Run processes in containers.mp4" type="video/mp4">
+</video>
+</p>
+<pre class="shell"><code>docker attach
+docker exec </code></pre>
+<h2 id="ii-iv.-manage-containers">II-IV. Manage containers</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-IV. Manage containers.mp4" type="video/mp4">
+</video>
+</p>
+<pre class="shell"><code>docker logs *container_name*</code></pre>
+<h2 id="ii-v.-exposing-ports">II-V. Exposing ports</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-V. Exposing ports.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-vi.-container-networking">II-VI. Container networking</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-VI. Container networking.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-vii.-legacy-linking">II-VII. Legacy linking</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-VII. Legacy linking.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-viii.-images">II-VIII. Images</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-VIII. Images.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-ix.-volumes">II-IX. Volumes</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-IX. Volumes.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-x.-docker-registries">II-X. Docker registries</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\II-X. Docker registries.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-xi.-chapter-quizz">II-XI. Chapter Quizz</h2>
+<h3 id="question-1-of-9">Question 1 of 9</h3>
+<p>You have a container running bash in detached mode. In terminal A, you attach to this container. Next, in terminal B, you ‘docker exec bash’ to this container. Then, back in terminal A, you exit the session. What happens to the container?</p>
+<blockquote>
+<p>The container and all its processes are terminated.</p>
+</blockquote>
+<h3 id="question-2-of-9">Question 2 of 9</h3>
+<p>In Docker, programs run in _____, which are comprised of _____.</p>
+<blockquote>
+<p>containers; images</p>
+</blockquote>
+<h3 id="question-3-of-9">Question 3 of 9</h3>
+<p>Which commands are used to upload a public image?</p>
+<blockquote>
+<p>Docker login and Docker push</p>
+</blockquote>
+<h3 id="question-4-of-9">Question 4 of 9</h3>
+<p>The command docker run -v volume-name ubuntu bash creates a volume that is _____, and is deleted when _____.</p>
+<blockquote>
+<p>ephemeral; no container is using it</p>
+</blockquote>
+<h3 id="question-5-of-9">Question 5 of 9</h3>
+<p>The command _____ is used to download images, while the command _____ is used to upload them.</p>
+<blockquote>
+
+</blockquote>
+<pre><code>docker pull; docker push</code></pre>
+<h3 id="question-6-of-9">Question 6 of 9</h3>
+<p>Container ‘aaa’ is already running. You now run container ‘bbb’ using the command below. Which statement is true?</p>
+<pre class="shell"><code>docker run --rm -ti --link aaa --name bbb ubuntu bash</code></pre>
+<blockquote>
+<p>Container ‘bbb’ will see the environment variables of container ‘aaa’.</p>
+</blockquote>
+<h3 id="question-7-of-9">Question 7 of 9</h3>
+<p>You can use the default network called _____ when a container does not require any network isolation.</p>
+<blockquote>
+<p>host</p>
+</blockquote>
+<h3 id="question-8-of-9">Question 8 of 9</h3>
+<p>What will not happen when you add a -p 8080 argument to a Docker run command?</p>
+<blockquote>
+<p>The internal port 8080 will be accessible externally on port 8080.</p>
+</blockquote>
+<h3 id="question-9-of-9">Question 9 of 9</h3>
+<p>A Docker container continues to run until _____.</p>
+<blockquote>
+<p>the process that started it exits</p>
+</blockquote>
+<h1 id="iii.-building-docker-images">III. Building Docker Images</h1>
+<h2 id="iii-i.-what-are-dockerfiles">III-I. What are Dockerfiles?</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\III-I. What are Dockerfiles.mp4" type="video/mp4">
+</video>
+</p>
+<pre class="shell"><code>docker build -t name_of_the_image</code></pre>
+<ul>
+<li><a href="https://docs.docker.com/engine/reference/builder/">https://docs.docker.com/engine/reference/builder/</a></li>
+</ul>
+<h2 id="iii-ii.-building-dockerfiles">III-II. Building Dockerfiles</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\III-II. Building Dockerfiles.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iii.-dockerfile-syntax">III-III. Dockerfile syntax</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\III-III. Dockerfile syntax.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iv.-multi-project-docker-files">III-IV. Multi-project Docker files</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\III-IV. Multi-project Docker files.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-v.-avoid-golden-images">III-V. Avoid golden images</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\III-V. Avoid golden images.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vi.-chapter-quizz">III-VI. Chapter Quizz</h2>
+<h3 id="question-1-of-5-1">Question 1 of 5</h3>
+<p>What does the CMD command in a Docker file do?</p>
+<blockquote>
+<p>It sets the program to run when the container starts.</p>
+</blockquote>
+<h3 id="question-2-of-5-1">Question 2 of 5</h3>
+<p>Each line of a Docker file _____.</p>
+<blockquote>
+<p>makes a new, independent image based on the previous line’s image</p>
+</blockquote>
+<h3 id="question-3-of-5-1">Question 3 of 5</h3>
+<p>What characterizes a golden image?</p>
+<blockquote>
+<p>It replaces a canonical build with a locally-modified revision.</p>
+</blockquote>
+<h3 id="question-4-of-5-1">Question 4 of 5</h3>
+<p>Which statement is incorrect regarding multiproject Docker files?</p>
+<blockquote>
+<p>They increase the eventual image size.</p>
+</blockquote>
+<h3 id="question-5-of-5-1">Question 5 of 5</h3>
+<p>The Docker file WORKDIR command changes directories _____.</p>
+<blockquote>
+<p>both for the rest of the Docker file, and in the finished image</p>
+</blockquote>
+<h1 id="iv.-under-the-hood">IV. Under the hood</h1>
+<h2 id="iv-i.-docker-the-program">IV-I. Docker the program</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\IV-I. Docker the program.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-ii.-networking-and-namespaces">IV-II. Networking and namespaces</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\IV-II. Networking and namespaces.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iii.-processes-and-cgroups">IV-III. Processes and cgroups</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\IV-III. Processes and cgroups.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iv.-storage">IV-IV. Storage</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\IV-IV. Storage.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-v.-chapter-quizz">IV-V. Chapter Quizz</h2>
+<h3 id="question-1-of-4">Question 1 of 4</h3>
+<p>Docker images are _____.</p>
+<blockquote>
+<p>read only</p>
+</blockquote>
+<h3 id="question-2-of-4">Question 2 of 4</h3>
+<p>Which Linux kernel feature is essential for container process isolation?</p>
+<blockquote>
+<p>cgroups</p>
+</blockquote>
+<h3 id="question-3-of-4">Question 3 of 4</h3>
+<p>Docker uses _____ and _____ to create virtual Ethernet networks.</p>
+<blockquote>
+<p>bridges; NAT</p>
+</blockquote>
+<h3 id="question-4-of-4">Question 4 of 4</h3>
+<p>What do you need to configure on a Docker container to run a Docker client within?</p>
+<blockquote>
+<p>Mount the Docker socket of the host into the container.</p>
+</blockquote>
+<h1 id="v.-orchestration-building-systems-with-docker">V. Orchestration: Building Systems with Docker</h1>
+<h2 id="v-i.-registries-in-detail">V-I. Registries in detail</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\V-I. Registries in detail.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-ii.-intro-to-orchestration">V-II. Intro to orchestration</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\V-II. Intro to orchestration.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-iii.-kubernetes-in-aws">V-III. Kubernetes in AWS</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\V-III. Kubernetes in AWS.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-iv.-google-kubernetes-engine">V-IV. Google Kubernetes Engine</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearningDocker\V-IV. Google Kubernetes Engine.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="v-v.-chapter-quizz">V-V. Chapter Quizz</h2>
+<h3 id="question-1-of-4-1">Question 1 of 4</h3>
+<p>This command is used to set the registry that an image will be uploaded to.</p>
+<blockquote>
+<p>docker tag</p>
+</blockquote>
+<h3 id="question-2-of-4-1">Question 2 of 4</h3>
+<p>When deploying a Kubernetes application on Google Kubernetes Engine, which step is performed after setting the default project and compute zone?</p>
+<blockquote>
+<p>Create a Kubernetes Engine cluster.</p>
+</blockquote>
+<h3 id="question-3-of-4-1">Question 3 of 4</h3>
+<p>The Kubernetes _____ is responsible for ensuring that the relevant service is running as needed.</p>
+<blockquote>
+<p>replication controller</p>
+</blockquote>
+<h3 id="question-4-of-4-1">Question 4 of 4</h3>
+<p>Which orchestration system is only suited to single-computer orchestration?</p>
+<blockquote>
+<p>docker compose</p>
+</blockquote>
+<hr />
+<h1 id="conclusion">Conclusion</h1>
+<h2 id="next-steps">Next steps</h2>
+<video width="600" height="337" controls>
+<source src="LearningDocker\Conclusion-Next steps.mp4" type="video/mp4">
+</video>
+<h2 id="certification">CERTIFICATION</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="LearningDocker\CertificateOfCompletion_Learning%20Docker.pdf">CertificateOfCompletion_Learning Docker.pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="LearningDocker.pdf">Learning Docker - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

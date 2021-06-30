@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="DocString.fr" />
+  <title>La Formation Complete Python</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">La Formation Complete Python</h1>
+<p class="author">DocString.fr</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">1. Introduction</a>
+<ul>
+<li><a href="#la-structure-de-la-formation">1.1 La Structure de la Formation</a></li>
+<li><a href="#un-petit-sur-la-notation">1.2 Un petit sur la notation</a></li>
+</ul></li>
+<li><a href="#quelques-conseils-pour-suivre-la-formation">2. Quelques conseils pour suivre la formation</a>
+<ul>
+<li><a href="#serveur-discord">2.1 Serveur Discord</a></li>
+<li><a href="#lien-dinvitation-sur-discord">2.2 Lien d’invitation sur Discord</a></li>
+<li><a href="#le-lecteur-vidéo-dudemy">2.3 Le lecteur vidéo d’Udemy</a></li>
+<li><a href="#les-exercices-de-code">2.4 Les Exercices de Code</a></li>
+<li><a href="#les-fichiers-sources-de-la-formation">2.5 Les fichiers sources de la formation</a></li>
+</ul></li>
+<li><a href="#choisir-un-environnement-de-développement">3. Choisir un environnement de développement</a>
+<ul>
+<li><a href="#les-environnements-de-développement---introduction">3.1 Les environnements de développement - Introduction</a></li>
+<li><a href="#sublime-text">3.2 Sublime Text</a></li>
+<li><a href="#visual-studio-code">3.3 Visual Studio Code</a></li>
+<li><a href="#pycharm">3.4 PyCharm</a></li>
+<li><a href="#jupyter-notebook">3.5 Jupyter Notebook</a></li>
+<li><a href="#anaconda">3.6 Anaconda</a></li>
+<li><a href="#mise-en-place-de-lenvironnement">3.7 Mise en place de l’environnement</a></li>
+</ul></li>
+<li><a href="#mise-en-place-de-lenvironnement-de-travail-sur-windows">4. Mise en place de l’environnement de travail sur Windows</a>
+<ul>
+<li><a href="#installation-de-python-pour-windows">4.1. Installation de Python pour Windows</a></li>
+<li><a href="#installation-de-visual-studio-code-pour-windows">4.2. Installation de Visual Studio Code pour Windows</a></li>
+<li><a href="#installation-de-git-pour-windows">4.3. Installation de Git pour Windows</a></li>
+<li><a href="#python-avec-git-bash">4.4. Python avec Git Bash</a></li>
+<li><a href="#installation-et-utilisation-de-cmder">4.5. Installation et utilisation de cmder</a></li>
+<li><a href="#installation-et-utilisation-de-cmder-avec-python">4.6. Installation et utilisation de Cmder avec Python</a></li>
+</ul></li>
+<li><a href="#mise-en-place-de-lenvironnement-de-travail-sur-mac-os">5. Mise en place de l’environnement de travail sur Mac OS</a>
+<ul>
+<li><a href="#installation-de-python-3.7-sur-mac-os">5.1. Installation de Python 3.7 sur Mac OS</a></li>
+<li><a href="#installation-de-visual-studio-code-sur-mac-os">5.2. Installation de Visual Studio Code sur Mac OS</a></li>
+<li><a href="#visual-studio-code-sur-mac-os-10.9">5.3. Visual Studio Code sur Mac OS 10.9</a></li>
+<li><a href="#installation-de-git-sur-mac-os">5.4. Installation de Git sur Mac OS</a></li>
+</ul></li>
+<li><a href="#mise-en-place-de-lenvironnement-de-travail-sur-linux">6. Mise en place de l’environnement de travail sur Linux</a>
+<ul>
+<li><a href="#installation-de-python-3.7-sur-linux">6.1. Installation de Python 3.7 sur Linux</a></li>
+<li><a href="#commandes-linux-pour-installer-python-3.7">6.2. Commandes Linux pour installer Python 3.7</a></li>
+<li><a href="#installation-de-visual-studio-code-sur-linux">6.3. Installation de Visual Studio Code sur Linux</a></li>
+<li><a href="#installation-de-git-sur-linux">6.4. Installation de Git sur Linux</a></li>
+</ul></li>
+<li><a href="#le-terminal">7. Le Terminal</a>
+<ul>
+<li><a href="#le-terminal---introduction">7.1. Le Terminal - Introduction</a></li>
+<li><a href="#le-terminal-avec-windows">7.2. Le terminal avec Windows</a></li>
+<li><a href="#le-terminal-avec-mac-os-et-linux">7.3. Le terminal avec Mac OS et Linux</a></li>
+<li><a href="#la-commande-ls">7.4. La commande <code>ls</code></a></li>
+<li><a href="#notes">7.4.1 notes</a></li>
+<li><a href="#la-commande-pwd">7.5. La commande <code>pwd</code></a></li>
+<li><a href="#la-commande-cd">7.6. La commande <code>cd</code></a></li>
+<li><a href="#le-dossier">7.7. Le dossier <code>~</code></a></li>
+<li><a href="#la-commande-clear">7.8. La commande <code>clear</code></a></li>
+<li><a href="#la-commande-mkdir">7.9. La commande <code>mkdir</code></a></li>
+<li><a href="#la-commande-rm">7.10. La commande <code>rm</code></a></li>
+<li><a href="#la-commande-touch">7.11. La commande <code>touch</code></a></li>
+</ul></li>
+<li><a href="#votre-premier-script">8. Votre premier script</a>
+<ul>
+<li><a href="#afficher-du-texte-avec-la-fonction-print">1. Afficher du texte avec la fonction print</a></li>
+</ul></li>
+<li><a href="#premiers-pas-avec-visual-studio-code">9. Premiers pas avec Visual Studio Code</a>
+<ul>
+<li><a href="#visual-studio-code---introduction">9.1. Visual Studio Code - Introduction</a></li>
+<li><a href="#vérifier-lintégration-de-visual-studio-code-sur-windows">9.2. Vérifier l’intégration de Visual Studio Code sur Windows</a></li>
+<li><a href="#vérifier-lintégration-de-visual-studio-code-sur-mac-os">9.3. Vérifier l’intégration de Visual Studio Code sur Mac OS</a></li>
+<li><a href="#vérifier-lintégration-de-visual-studio-code-sur-linux">9.4. Vérifier l’intégration de Visual Studio Code sur Linux</a></li>
+<li><a href="#ouvrir-visual-studio-code-depuis-le-terminal">9.5. Ouvrir Visual Studio Code depuis le terminal</a></li>
+<li><a href="#configurer-visual-studio-code-pour-python">9.6. Configurer Visual Studio Code pour Python</a></li>
+<li><a href="#exécuter-un-script-python-depuis-visual-studio-code">9.7. Exécuter un script Python depuis Visual Studio Code</a></li>
+<li><a href="#exécuter-un-script-depuis-le-terminal">9.8. Exécuter un script depuis le Terminal</a></li>
+</ul></li>
+<li><a href="#les-bases">10. Les bases</a>
+<ul>
+<li><a href="#sources">10.1. Sources</a></li>
+<li><a href="#les-variables-str-int-et-float">10.2. Les variables <code>str</code>, <code>int</code> et <code>float</code></a></li>
+<li><a href="#précision-sur-les-noms-de-variables">10.3. Précision sur les noms de variables</a></li>
+<li><a href="#les-variables---exercice-de-syntaxe---correction">10.4,5,6. Les variables - Exercice de syntaxe - Correction</a></li>
+<li><a href="#les-variables---affectations-simples-parallèles-et-multiples">10.7. Les variables - Affectations simples, parallèles et multiples</a></li>
+<li><a href="#les-variables---affectations-simples-parallèles-et-multiples---solution">10.8,9,10. Les variables - Affectations simples, parallèles et multiples - Solution</a></li>
+</ul></li>
+<li><a href="#exercices---les-bases">11. # Exercices - Les bases</a>
+<ul>
+<li><a href="#calculatrice-en-python-tuto-youtube">11.1. Calculatrice en Python (Tuto Youtube)</a>
+<ul>
+<li><a href="#code">Code:</a></li>
+</ul></li>
+<li><a href="#concaténation">11.2. Concaténation</a></li>
+</ul></li>
+<li><a href="#section"></a>
+<ul>
+<li><a href="#section-1"></a></li>
+</ul></li>
+<li><a href="#section-2"></a>
+<ul>
+<li><a href="#section-3"></a></li>
+</ul></li>
+<li><a href="#section-4"></a>
+<ul>
+<li><a href="#section-5"></a></li>
+</ul></li>
+<li><a href="#section-6"></a>
+<ul>
+<li><a href="#section-7"></a></li>
+</ul></li>
+<li><a href="#section-8"></a>
+<ul>
+<li><a href="#section-9"></a></li>
+</ul></li>
+<li><a href="#section-10"></a>
+<ul>
+<li><a href="#section-11"></a></li>
+</ul></li>
+<li><a href="#section-12"></a>
+<ul>
+<li><a href="#section-13"></a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">1. Introduction</h1>
+<h2 id="la-structure-de-la-formation">1.1 La Structure de la Formation</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\1. Introduction\1. La structure de la formation.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="un-petit-sur-la-notation">1.2 Un petit sur la notation</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\1. Introduction\2. Un petit mot sur la notation.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="quelques-conseils-pour-suivre-la-formation">2. Quelques conseils pour suivre la formation</h1>
+<h2 id="serveur-discord">2.1 Serveur Discord</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\2. Quelques conseils pour suivre la formation\1. Rejoins-nous sur le serveur Discord !.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="lien-dinvitation-sur-discord">2.2 Lien d’invitation sur Discord</h2>
+<ul>
+<li><a href="LaFormationCompletePython\2.%20Quelques%20conseils%20pour%20suivre%20la%20formation\2.%20Lien%20d&#39;invitation%20pour%20le%20serveur%20Discord.html">2. Lien d’invitation pour le serveur Discord.html</a></li>
+</ul>
+<p>Apprendre à coder, c’est difficile. Apprendre à coder tout seul, ça l’est encore plus.</p>
+<p>C’est pourquoi j’ai créé en plus de mes formations un <strong>serveur Discord</strong> sur lequel tu peux retrouver les autres étudiants qui ont suivi les même formations que toi afin de poser des questions et rejoindre une communauté grandissante de passionnés du langage de programmation Python.</p>
+<p>Et la bonne nouvelle c’est que <strong>c’est entièrement gratuit !</strong></p>
+<p><strong>Tu peux t’inscrire</strong> au forum de discussion Discord grâce au lien d’invitation suivant :</p>
+<p><a href="https://discordapp.com/invite/NWQvTeX" class="uri">https://discordapp.com/invite/NWQvTeX</a> (si le lien ne fonctionne pas, essayez avec : <a href="https://discord.gg/NWQvTeX" class="uri">https://discord.gg/NWQvTeX</a>).</p>
+<p><strong>Nous sommes plusieurs centaines</strong> à échanger sur les problèmes et défis que nous avons à relever au quotidien !</p>
+<p>En espérant te retrouver là-bas :)</p>
+<p>Thib.</p>
+<h2 id="le-lecteur-vidéo-dudemy">2.3 Le lecteur vidéo d’Udemy</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\2. Quelques conseils pour suivre la formation\3. Le lecteur vidéo d'Udemy.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="les-exercices-de-code">2.4 Les Exercices de Code</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\2. Quelques conseils pour suivre la formation\4. Les exercices de code.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="les-fichiers-sources-de-la-formation">2.5 Les fichiers sources de la formation</h2>
+<ul>
+<li><a href="LaFormationCompletePython\2.%20Quelques%20conseils%20pour%20suivre%20la%20formation\5.%20Les%20fichiers%20sources%20de%20la%20formation">5. Les fichiers sources de la formation</a></li>
+</ul>
+<p>Tu peux retrouver toutes les sources de la formation sur <strong>Github</strong> à l’adresse suivante :</p>
+<p><a href="https://github.com/DocstringFr/la-formation-complete-python" class="uri">https://github.com/DocstringFr/la-formation-complete-python</a></p>
+<p>Si tu n’as pas de compte Git, pas de panique, tu peux télécharger les sources sur Github au format .zip :</p>
+<p>Je n’ai pas attaché les sources sur chaque session de la formation car je trouve ça pénible pour toi de devoir télécharger des dizaines de fichiers éparpillés sur chaque session.</p>
+<p>Je préfère donc te donner la possibilité de télécharger la totalité des sources de la formation en une seule fois.</p>
+<p>Tu peux ensuite retrouver facilement les fichiers correspondant à chaque partie de la formation et aux différents exercices grâces aux noms des dossiers.</p>
+<p>Bonne formation !</p>
+<h1 id="choisir-un-environnement-de-développement">3. Choisir un environnement de développement</h1>
+<h2 id="les-environnements-de-développement---introduction">3.1 Les environnements de développement - Introduction</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\3. Choisir un environnement de développement\1. Les environnements de développement - Introduction.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="sublime-text">3.2 Sublime Text</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\3. Choisir un environnement de développement\2. Sublime Text.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="visual-studio-code">3.3 Visual Studio Code</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\3. Choisir un environnement de développement\3. Visual Studio Code.mp4" type="video/mp4">
+</video>
+</p>
+<p><span class="info"> Pour les Scripts relativement petits et rapides. </span></p>
+<h2 id="pycharm">3.4 PyCharm</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\3. Choisir un environnement de développement\4. PyCharm.mp4" type="video/mp4">
+</video>
+</p>
+<p><span class="info"> Pour les projets conséquent. Avec beaucoup de fichiers et des centaines de lignes de code. </span></p>
+<h2 id="jupyter-notebook">3.5 Jupyter Notebook</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\3. Choisir un environnement de développement\5. Jupyter Notebook.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="anaconda">3.6 Anaconda</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\3. Choisir un environnement de développement\6. Anaconda.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="mise-en-place-de-lenvironnement">3.7 Mise en place de l’environnement</h2>
+<p>Dans les prochaines parties, je vais vous montrer comment installer <strong>Python</strong> et <strong>Visual Studio Code</strong> sur <em>Windows, Mac OS et Linux</em>.</p>
+<p>⚠️ <strong><em>Je vous montre également comment installer Git, qui n’est pas encore utilisé dans la formation mais qui le sera prochainement quand j’aurai terminé d’enregistrer les parties concernant le système de contrôle de version Git.</em></strong></p>
+<p>Dans la prochaine partie, on voit la mise en place de l’environnement de travail avec Windows.</p>
+<p>👉 Je vous conseille donc d’aller directement à la partie qui vous concerne <strong>selon votre système d’exploitation</strong>.</p>
+<p>Si vous utilisez Windows, alors vous pouvez continuer avec la prochaine vidéo, sinon, rendez-vous quelques sessions plus loin pour les étapes de configuration avec Mac OS ou Linux.</p>
+<p>Bonne formation 💪</p>
+<h1 id="mise-en-place-de-lenvironnement-de-travail-sur-windows">4. Mise en place de l’environnement de travail sur Windows</h1>
+<h2 id="installation-de-python-pour-windows">4.1. Installation de Python pour Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\4. Mise en place de l'environnement de travail sur Windows\1. Installation de Python pour Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="installation-de-visual-studio-code-pour-windows">4.2. Installation de Visual Studio Code pour Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\4. Mise en place de l'environnement de travail sur Windows\2. Installation de Visual Studio Code pour Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="installation-de-git-pour-windows">4.3. Installation de Git pour Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\4. Mise en place de l'environnement de travail sur Windows\3. Installation de Git pour Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="python-avec-git-bash">4.4. Python avec Git Bash</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\4. Mise en place de l'environnement de travail sur Windows\4. Python avec Git Bash.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="installation-et-utilisation-de-cmder">4.5. Installation et utilisation de cmder</h2>
+<p>Certains étudiants ont eu des problèmes sur Windows avec Git Bash.</p>
+<p>À la demande générale, vous retrouverez donc dans la prochaine partie les étapes à suivre pour installer un autre émulateur de Terminal qui fonctionne très bien également sur Windows : cmder.</p>
+<p>Dans la suite de la formation, vous me verrez utiliser Git Bash pour les commandes, mais si vous avez des problèmes avec, je vous conseille donc d’essayer <strong>cmder</strong>.</p>
+<p>Je vous conseille de les essayer et de voir celui qui vous convient le mieux 😉</p>
+<p>Et si vous avez le moindre problème de configuration avec l’un ou l’autre de ces émulateurs 👉direction les Q&amp;R de la formation pour que l’on vienne à votre aide (ou sur le Discord).</p>
+<p>Thibault.</p>
+<h2 id="installation-et-utilisation-de-cmder-avec-python">4.6. Installation et utilisation de Cmder avec Python</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\4. Mise en place de l'environnement de travail sur Windows\6. Installation et utilisation de Cmder avec Python.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="mise-en-place-de-lenvironnement-de-travail-sur-mac-os">5. Mise en place de l’environnement de travail sur Mac OS</h1>
+<h2 id="installation-de-python-3.7-sur-mac-os">5.1. Installation de Python 3.7 sur Mac OS</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\5. Mise en place de l'environnement de travail sur Mac OS\1. Installation de Python 3.7 sur Mac OS.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="installation-de-visual-studio-code-sur-mac-os">5.2. Installation de Visual Studio Code sur Mac OS</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\5. Mise en place de l'environnement de travail sur Mac OS\2. Installation de Visual Studio Code sur Mac OS.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="visual-studio-code-sur-mac-os-10.9">5.3. Visual Studio Code sur Mac OS 10.9</h2>
+<p>⚠️ Sur les versions de Mac OS inférieures à 10.9, il n’est malheureusement pas possible d’installer Visual Studio Code à cause d’une dépendance à la librairie Electron qui nécessite Mac OS &gt; 10.9.</p>
+<p>👉 Je vous conseille donc pour les utilisateurs Mac OS qui ne peuvent pas installer Visual Studio Code d’utiliser un autre éditeur de texte tel que Sublime Text, qui fonctionne également très bien pour écrire du code Python.</p>
+<p>Si jamais vous rencontrez la moindre difficulté lors de la configuration de votre environnement de travail, n’hésitez pas à nous demander de l’aide dans les Q&amp;R de la formation ou sur Discord !</p>
+<h2 id="installation-de-git-sur-mac-os">5.4. Installation de Git sur Mac OS</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\5. Mise en place de l'environnement de travail sur Mac OS\4. Installation de Git sur Mac OS.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="mise-en-place-de-lenvironnement-de-travail-sur-linux">6. Mise en place de l’environnement de travail sur Linux</h1>
+<h2 id="installation-de-python-3.7-sur-linux">6.1. Installation de Python 3.7 sur Linux</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\6. Mise en place de l'environnement de travail sur Linux\1. Installation de Python 3.7 sur Linux.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="commandes-linux-pour-installer-python-3.7">6.2. Commandes Linux pour installer Python 3.7</h2>
+<p>Voici les différentes commandes utilisées dans la partie précédente pour installer Python 3.7 sur Ubuntu :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sudo</span> apt update</span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">sudo</span> apt install software-properties-common</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">sudo</span> add-apt-repository ppa:deadsnakes/ppa</span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">sudo</span> apt install python3.7 </span></code></pre></div>
+<h2 id="installation-de-visual-studio-code-sur-linux">6.3. Installation de Visual Studio Code sur Linux</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\6. Mise en place de l'environnement de travail sur Linux\3. Installation de Visual Studio Code sur Linux.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="installation-de-git-sur-linux">6.4. Installation de Git sur Linux</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\6. Mise en place de l'environnement de travail sur Linux\4. Installation de Git sur Linux.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="le-terminal">7. Le Terminal</h1>
+<h2 id="le-terminal---introduction">7.1. Le Terminal - Introduction</h2>
+<p>Dans les prochaines parties, je vous présente plusieurs commandes que l’on peut utiliser dans un terminal pour par exemple créer ou supprimer des fichiers ou des dossiers.</p>
+<p>Ce n’est pas une partie essentielle de la formation car elle n’est pas directement reliée à Python, mais je considère que tout bon programmeur se doit de savoir utiliser un terminal.</p>
+<p>C’est un atout vraiment important quand vous arrivez dans une entreprise et je vous conseille donc de passer à travers cette section. Nous allons d’ailleurs à quelques reprises dans la formation utiliser le terminal pour créer un fichier ou un dossier.</p>
+<p>Si jamais cela ne vous intéresse pas du tout, vous pouvez passer à la prochaine section dans la quelle nous allons écrire notre première ligne de code en Python 😉</p>
+<h2 id="le-terminal-avec-windows">7.2. Le terminal avec Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\2. Le terminal avec Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="le-terminal-avec-mac-os-et-linux">7.3. Le terminal avec Mac OS et Linux</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\3. Le terminal avec Mac OS et Linux.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="la-commande-ls">7.4. La commande <code>ls</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\4. La commande ls.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="notes">7.4.1 notes</h2>
+<p>Pour voir des commandes de bases pour Linux: <a href="LaFormationCompletePython\7.%20Le%20Terminal\4.1%20notes.pdf">4.1 notes.pdf</a></p>
+<h2 id="la-commande-pwd">7.5. La commande <code>pwd</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\5. La commande pwd.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="la-commande-cd">7.6. La commande <code>cd</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\6. La commande cd.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="le-dossier">7.7. Le dossier <code>~</code></h2>
+<p>Dans un terminal, vous verrez souvent un symbole tilde (~) apparaître.</p>
+<p>Ce symbole correspond au dossier utilisateur de la machine que vous utilisez.</p>
+<p>Dans mon cas (sur Mac OS), ce sera donc le dossier <em>/Users/thibh</em>.</p>
+<p>C’est dans ce dossier que le terminal s’ouvre par défaut. C’est donc pour cette raison que vous avez ce symbole qui apparaît.</p>
+<p>Si on navigue par la suite dans le dossier <em>Documents</em>, on verra donc affiché le chemin ~/Documents, qui est un raccourci pour <em>/Users/thibh/Documents</em>.</p>
+<p>Quand on utilise la commande pwd, le chemin complet nous est d’ailleurs affiché.</p>
+<h2 id="la-commande-clear">7.8. La commande <code>clear</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\8. La commande clear.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="la-commande-mkdir">7.9. La commande <code>mkdir</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\9. La commande mkdir.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="la-commande-rm">7.10. La commande <code>rm</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\10. La commande rm.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="la-commande-touch">7.11. La commande <code>touch</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\7. Le Terminal\11. La commande touch.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="votre-premier-script">8. Votre premier script</h1>
+<h2 id="afficher-du-texte-avec-la-fonction-print">1. Afficher du texte avec la fonction print</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\8. Votre premier script\1. Afficher du texte avec la fonction print.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="premiers-pas-avec-visual-studio-code">9. Premiers pas avec Visual Studio Code</h1>
+<h2 id="visual-studio-code---introduction">9.1. Visual Studio Code - Introduction</h2>
+<p>Dans cette section, je vais vous présenter quelques astuces et extensions que l’on peut installer dans Visual Studio Code afin de faciliter notre utilisation de Python.</p>
+<p>Certaines parties sont consacrées à Windows, Mac OS ou Linux, je vous conseille donc de passer directement à la partie qui concerne votre système d’exploitation.</p>
+<p>Dans la prochaine partie, nous allons vérifier l’intégration de Visual Studio Code dans Windows.</p>
+<h2 id="vérifier-lintégration-de-visual-studio-code-sur-windows">9.2. Vérifier l’intégration de Visual Studio Code sur Windows</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\2. Vérifier l'intégration de Visual Studio Code sur Windows.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vérifier-lintégration-de-visual-studio-code-sur-mac-os">9.3. Vérifier l’intégration de Visual Studio Code sur Mac OS</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\3. Vérifier l'intégration de Visual Studio Code sur Mac OS.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="vérifier-lintégration-de-visual-studio-code-sur-linux">9.4. Vérifier l’intégration de Visual Studio Code sur Linux</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\4. Vérifier l'intégration de Visual Studio Code sur Linux.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ouvrir-visual-studio-code-depuis-le-terminal">9.5. Ouvrir Visual Studio Code depuis le terminal</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\5. Ouvrir Visual Studio Code depuis le terminal.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="configurer-visual-studio-code-pour-python">9.6. Configurer Visual Studio Code pour Python</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\6. Configurer Visual Studio Code pour Python.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="exécuter-un-script-python-depuis-visual-studio-code">9.7. Exécuter un script Python depuis Visual Studio Code</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\7. Exécuter un script Python depuis Visual Studio Code.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="exécuter-un-script-depuis-le-terminal">9.8. Exécuter un script depuis le Terminal</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\9. Premiers pas avec Visual Studio Code\8. Exécuter un script depuis le Terminal.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="les-bases">10. Les bases</h1>
+<h2 id="sources">10.1. Sources</h2>
+<p>Retrouve toutes les sources de cette partie ici :</p>
+<p><a href="https://github.com/DocstringFr/la-formation-complete-python/tree/master/chp-001_les-bases" class="uri">https://github.com/DocstringFr/la-formation-complete-python/tree/master/chp-001_les-bases</a></p>
+<h2 id="les-variables-str-int-et-float">10.2. Les variables <code>str</code>, <code>int</code> et <code>float</code></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\10. Les bases\2. Les variables  str, int et float.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="précision-sur-les-noms-de-variables">10.3. Précision sur les noms de variables</h2>
+<p>Dans la partie précédente je vous indique qu’il n’est pas possible d’utiliser des caractères spéciaux dans les noms de nos variables.</p>
+<p>C’est vrai pour tous les symboles comme $, %, ? ou ^ par exemple.</p>
+<p>Depuis Python 3 cependant, il est possible d’utiliser des accents dans les noms de variable.</p>
+<p>Vous n’aurez donc pas d’erreurs si vous créez une variable prénom ou âge.</p>
+<p><span class="info">⚠️ Je vous conseille cependant fortement de ne pas utiliser d’accents dans les noms de vos variables !</span></p>
+<p>Les espaces et les accents sont vraiment la bête noire de l’informatique en règle générale.</p>
+<p><span class="info">Même si cela peut vous sembler mieux, vraiment, n’utilisez pas d’accents 👌</span></p>
+<p>Python permet beaucoup de liberté, mais les développeurs suivent également beaucoup de conventions qu’il serait dommage de ne pas suivre.</p>
+<p>Bonne continuation !</p>
+<h2 id="les-variables---exercice-de-syntaxe---correction">10.4,5,6. Les variables - Exercice de syntaxe - Correction</h2>
+<p>Plusieurs noms de variables dans cet exercice allaient à l’encontre des règles énoncées dans la vidéo théorique sur les variables.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a>a <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>_a <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>nombre impair <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>nombre pair <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>a_ <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="bu">print</span> <span class="op">=</span> <span class="st">&quot;Python&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>3a <span class="op">=</span> <span class="dv">15</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>a3 <span class="op">=</span> <span class="dv">6</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>a2b <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="op">%</span>taux_immobilier <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>2ab <span class="op">=</span> <span class="dv">10</span></span></code></pre></div>
+<p>En effet, une variable ne peut pas commencer par un nombre.</p>
+<p>Les variables 3a et 2ab n’étaient donc pas valides.</p>
+<p>De plus, certains mots sont réservés par Python, car ils nous permettent d’effectuer certaines actions, comme la fonction print qui permet d’afficher du texte. Il ne faut donc pas utiliser ces mots réservés comme nom de variable.</p>
+<p>Exit donc la variable print = “Python”.</p>
+<p>Un nom de variable ne peut également pas contenir d’espaces. Les variables nombre impair et nombre pair n’étaient donc pas valides. Pour séparer des mots dans un nom de variable, on utilise le tiret du bas (il aurait donc fallu appeler ces variables respectivement nombre_impair et nombre_pair).</p>
+<p>Enfin, le nom d’une variable ne peut pas contenir certains caractères spéciaux comme $%?&amp;*()@!-{}&lt;&gt; (liste non exhaustive mais vous comprenez l’idée).</p>
+<p>La variable %taux_immobilier n’étaient donc pas valide.</p>
+<h2 id="les-variables---affectations-simples-parallèles-et-multiples">10.7. Les variables - Affectations simples, parallèles et multiples</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\10. Les bases\7. Les variables - Affectations simples, parallèles et multiples.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="les-variables---affectations-simples-parallèles-et-multiples---solution">10.8,9,10. Les variables - Affectations simples, parallèles et multiples - Solution</h2>
+<p><span class="question">1. Créez une variable ‘a’ qui a pour valeur le nombre 500</span></p>
+<p><span class="answer">a = 500</span></p>
+<p><span class="question">2. Créez une variable ‘langage’ qui a pour valeur ‘python’ </span></p>
+<p><span class="answer">langage = “python”</span></p>
+<p><span class="question">3. Assignez à une variable b la même valeur que celle contenue dans la variable a. Pas le droit de faire b = 500 ! </span></p>
+<p><span class="answer">b = a</span></p>
+<p><span class="question"> 4. Créez, avec une seule ligne de code, deux variables ‘c’ et ‘d’, qui contiennent toutes deux la valeur 10 </span></p>
+<p><span class="answer">c = d = 10</span></p>
+<p><span class="question">5. Créez, avec une seule ligne de code, deux variables ‘e’ et ‘f’, qui contiennent respectivement les valeurs 8 et 12 </span></p>
+<p><span class="answer">e, f = 8, 12</span></p>
+<p><span class="question">6. Maintenant, avec une seule ligne de code, permutez les valeurs contenues dans ‘e’ et ‘f’ (‘f’ doit être égal à 8 et ‘e’ à 12) </span></p>
+<p><span class="answer">e, f = f, e</span></p>
+<p>N’hésitez pas à poser vos questions dans les Questions et Réponses de la formation si jamais vous êtes bloqués et nous feront de notre mieux pour vous répondre dans les plus brefs délais (onglet Q &amp; R juste en dessous du lecteur vidéo) !</p>
+<h1 id="exercices---les-bases">11. # Exercices - Les bases</h1>
+<p>Impossible d’accéder à ces liens, mais au cas où…:</p>
+<ul>
+<li><a href="LaFormationCompletePython\11.%20#%20Exercices%20-%20Les%20bases\1.%20La%20calculatrice.html">1. La calculatrice.html</a></li>
+<li><a href="LaFormationCompletePython\11.%20#%20Exercices%20-%20Les%20bases\2.%20La%20concaténation.html">2. La concaténation.html</a></li>
+</ul>
+<h2 id="calculatrice-en-python-tuto-youtube">11.1. Calculatrice en Python (Tuto Youtube)</h2>
+<p>Create a simple calculator with Python (Créer une calculatrice très simple en Python):</p>
+<iframe width="600" height="337" src="https://www.youtube.com/embed/fNJf7yPhpJs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+</iframe>
+<h3 id="code">Code:</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a>  <span class="co"># --------------------- Definitions --------------------- #</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">def</span> add(a, b):</span>
+<span id="cb3-3"><a href="#cb3-3"></a>      <span class="cf">return</span> a <span class="op">+</span> b</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="kw">def</span> substract(a, b):</span>
+<span id="cb3-6"><a href="#cb3-6"></a>      <span class="cf">return</span> a <span class="op">-</span> b</span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="kw">def</span> multiplication(a, b):</span>
+<span id="cb3-9"><a href="#cb3-9"></a>      <span class="cf">return</span> a <span class="op">*</span> b</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="kw">def</span> division(a, b):</span>
+<span id="cb3-12"><a href="#cb3-12"></a>      <span class="cf">return</span> a <span class="op">/</span> b</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a>  <span class="co"># --------------------- Program --------------------- #</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>  <span class="bu">print</span>(<span class="st">&quot;Quelle opération voulez-vous faire ? &quot;</span>)</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="bu">print</span>(<span class="st">&quot;1. Addition. &quot;</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="bu">print</span>(<span class="st">&quot;2. Soustraction. &quot;</span>)</span>
+<span id="cb3-18"><a href="#cb3-18"></a>  <span class="bu">print</span>(<span class="st">&quot;3. Multiplication. &quot;</span>)</span>
+<span id="cb3-19"><a href="#cb3-19"></a>  <span class="bu">print</span>(<span class="st">&quot;4. Division. </span><span class="ch">\n</span><span class="st">&quot;</span>)</span>
+<span id="cb3-20"><a href="#cb3-20"></a></span>
+<span id="cb3-21"><a href="#cb3-21"></a>  choix <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;Votre choix s&#39;il vous plaît: &quot;</span>))</span>
+<span id="cb3-22"><a href="#cb3-22"></a>  <span class="bu">print</span>(<span class="st">&quot;Rentrez les valeurs de A et B: &quot;</span>)</span>
+<span id="cb3-23"><a href="#cb3-23"></a>  valeur1 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;Valeur de A: &quot;</span>))</span>
+<span id="cb3-24"><a href="#cb3-24"></a>  valeur2 <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;Valeur de B: &quot;</span>))</span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a>  <span class="cf">if</span> choix <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb3-27"><a href="#cb3-27"></a>      <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st"> Résultat de l&#39;addition: &quot;</span>)</span>
+<span id="cb3-28"><a href="#cb3-28"></a>      <span class="bu">print</span>(<span class="st">&quot;     </span><span class="sc">{}</span><span class="st"> + </span><span class="sc">{}</span><span class="st"> = </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(valeur1, valeur2, add(valeur1, valeur2)))</span>
+<span id="cb3-29"><a href="#cb3-29"></a>  <span class="cf">elif</span> choix <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb3-30"><a href="#cb3-30"></a>      <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st"> Résultat de la soustraction: &quot;</span>)</span>
+<span id="cb3-31"><a href="#cb3-31"></a>      <span class="bu">print</span>(<span class="st">&quot;     </span><span class="sc">{}</span><span class="st"> - </span><span class="sc">{}</span><span class="st"> = </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(valeur1, valeur2, substract(valeur1, valeur2)))</span>
+<span id="cb3-32"><a href="#cb3-32"></a>  <span class="cf">elif</span> choix <span class="op">==</span> <span class="dv">3</span>:</span>
+<span id="cb3-33"><a href="#cb3-33"></a>      <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st"> Résultat de la multiplication:&quot;</span>)</span>
+<span id="cb3-34"><a href="#cb3-34"></a>      <span class="bu">print</span>(<span class="st">&quot;     </span><span class="sc">{}</span><span class="st"> X </span><span class="sc">{}</span><span class="st"> = </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(valeur1, valeur2, multiplication(valeur1, valeur2)))</span>
+<span id="cb3-35"><a href="#cb3-35"></a>  <span class="cf">elif</span> choix <span class="op">==</span> <span class="dv">4</span>:</span>
+<span id="cb3-36"><a href="#cb3-36"></a>      <span class="cf">if</span> valeur2 <span class="op">!=</span> <span class="dv">0</span>:  <span class="co"># On ne peut pas diviser par 0</span></span>
+<span id="cb3-37"><a href="#cb3-37"></a>          <span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st"> Résultat de la division: &quot;</span>)</span>
+<span id="cb3-38"><a href="#cb3-38"></a>          <span class="bu">print</span>(<span class="st">&quot;     </span><span class="sc">{}</span><span class="st"> / </span><span class="sc">{}</span><span class="st"> = </span><span class="sc">{}</span><span class="st">&quot;</span>.<span class="bu">format</span>(valeur1, valeur2, division(valeur1, valeur2)))</span>
+<span id="cb3-39"><a href="#cb3-39"></a>      <span class="cf">else</span>:</span>
+<span id="cb3-40"><a href="#cb3-40"></a>          <span class="bu">print</span>(<span class="st">&quot;Opération impossible... On ne peut pas diviser par 0 !&quot;</span>)</span>
+<span id="cb3-41"><a href="#cb3-41"></a>  <span class="cf">else</span>:</span>
+<span id="cb3-42"><a href="#cb3-42"></a>      <span class="bu">print</span>(<span class="st">&quot;Erreur de saisie. Merci de vérifier vos entrées.&quot;</span>)</span></code></pre></div>
+<h2 id="concaténation">11.2. Concaténation</h2>
+<p>Test de <code>code</code></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Test de code:</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt update -y <span class="kw">&amp;&amp;</span> <span class="fu">ls</span> -al </span></code></pre></div>
+<h1 id="section"></h1>
+<h2 id="section-1"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<h1 id="section-2"></h1>
+<h2 id="section-3"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<h1 id="section-4"></h1>
+<h2 id="section-5"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<h1 id="section-6"></h1>
+<h2 id="section-7"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<h1 id="section-8"></h1>
+<h2 id="section-9"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<h1 id="section-10"></h1>
+<h2 id="section-11"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<h1 id="section-12"></h1>
+<h2 id="section-13"></h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LaFormationCompletePython\" type="video/mp4">
+</video>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="template.pdf">La Formation Complete Python - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

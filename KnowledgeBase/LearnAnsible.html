@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Jesse Keating" />
+  <title>Learn Ansible</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Learn Ansible</h1>
+<p class="author">Jesse Keating</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#welcome">Welcome</a></li>
+<li><a href="#what-you-should-know">What you should know</a></li>
+</ul></li>
+<li><a href="#i.-what-is-ansible">I. What is Ansible?</a>
+<ul>
+<li><a href="#i-i.-an-introduction-to-ansible">I-I. An introduction to Ansible</a></li>
+<li><a href="#i-ii.-low-cost-fleet-management">I-II. Low-cost fleet management</a></li>
+<li><a href="#i-iii.-get-started-with-ansible">I-III. Get started with Ansible</a></li>
+</ul></li>
+<li><a href="#ii.-what-are-the-parts-of-ansible">II. What are the parts of Ansible?</a>
+<ul>
+<li><a href="#ii-i.-work-with-hosts-and-variables">II-I. Work with hosts and variables</a></li>
+<li><a href="#ii-ii.-provided-code-to-accomplish-work">II-II. Provided code to accomplish work</a></li>
+<li><a href="#ii-iii.-playbooks-collections-of-tasks">II-III. Playbooks: Collections of tasks</a></li>
+<li><a href="#ii-iv.-control-task-and-play-behavior">II-IV. Control task and play behavior</a></li>
+<li><a href="#ii-v.-challenge-write-a-playbook">II-V. Challenge: Write a playbook</a></li>
+<li><a href="#ii-vi.-solution-write-a-playbook">II-VI. Solution: Write a playbook</a></li>
+</ul></li>
+<li><a href="#iii.-what-is-ansible-good-for">III. What is Ansible good for?</a>
+<ul>
+<li><a href="#iii-i.-code-driven-deployments-and-operations">III-I. Code-driven deployments and operations</a></li>
+<li><a href="#iii-ii.-coordinate-complicated-sets-of-actions">III-II. Coordinate complicated sets of actions</a></li>
+<li><a href="#iii-iii.-manage-system-configurations">III-III. Manage system configurations</a></li>
+<li><a href="#iii-iv.-react-to-configuration-changes">III-IV. React to configuration changes</a></li>
+<li><a href="#iii-v.-infrastructure-management">III-V. Infrastructure management</a></li>
+<li><a href="#iii-vi.-repeat-a-task-across-a-fleet">III-VI. Repeat a task across a fleet</a></li>
+<li><a href="#iii-vii.-challenge-ad-hoc-task">III-VII. Challenge: Ad-hoc task</a></li>
+<li><a href="#iii-viii.-solution-ad-hoc-task">III-VIII. Solution: Ad-hoc task</a></li>
+</ul></li>
+<li><a href="#iv.-why-choose-ansible">IV. Why choose Ansible?</a>
+<ul>
+<li><a href="#iv-i.-ansible-ease-of-use">IV-I. Ansible ease of use</a></li>
+<li><a href="#iv-ii.-manage-extensions-in-ansible">IV-II. Manage extensions in Ansible</a></li>
+<li><a href="#iv-iii.-advantages-to-using-ansible">IV-III. Advantages to using Ansible</a></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#certification">CERTIFICATION</a></li>
+</ul></li>
+</ul>
+</nav>
+<p><link rel="icon" href="favicon.png" type="image/png" /></p>
+<h1 id="introduction">Introduction</h1>
+<h2 id="welcome">Welcome</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\Introduction-Welcome.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="what-you-should-know">What you should know</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\Introduction-What you should know.mp4" type="video/mp4">
+</video>
+</p>
+<hr />
+<h1 id="i.-what-is-ansible">I. What is Ansible?</h1>
+<h2 id="i-i.-an-introduction-to-ansible">I-I. An introduction to Ansible</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\I-I. An introduction to Ansible.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-ii.-low-cost-fleet-management">I-II. Low-cost fleet management</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\I-II. Low-cost fleet management.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="i-iii.-get-started-with-ansible">I-III. Get started with Ansible</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\I-III. Get started with Ansible.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="ii.-what-are-the-parts-of-ansible">II. What are the parts of Ansible?</h1>
+<h2 id="ii-i.-work-with-hosts-and-variables">II-I. Work with hosts and variables</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\II-I. Work with hosts and variables.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-ii.-provided-code-to-accomplish-work">II-II. Provided code to accomplish work</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\II-I. Provided code to accomplish work.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iii.-playbooks-collections-of-tasks">II-III. Playbooks: Collections of tasks</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\II-III. Playbooks Collections of tasks.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-iv.-control-task-and-play-behavior">II-IV. Control task and play behavior</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\Control task and play behavior.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-v.-challenge-write-a-playbook">II-V. Challenge: Write a playbook</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\II-V. Challenge Write a playbook.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="ii-vi.-solution-write-a-playbook">II-VI. Solution: Write a playbook</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\II-VI. Solution Write a playbook.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="iii.-what-is-ansible-good-for">III. What is Ansible good for?</h1>
+<h2 id="iii-i.-code-driven-deployments-and-operations">III-I. Code-driven deployments and operations</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-I. Code-driven deployments and operations.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-ii.-coordinate-complicated-sets-of-actions">III-II. Coordinate complicated sets of actions</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-II. Coordinate complicated sets of actions.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iii.-manage-system-configurations">III-III. Manage system configurations</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-III. Manage system configurations.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-iv.-react-to-configuration-changes">III-IV. React to configuration changes</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-IV. React to configuration changes.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-v.-infrastructure-management">III-V. Infrastructure management</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-V. Infrastructure management.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vi.-repeat-a-task-across-a-fleet">III-VI. Repeat a task across a fleet</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-VI. Repeat a task across a fleet.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-vii.-challenge-ad-hoc-task">III-VII. Challenge: Ad-hoc task</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-VII. Challenge Ad-hoc task.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iii-viii.-solution-ad-hoc-task">III-VIII. Solution: Ad-hoc task</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\III-VIII. Solution Ad-hoc task.mp4" type="video/mp4">
+</video>
+</p>
+<h1 id="iv.-why-choose-ansible">IV. Why choose Ansible?</h1>
+<h2 id="iv-i.-ansible-ease-of-use">IV-I. Ansible ease of use</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\IV-I. Ansible ease of use.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-ii.-manage-extensions-in-ansible">IV-II. Manage extensions in Ansible</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\IV-II. Manage extensions in Ansible.mp4" type="video/mp4">
+</video>
+</p>
+<h2 id="iv-iii.-advantages-to-using-ansible">IV-III. Advantages to using Ansible</h2>
+<p style="align-content: center;">
+<video width="600" height="337" controls>
+<source src="LearnAnsible\IV-III. Advantages to using Ansible.mp4" type="video/mp4">
+</video>
+</p>
+<hr />
+<h1 id="conclusion">Conclusion</h1>
+<video width="600" height="337" controls>
+<source src="LearnAnsible\Conclusion.mp4" type="video/mp4">
+</video>
+<h2 id="certification">CERTIFICATION</h2>
+<p style="text-align: center; text-decoration-color: red">
+<a href="LearnAnsible\CertificateOfCompletion_Learning%20Ansible%20(2017).pdf">CertificateOfCompletion_Learning Ansible (2017).pdf</a>
+</p>
+<hr />
+<p style="text-align: center">
+<a href="LearnAnsible.pdf">Learn Ansible - Version PDF</a>
+</p>
+<hr />
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>
