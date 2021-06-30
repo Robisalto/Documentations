@@ -26,6 +26,7 @@ extensions: 'extra'
 - [Formation **Docker**: Initiation](2021-06-21-POEI-Docker.html)
 - Formation **Ansible**: Initiation
 - Mise en Situation Docker/Ansible - Cursus DevOps
+- [Formation **Vagrant/Packer** (21H)](2021-06-30-POEI-Vagrant_Packer.html)
 
 ## **Linux Academy** 
 
