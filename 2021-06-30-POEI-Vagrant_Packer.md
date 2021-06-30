@@ -120,7 +120,7 @@ Permet de **suspendre** l'état de la machine.
 
 <div class=info> Pour suspendre toutes les VMs: `vagrant suspend` </div>
 
-**Exemple :**
+**Exemple:**
 
 ```bash
 Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
@@ -214,3 +214,77 @@ Pour Windows il n'y aura pas de ***ssh***, on utilisera les protocoles **powersh
 - `vagrant powershell`
 - `vagrant rdp`
 
+
+# Modification de VM
+
+## Modification VM de Test
+
+Dans le fichier **vagrantfile**:
+
+```ruby
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.hostname = "ubuntu-20.04"
+  config.vm.network :private_network, ip: "192.168.0.50"
+  
+end
+```
+
+On vérifie:
+
+```sh
+Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
+$ vagrant ssh default
+Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-77-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jun 30 13:27:38 UTC 2021
+
+  System load:  0.64              Processes:               118
+  Usage of /:   3.3% of 38.71GB   Users logged in:         0
+  Memory usage: 18%               IPv4 address for enp0s3: 10.0.2.15
+  Swap usage:   0%                IPv4 address for enp0s8: 192.168.0.50
+
+
+1 update can be applied immediately.
+To see these additional updates run: apt list --upgradable
+
+
+Last login: Wed Jun 30 12:23:03 2021 from 10.0.2.2
+```
+
+## Création d'une nouvelle VM "demo2"
+
+Dans le fichier `vagrantfile`:
+
+```ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/focal64"
+  config.vm.hostname = "ubuntu-20.04"
+  config.vm.network :private_network, ip: "192.168.0.50"
+  
+# Les ressources
+config.vm.define "demo2" do |vm|
+
+  vm.vm.provider "virtualbox" do |v|
+    v.memory = '512'
+    v.cpus = '1'
+    v.name = "demo2"
+  end
+end
+
+
+end
+
+```
+
+Puis on relance les VMs: `vagrant up`
+
+![](2021-06-30-POEI-Vagrant-Packer/demo2.png)
