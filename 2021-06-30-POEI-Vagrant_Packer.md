@@ -1,5 +1,5 @@
 ---
-title: POEI DevOps - Ansible
+title: POEI DevOps - Vagrant & Packer
 author: 
 date: 2021-06-24
 linkcolor: lightblue
@@ -13,14 +13,15 @@ extensions: 'extra'
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-#### Formation Docker: Initiation
+#### Formation Vagrant & Packer
 
-Pierre Sablé, Formateur & Administrateur Systèmes Linux - DevOps.
-21H du 21/06/21 au 23/06/21
+Damien BERAUD
+Responsable du pôle système
+Tel: +33 761 049 539
+21H 
 
 Tel : *07.63.88.76.21* - Mail: *<psable@dawan.fr>*
 
----
 
 # Doc Source
 
