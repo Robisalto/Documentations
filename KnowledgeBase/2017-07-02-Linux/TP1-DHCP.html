@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/TP1-DHCP.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:49 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Installation de serveur DNS et DHCP sous Debian</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Installation de serveur DNS et DHCP sous Debian</div>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#configuration-du-réseau-vmware">Configuration du réseau VMWare</a></li>
+<li><a href="#avertissement">Avertissement</a></li>
+<li><a href="#configuration-spécifique-pour-une-machine-avec-deux-cartes-réseau">Configuration spécifique pour une machine avec deux cartes réseau</a></li>
+<li><a href="#carte-réseau-eth1">Carte réseau eth1</a></li>
+</ul></li>
+<li><a href="#installation-des-services">Installation des services</a><ul>
+<li><a href="#serveur-dhcp">Serveur DHCP</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#interface-réseau">Interface réseau</a></li>
+<li><a href="#configuration-des-adresses">Configuration des adresses</a></li>
+</ul></li>
+<li><a href="#ajout-dun-hôte">Ajout d’un hôte</a><ul>
+<li><a href="#redémarrage-du-serveur">Redémarrage du serveur</a></li>
+<li><a href="#affichage-de-la-liste-des-réservations-dadresse">Affichage de la liste des réservations d’adresse</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#mise-en-place-de-la-passerelle-réseau">Mise en place de la passerelle réseau</a><ul>
+<li><a href="#ipforwarding">IP Forwarding</a></li>
+<li><a href="#règles-iptables">Règles iptables</a><ul>
+<li><a href="#définition">Définition</a></li>
+<li><a href="#sauvegarde">Sauvegarde</a></li>
+<li><a href="#commande-de-sauvegarde-iptables">Commande de sauvegarde iptables</a></li>
+<li><a href="#effacement-des-règles-iptables">Effacement des règles iptables</a></li>
+</ul></li>
+<li><a href="#tests">Tests</a><ul>
+<li><a href="#dépannage">Dépannage</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#autres-exemples-iptables">Autres exemples iptables</a><ul>
+<li><a href="#avertissement-1">Avertissement</a><ul>
+<li><a href="#sauvegarde-en-cas-de-modification">Sauvegarde en cas de modification</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#document-de-synthèse">Document de synthèse</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Ceci est une procédure permettant d’installer un serveur DHCP et DNS sur une machine Debian.</p>
+<p>Son nom sera: <code>netgateway-&lt;VOTRE_NOM&gt;</code>.</p>
+<div class="information">
+<p>Remplacer <code>&lt;VOTRE_NOM&gt;</code> par votre nom de famille <strong>en minuscules</strong>.</p>
+</div>
+<p>Cette machine comportera :</p>
+<ul>
+<li>256 Mo de RAM</li>
+<li>3 Go de disque dur</li>
+<li>2 cartes réseau montées sur deux <code>vmnet</code> différents</li>
+<li>aucune carte son, ni imprimante</li>
+</ul>
+<div class="important">
+<p>Les <code>vmnet</code> sont des réseaux virtuels simulés par VmWare.</p>
+<p>Prenez bien garde à <strong>ne pas modifier</strong> les <code>vmnet</code> par défaut installés avec VmWare.</p>
+</div>
+<h2 id="configuration-du-réseau-vmware">Configuration du réseau VMWare</h2>
+<figure>
+<img src="images/reseau.png" alt="Schéma du réseau" /><figcaption>Schéma du réseau</figcaption>
+</figure>
+<p>Dans ce cas précis, on utilise une VM qui comporte deux cartes (et donc connectée à deux <code>vmnet</code> différents) :</p>
+<ul>
+<li>une dont le réseau est le réseau externe (eth0).</li>
+<li>une dont le réseau est 192.168.81.0/24 (eth1).</li>
+</ul>
+<p>Ceci est à adapter aux besoins (c’est-à-dire au plan d’adressage que vous auriez mis en place).</p>
+<div class="information">
+<p><strong>Notez bien</strong> que <code>eth0</code> et <code>eth1</code> seront à remplacer par les noms des interfaces réseaux donnés par la commande <code>ip a</code>.</p>
+</div>
+<p>Lancez cette commande (<code>ip a</code>) et <strong>faites un schéma</strong> faisant correspondre les noms ci-dessus avec ceux de votre machine.</p>
+<div class="important">
+<p><strong>Vous devez impérativement gérer ces deux réseaux sur deux <em>vmnet</em> différents.</strong></p>
+<p>Reporter sur un schéma les informations suivantes:</p>
+<ul>
+<li>identifiants réseaux,</li>
+<li>nom d’interface (<code>ensYY</code>) (avec sa correspondance avec <code>eth0</code> ou <code>eth1</code>),</li>
+<li>nom de réseau virtuel (<code>vmnetXXX</code>),</li>
+<li>adresses IP des machines</li>
+</ul>
+<p>Faire vérifier ce schéma par le formateur.</p>
+</div>
+<h2 id="avertissement">Avertissement</h2>
+<p>Toute configuration ne respectant pas ce qui précède risque de <strong>provoquer des dysfonctionnements</strong> sur le réseau local. Il est de votre responsabilité de configurer correctement vos cartes <code>vmnet</code>.</p>
+<div class="important">
+<p>Faites systématiquement vérifier la configuration par le formateur avant tout redémarrage de service (<code>systemctl restart NOM_DU_SERVICE</code>)</p>
+</div>
+<h2 id="configuration-spécifique-pour-une-machine-avec-deux-cartes-réseau">Configuration spécifique pour une machine avec deux cartes réseau</h2>
+<p>Le fichier <code>/etc/network/interfaces</code> permet de configurer les cartes réseaux présentent sur la machine.</p>
+<div class="information">
+<p>Il sera nécessaire de rajouter sur les clients (VM) les lignes suivantes si elles ont une seconde carte réseau:</p>
+<pre class="conf"><code>auto eth1
+allow-hotplug eth1
+iface eth1 inet dhcp</code></pre>
+<p>Mais pour l’instant, nous sommes en train de configurer le serveur DHCP.</p>
+</div>
+<p>Faites une recherche Internet avec les mots clefs: <code>Debian network interface</code>. Parmi les résultats, aller sur celui du site <code>https://wiki.debian.org</code> (page <code>NetworkConfiguration</code>) : des modèles de configuration sont donnés.</p>
+<div class="warning">
+<p>Rappel: pensez à adapter le nom de la carte réseau <code>eth1</code> en <code>ensYY</code></p>
+</div>
+<h2 id="carte-réseau-eth1">Carte réseau eth1</h2>
+<p>On édite <code>/etc/network/interfaces</code></p>
+<pre class="conf"><code># The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+allow-hotplug eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+    address 192.168.81.2
+    dns-nameservers 192.168.81.2
+    network 192.168.81.0
+    netmask 255.255.255.0
+    broadcast 192.168.81.255
+</code></pre>
+<p>Pas de gateway (<code>eth1</code> n’est pas la passerelle vers internet)</p>
+<p>On redémarre:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">sudo</span> systemctl restart networking</a></code></pre></div>
+<div class="practice">
+<p>A quoi sert la ligne <code>dns-nameservers</code> ?</p>
+<p>Est-elle systématiquement nécessaire ?</p>
+<p>Pourquoi est-elle présente ici ?</p>
+</div>
+<h1 id="installation-des-services">Installation des services</h1>
+<h2 id="serveur-dhcp">Serveur DHCP</h2>
+<h3 id="installation">Installation</h3>
+<p>On installe isc-dhcp:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">sudo</span> apt-get install isc-dhcp-server</a></code></pre></div>
+<p>On fait une copie de sauvegarde du fichier de configuration:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">sudo</span> cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.bak</a></code></pre></div>
+<h3 id="interface-réseau">Interface réseau</h3>
+<p>Editer le fichier <code>/etc/default/isc-dhcp-server</code></p>
+<p>Modifier la valeur de <code>INTERFACESv4</code>:</p>
+<pre class="conf"><code>INTERFACESv4=&quot;eth1&quot;
+INTERFACESv6=&quot;&quot;</code></pre>
+<div class="warning">
+<p>Etes-vous certain du nom de l’interface ?</p>
+<p>Vérifiez avec la commande <code>ip a</code></p>
+</div>
+<h3 id="configuration-des-adresses">Configuration des adresses</h3>
+<p>On édite ce fichier <code>/etc/dhcp/dhcpd.conf</code>:</p>
+<pre class="conf"><code>ddns-update-style none;
+
+# option definitions common to all supported networks...
+option domain-name         &quot;example.com&quot;;
+
+# Désactivé pour l&#39;instant: sera activé au moment
+# de la mise en place du DNS
+#option domain-name-servers 192.168.81.2;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+# If this DHCP server is the official DHCP server for the local
+# network, the authoritative directive should be uncommented.
+authoritative;
+
+# Use this to send dhcp log messages to a different log file (you also
+# have to hack syslog.conf to complete the redirection).
+log-facility local7;
+
+# No service will be given on this subnet, but declaring it helps the
+# DHCP server to understand the network topology.
+subnet 192.168.0.0 netmask 255.255.255.0 {
+}
+</code></pre>
+<p>On ajoute le paragraphe suivant:</p>
+<pre class="conf"><code>subnet 192.168.81.0 netmask 255.255.255.0 {
+  authoritative;
+  range                       192.168.81.13 192.168.81.50;
+  option domain-name-servers  192.168.81.2 ;
+  option domain-name          &quot;example.com&quot;;
+  option routers              192.168.81.2;
+  default-lease-time          3600;
+  max-lease-time              3600;
+  option subnet-mask          255.255.255.0;
+  option broadcast-address    192.168.81.255;
+
+}
+</code></pre>
+<h2 id="ajout-dun-hôte">Ajout d’un hôte</h2>
+<p>On ajoute le paragraphe suivant pour permettre à un hôte de se connecter et obtenir une adresse IP:</p>
+<pre class="conf"><code>host debiantsr {
+  hardware ethernet 00:0c:29:be:f9:93;
+  fixed-address 192.168.81.11;
+}</code></pre>
+<h3 id="redémarrage-du-serveur">Redémarrage du serveur</h3>
+<div class="important">
+<p>Avant de procéder à cette étape, faites vérifier la configuration par le formateur</p>
+</div>
+<p>Une fois le réseau redémarré et isc-dhcp configuré on peut le démarrer (ou redémarrer avec <code>restart</code>):</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">sudo</span> systemctl start isc-dhcp-server</a></code></pre></div>
+<h3 id="affichage-de-la-liste-des-réservations-dadresse">Affichage de la liste des réservations d’adresse</h3>
+<p>Le fichier <code>/var/lib/dhcp/dhcpd.leases</code> contient les réservations en cours:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="fu">less</span> /var/lib/dhcp/dhcpd.leases</a></code></pre></div>
+<h1 id="mise-en-place-de-la-passerelle-réseau">Mise en place de la passerelle réseau</h1>
+<p>Tant que cette étape n’est pas réalisée, les machines clientes n’auront pas accès au réseau</p>
+<h2 id="ipforwarding">IP Forwarding</h2>
+<p>Éditer le fichier <code>/etc/sysctl.conf</code> et y décommenter les lignes suivantes:</p>
+<pre class="conf"><code>net.ipv4.ip_forward=1
+# ...
+net.ipv6.conf.all.forwarding=1</code></pre>
+<p>Mettre à jour le système par rapport à cette nouvelle configuration :</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">sudo</span> sysctl -p</a></code></pre></div>
+<p>Vérifier que l’on obtient <code>1</code> en appelant cette commande:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1">$ <span class="fu">cat</span> /proc/sys/net/ipv4/ip_forward</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="ex">1</span></a></code></pre></div>
+<p>Si ce n’est pas le cas, vérifier que les commandes précédentes ont été exécutées correctement.</p>
+<h2 id="règles-iptables">Règles iptables</h2>
+<h3 id="définition">Définition</h3>
+<p>Afin de permettre à une machine se connectant à cette passerelle d’accéder à Internet, il faut ajouter la règle suivante:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="fu">sudo</span> iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE</a></code></pre></div>
+<div class="warning">
+<p>À quelle réseau correspond le nom de l’interface réseau donné dans la commande précédente ?</p>
+</div>
+<div class="information">
+<p>Vérifier que les machines clientes se connectent (voir le paragraphe <a href="#tests">Tests</a>).</p>
+</div>
+<p>Cependant, la règle précédemment créée sera perdue au prochain redémarrage de la machine. Nous allons voir comment rendre ces changements permanents.</p>
+<h3 id="sauvegarde">Sauvegarde</h3>
+<p>Pour éviter cela, on va installer un paquet qui permet de sauvegarder la configuration iptables et de la restaurer automatiquement au démarrage.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="fu">sudo</span> apt-get install iptables-persistent</a></code></pre></div>
+<p>Au moment de l’installation, l’installeur nous demande si nous souhaitons sauvegarder les règles. Ce qui est ici le cas.</p>
+<h3 id="commande-de-sauvegarde-iptables">Commande de sauvegarde iptables</h3>
+<h4 id="avec-iptables-persistent">Avec iptables-persistent</h4>
+<p>Il suffit de relancer la commande suivante pour sauvegarder à nouveaux les règles iptables:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="fu">sudo</span> dpkg-reconfigure iptables-persistent</a></code></pre></div>
+<h4 id="commande-de-sauvegarde-iptables-save">Commande de sauvegarde <code>iptables-save</code></h4>
+<p>La commande précédente (<code>dpkg-reconfigure</code>) est l’équivalent de l’exécution des commandes suivantes:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1">    <span class="ex">iptables-save</span> <span class="op">&gt;</span> /etc/iptables/rules.v4</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">    <span class="ex">ip6tables-save</span> <span class="op">&gt;</span> /etc/iptables/rules.v6</a></code></pre></div>
+<div class="practice">
+<p>Créer un script <code>iptables-rules-store</code> permettant d’automatiser ces appels.</p>
+</div>
+<h4 id="commande-de-restauration">Commande de restauration</h4>
+<p>Au redémarrage, on a l’équivalent des commandes suivantes qui est exécuté par <code>iptables-persistent</code></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="ex">iptables-restore</span> <span class="op">&lt;</span> /etc/iptables/rules.v4</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="ex">ip6tables-restore</span> <span class="op">&lt;</span> /etc/iptables/rules.v6</a></code></pre></div>
+<div class="practice">
+<p>Créer un script <code>iptables-rules-reload</code> permettant d’automatiser ces appels.</p>
+</div>
+<h3 id="effacement-des-règles-iptables">Effacement des règles iptables</h3>
+<h4 id="effacement-de-toutes-les-règles">Effacement de toutes les règles</h4>
+<p>Le script suivant permet de supprimer toutes les règles <code>iptables</code>:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co">#!/bin/sh</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co"># delete all existing rules.</span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="co">#</span></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="ex">iptables</span> -F</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="ex">iptables</span> -t nat -F</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="ex">iptables</span> -t mangle -F</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="ex">iptables</span> -X</a></code></pre></div>
+<div class="practice">
+<p>Créer ce script et testez-le.</p>
+<p>Restaurer les règles avec les scripts précédemment créés.</p>
+</div>
+<h4 id="effacement-de-règles-spécifiques">Effacement de règles spécifiques</h4>
+<p>La commande suivante permet d’afficher toutes les règles d’une table:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" data-line-number="1">$ <span class="fu">sudo</span> iptables -L -t nat -v --line-numbers</a></code></pre></div>
+<p>Dans la sortie, la colonne <code>num</code> indique un numéro de ligne:</p>
+<pre><code>Chain PREROUTING (policy ACCEPT 336 packets, 80168 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+
+Chain INPUT (policy ACCEPT 336 packets, 80168 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 15 packets, 2864 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 15 packets, 2864 bytes)
+num   pkts bytes target     prot opt in     out     source               destination         
+1        0     0 MASQUERADE  all  --  any    eth0    anywhere             anywhere            </code></pre>
+<p>Pour effacer la règle <code>1</code> de la chaîne <code>POSTROUTING</code>, on utilise la commande suivante:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1">$ <span class="fu">sudo</span> iptables -t nat -D POSTROUTING 1</a></code></pre></div>
+<div class="practice">
+<p>Ecrire une commande permettant de n’afficher que les règles contenant le mot <code>MASQUERADE</code>.</p>
+<p>Modifier cette commande pour aussi afficher le bloc <code>chain</code> correspondant (ici <code>POSTROUTING</code>)</p>
+</div>
+<h2 id="tests">Tests</h2>
+<p>Vous devez tester que vos machines clientes se connectent à Internet.</p>
+<p>Exemple de machines clientes:</p>
+<ul>
+<li>une VM Windows connectée au réseau intranet</li>
+<li>une VM Linux en mode Desktop</li>
+</ul>
+<h3 id="dépannage">Dépannage</h3>
+<p>En cas de non-fonctionnement, vous pouvez vérifier les éléments suivants.</p>
+<h4 id="ip-forwarding">IP-Forwarding</h4>
+<p>Les deux commandes suivantes doivent indiquer une valeur de <code>1</code> pour IPv4:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="fu">cat</span> /proc/sys/net/ipv4/ip_forward</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="fu">sudo</span> sysctl -a <span class="kw">|</span> <span class="fu">grep</span> ip_forward</a></code></pre></div>
+<p>Si ce n’est pas le cas, reprendre les étapes du paragraphe <a href="#ipforwarding">IP Forwarding</a></p>
+<h4 id="routage">Routage</h4>
+<p>Le routage ne peut pas fonctionner si la commande <code>sudo iptables -L -t nat -v</code> ne renvoie pas une sortie contenant les lignes suivantes :</p>
+<pre><code>Chain POSTROUTING (policy ACCEPT 15 packets, 2864 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 MASQUERADE  all  --  any    eth0    anywhere             anywhere            </code></pre>
+<div class="warning">
+<p>L’interface réseau vers laquelle le routage est fait est-elle correcte ?</p>
+</div>
+<h1 id="autres-exemples-iptables">Autres exemples iptables</h1>
+<h2 id="avertissement-1">Avertissement</h2>
+<div class="important">
+<p>Les exemples donnés ci-dessous sont donnés à titre indicatifs et ne sont pas à faire sur la machine DHCP.</p>
+</div>
+<h3 id="sauvegarde-en-cas-de-modification">Sauvegarde en cas de modification</h3>
+<p>Pour information, en cas de changement (par exemple une règle de NAT qui redirige le port 80):</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" data-line-number="1">    <span class="fu">sudo</span> iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 8080</a></code></pre></div>
+<h1 id="document-de-synthèse">Document de synthèse</h1>
+<p>Rédiger un document de synthèse (format informatisé) de ce que vous avez fait durant cette séance avec pour chaque étape:</p>
+<ul>
+<li>une description de l’opération effectuée</li>
+<li>le contexte (pré-requis: dans quel état doit se trouver la machine avant d’effectuer l’étape)</li>
+<li>les effets attendus</li>
+<li>les effets constatés</li>
+</ul>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/TP1-DHCP.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:50 GMT -->
+</html>

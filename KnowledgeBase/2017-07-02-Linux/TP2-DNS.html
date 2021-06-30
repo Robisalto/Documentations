@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/TP2-DNS.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:50 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>DNS : installation et configuration sous Debian</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">DNS : installation et configuration sous Debian</div>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#configuration-du-réseau-vmware">Configuration du réseau VMWare</a></li>
+<li><a href="#installation-des-services">Installation des services</a><ul>
+<li><a href="#installation-de-bind">Installation de BIND</a></li>
+<li><a href="#autres-outils-associés">Autres outils associés</a></li>
+<li><a href="#tests-1">Tests</a></li>
+</ul></li>
+<li><a href="#interfaces-graphiques-pour-bind9">Interfaces graphiques pour Bind9</a></li>
+<li><a href="#références">Références</a></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Ceci est une procédure permettant d’installer un serveur DNS sur une machine Debian.</p>
+<p>Vous pouvez:</p>
+<ul>
+<li>soit l’installer sur machine existante (exemple: le serveur DHCP créé précédemment)</li>
+<li>soit l’installer sur une nouvelle machine</li>
+</ul>
+<h1 id="configuration-du-réseau-vmware">Configuration du réseau VMWare</h1>
+<p>Le réseau à configurer ressemble à celui-ci.</p>
+<figure>
+<img src="images/reseau.png" alt="Schéma du réseau" /><figcaption>Schéma du réseau</figcaption>
+</figure>
+<div class="practice">
+<p>Préciser sur votre schéma ou se trouvera le service DNS.</p>
+</div>
+<h1 id="installation-des-services">Installation des services</h1>
+<h2 id="installation-de-bind">Installation de BIND</h2>
+<h4 id="installation-du-paquet">Installation du paquet</h4>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">sudo</span> apt-get install bind9 bind9utils bind9-doc</a></code></pre></div>
+<h4 id="définition-de-la-zone">Définition de la zone</h4>
+<p>Editer le fichier <code>/etc/bind/named.conf.local</code> et ajouter ceci:</p>
+<pre class="conf"><code>// Definition des zones
+zone &quot;example.com&quot; {
+        type master;
+        file &quot;/etc/bind/db.example.com&quot;;
+};
+
+// Definition des reverses
+zone &quot;81.168.192.in-addr.arpa&quot; {
+        type master;
+        file &quot;/etc/bind/db.81.168.192.in-addr.arpa&quot;;
+};
+</code></pre>
+<h4 id="configuration-de-la-zone">Configuration de la zone</h4>
+<p>Edition du fichier <code>/etc/bind/db.example.com</code></p>
+<p>On fait correspondre ici un nom à une adresse IP. Ainsi, <code>trisquel.example.com</code> aura l’adresse <code>192.168.81.12</code></p>
+<pre class="conf"><code>$TTL    604800
+@       IN      SOA     ns.example.com. admin.example.com. (17032304 604800 86400 2417200 604800)
+
+@               IN      NS      ns.example.com.
+ns              IN      A       192.168.81.2
+netservice      IN      A       192.168.81.2
+
+
+;serveur
+debiansrv       IN      A       192.168.81.11
+debsrv          IN      A       192.168.81.11
+trisquel        IN      A       192.168.81.12
+
+; Infrastructure
+; LDAP
+;llithyie        IN      A       192.168.81.150
+
+; CAS SSO
+;cerbere         IN      A       192.168.81.151
+
+; Mail
+;                IN      MX 10   hermes.example.com.
+;hermes          IN      A       192.168.81.152
+;smtp            IN      A       192.168.81.152
+;pop3            IN      A       192.168.81.152
+;mail            IN      A       192.168.81.152
+</code></pre>
+<h4 id="configuration-du-reverse">Configuration du reverse</h4>
+<p>Edition du fichier <code>/etc/bind/db.81.168.192.in-addr.arpa</code></p>
+<p>Ici on fait correspondre l’IP au nom. Ainsi, à partir de l’adresse <strong>12</strong> (et donc 192.168.81.<strong>12</strong>) on obtient le nom de la machine sur le domaine <code>example.com</code> (ici <code>trisquel.example.com</code>)</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="va">$TTL</span> <span class="ex">1800</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="ex">@</span>       IN      SOA     ns.example.com. admin.example.com. (3 14400 3600 604800 10800)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ex">@</span>       IN      NS      ns.</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="ex">2</span>       IN      PTR     ns.example.com.</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="ex">11</span>      IN      PTR     debiansrv.example.com.</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="ex">12</span>      IN      PTR     trisquel.example.com.</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">;<span class="ex">150</span>     IN      PTR     llithyie.example.com.</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">;<span class="ex">151</span>     IN      PTR     cerbere.example.com.</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">;<span class="ex">152</span>     IN      PTR     hermes.example.com.</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">;<span class="ex">152</span>     IN      PTR     smtp.example.com.</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">;<span class="ex">152</span>     IN      PTR     pop3.example.com.</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">;<span class="ex">152</span>     IN      PTR     mail.example.com.</a></code></pre></div>
+<h4 id="modification-des-options">Modification des options</h4>
+<p>Dans le fichier <code>/etc/bind/named.conf.options</code></p>
+<pre class="conf"><code>options {
+        directory &quot;/var/cache/bind&quot;;
+
+        // If there is a firewall between you and nameservers you want
+        // to talk to, you may need to fix the firewall to allow multiple
+        // ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+        // If your ISP provided one or more IP addresses for stable
+        // nameservers, you probably want to use them as forwarders.
+        // Uncomment the following block, and insert the addresses
+        // replacing the all-0&#39;s placeholder.
+
+        //allow-recursion { localhost; };
+        allow-recursion { any; };
+
+        forwarders { 8.8.8.8; };
+
+        dnssec-enable no;
+        dnssec-validation no;
+
+        auth-nxdomain no;    # conform to RFC1035
+        listen-on-v6 { any; };
+        listen-on { any; };
+        allow-query { any; };
+};
+</code></pre>
+<h4 id="vérification">Vérification</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1">$ <span class="fu">sudo</span> named-checkconf</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">$ <span class="fu">sudo</span> named-checkzone example.com /etc/bind/db.example.com</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="ex">zone</span> exemple.com/IN: loaded serial 17032304</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="ex">OK</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">$ <span class="fu">sudo</span> named-checkzone example.com /etc/bind/db.81.168.192.in-addr.arpa</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="ex">zone</span> exemple.com/IN: loaded serial 3</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="ex">OK</span></a></code></pre></div>
+<h4 id="tests">Tests</h4>
+<p>On utilise la commande <code>dig</code> (à installer si elle n’est pas présente):</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">dig</span> @192.168.81.2 debiansrv.example.com</a></code></pre></div>
+<p>La sortie de la commande doit indiquer <code>NOERROR</code>. Si ce n’est pas le cas, c’est qu’il y a un problème.</p>
+<h4 id="débuggage-et-recherche-de-pannes">Débuggage et recherche de pannes</h4>
+<h5 id="statut-du-service">Statut du service</h5>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="fu">sudo</span> systemctl status bind9</a></code></pre></div>
+<h4 id="journaux">Journaux</h4>
+<p>Les journaux permettent d’afficher les informations renvoyées par le serveur:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="fu">sudo</span> journalctl -f -u bind9</a></code></pre></div>
+<p>Enlever <code>-f</code> pour un affichage normal (less).</p>
+<p><code>-f</code> permet d’avoir le même comportement que <code>tail -f</code></p>
+<h2 id="autres-outils-associés">Autres outils associés</h2>
+<p>Voir cette page: <a href="https://www.isc.org/community/tools/" class="uri">https://www.isc.org/community/tools/</a></p>
+<h2 id="tests-1">Tests</h2>
+<p>Vous devez tester que vos machines clientes se connectent à Internet.</p>
+<h1 id="interfaces-graphiques-pour-bind9">Interfaces graphiques pour Bind9</h1>
+<p>Client Web:</p>
+<ul>
+<li><a href="http://askubuntu.com/questions/20315/looking-for-bind-web-interface">Liste de clients (Ubuntu)</a></li>
+<li><a href="http://www.facilemanager.com/modules/fmdns/">fmdns</a></li>
+<li><a href="https://github.com/jforman/binder">binder</a></li>
+</ul>
+<p>Client lourd:</p>
+<ul>
+<li>https://packages.debian.org/jessie/gadmin-bind</li>
+</ul>
+<h1 id="références">Références</h1>
+<ul>
+<li><a href="https://www.guillaume-leduc.fr/projet-configuration-simple-facile-et-fonctionnelle-dun-dns-avec-bind9.html">Configuration simple facile et fonctionnelle d’un serveur DNS sous Debian</a></li>
+<li><a href="https://www.digitalocean.com/community/tutorials/how-to-configure-bind-as-a-private-network-dns-server-on-ubuntu-14-04">How to configure bind9 as a private network dns</a></li>
+<li><a href="https://doc.ubuntu-fr.org/bind9">Bind9 sur Ubuntu-fr.org</a></li>
+</ul>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/TP2-DNS.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:50 GMT -->
+</html>

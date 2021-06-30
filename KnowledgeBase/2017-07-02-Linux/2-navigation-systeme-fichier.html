@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/2-navigation-systeme-fichier.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:17 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Navigation en ligne de commande</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Navigation en ligne de commande</div>
+<nav id="TOC">
+<ul>
+<li><a href="#navigation-dans-un-système-de-fichier">Navigation dans un système de fichier</a><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#les-systèmes-de-fichiers-linux">Les systèmes de fichiers Linux</a></li>
+<li><a href="#travaux-pratiques">Travaux pratiques</a><ul>
+<li><a href="#application">Application</a></li>
+<li><a href="#création-de-fichiers">Création de fichiers</a></li>
+<li><a href="#création-de-sous-répertoires">Création de sous-répertoires</a></li>
+<li><a href="#navigation">Navigation</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="navigation-dans-un-système-de-fichier">Navigation dans un système de fichier</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Un système de fichier permet de stocker et d’organiser les informations enregistrées sur un support de stockage.</p>
+<p>Ces informations sont stockées sur un support de manière “linéaire” ou “sérielle”: les octets sont rangés les uns après les autres.</p>
+<p>Ils sont organisés en groupe d’octets.</p>
+<p>Chaque groupe d’octet possède une adresse qui permet de le retrouver directement.</p>
+<p>Un fichier ou un dossier est un pointeur vers un groupe d’octet.</p>
+<p>Pour structurer ces données de manière accessible à un être humain, on utilise une représentation arborescente:</p>
+<ul>
+<li>une racine</li>
+<li>des branches (et sous-branches)</li>
+<li>des feuilles</li>
+</ul>
+<h2 id="les-systèmes-de-fichiers-linux">Les systèmes de fichiers Linux</h2>
+<p>Sous Linux, les systèmes de fichiers extX (ext2, ext3, ext4) sont les plus utilisés (mais d’autres existent).</p>
+<p>Dans ces <em>filesystems</em> les groupes d’octets sont appelés des blocs (block).</p>
+<p>Des métadonnées (les <em>inodes</em>) permettent de décrire le fichier ou dossier et d’indiquer leur emplacement sur le disque ou la partition.</p>
+<p>La structure permettant d’accéder aux données est organisée sous forme d’une “carte” arborescente.</p>
+<p>La racine de la “carte” est notée <code>/</code>.</p>
+<p>Depuis cette racine, on peut accéder à tous les fichiers et dossiers du système.</p>
+<p>Chaque fichier ou dossier référence un <code>inode</code>.</p>
+<p>Un <code>inode</code> non référencé est considéré comme libre. Ses données peuvent être écrasées par d’autres données lors de toute prochaine écriture de données.</p>
+<h2 id="travaux-pratiques">Travaux pratiques</h2>
+<p>Pour commencer, nous allons installer la commande <code>tree</code> (elle permet d’afficher une représentation “graphique” d’une arborescence.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">sudo</span> apt-get install tree</a></code></pre></div>
+<p>Ensuite, nous allons créer une arborescence de test grâce aux commandes <code>mkdir</code> (création de répertoire) et <code>cd</code> (déplacement du répertoire courant) :</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="bu">cd</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">mkdir</span> racine</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="bu">cd</span> racine</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="fu">mkdir</span> tronc.droit</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="fu">mkdir</span> tronc.gauche</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="bu">cd</span> tronc.droit</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="fu">mkdir</span> branche.est</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="fu">mkdir</span> branche.sud-est</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="fu">mkdir</span> branche.nord-est</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="bu">cd</span></a></code></pre></div>
+<p>Afficher l’arborescence en utilisant la commande <code>tree</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">tree</span></a></code></pre></div>
+<p>Nous allons maintenant naviguer dans cette arborescence.</p>
+<p>Et utiliser la commande <code>pwd</code>. Que fait cette commande ?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="bu">cd</span> racine/</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># Maintenant nous sommes dans la racine</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="bu">pwd</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ex">/home/utilisateur/racine</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="bu">cd</span> tronc.gauche</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># Maintenant nous sommes sur le tronc gauche</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="ex">/home/utilisateur/racine/tronc.gauche</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="bu">cd</span> ../</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co"># Nous remontons au niveau précédent</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="bu">pwd</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="ex">/home/utilisateur/racine</span></a></code></pre></div>
+<h3 id="application">Application</h3>
+<p>Effectuez les opérations suivantes:</p>
+<ol type="1">
+<li>déplacez-vous dans la branche Sud-Est</li>
+<li>allez directement dans la branche Sud-Ouest</li>
+<li>allez sur le tronc gauche et créez les branches Ouest, Sud-Ouest et Nord-Ouest</li>
+</ol>
+<h3 id="création-de-fichiers">Création de fichiers</h3>
+<p>La commande <code>touch</code> permet de créer un fichier vide. Elle permet aussi de modifier la date de modification du fichier à la date courante.</p>
+<p>Par exemple, la commande <code>touch lisezmoi.txt</code> créera un fichier <code>lisezmoi.txt</code> vide.</p>
+<p>Effectuez les opérations suivantes:</p>
+<ol type="1">
+<li>créez un fichier <code>feuille1</code> dans la branche <code>Sud-Ouest</code> en vous plaçant dans ce répertoire</li>
+<li>placez-vous dans le répertoire racine et créez un fichier <code>feuille2</code> dans la branche <code>Nord-Est</code></li>
+<li>placez-vous dans le répertoire <code>Est</code> et créez un fichier <code>feuille3</code> dans la branche <code>Ouest</code></li>
+</ol>
+<h3 id="création-de-sous-répertoires">Création de sous-répertoires</h3>
+<p>Nous allons créer plusieurs répertoires dans la branche <code>Est</code>.</p>
+<p>Pour cela, placez-vous dans cette branche et tapez la commande suivante:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">mkdir</span> cap89 cap90 cap91</a></code></pre></div>
+<p>Vérifiez les effets sur l’arborescence.</p>
+<p>Nous allons maintenant créer une arborescence complète.</p>
+<p>Pour cela, se déplacer dans le répertoire <code>racine</code> et taper la commande suivante:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">mkdir</span> -p tronc.haut/branche.nord</a></code></pre></div>
+<p>Vérifiez les effets sur l’arborescence.</p>
+<p>Créez maintenant une arborescence plus complexe:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="fu">mkdir</span> -p tronc.bas/branche.sud/cap179 tronc.bas/branche.sud/cap180  tronc.bas/branche.sud/cap181</a></code></pre></div>
+<p>Vérifiez les effets sur l’arborescence.</p>
+<h3 id="navigation">Navigation</h3>
+<p>Exécuter la commande <code>cd tronc.haut/branche.nord</code>.</p>
+<p>Exécuter ensuite la commande <code>cd ../../tronc.bas/branche.sud</code></p>
+<p>Enfin, exécuter plusieurs fois de suite la commande <code>cd -</code>. Que se passe-t-il ?</p>
+<p>Exécuter la commande <code>cd ../../tronc.droit/branche.est</code></p>
+<p>Exécuter plusieurs fois de suite la commande <code>cd -</code>. Que peut-on conclure ?</p>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/2-navigation-systeme-fichier.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:17 GMT -->
+</html>

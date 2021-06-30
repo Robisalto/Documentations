@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/4-manipulation-de-fichiers.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:18 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Manipulation de fichiers sous Linux</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Manipulation de fichiers sous Linux</div>
+<nav id="TOC">
+<ul>
+<li><a href="#manipulation-de-fichiers-sous-linux">Manipulation de fichiers sous Linux</a><ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#récupération-des-fichiers-de-travail">Récupération des fichiers de travail</a></li>
+<li><a href="#exécution-affichage">Exécution, affichage</a></li>
+<li><a href="#manipulation-de-répertoires-et-fichiers">Manipulation de répertoires et fichiers</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="manipulation-de-fichiers-sous-linux">Manipulation de fichiers sous Linux</h1>
+<h2 id="introduction">Introduction</h2>
+<p>Les exercices suivants sont prévus pour découvrir et utiliser les commandes ou pages de manuel suivantes:</p>
+<ul>
+<li><code>ls</code></li>
+<li><code>wc</code></li>
+<li><code>grep</code></li>
+<li><code>glob</code></li>
+<li><code>rm</code></li>
+<li><code>cp</code></li>
+<li><code>mv</code></li>
+<li><code>pwd</code></li>
+<li><code>touch</code></li>
+<li><code>rmdir</code></li>
+<li><code>cat</code></li>
+<li><code>more</code></li>
+<li><code>less</code></li>
+</ul>
+<p>Ouvrir les pages de manuel correspondant à ces commandes est donc nécessaire pour pouvoir réaliser ces exercices.</p>
+<h2 id="récupération-des-fichiers-de-travail">Récupération des fichiers de travail</h2>
+<p>Créer un répertoire <code>tpfichiers</code> et se placer dans ce répertoire pour réaliser les exercices proposés ci-dessous.</p>
+<p>Vous allez télécharger le fichier <a href="data/manipulation-fichiers.tar.gz">manipulation-fichiers.tar.gz</a> en utilisant la commande <code>wget</code>.</p>
+<div class="information">
+<p>Pour cela cliquer bouton droit sur le lien ci-dessus et copier l’adresse du lien</p>
+</div>
+<p>Ensuite, coller cette adresse dans la commande suivante:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">wget</span> ADRESSE_DU_LIEN</a></code></pre></div>
+<p>Décompressez ce fichier avec une commande tar appropriée. Placez-vous ensuite dans le répertoire extrait: vous êtes prêt pour la suite.</p>
+<h2 id="exécution-affichage">Exécution, affichage</h2>
+<ol type="1">
+<li>Exécutez le fichier <code>init</code>.</li>
+<li>Combien de fichiers ont été créés ?</li>
+<li>En êtes vous sûr ?</li>
+<li>Combien de répertoires ont été créés ?</li>
+<li>Listez tous les fichiers dont le nom contient un <code>F</code>.</li>
+<li>Listez tous les fichiers dont le nom contient deux chiffres.</li>
+<li>Listez tous les fichiers dont le nom contient deux chiffres qui se suivent.</li>
+<li>Effacez tous les fichiers dont le nom fini par <code>d</code>.</li>
+<li>Copiez tous les fichiers dont le nom contient un <code>1</code> ou un <code>3</code> dans un sous-répertoire nommé <code>copy</code> (créez le si nécessaire).</li>
+<li>Mettez, dans un fichier nommé <code>listeComplete.txt</code>, la liste de tous les fichiers créés par le <em>script</em> <code>init</code>.</li>
+<li>Déplacez le à la racine de votre compte.</li>
+</ol>
+<h2 id="manipulation-de-répertoires-et-fichiers">Manipulation de répertoires et fichiers</h2>
+<ol type="1">
+<li>Effacez le répertoire <code>unix</code> créé par le script <code>init</code>. Fermez le terminal, et ouvrez de nouveau un terminal. Cette partie ne se fait uniquement que par la ligne de commande.</li>
+<li>Vérifier où on se trouve dans l’arborescence des fichiers (répertoire courant)</li>
+<li>Se déplacer à la racine du disque. Lister les répertoires existants.</li>
+<li>Se déplacer dans votre répertoire de travail par défaut (3 solutions possibles, <strong>notez-les !!!</strong>)</li>
+<li>Créer un répertoire de nom <code>UNIX</code></li>
+<li>Sous <code>UNIX</code> créer un répertoire de nom <code>TP1</code></li>
+<li>Aller dans le dernier répertoire créé</li>
+<li>Créer un répertoire de nom <code>tmp</code></li>
+<li>Aller dans le répertoire <code>tmp</code></li>
+<li>Créer un fichier vide nommé <code>vide.txt</code></li>
+<li>Lister l’arborescence du répertoire <code>UNIX</code> en format long</li>
+<li>Remonter d’un niveau dans l’arborescence.</li>
+<li>Détruire le répertoire tmp avec la commande <code>rmdir</code></li>
+</ol>
+<ul>
+<li>Que se passe-t-il ?</li>
+<li>Faites en sorte de détruire ce répertoire.</li>
+</ul>
+<ol start="14" type="1">
+<li>Prendre le fichier <code>dessus.txt</code> et le copier à la racine de votre compte Linux</li>
+<li>Visualiser le fichier <code>dessus.txt</code> à l’aide de la commande <code>cat</code>.</li>
+<li>Le visualiser à l’aide de la commande <code>more</code>. Quelles sont les différences ?</li>
+<li>Faire de même avec la commande <code>less</code></li>
+<li>Le rouvrir avec la commande <code>less</code>. Rechercher le mot <em>locataire</em>.</li>
+<li>Recréer le répertoire <code>tmp</code></li>
+<li>Faire une copie du fichier <code>dessus.txt</code> dans le répertoire <code>tmp</code></li>
+<li>Aller dans le répertoire <code>tmp</code> et renommer le fichier <code>dessus.txt</code> en <code>Dessous.txt</code>.</li>
+<li>Le déplacer à la racine de votre compte</li>
+<li>Vérifier que le fichier s’y trouve bien</li>
+</ol>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/4-manipulation-de-fichiers.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:18 GMT -->
+</html>

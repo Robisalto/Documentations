@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/A-annexe-configuration-ssh.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:21 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SSH</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">SSH</div>
+<nav id="TOC">
+<ul>
+<li><a href="#vérification-des-fingerprint">Vérification des fingerprint</a></li>
+<li><a href="#configuration-de-connexion-ssh">Configuration de connexion ssh</a><ul>
+<li><a href="#installation-dun-client">Installation d’un client</a><ul>
+<li><a href="#putty">Putty</a></li>
+<li><a href="#git-bash">Git-bash</a></li>
+<li><a href="#installation-de-linux-pour-windows">Installation de Linux pour Windows</a></li>
+</ul></li>
+<li><a href="#création-dune-clef">Création d’une clef</a><ul>
+<li><a href="#putty-1">Putty</a></li>
+<li><a href="#git-bash-1">Git-bash</a></li>
+</ul></li>
+<li><a href="#installation-de-la-clef-publique">Installation de la clef publique</a></li>
+<li><a href="#connexion-au-serveur">Connexion au serveur</a><ul>
+<li><a href="#en-utilisant-putty">En utilisant Putty</a></li>
+<li><a href="#avec-git-bash">Avec git-bash</a></li>
+</ul></li>
+<li><a href="#configuration-de-lagent">Configuration de l’agent</a><ul>
+<li><a href="#avec-putty">Avec Putty</a></li>
+<li><a href="#avec-git-bash-1">Avec git-bash</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="vérification-des-fingerprint">Vérification des fingerprint</h1>
+<p>Côté serveur, taper la commande :</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">ssh-keygen</span> -l -f /etc/ssh/ssh_host_rsa_key.pub</a></code></pre></div>
+<h1 id="configuration-de-connexion-ssh">Configuration de connexion ssh</h1>
+<h2 id="installation-dun-client">Installation d’un client</h2>
+<h3 id="putty">Putty</h3>
+<p>Le client SSH nommé Putty peut être téléchargé depuis <a href="https://the.earth.li/~sgtatham/putty/latest/w64/putty.zip">ce lien</a></p>
+<h3 id="git-bash">Git-bash</h3>
+<p>Le client <code>git</code> pour Windows intègre un client <code>ssh</code>.</p>
+<p>Il est disponible en téléchargeant la version Windows depuis la <a href="https://git-scm.com/downloads">page de téléchargement de Git-Bash</a>.</p>
+<p>Pour se connecter à la machine, depuis la ligne de commande git-bash, entrez la commande suivante:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">ssh</span> <span class="op">&lt;</span>utilisateur<span class="op">&gt;</span>@<span class="op">&lt;</span>ip-de-la-machine<span class="op">&gt;</span></a></code></pre></div>
+<p>Remplacer:</p>
+<ul>
+<li><utilisateur> par votre utilisateur</li>
+<li><ip-de-la-machine> par l’adresse IP de votre machine cible.</li>
+</ul>
+<h3 id="installation-de-linux-pour-windows">Installation de Linux pour Windows</h3>
+<p>Dans le Windows Store, installer Ubuntu. Une fois installé, utiliser la commande ssh donnée au paragraphe précédent.</p>
+<h2 id="création-dune-clef">Création d’une clef</h2>
+<p>Cette partie est facultative et peut être traitée plus tard.</p>
+<h3 id="putty-1">Putty</h3>
+<p>En utilisant PuttyGen, vous pouvez générer une clef SSH</p>
+<p>Pour cela, cliquer sur le bouton <code>Generate</code> puis déplacer la souris pendant quelques secondes jusqu’à ce que la barre de progression soit complétée.</p>
+<p>Une fois cela fait:</p>
+<ol type="1">
+<li>Entrez une <em>passphrase</em> (une phrase assez longue qui va protéger votre clef)</li>
+<li>Confirmez la <em>passphrase</em></li>
+<li>Sauvez la clé privée avec le bouton <code>Save private key</code> dans un emplacement de votre disque</li>
+<li>Copiez le texte complet (y compris <code>ssh-rsa</code> et jusqu’en bas de la zone de sélection qui peut dépasser la zone visible)</li>
+<li>Suivez les instructions du paragraphe <em>Installation d’une clef publique</em></li>
+</ol>
+<h3 id="git-bash-1">Git-bash</h3>
+<p>Sur le client <code>git-bash</code> la commande à utiliser est la suivante:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1">$ <span class="fu">ssh-keygen</span></a></code></pre></div>
+<p>La commande affiche:</p>
+<pre><code>Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/lauhub/.ssh/id_rsa):</code></pre>
+<p>Ne rien saisir (laisser la valeur par défaut) pour la question <code>Enter file in which to save the key</code> et appuyez sur la touche <code>Entrée</code>.</p>
+<p>Ensuite, choisir une passphrase:</p>
+<pre><code>Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /Users/lauhub/.ssh/id_bla.
+Your public key has been saved in /Users/lauhub/.ssh/id_bla.pub.
+The key fingerprint is:
+SHA256:qnMr1UW+zi3msGd/2UWfkqfq/ZkIi6mZzqeDLGFghh8 lauhub@MacBookAir-2-Laurent.local
+The key&#39;s randomart image is:
++---[RSA 2048]----+
+|                 |
+|          .      |
+|.        o       |
+|.+E       o     .|
+|o.  .. .S. .  ..o|
+|  .o  ... .  oo o|
+|  . o.o oo o  +o.|
+|   .o+o.o+X =.+ +|
+|    o+oO*Bo*O+.+ |
++----[SHA256]-----+</code></pre>
+<p>Vous obtenez deux fichiers:</p>
+<ul>
+<li><code>~/.ssh/id_rsa</code></li>
+<li><code>~/.ssh/id_rsa.pub</code></li>
+</ul>
+<p>Récupérez le contenu de la clef publique et copiez le:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1">$ <span class="fu">cat</span> ~/.ssh/id_rsa.pub</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="ex">ssh-rsa</span> AAAAB3NzaC1yc2EAAAADAQABAAABAQC/tAFES1cFMs7O4mVJql7C4aLW/67F6gDyXiE2JOcQIk8+WeqSyMAegOHw0OsdhnAQdf5iDPI19UQgD+kES6gHG7ZBLg+sw3v0yloAf4W1HBdHVj75HTvx0i84d7WH0Q1RuBTgq52ni7IfmvZfhHaMaRHkRcY45cfX+BY2vh4y6BwYF0bmQWOlJUJgpMaJx9lZ2ByedCBlbnYRcdcKBASSHrL7TWR7twJyF321+B6W03BIlvwF8RupROVMBSn+56BIQ27HR4DKe/VL4FOpGAF4LM9vLEoG/9J3kuMWhwk44B3ZW7GTKAvFgmFTT7YH/gXwK4+lppJuGhPMqYLQSyzV commentaire</a></code></pre></div>
+<p>Copiez ce contenu (y compris <code>ssh-rsa</code> et <code>commentaire</code>).</p>
+<p>Suivez les instructions du paragraphe <em>Installation d’une clef publique</em></p>
+<h2 id="installation-de-la-clef-publique">Installation de la clef publique</h2>
+<p>La clef publique est la <em>serrure</em> qui permettra de se connecter à une machine en utilisant la clef privée qui lui est associée.</p>
+<p>Pour l’installer:</p>
+<ol type="1">
+<li>Ouvrez une session ssh sur la machine avec votre compte</li>
+<li>Créez un répertoire .ssh s’il n’existe pas (dans le répertoire utilisateur) : <code>mkdir -p ~/.ssh</code></li>
+<li>Allez dans le répertoire .ssh: <code>cd ~/.ssh</code></li>
+<li>Créez un nouveau fichier nommé <code>authorized_keys</code> : <code>nano authorized_keys</code></li>
+<li>Collez le contenu de la clef publique que vous avez copié précédemment</li>
+<li>Déconnectez-vous</li>
+<li>Testez l’installation en suivant les instructions du paragraphe <code>Connexion au serveur</code></li>
+</ol>
+<h2 id="connexion-au-serveur">Connexion au serveur</h2>
+<h3 id="en-utilisant-putty">En utilisant Putty</h3>
+<p>Dans le menu connexion, il faut définir la clef à utiliser:</p>
+<ol type="1">
+<li>Connection &gt; SSH &gt; Auth</li>
+<li>Choisir la clef privée créée précédemment dans le champ <code>Private key file for authentication</code></li>
+<li>Connectez-vous au serveur en cliquant sur le bouton Open</li>
+</ol>
+<h3 id="avec-git-bash">Avec git-bash</h3>
+<p>Connectez-vous directement:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1">$ <span class="fu">ssh</span> user@nom_ou_adresse_serveur</a></code></pre></div>
+<p>La passphrase vous est demandée. Entrez-la.</p>
+<p>Vous pouvez maintenant configurer l’agent (voir le paragraphe correspondant ci-dessous)</p>
+<h2 id="configuration-de-lagent">Configuration de l’agent</h2>
+<h3 id="avec-putty">Avec Putty</h3>
+<p>Ce tutoriel indique comment configurer <code>Pageant</code> (l’agent Putty de gestion des passphrases): https://www.siteground.com/tutorials/ssh/putty.htm</p>
+<h3 id="avec-git-bash-1">Avec git-bash</h3>
+<p>Sur le client, créer le fichier <code>.bash_profile</code> :</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="fu">touch</span> .bash_profile</a></code></pre></div>
+<p>Éditer le fichier <code>.bash_profile</code>. Ajoutez les lignes suivantes à la fin du fichier :</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="va">SSH_ENV=</span><span class="st">&quot;</span><span class="va">$HOME</span><span class="st">/.ssh/environment&quot;</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">function</span><span class="fu"> start_agent</span> <span class="kw">{</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">     <span class="bu">echo</span> <span class="st">&quot;Initialising new SSH agent...&quot;</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">     <span class="ex">/usr/bin/ssh-agent</span> <span class="kw">|</span> <span class="fu">sed</span> <span class="st">&#39;s/^echo/#echo/&#39;</span> <span class="op">&gt;</span> <span class="st">&quot;</span><span class="va">${SSH_ENV}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">     <span class="bu">echo</span> succeeded</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">     <span class="fu">chmod</span> 600 <span class="st">&quot;</span><span class="va">${SSH_ENV}</span><span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">     <span class="bu">.</span> <span class="st">&quot;</span><span class="va">${SSH_ENV}</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="ex">/dev/null</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">     <span class="ex">/usr/bin/ssh-add</span>;</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="kw">}</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"><span class="co"># Source SSH settings, if applicable</span></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="kw">if</span><span class="bu"> [</span> <span class="ot">-f</span> <span class="st">&quot;</span><span class="va">${SSH_ENV}</span><span class="st">&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">     <span class="bu">.</span> <span class="st">&quot;</span><span class="va">${SSH_ENV}</span><span class="st">&quot;</span> <span class="op">&gt;</span> <span class="ex">/dev/null</span></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">     <span class="co">#ps ${SSH_AGENT_PID} doesn&#39;t work under cywgin</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">     <span class="fu">ps</span> -ef <span class="kw">|</span> <span class="fu">grep</span> <span class="va">${SSH_AGENT_PID}</span> <span class="kw">|</span> <span class="fu">grep</span> ssh-agent$ <span class="op">&gt;</span> /dev/null <span class="kw">||</span> <span class="kw">{</span></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">         <span class="ex">start_agent</span><span class="kw">;</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">     <span class="kw">}</span></a>
+<a class="sourceLine" id="cb9-20" data-line-number="20"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb9-21" data-line-number="21">     <span class="ex">start_agent</span><span class="kw">;</span></a>
+<a class="sourceLine" id="cb9-22" data-line-number="22"><span class="kw">fi</span></a></code></pre></div>
+<p>En cas de non fonctionnement, voir:</p>
+<p>https://github.com/gnhuy91/til/issues/26</p>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/A-annexe-configuration-ssh.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:21 GMT -->
+</html>

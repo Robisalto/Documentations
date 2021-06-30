@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/installation-intranet.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:19 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Installation et configuration d’un réseau Intranet</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Installation et configuration d’un réseau Intranet</div>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#documentation">Documentation</a></li>
+</ul></li>
+<li><a href="#préparation">Préparation</a><ul>
+<li><a href="#préparation-documentaire">Préparation documentaire</a></li>
+<li><a href="#définition-du-réseau">Définition du réseau</a></li>
+</ul></li>
+<li><a href="#mise-en-place-du-réseau-intranet">Mise en place du réseau Intranet</a><ul>
+<li><a href="#mise-en-place-du-ad-dc">Mise en place du AD DC</a></li>
+<li><a href="#mise-en-place-du-serveur-de-fichier">Mise en place du serveur de fichier</a></li>
+<li><a href="#tests-et-validation">Tests et validation</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>L’objectif de ce module est de mettre en place une maquette de réseau Intranet d’entreprise en utilisant les technologies GNU/Linux (en l’occurence en utilisant une distribution Debian).</p>
+<p>Pour cela, il sera nécessaire d’installer au minimum :</p>
+<ul>
+<li>un serveur <em>Active Directory</em> faisant office de <em>Domain Controller</em> en utilisant <em>Samba</em></li>
+<li>un serveur de fichier <code>Samba</code></li>
+</ul>
+<p>Une telle installation est un travail qui demande une préparation minimale. Et notamment il est impératif de définir au préalable :</p>
+<ul>
+<li>la répartition des services sur les machines (DNS, DHCP)</li>
+<li>les noms de domaines à configurer (ils ne pourront pas être changés par la suite)</li>
+<li>un plan d’adressage réseau</li>
+<li>un schéma de fonctionnement complet du réseau</li>
+</ul>
+<p>Vous aurez vraisemblablement besoin de machines sous Windows pour tester ou configurer certains éléments.</p>
+<h2 id="documentation">Documentation</h2>
+<div class="attention">
+<p>Les documents donnés ci-dessous doivent être adaptés à votre réseau Intranet. Lisez-les mais ne les mettez pas en application tout de suite.</p>
+</div>
+<p>Les documents suivants donnent des informations sur l’installation de machines nécessaires à l’installation de l’Intranet :</p>
+<ul>
+<li><a href="TP1-DHCP.html">Installation d’un DHCP sous Debian</a></li>
+<li><a href="TP2-DNS.html">Installation d’un DNS sous Debian</a></li>
+<li>Documentation Samba :
+<ul>
+<li><a href="https://wiki.samba.org/index.php/Installing_Samba">Installing Samba</a></li>
+<li><a href="https://wiki.samba.org/index.php/Setting_up_Samba_as_an_Active_Directory_Domain_Controller">Setting up Samba as an Active Directory Domain Controller</a></li>
+<li><a href="https://wiki.samba.org/index.php/Setting_up_Samba_as_a_Domain_Member">Setting up Samba as a Domain Member</a></li>
+<li><a href="https://wiki.samba.org/index.php/Samba_File_Serving">Samba File Serving</a></li>
+<li><a href="https://wiki.samba.org/index.php/Setting_up_a_BIND_DNS_Server">Setting up a BIND DNS Server</a></li>
+</ul></li>
+</ul>
+<h1 id="préparation">Préparation</h1>
+<h2 id="préparation-documentaire">Préparation documentaire</h2>
+<p>Un premier travail consiste à définir les fonctionnalités à fournir aux utilisateurs (elles sont ici minimalistes).</p>
+<p>En second lieu, vous devrez préparer un plan d’action. Ce plan d’action doit être élaboré après avoir parcouru les différentes documentations données (et éventuellement d’autres documentations qui vous sembleraient pertinentes).</p>
+<p>Pour définir ce plan d’action vous devez:</p>
+<ul>
+<li>définir les étapes principales de la mise en place</li>
+<li>anticiper la vérification du bon fonctionnement de votre réseau Intranet</li>
+</ul>
+<p>En plus de ce plan d’action, un tableau récapitulatif des identifiants doit être donné:</p>
+<ul>
+<li>nom de domaine</li>
+<li>noms des machines</li>
+<li>identifiant des utilisateurs de test</li>
+<li>etc</li>
+</ul>
+<h2 id="définition-du-réseau">Définition du réseau</h2>
+<p>Un plan d’adressage réseau ainsi qu’un schéma de déploiement doit être défini.</p>
+<h1 id="mise-en-place-du-réseau-intranet">Mise en place du réseau Intranet</h1>
+<h2 id="mise-en-place-du-ad-dc">Mise en place du AD DC</h2>
+<p>La mise en place du Domain Controller se fera sous Debian en utilisant les gestionnaires de paquet.</p>
+<p>Quelle est la version de Samba disponible pour votre version de Debian ? Quelle est la dernière version de Samba existante ?</p>
+<h2 id="mise-en-place-du-serveur-de-fichier">Mise en place du serveur de fichier</h2>
+<p>Le serveur de fichier doit se connecter au DC pour gérer les authentifications.</p>
+<p>Quelles documentations donnent des informations à ce sujet ?</p>
+<h2 id="tests-et-validation">Tests et validation</h2>
+<p>Quelles machines de test et de validation allez-vous mettre en oeuvre ?</p>
+<p>Assurez-vous qu-elles apparaissent sur le schéma de déploiement.</p>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/installation-intranet.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:20 GMT -->
+</html>

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/recherche-panne.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:18 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Recherche de pannes sous Linux</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Recherche de pannes sous Linux</div>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#les-fichiers-de-log">Les fichiers de log</a><ul>
+<li><a href="#emplacement">Emplacement</a></li>
+<li><a href="#principaux-fichiers-de-log">Principaux fichiers de log</a><ul>
+<li><a href="#fichiers-de-log-système">Fichiers de log système</a></li>
+<li><a href="#connexions-utilisateur">Connexions utilisateur</a></li>
+<li><a href="#fichiers-de-log-des-programmes">Fichiers de log des programmes</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#outils">Outils</a><ul>
+<li><a href="#recherche-par-date">Recherche par date</a></li>
+<li><a href="#less">less</a><ul>
+<li><a href="#raccourcis-de-less">Raccourcis de <code>less</code></a></li>
+<li><a href="#recherche-avec-less">Recherche avec <code>less</code></a></li>
+<li><a href="#filtrage-avec-less">Filtrage avec <code>less</code></a></li>
+</ul></li>
+<li><a href="#more"><code>more</code></a></li>
+<li><a href="#tail"><code>tail</code></a></li>
+<li><a href="#logrotate"><code>logrotate</code></a><ul>
+<li><a href="#affichage-avec-less">Affichage avec <code>less</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#gestion-des-services-daemon">Gestion des services (daemon)</a><ul>
+<li><a href="#systemd">Systemd</a><ul>
+<li><a href="#commandes-systemd">Commandes <code>systemd</code></a></li>
+<li><a href="#journalctl">journalctl</a></li>
+</ul></li>
+<li><a href="#sysvinit">sysVinit</a><ul>
+<li><a href="#répertoire-des-scripts-de-démarrage-sysvinit">Répertoire des scripts de démarrage sysVinit</a></li>
+<li><a href="#commandes-de-démarrage">Commandes de démarrage</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#réseau">Réseau</a><ul>
+<li><a href="#redémarrage">Redémarrage</a><ul>
+<li><a href="#première-méthode">Première méthode</a></li>
+<li><a href="#alternative">Alternative</a></li>
+<li><a href="#en-cas-de-dysfonctionnement-de-la-première-méthode">En cas de dysfonctionnement de la première méthode</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Sous GNU/Linux, l’ensemble des événements du système est enregistré dans des fichiers journaux: les fichiers de <em>log</em>.</p>
+<p>Dans cette partie, nous allons voir les différents outils à notre disposition et étudier quelques exemples de fichiers de journalisation.</p>
+<h1 id="les-fichiers-de-log">Les fichiers de log</h1>
+<h2 id="emplacement">Emplacement</h2>
+<p>La norme concernant l’organisation du système de fichiers sous GNU/Linux indique que les fichiers de journalisation doivent être placés dans l’arborescence au chemin <code>/var/log</code> (voir <a href="http://www.pathname.com/fhs/ et plus prÃ©cisÃ©ment %5Bce chapitre%5D(http://www.pathname.com/fhs/pub/fhs-2.3.html#VARLOGLOGFILESANDDIRECTORIES)">Filesystem Hierarchy Standard</a></p>
+<h2 id="principaux-fichiers-de-log">Principaux fichiers de log</h2>
+<p>Un service = un fichier de log associé</p>
+<p>(au moins un)</p>
+<p>Sous Linux, chaque service installé aura (en général) son propre fichier de log. Cependant, certains fichiers sont particulièrement intéressant pour comprendre ce qui se passe sur un système.</p>
+<p>Il faut avoir à l’esprit que le premier processus à démarrer est le noyau, et que les autres processus peuvent mettre un certain temps avant de démarrer également. Certains messages peuvent donc ne pas être pris en charge par un processus spécifique au moment du démarrage.</p>
+<h3 id="fichiers-de-log-système">Fichiers de log système</h3>
+<p>Les fichiers suivants stockent les principaux événéments du système:</p>
+<ul>
+<li><code>syslog</code></li>
+<li><code>kern.log</code></li>
+<li><code>messages</code></li>
+<li><code>daemon.log</code></li>
+<li><code>auth.log</code></li>
+</ul>
+<h4 id="varlogsyslog"><code>/var/log/syslog</code></h4>
+<p>Contient donc tous les messages depuis le démarrage du processus <code>syslog</code>.</p>
+<p>Ne contient pas les informations sur les connexions utilisateurs.</p>
+<h4 id="varlogkern.log"><code>/var/log/kern.log</code></h4>
+<p>Tous les messages du noyau depuis son démarrage.</p>
+<p>Accessible également via la commande <code>dmesg</code></p>
+<h4 id="varlogmessages"><code>/var/log/messages</code></h4>
+<p>Activité du système:</p>
+<ul>
+<li>messages d’information</li>
+<li>messages non critiques</li>
+</ul>
+<h4 id="varlogdaemon.log"><code>/var/log/daemon.log</code></h4>
+<p>Messages des services en arrière-plan (<em>daemon process</em>)</p>
+<h4 id="varlogauth.log"><code>/var/log/auth.log</code></h4>
+<p>Connexions et échecs de connexion au système.</p>
+<p>Inclus les appels à la commande <code>sudo</code></p>
+<h4 id="varlogdebug"><code>/var/log/debug</code></h4>
+<p>Messages de débuggage</p>
+<h3 id="connexions-utilisateur">Connexions utilisateur</h3>
+<h4 id="varloglastlog"><code>/var/log/lastlog</code></h4>
+<p>Ce n’est pas un fichier texte.</p>
+<p>On utilise la commande <code>lastlog</code> pour en afficher les informations</p>
+<h4 id="varlogfaillog"><code>/var/log/faillog</code></h4>
+<p>Echecs de connexion par utilisateur.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">faillog</span> -u root</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="ex">faillog</span> -u USER</a></code></pre></div>
+<h3 id="fichiers-de-log-des-programmes">Fichiers de log des programmes</h3>
+<h4 id="répertoire-varlogapt">Répertoire <code>/var/log/apt</code></h4>
+<p>Contient les messages concernant la gestion des paquets</p>
+<h4 id="varlogdpkg.log"><code>/var/log/dpkg.log</code></h4>
+<p><code>dpkg</code> : utilitaire utilisé par APT pour installer les paquets</p>
+<h1 id="outils">Outils</h1>
+<h2 id="recherche-par-date">Recherche par date</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="fu">ls</span> -rtl /var/log</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">man</span> find</a></code></pre></div>
+<h2 id="less">less</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">sudo</span> less /var/log/auth.log</a></code></pre></div>
+<h3 id="raccourcis-de-less">Raccourcis de <code>less</code></h3>
+<ul>
+<li><code>u</code></li>
+<li><code>d</code></li>
+<li><code>j</code></li>
+<li><code>k</code></li>
+<li><code>g</code></li>
+<li><code>G</code></li>
+</ul>
+<h3 id="recherche-avec-less">Recherche avec <code>less</code></h3>
+<ul>
+<li><code>/chaineAChercher</code></li>
+<li><code>n</code> : occurence suivante</li>
+<li><code>N</code> : occurence précédente</li>
+</ul>
+<h4 id="exemple-de-recherche">Exemple de recherche</h4>
+<ul>
+<li><code>/sudo</code></li>
+</ul>
+<p>puis appuyer sur <code>n</code> ou <code>&lt;Shift + n&gt;</code></p>
+<h3 id="filtrage-avec-less">Filtrage avec <code>less</code></h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">sudo</span> cat /var/log/syslog <span class="kw">|</span> <span class="fu">grep</span> -i usb <span class="kw">|</span> <span class="fu">less</span></a></code></pre></div>
+<h2 id="more"><code>more</code></h2>
+<p>Alternative à <code>less</code>: (less is more)</p>
+<h2 id="tail"><code>tail</code></h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">sudo</span> tail -f /var/log/messages</a></code></pre></div>
+<p>Affiche la fin du fichier et suit en temps réel les modifications</p>
+<h2 id="logrotate"><code>logrotate</code></h2>
+<p>Processus de gestion des fichiers log</p>
+<p><code>logrotate</code> est un processus de gestion des enregistrements de log. Il permet notamment de découper les fichiers de logs quand ils deviennent trop volumineux: dans ce cas, l’ancien fichier de log est archivé et un nouveau fichier le remplace pour recevoir les messages.</p>
+<p>On peut donc trouver dans le répertoire les fichiers suivants:</p>
+<ul>
+<li><code>fichier.log</code> : le fichier en cours d’utilisation</li>
+<li><code>fichier.log.1</code> : le précédent fichier (fichier texte)</li>
+<li><code>fichier.log.2.gz</code> : le fichier précédemment nommé <code>fichier.log.1</code>, désormais compressé</li>
+</ul>
+<p>Les utilitaires <code>zcat</code> ou <code>gunzip -c</code> permettent d’afficher le contenu d’un fichier sans le décompresser sur le système de fichier:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">gunzip</span> -c fichier.log.2.gz <span class="kw">|</span> <span class="fu">less</span></a></code></pre></div>
+<h3 id="affichage-avec-less">Affichage avec <code>less</code></h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="fu">gunzip</span> -c /var/log/syslog.2.gz <span class="kw">|</span> <span class="fu">less</span></a></code></pre></div>
+<h1 id="gestion-des-services-daemon">Gestion des services (daemon)</h1>
+<h2 id="systemd">Systemd</h2>
+<p><code>d</code> = <code>daemon</code></p>
+<h3 id="commandes-systemd">Commandes <code>systemd</code></h3>
+<h4 id="démarrage">Démarrage</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="fu">sudo</span> systemctl start nom-service</a></code></pre></div>
+<h4 id="vérification-de-létat">Vérification de l’état</h4>
+<p>A faire systèmatiquement après un démarrage:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="fu">sudo</span> systemctl status nom-service</a></code></pre></div>
+<h5 id="exemple-dutilisation-de-systemctl-status">Exemple d’utilisation de <code>systemctl status</code></h5>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1">$ <span class="fu">sudo</span> systemctl status isc-dhcp-server</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">● <span class="ex">isc-dhcp-server.service</span> - LSB: DHCP server</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">   <span class="ex">Loaded</span>: loaded (/etc/init.d/isc-dhcp-server<span class="kw">;</span> <span class="ex">generated</span><span class="kw">;</span> <span class="ex">vendor</span> preset: enabled)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">   <span class="ex">Active</span>: active (running) <span class="ex">since</span> Tue 2018-06-05 11:25:41 CEST<span class="kw">;</span> <span class="ex">2min</span> 6s ago</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">     <span class="ex">Docs</span>: man:systemd-sysv-generator(8)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">  <span class="ex">Process</span>: 9810 ExecStop=/etc/init.d/isc-dhcp-server stop (code=exited, status=0/SUCCESS)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">  <span class="ex">Process</span>: 9852 ExecStart=/etc/init.d/isc-dhcp-server start (code=exited, status=0/SUCCESS)</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">    <span class="ex">Tasks</span>: 1 (limit: 19660)</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">   <span class="ex">CGroup</span>: /system.slice/isc-dhcp-server.service</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10">           └─<span class="ex">9864</span> /usr/sbin/dhcpd -4 -q -cf /etc/dhcp/dhcpd.conf ens34</a></code></pre></div>
+<h4 id="redémarrage-rechargement">Redémarrage, rechargement</h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="fu">sudo</span> systemctl restart nom-service</a></code></pre></div>
+<h4 id="arrêt">Arrêt</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="fu">sudo</span> systemctl stop nom-service</a></code></pre></div>
+<h3 id="journalctl">journalctl</h3>
+<p>Permet de consulter les journaux des services.</p>
+<h4 id="affichage-et-suivi-des-modifications">Affichage et suivi des modifications</h4>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">sudo</span> journalctl -f</a></code></pre></div>
+<p>Équivalent à <code>tail -f</code></p>
+<h4 id="exemple-daffichage-pour-le-service-dhcp">Exemple d’affichage pour le service DHCP</h4>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ex">journalctl</span> -xe -u isc-dhcp-server</a></code></pre></div>
+<h4 id="affichage-complet">Affichage complet</h4>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">journalctl</span> -xel</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="ex">--</span> Defined-By: systemd</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="ex">--</span> Support: https://www.debian.org/support</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="ex">--</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="ex">--</span> Unit isc-dhcp-server.service has begun starting up.</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway isc-dhcp-server[9822]: Launching IPv4 server only.</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway dhcpd[9834]: /etc/dhcp/dhcpd.conf line 124: semicolon expected.</a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway dhcpd[9834]:   fixed-adress 192.</a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway dhcpd[9834]:                 ^</a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway isc-dhcp-server[9822]: dhcpd self-test failed. Please fix /etc/dhcp/dhcpd.conf.</a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway isc-dhcp-server[9822]: The error was:</a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="ex">Jun</span> 05 11:21:24 gmsi16netgateway dhcpd[9834]: Configuration file errors encountered -- exiting</a></code></pre></div>
+<h2 id="sysvinit">sysVinit</h2>
+<p>Ancien système de démarrage: programme d’<em>init</em> d’<em>UNIX System V</em></p>
+<p><code>sysVinit</code> a été remplacé par <code>systemd</code> depuis Debian Jessie.</p>
+<p>Il reste encore utilisée par certains services: dans ce cas, <code>systemd</code> appelle les scripts de démarrage de <code>sysVinit</code> correspondants</p>
+<h3 id="répertoire-des-scripts-de-démarrage-sysvinit">Répertoire des scripts de démarrage sysVinit</h3>
+<p>Le répertoire <code>/etc/init.d</code> contient des scripts (shell DASH).</p>
+<h3 id="commandes-de-démarrage">Commandes de démarrage</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="fu">sudo</span> service nom-service start</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="fu">sudo</span> service nom-service status</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="fu">sudo</span> service nom-service stop</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="fu">sudo</span> service nom-service restart</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co"># Alternative: appel des scripts</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="fu">sudo</span> /etc/init.d/nom-service start</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="fu">sudo</span> /etc/init.d/nom-service status</a></code></pre></div>
+<h1 id="réseau">Réseau</h1>
+<h2 id="redémarrage">Redémarrage</h2>
+<h3 id="première-méthode">Première méthode</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="fu">sudo</span> systemctl restart networking</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="fu">sudo</span> dhclient -4 eth0</a></code></pre></div>
+<h3 id="alternative">Alternative</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="fu">sudo</span> ifdown ens33</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="fu">sudo</span> ifup ens33</a></code></pre></div>
+<p>Remplacer <code>ens33</code> par l’interface réseau ciblée</p>
+<h3 id="en-cas-de-dysfonctionnement-de-la-première-méthode">En cas de dysfonctionnement de la première méthode</h3>
+<p>Editer le fichier <code>/etc/network/interfaces</code> et ajouter : <code>auto ens33</code></p>
+<p>(en remplaçant ens33 par l’interface réseau correspondante)</p>
+<h4 id="ancienne-configuration">Ancienne configuration</h4>
+<pre><code># The primary network interface
+allow-hotplug ens33
+iface ens33 inet dhcp</code></pre>
+<h4 id="nouvelle-configuration">Nouvelle configuration</h4>
+<p>Pour permettre à <code>sudo systemctl restart networking</code> de fonctionner:</p>
+<pre><code># The primary network interface
+auto ens33
+allow-hotplug ens33
+iface ens33 inet dhcp</code></pre>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/recherche-panne.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:19 GMT -->
+</html>

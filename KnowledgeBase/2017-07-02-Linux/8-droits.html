@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/droits.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:18 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Utilisateurs et droits</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Utilisateurs et droits</div>
+<nav id="TOC">
+<ul>
+<li><a href="#gestion-des-utilisateurs-et-des-groupes">Gestion des utilisateurs et des groupes</a><ul>
+<li><a href="#création-dutilisateurs-et-de-groupes">Création d’utilisateurs et de groupes</a></li>
+<li><a href="#remplacer-un-mot-de-passe">Remplacer un mot de passe</a></li>
+</ul></li>
+<li><a href="#les-droits-daccès-posix">Les droits d’accès POSIX</a><ul>
+<li><a href="#catégories-dutilisateurs">Catégories d’utilisateurs</a></li>
+<li><a href="#types-de-droits">Types de droits</a></li>
+<li><a href="#la-commande-ls--l">La commande ls -l</a><ul>
+<li><a href="#catégories-des-droits-daccès">Catégories des droits d’accès</a></li>
+</ul></li>
+<li><a href="#les-types-de-fichiers">Les types de fichiers</a></li>
+<li><a href="#notation-symbolique-absolue">Notation symbolique / absolue</a></li>
+<li><a href="#commande-chmod">Commande chmod</a><ul>
+<li><a href="#chmod-en-symbolique">chmod en symbolique</a></li>
+<li><a href="#chmod-en-symbolique-ajout">chmod en symbolique : ajout</a></li>
+<li><a href="#chmod-en-symbolique-suppression">chmod en symbolique : suppression</a></li>
+<li><a href="#chmod-en-symbolique-modification-simultanée">chmod en symbolique: modification simultanée</a></li>
+<li><a href="#chmod-en-symbolique-exemples-dajouts">chmod en symbolique : exemples d’ajouts</a></li>
+<li><a href="#chmod-en-absolu">chmod en absolu</a></li>
+</ul></li>
+<li><a href="#umask">umask</a></li>
+</ul></li>
+<li><a href="#exercices-sur-les-droits-unix">Exercices sur les droits UNIX</a><ul>
+<li><a href="#arborescence-de-travail">Arborescence de travail</a></li>
+<li><a href="#positionnement-des-propriétaires">Positionnement des propriétaires</a></li>
+<li><a href="#positionnement-des-droits">Positionnement des droits</a></li>
+<li><a href="#gestion-des-droits-unix">Gestion des droits UNIX</a></li>
+</ul></li>
+<li><a href="#les-access-control-lists-acl">Les <code>Access Control Lists</code> (ACL)</a><ul>
+<li><a href="#eléments-de-solution">Eléments de solution</a><ul>
+<li><a href="#suppression-des-droits">Suppression des droits</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="gestion-des-utilisateurs-et-des-groupes">Gestion des utilisateurs et des groupes</h1>
+<h2 id="création-dutilisateurs-et-de-groupes">Création d’utilisateurs et de groupes</h2>
+<p>Les commandes pour gérer des utilisateurs sous Debian sont :</p>
+<ul>
+<li><code>adduser</code></li>
+<li><code>addgroup</code></li>
+<li><code>deluser</code></li>
+<li><code>delgroup</code></li>
+</ul>
+<p>D’autres commandes existent comme <code>useradd</code> ou <code>groupdel</code> mais elles sont moins pratiques à utiliser.</p>
+<p>Après chacune des opérations suivantes, observez le contenu des fichiers <code>/etc/group</code>, <code>/etc/passwd</code> et <code>/etc/shadow</code></p>
+<ol type="1">
+<li>Créez un utilisateur nommé <code>bill</code></li>
+<li>Ajoutez le dans un groupe nommé <code>microsoft</code></li>
+<li>Créez un utilisateur nommé <code>steve</code></li>
+<li>Ajoutez le dans un groupe nommé <code>apple</code></li>
+<li>Créez un utilisateur nommé <code>linus</code> et un autre nommé <code>ian</code></li>
+<li>Les ajouter au groupe <code>linux</code>.</li>
+<li>Quels sont les rôles des fichiers <code>/etc/group</code>, <code>/etc/passwd</code> et <code>/etc/shadow</code> ?</li>
+<li>Connectez-vous en tant que <code>ian</code> avec la commande <code>su</code> et créez un fichier nommé <code>je-suis-su.txt</code>. Déconnectez-vous</li>
+<li>Connectez-vous en tant que <code>ian</code> avec la commande <code>su -</code> et créez un fichier nommé <code>je-suis-su-tiret.txt</code>. Déconnectez-vous</li>
+<li>Qu’observez-vous ? Où sont les deux fichiers créés ?</li>
+<li>Utilisez la commande suivante: <code>sudo -u ian echo Bonjour &gt;&gt; fichier-ian.txt</code>. À qui appartient ce fichier ? Réessayer en mettant la cible dans <code>/tmp</code> (<code>/tmp/fichier-ian.txt</code>) puis dans <code>/home/ian</code>.</li>
+<li>Utilisez la commande suivante: <code>sudo -u ian cp fichier-ian.txt copie-ian.txt</code>. À qui appartient ce nouveau fichier ? Essayer de faire ces opérations dans le répertoire <code>/home/ian</code>.</li>
+</ol>
+<h2 id="remplacer-un-mot-de-passe">Remplacer un mot de passe</h2>
+<div class="important">
+<p>Avant de faire la moindre manipulation, faites une sauvegarde de vos fichiers:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">cp</span> /etc/passwd /etc/passwd.bak</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">cp</span> /etc/group /etc/group.bak</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">cp</span> /etc/shadow /etc/shadow.bak</a></code></pre></div>
+</div>
+<p>La commande <code>passwd</code> permet de remplacer un mot de passe.</p>
+<ol start="13" type="1">
+<li>Modifiez le mot de passe de <code>linus</code> et mettez: <code>8chats+caiLLou</code></li>
+<li>Désactivez l’utilisateur <code>linus</code> (il doit exister sur le système mais toute tentative de connexion en l’utilisant doit échouer).</li>
+<li>Réactivez l’utilisateur <code>linus</code>.</li>
+<li>Ajoutez-le au groupe des <code>sudoers</code></li>
+</ol>
+<p>Cependant, il peut être parfois intéressant de changer un mot de passe sur un système dont on a perdu l’accès (par exemple avec un live-CD).</p>
+<p>La commande suivante permet de générer un mot de passe:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">openssl</span> passwd -1 -salt salage12 nouveaumotdepasse</a></code></pre></div>
+<ol start="17" type="1">
+<li>À quoi correspond la clef de salage ?</li>
+<li>Utilisez ce résultat pour remplacer le mot de passe de <code>linus</code> dans le fichier <code>/etc/shadow</code>. Vérifiez que vous pouvez vous connecter.</li>
+</ol>
+<p>Voir aussi <a href="https://gist.github.com/JensRantil/ac691a4854a4f6cb4bd9">cette page</a></p>
+<h1 id="les-droits-daccès-posix">Les droits d’accès POSIX</h1>
+<h2 id="catégories-dutilisateurs">Catégories d’utilisateurs</h2>
+<p>Pour un fichier ou dossier, trois catégories d’utilisateurs sont gérées:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Catégorie</th>
+<th>Nom anglais</th>
+<th>Acronyme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>utilisateur propriétaire</td>
+<td>owner <strong>u</strong>ser</td>
+<td><code>u</code></td>
+</tr>
+<tr class="even">
+<td>groupe</td>
+<td><strong>g</strong>roup</td>
+<td><code>g</code></td>
+</tr>
+<tr class="odd">
+<td>autres utilisateurs</td>
+<td><strong>o</strong>ther users</td>
+<td><code>o</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="types-de-droits">Types de droits</h2>
+<p>Trois types de droits sont associés à chacune de ces catégories:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Droit</th>
+<th>Nom anglais</th>
+<th>Acronyme</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lecture/affichage</td>
+<td><strong>r</strong>ead</td>
+<td><code>r</code></td>
+</tr>
+<tr class="even">
+<td>Écriture/modification</td>
+<td><strong>w</strong>rite</td>
+<td><code>w</code></td>
+</tr>
+<tr class="odd">
+<td>Exécution/accès</td>
+<td>e<strong>x</strong>ecution</td>
+<td><code>x</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="la-commande-ls--l">La commande ls -l</h2>
+<p>L’affichage de la commande <code>ls -l</code> produit une sortie semblable à ceci:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">-rw-r--r--</span>   1 theuser  thegroup    17B 26 mar 01:02 hello.c</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ex">drwxr-xr-x</span>   3 theuser  thegroup   102B  5 apr 09:44 data</a></code></pre></div>
+<p>La colonne de gauche reprend les droits d’accès répartis dans les trois catégories sur 10 caractères.</p>
+<h3 id="catégories-des-droits-daccès">Catégories des droits d’accès</h3>
+<table>
+<thead>
+<tr class="header">
+<th>t</th>
+<th>u</th>
+<th>g</th>
+<th>o</th>
+<th>Catégorie</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>-</code></td>
+<td><code>rw-</code></td>
+<td><code>r--</code></td>
+<td><code>r--</code></td>
+<td>Owner</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>d</code></td>
+<td><code>rwx</code></td>
+<td><code>r-x</code></td>
+<td><code>r-x</code></td>
+<td>Owner</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>-</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Type de fichier</td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>d</code></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Type de fichier</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td><code>rw-</code></td>
+<td></td>
+<td></td>
+<td>owner <strong>U</strong>ser</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td><code>rwx</code></td>
+<td></td>
+<td></td>
+<td>owner <strong>U</strong>ser</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td><code>r--</code></td>
+<td></td>
+<td><strong>G</strong>roup</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><code>r-x</code></td>
+<td></td>
+<td><strong>G</strong>roup</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td><code>r--</code></td>
+<td><strong>O</strong>ther users</td>
+<td></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td><code>r-x</code></td>
+<td><strong>O</strong>ther users</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h2 id="les-types-de-fichiers">Les types de fichiers</h2>
+<p>La première lettre donne le type du fichier:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Lettre</th>
+<th>Signification anglophone</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>-</td>
+<td>regular file</td>
+<td>fichier standard</td>
+</tr>
+<tr class="even">
+<td>d</td>
+<td>directory</td>
+<td>répertoire</td>
+</tr>
+<tr class="odd">
+<td>l</td>
+<td>symbolic link</td>
+<td>lien symbolique</td>
+</tr>
+<tr class="even">
+<td>s</td>
+<td>socket</td>
+<td>socket</td>
+</tr>
+<tr class="odd">
+<td>b</td>
+<td>block device</td>
+<td>périphérique bloc</td>
+</tr>
+<tr class="even">
+<td>c</td>
+<td>character device</td>
+<td>périphérique caractère</td>
+</tr>
+<tr class="odd">
+<td>p</td>
+<td>FIFO</td>
+<td>tuyau, tube, pipe</td>
+</tr>
+</tbody>
+</table>
+<p>Sous Debian, la commande <code>man namei</code> permet de lister les types de fichiers.</p>
+<p>Sous d’autres systèmes, la commande <code>man ls</code> donne ces informations.</p>
+<h2 id="notation-symbolique-absolue">Notation symbolique / absolue</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Symbolique</th>
+<th>Absolue</th>
+<th>r = 4</th>
+<th>w = 2</th>
+<th>x = 1</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>rwx</code></td>
+<td>7</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>rw-</code></td>
+<td>6</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><code>r-x</code></td>
+<td>5</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td><code>r--</code></td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td><code>-w-</code></td>
+<td>2</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td><code>---</code></td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="commande-chmod">Commande chmod</h2>
+<h3 id="chmod-en-symbolique">chmod en symbolique</h3>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="fu">chmod</span> [augo][+-][rwxX]</a></code></pre></div>
+<ul>
+<li>Ajout: <code>+</code></li>
+<li>Suppression: <code>-</code></li>
+<li>Premier caractère: <code>u</code>, <code>g</code>, <code>o</code> ou <code>a</code> (all)</li>
+<li>Second caractère: <code>r</code>, <code>w</code>, <code>x</code> ou <code>X</code></li>
+</ul>
+<h3 id="chmod-en-symbolique-ajout">chmod en symbolique : ajout</h3>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># Ajoute les droits en écriture pour le groupe</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="fu">chmod</span> g+w fichier</a></code></pre></div>
+<h3 id="chmod-en-symbolique-suppression">chmod en symbolique : suppression</h3>
+<p>Exemple:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Supprime les droits en écriture pour les autres</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="fu">chmod</span> o-w fichier</a></code></pre></div>
+<h3 id="chmod-en-symbolique-modification-simultanée">chmod en symbolique: modification simultanée</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Ajoute les droits en écriture pour le groupe</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co"># Supprime les droits en écriture pour les autres</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="fu">chmod</span> g+w,o-w fichier</a></code></pre></div>
+<h3 id="chmod-en-symbolique-exemples-dajouts">chmod en symbolique : exemples d’ajouts</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># + exécution pour tous</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="fu">chmod</span> +x fichier</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># + exécution pour l&#39;utilisateur propriétaire</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="fu">chmod</span> u+x fichier</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># + exécution si l&#39;un des bits d&#39;exécution est positionné</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="fu">chmod</span> +X fichier</a></code></pre></div>
+<h3 id="chmod-en-absolu">chmod en absolu</h3>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1">$ <span class="fu">chmod</span> 644 fichier</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">$ <span class="fu">ls</span> -l</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">-rw-r--r--</span>   1 theuser  thegroup     17 26 mar 01:02 fichier</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">$ <span class="fu">chmod</span> 755 fichier</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">$ <span class="fu">ls</span> -l</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="ex">-rwxr-xr-x</span>   1 theuser  thegroup     17 26 mar 01:02 fichier</a></code></pre></div>
+<h2 id="umask">umask</h2>
+<p>Voir <code>man umask</code></p>
+<h1 id="exercices-sur-les-droits-unix">Exercices sur les droits UNIX</h1>
+<h2 id="arborescence-de-travail">Arborescence de travail</h2>
+<p>Créer l’arborescence suivante:</p>
+<ul>
+<li>informatique
+<ul>
+<li>linux
+<ul>
+<li>sources</li>
+</ul></li>
+<li>windows
+<ul>
+<li>sources</li>
+</ul></li>
+<li>mac
+<ul>
+<li>sources</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>Dans chaque dossier <code>sources</code>, créer un fichier <code>init.c</code>.</p>
+<h2 id="positionnement-des-propriétaires">Positionnement des propriétaires</h2>
+<p>Les propriétaires (utilisateur et groupe) sont positionnés en utilisant la commande <code>chown</code>.</p>
+<p>La commande suivante :</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="fu">chown</span> ian:linux linux</a></code></pre></div>
+<p>Va modifier le propriétaire et le “groupe propriétaire” du répertoire <code>linux</code>:</p>
+<ul>
+<li><code>ian</code> sera l’utilisateur propriétaire</li>
+<li><code>linux</code> sera le groupe propriétaire</li>
+</ul>
+<p>La commande suivante agit de manière récursive :</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="fu">chown</span> -R ian:linux linux</a></code></pre></div>
+<p>Va modifier le propriétaire et le “groupe propriétaire” du répertoire <code>linux</code> et de tous ses fichiers et sous-dossiers récursivement :</p>
+<ul>
+<li><code>ian</code> sera l’utilisateur propriétaire</li>
+<li><code>linux</code> sera le groupe propriétaire</li>
+</ul>
+<h2 id="positionnement-des-droits">Positionnement des droits</h2>
+<p>Le positionnement des droits se fait avec la commande <code>chmod</code></p>
+<ol start="19" type="1">
+<li>Mettez les droits correspondants aux groupes définis précédemment et correspondant à ces répertoires (le groupe <code>apple</code> n’a pas le droit d’aller lire ni écrire dans le répertoire <code>windows</code> par exemple).</li>
+</ol>
+<ul>
+<li>dossier <code>linux</code> : appartient au groupe <code>linux</code></li>
+<li>dossier <code>mac</code> : appartient au groupe <code>apple</code></li>
+<li>dossier <code>windows</code> : appartient au groupe <code>microsoft</code></li>
+<li>il n’est pas demandé de changer le propriétaire du fichier (qui doit rester votre utilisateur par défaut)</li>
+</ul>
+<h2 id="gestion-des-droits-unix">Gestion des droits UNIX</h2>
+<p>Nous allons maintenant manipuler les droits UNIX.</p>
+<p>Pour visualiser les modifications, la commande <code>ls -l</code> ou son alias <code>ll</code> seront utilisés.</p>
+<ol start="20" type="1">
+<li>Lancer la commande suivante: <code>chmod 755 mac</code>. Vérifier ses effets.</li>
+<li>Taper la commande <code>sudo -u linus touch mac/jesuislinus</code>. Que se passe-t-il ?</li>
+<li>Taper la commande <code>sudo -u linus touch linux/jesuislinus</code>. Que se passe-t-il ?</li>
+<li>Taper la commande <code>sudo -u linus touch windows/jesuislinus</code>. Que se passe-t-il ?</li>
+</ol>
+<div class="information">
+<p>Dans ce qui suit, <code>USER</code> sera à remplacer par le nom de votre utilisateur courant</p>
+</div>
+<ol start="24" type="1">
+<li>Créer le fichier <code>windows/USER</code> avec la commande <code>touch windows/USER</code>. Est-ce normal que le fichier existe ?</li>
+<li>Supprimer le fichier <code>windows/USER</code></li>
+<li>Taper la commande <code>chown bill windows</code> puis la commande <code>touch windows/USER</code>. Que se passe-t-il ? Est-ce normal ?</li>
+<li>Taper la commande <code>chown linus linux</code></li>
+<li>Taper la commande <code>chown steve mac</code></li>
+<li>Tenter de créer les fichiers <code>windows/USER</code>, <code>mac/USER</code> et <code>linux/USER</code></li>
+<li>Ajouter <code>USER</code> au groupe <code>linux</code> et retenter de créer <code>linux/USER</code></li>
+<li>Ajouter <code>USER</code> au groupe <code>mac</code> et retenter de créer <code>windows/USER</code>, <code>mac/USER</code> et <code>linux/USER</code></li>
+<li>Ajouter <code>USER</code> au groupe <code>microsoft</code> et retenter de créer <code>windows/USER</code></li>
+<li>Taper la commande <code>sudo chmod g+w windows</code> et retenter de créer <code>windows/USER</code>. Est-ce normal ?</li>
+<li>Déconnectez vous et retenter de créer <code>windows/USER</code>. Que s’est-il passé ? Dans quel autre cas avez-vous déjà dû vous déconnecter pour observer le changement de groupe effectif ?</li>
+</ol>
+<h1 id="les-access-control-lists-acl">Les <code>Access Control Lists</code> (ACL)</h1>
+<div class="information">
+<p>L’installation du paquet <code>acl</code> est nécessaire pour utiliser les commandes <code>setfacl</code> et <code>getfacl</code>. Pour l’installer :</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="fu">sudo</span> apt-get update <span class="kw">&amp;&amp;</span> <span class="fu">sudo</span> apt-get install acl</a></code></pre></div>
+</div>
+<ol start="35" type="1">
+<li>Utiliser la commande <code>setfacl</code> pour permettre à <code>linus</code> (et uniquement lui) de lire et écrire dans le répertoire <code>mac</code> et ses sous-répertoires. Testez.</li>
+<li>Utilisez la commande <code>getfacl</code> pour vérifier les droits affectés au fichier <code>informatique/mac/sources/init.c</code></li>
+</ol>
+<p>Voir aussi <a href="http://lea-linux.org/documentations/Gestion_des_ACL">cette page</a>.</p>
+<ol start="37" type="1">
+<li>Taper la commande <code>sudo -u linus touch mac/sources/init.c</code></li>
+<li>Taper la commande <code>sudo -u bill touch mac/sources/init.c</code>. Est-ce que le résultat est normal ?</li>
+<li>Taper la commande <code>setfacl -Rb mac</code> puis essayer à nouveau <code>sudo -u linus touch mac/sources/init.c</code>. Que s’est-il passé ?</li>
+<li>Taper la commande <code>setfacl -Rm u:linus:rwX mac</code> puis créer le répertoire <code>mac/bin</code>. Quels sont les autorisations associées à ce dossier ? Est-ce normal ? Est-ce souhaité ?</li>
+<li>Taper la commande <code>setfacl -Rdm u:linus:rwX mac</code> puis créer le répertoire <code>mac/partage</code>. Observer les autorisations associées à ce dossier. Que peut-on en conclure ?</li>
+<li>Pour finir, supprimer les ACLs de tous les dossiers (<code>mac</code>, <code>linux</code>, <code>windows</code>)</li>
+</ol>
+<h2 id="eléments-de-solution">Eléments de solution</h2>
+<h3 id="suppression-des-droits">Suppression des droits</h3>
+<p>Récursivement</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">setfacl</span> -Rx u:linus: mac</a></code></pre></div>
+<p>Pour un fichier</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ex">setfacl</span> -x g:apple mac</a></code></pre></div>
+<p>Suppression:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">setfacl</span> -Rb mac windows linux</a></code></pre></div>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/droits.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:18 GMT -->
+</html>

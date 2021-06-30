@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<!-- Mirrored from linux.risr17.aezi.fr/annexe-vmware-network-editor.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:21 GMT -->
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Configuration réseau VMWare</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="pandoc.css">
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<div class="doctitle">Configuration réseau VMWare</div>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#configuration-par-défaut">Configuration par défaut</a></li>
+<li><a href="#autorisation-de-modification-des-réseaux">Autorisation de modification des réseaux</a></li>
+<li><a href="#remise-à-zéro-des-réseaux">Remise à zéro des réseaux</a></li>
+<li><a href="#ajout-de-nouveaux-réseaux">Ajout de nouveaux réseaux</a><ul>
+<li><a href="#second-réseau-ponté">Second réseau ponté</a><ul>
+<li><a href="#modification-du-premier-réseau-ponté">Modification du premier réseau ponté</a></li>
+<li><a href="#modification-du-second-réseau-ponté">Modification du second réseau ponté</a></li>
+</ul></li>
+<li><a href="#ajout-dun-réseau-privé">Ajout d’un réseau privé</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="introduction">Introduction</h1>
+<p>Il est assez fréquent que VMWare connaisse des problèmes de réseau :</p>
+<ul>
+<li>absence de communication entre les VM,</li>
+<li>pas de communication entre l’hôte et les VM</li>
+<li>pas de communication entre les VM et Internet</li>
+</ul>
+<p>Dans ce cas, il est parfois nécessaire de remettre à zéro les réseaux virtuels (<code>vmnet</code>).</p>
+<h1 id="configuration-par-défaut">Configuration par défaut</h1>
+<p>La configuration par défaut doit ressembler à ceci :</p>
+<figure>
+<img src="images/vmneteditor-reset-01.png" alt="Configuration par défaut" /><figcaption>Configuration par défaut</figcaption>
+</figure>
+<p>Trois <code>vmnet</code> doivent être présents et configurés comme suit:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Nom</th>
+<th>Type</th>
+<th>Description</th>
+<th>DHCP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>vmnet0</code></td>
+<td>Bridge</td>
+<td>réseau ponté</td>
+<td>Non</td>
+</tr>
+<tr class="even">
+<td><code>vmnet1</code></td>
+<td>Host-only</td>
+<td>réseau privé hôte</td>
+<td>Activé</td>
+</tr>
+<tr class="odd">
+<td><code>vmnet8</code></td>
+<td>NAT</td>
+<td>réseau translaté</td>
+<td>Activé</td>
+</tr>
+</tbody>
+</table>
+<p>Si le <code>DHCP</code> est désactivé sur <code>vmnet1</code> ou <code>vmnet8</code>, il y a vraisemblablement eu des modifications incorrectes.</p>
+<p>Dans ce cas, une réinitialisation peut permettre de résoudre de nombreux problèmes.</p>
+<h1 id="autorisation-de-modification-des-réseaux">Autorisation de modification des réseaux</h1>
+<p>Pour pouvoir modifier les réseaux, il est nécessaire d’appuyer sur le bouton <code>Change settings...</code></p>
+<figure>
+<img src="images/vmneteditor-1.png" alt="Droits de modifications limités" /><figcaption>Droits de modifications limités</figcaption>
+</figure>
+<p>Une fois ceci fait, l’affichage des réseaux est plus complet:</p>
+<figure>
+<img src="images/vmneteditor-2.png" alt="Droits de modifications accordés" /><figcaption>Droits de modifications accordés</figcaption>
+</figure>
+<p>Cet affichage permet de contrôler si les services DHCP sont activés ou non.</p>
+<h1 id="remise-à-zéro-des-réseaux">Remise à zéro des réseaux</h1>
+<p>Cliquer sur le bouton <code>Restore defaults</code> (en bas à droite)</p>
+<figure>
+<img src="images/vmneteditor-3.png" alt="Virtual network editor" /><figcaption>Virtual network editor</figcaption>
+</figure>
+<p>Si une machine virtuelle est en cours d’exécution, le message suivant apparaît:</p>
+<figure>
+<img src="images/vmneteditor-8.png" alt="Machine en cours d’exécution" /><figcaption>Machine en cours d’exécution</figcaption>
+</figure>
+<p>Arrêter toutes les machines en cours d’exécution et appuyer à nouveau sur <code>Restore defaults</code>.</p>
+<p>Le message suivant apparaît:</p>
+<figure>
+<img src="images/vmneteditor-9.png" alt="Confirmation réinitialisation" /><figcaption>Confirmation réinitialisation</figcaption>
+</figure>
+<p>Cliquer sur <code>Oui</code></p>
+<p>Après quelques secondes, l’affichage apparaît avec les réseaux par défaut:</p>
+<figure>
+<img src="images/vmneteditor-reset-01.png" alt="Configuration réinitialisée" /><figcaption>Configuration réinitialisée</figcaption>
+</figure>
+<h1 id="ajout-de-nouveaux-réseaux">Ajout de nouveaux réseaux</h1>
+<h2 id="second-réseau-ponté">Second réseau ponté</h2>
+<p>Dans le cas où l’hôte comporte deux cartes réseaux physiques (par exemple deux cartes filaires ou une carte filaire et une carte Wi-Fi), il peut être intéressant de créer un second <code>vmnet</code> en mode <code>bridge</code>.</p>
+<p>Cliquer sur le bouton <code>Add Network...</code>. La fenêtre suivante apparaît. On y sélectionne le nouveau <code>vmnet</code> à créer (ici <code>vmnet2</code>):</p>
+<figure>
+<img src="images/vmneteditor-reset-02.png" alt="Création vmnet" /><figcaption>Création vmnet</figcaption>
+</figure>
+<p>Cliquer sur OK.</p>
+<h3 id="modification-du-premier-réseau-ponté">Modification du premier réseau ponté</h3>
+<p>Pour que deux réseaux soient pontés, aucun ne doivent être en mode <code>automatique</code>. Pour cela, il faut sélectionner <code>vmnet0</code> et lui assigner une carte réseau:</p>
+<figure>
+<img src="images/vmneteditor-reset-03.png" alt="Assignation de la première carte réseau à vmnet0" /><figcaption>Assignation de la première carte réseau à <code>vmnet0</code></figcaption>
+</figure>
+<h3 id="modification-du-second-réseau-ponté">Modification du second réseau ponté</h3>
+<p>Puis on sélectionne le réseau <code>vmnet2</code> et on lui assigne la seconde carte réseau:</p>
+<figure>
+<img src="images/vmneteditor-reset-04.png" alt="Assignation du deuxième “pont”" /><figcaption>Assignation du deuxième “pont”</figcaption>
+</figure>
+<h2 id="ajout-dun-réseau-privé">Ajout d’un réseau privé</h2>
+<p>Un réseau privé permet d’isoler les machines de l’extérieur. Ici, nous allons créer un réseau privé sans DHCP (une VM devra donc fournir ce service sur ce réseau s’il est nécessaire).</p>
+<p>Créer le réseau en cliquant sur le bouton <code>Add Network...</code>.</p>
+<figure>
+<img src="images/vmneteditor-reset-05.png" alt="Création réseau privé" /><figcaption>Création réseau privé</figcaption>
+</figure>
+<p>Sélectionner <code>vmnet5</code> et cliquer sur <code>OK</code></p>
+<p>On décoche la case <code>Use local DHCP service to distribute IP address to VMs</code> :</p>
+<figure>
+<img src="images/vmneteditor-reset-06.png" alt="Désactivation du DHCP et définition du subnet id" /><figcaption>Désactivation du DHCP et définition du subnet id</figcaption>
+</figure>
+<p>Et on définit l’adresse du sous-réseau (ici <code>192.168.81.0/24</code>).</p>
+</body>
+
+<!-- Mirrored from linux.risr17.aezi.fr/annexe-vmware-network-editor.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 09 Jul 2018 09:08:43 GMT -->
+</html>
