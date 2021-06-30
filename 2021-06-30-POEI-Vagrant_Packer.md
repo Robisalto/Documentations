@@ -26,7 +26,7 @@ Tel : *07.63.88.76.21* - Mail: *<psable@dawan.fr>*
 
 Documentation Source en PDF:
 
-<iframe src="2021-06-24-POEI-Ansible/Formation_Ansible-Pierre_SABLE.pdf" width="100%"  height="320px" allowfullscreen="yes"></iframe>
+<iframe src="2021-06-24-POEI-Ansible/.pdf" width="100%"  height="320px" allowfullscreen="yes"></iframe>
 
 Site officiel: <https://www.ansible.com/overview/it-automation>
 
@@ -52,16 +52,18 @@ vagrant init ubuntu/focal64
 
 Vagrantfile: <https://www.vagrantup.com/docs/vagrantfile>
 
-## Gérer les états
+# Les Boxes Vagrant
+
+<https://app.vagrantup.com/boxes/search>
+
+
+# Gérer les états
 
 - `vagrant up`: Créer/démarrer les VMs
 - `vagrant halt`: Arrêter les VMs
 - `vagrant reload`: halt + up
 - `vagrant suspend`: suspendre les traitements dans les VMs
 
-## Les Boxes Vagrant
-
-<https://app.vagrantup.com/boxes/search>
 
 ## Vagrant Status
 
@@ -97,6 +99,89 @@ Vagrant commands from any directory. For example:
 "vagrant destroy 1a2b3c4d"
 ```
 
+
+
+
+## Vagrant suspend
+
+Permet de **suspendre** l'état de la machine.
+
+> Suspend
+>
+> Command: vagrant suspend [name|id]
+> 
+> This suspends the guest machine Vagrant is managing, rather than fully shutting it down or destroying it.
+> 
+> A suspend effectively saves the exact point-in-time state of the machine, so that when you resume it later, it begins running immediately from that point, rather than doing a full boot.
+> 
+> This generally requires extra disk space to store all the contents of the RAM within your guest machine, but the machine no longer consumes the RAM of your host machine or CPU cycles while it is suspended.
+>  --<cite> https://www.vagrantup.com/docs/cli/suspend </cite>
+
+
+<div class=info> Pour suspendre toutes les VMs: `vagrant suspend` </div>
+
+### Exemple 
+
+```bash
+Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
+$ vagrant status
+Current machine states:
+
+default                   running (virtualbox)
+
+The VM is running. To stop this VM, you can run `vagrant halt` to
+shut it down forcefully, or you can run `vagrant suspend` to simply
+suspend the virtual machine. In either case, to restart it again,
+simply run `vagrant up`.
+
+Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
+$ vagrant global-status
+id       name    provider   state   directory                                                
+-------------------------------------------------------------------------------------        
+d9be6c2  default virtualbox running C:/Users/Admin stagiaire.DESKTOP-8967908/vagrant
+
+The above shows information about all known Vagrant environments
+on this machine. This data is cached and may not be completely
+up-to-date (use "vagrant global-status --prune" to prune invalid
+entries). To interact with any of the machines, you can go to that
+directory and run Vagrant, or you can use the ID directly with
+Vagrant commands from any directory. For example:
+"vagrant destroy 1a2b3c4d"
+
+Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
+$ vagrant status
+Current machine states:
+
+default                   running (virtualbox)
+
+The VM is running. To stop this VM, you can run `vagrant halt` to
+shut it down forcefully, or you can run `vagrant suspend` to simply
+suspend the virtual machine. In either case, to restart it again,
+simply run `vagrant up`.
+
+Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
+$ vagrant suspend
+==> default: Saving VM state and suspending execution...
+
+Admin stagiaire@BBG58Y2 MINGW64 ~/vagrant
+$ vagrant resume
+==> default: Resuming suspended VM...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+==> default: Machine booted and ready!
+==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`   
+==> default: flag to force provisioning. Provisioners marked to run always will still run. 
+```
+
+## Vagrant destroy
+
+**Détruit totaleent la VM**
+
+# Connexion / Authentification
+
 ## Configuration ssh
 
 ```bash
@@ -120,7 +205,12 @@ Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-77-generic x86_64)
 To see these additional updates run: apt list --upgradable
 ```
 
-<div class=info> On se connecte automatiquement en ssh dans le machine *default* </div>
+<div class=info> On se connecte automatiquement en ***ssh*** dans la machine ***default*** </div>
 
+## Pour les connexion sur Windows
 
+Pour Windows il n'y aura pas de ***ssh***, on utilisera les protocoles **powershell** et **rdp**.
+
+- `vagrant powershell`
+- `vagrant rdp`
 
