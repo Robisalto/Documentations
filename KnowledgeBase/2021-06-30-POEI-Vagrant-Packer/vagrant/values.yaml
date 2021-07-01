@@ -1,0 +1,8 @@
+---
+  box: 'ubuntu/focal64'
+  hostname: 'My-Ubuntu'
+  
+  name: 'demo4'
+  memory: '512'
+  cpus: '1'
+...
