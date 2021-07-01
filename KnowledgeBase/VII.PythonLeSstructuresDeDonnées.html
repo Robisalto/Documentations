@@ -16,6 +16,7 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -75,6 +76,7 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="styleLight.css" />
   <!--[if lt IE 9]>
@@ -148,70 +150,70 @@
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\I-IV. Importer avec le module Codecs.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> csv</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="im">import</span> codecs</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
-<span id="cb1-5"><a href="#cb1-5"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
-<span id="cb1-6"><a href="#cb1-6"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
-<span id="cb1-7"><a href="#cb1-7"></a>        <span class="bu">print</span>(r[<span class="dv">1</span>:<span class="dv">3</span>])</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> codecs</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(r[<span class="dv">1</span>:<span class="dv">3</span>])</span></code></pre></div>
 <h2 id="i-v.-ajouter-des-éléments-dans-une-liste">I-V. Ajouter des éléments dans une liste</h2>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\I-V. Ajouter des éléments dans une liste.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="im">import</span> csv</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="im">import</span> codecs</span>
-<span id="cb2-3"><a href="#cb2-3"></a></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
-<span id="cb2-5"><a href="#cb2-5"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
-<span id="cb2-6"><a href="#cb2-6"></a>    departements <span class="op">=</span> []</span>
-<span id="cb2-7"><a href="#cb2-7"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
-<span id="cb2-8"><a href="#cb2-8"></a>        departements.append(r[<span class="dv">2</span>])</span>
-<span id="cb2-9"><a href="#cb2-9"></a></span>
-<span id="cb2-10"><a href="#cb2-10"></a><span class="bu">print</span>(departements)</span>
-<span id="cb2-11"><a href="#cb2-11"></a>departements.extend([<span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
-<span id="cb2-12"><a href="#cb2-12"></a><span class="bu">print</span>(departements) </span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> codecs</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    departements <span class="op">=</span> []</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        departements.append(r[<span class="dv">2</span>])</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(departements)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>departements.extend([<span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(departements) </span></code></pre></div>
 <h2 id="i-vi.-modifier-les-listes">I-VI. Modifier les listes</h2>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\I-VI. Modifier les listes.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="im">import</span> csv</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="im">import</span> codecs</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    departements <span class="op">=</span> []</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
-<span id="cb3-8"><a href="#cb3-8"></a>        departements.append(r[<span class="dv">2</span>])</span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a>departements.extend([<span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># departements.insert(2, [&#39;Neuchatel&#39;, &#39;Jura&#39;])</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a></span>
-<span id="cb3-13"><a href="#cb3-13"></a>departements[<span class="dv">2</span>:<span class="dv">2</span>] <span class="op">=</span> [<span class="st">&#39;Neuchatel&#39;</span>, <span class="st">&#39;Jura&#39;</span>]</span>
-<span id="cb3-14"><a href="#cb3-14"></a></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="bu">print</span>(departements)</span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="co"># print(departements.pop(0))</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co"># print(departements)</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> codecs</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    departements <span class="op">=</span> []</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        departements.append(r[<span class="dv">2</span>])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>departements.extend([<span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># departements.insert(2, [&#39;Neuchatel&#39;, &#39;Jura&#39;])</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>departements[<span class="dv">2</span>:<span class="dv">2</span>] <span class="op">=</span> [<span class="st">&#39;Neuchatel&#39;</span>, <span class="st">&#39;Jura&#39;</span>]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(departements)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co"># print(departements.pop(0))</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># print(departements)</span></span></code></pre></div>
 <h2 id="i-vii.-trier-les-listes">I-VII. Trier les listes</h2>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\I-VII. Trier les listes.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> csv</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="im">import</span> codecs</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
-<span id="cb4-5"><a href="#cb4-5"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
-<span id="cb4-6"><a href="#cb4-6"></a>    departements <span class="op">=</span> []</span>
-<span id="cb4-7"><a href="#cb4-7"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
-<span id="cb4-8"><a href="#cb4-8"></a>        departements.append(r[<span class="dv">2</span>])</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a>departements.extend([<span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
-<span id="cb4-11"><a href="#cb4-11"></a></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co"># departements.sort(key=int)</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># departements.sort(key=lambda l: l[-1])</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a>departements.sort(key<span class="op">=</span><span class="kw">lambda</span> l: l[::<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb4-15"><a href="#cb4-15"></a></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="bu">print</span>(departements)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> codecs</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    departements <span class="op">=</span> []</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> r <span class="kw">in</span> rd:</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>        departements.append(r[<span class="dv">2</span>])</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>departements.extend([<span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># departements.sort(key=int)</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># departements.sort(key=lambda l: l[-1])</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>departements.sort(key<span class="op">=</span><span class="kw">lambda</span> l: l[::<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(departements)</span></code></pre></div>
 <h2 id="i-viii.-trier-avec-une-expression-lambda">I-VIII. Trier avec une expression lambda</h2>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\I-VIII. Trier avec une expression lambda.mp4" type="video/mp4">
@@ -251,19 +253,19 @@ INFO: Contrairement à la liste un Tuple est <strong>IMMUABLE</strong>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\II-II. Créer des sets.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> csv</span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="im">import</span> codecs</span>
-<span id="cb5-3"><a href="#cb5-3"></a></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
-<span id="cb5-5"><a href="#cb5-5"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
-<span id="cb5-6"><a href="#cb5-6"></a>    departements <span class="op">=</span> <span class="bu">set</span>(r[<span class="dv">2</span>] <span class="cf">for</span> r <span class="kw">in</span> rd)</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a>departements.add(<span class="st">&#39;Valais&#39;</span>)</span>
-<span id="cb5-9"><a href="#cb5-9"></a>departements.update([<span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
-<span id="cb5-10"><a href="#cb5-10"></a></span>
-<span id="cb5-11"><a href="#cb5-11"></a>suisse <span class="op">=</span> <span class="bu">set</span>([<span class="st">&#39;Valais&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Neuchatel&#39;</span>])</span>
-<span id="cb5-12"><a href="#cb5-12"></a></span>
-<span id="cb5-13"><a href="#cb5-13"></a><span class="bu">print</span>(<span class="bu">len</span>(departements))</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> csv</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> codecs</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> codecs.<span class="bu">open</span>(<span class="st">&#39;d:</span><span class="ch">\\</span><span class="st">data</span><span class="ch">\\</span><span class="st">departement.csv&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf8&#39;</span>, errors<span class="op">=</span><span class="st">&#39;replace&#39;</span>) <span class="im">as</span> dept:</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    rd <span class="op">=</span> csv.reader(dept, delimiter<span class="op">=</span><span class="st">&#39;,&#39;</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    departements <span class="op">=</span> <span class="bu">set</span>(r[<span class="dv">2</span>] <span class="cf">for</span> r <span class="kw">in</span> rd)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>departements.add(<span class="st">&#39;Valais&#39;</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>departements.update([<span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Valais&#39;</span>])</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>suisse <span class="op">=</span> <span class="bu">set</span>([<span class="st">&#39;Valais&#39;</span>, <span class="st">&#39;Vaud&#39;</span>, <span class="st">&#39;Geneve&#39;</span>, <span class="st">&#39;Neuchatel&#39;</span>])</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">len</span>(departements))</span></code></pre></div>
 <h2 id="ii-iii.-manipuler-des-sets">II-III. Manipuler des sets</h2>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\II-III. Manipuler des sets.mp4" type="video/mp4">
@@ -287,7 +289,7 @@ Le SET est <strong>muable</strong> par défaut. Sauf si l’on utilise un <code>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\II-VII. Découvrir le module Collections.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1"></a><span class="im">import</span> collections</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> collections</span></code></pre></div>
 <h2 id="ii-viii.-sinitier-à-itertools">II-VIII. S’initier à Itertools</h2>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\II-VIII. S'initier à Itertools.mp4" type="video/mp4">
@@ -300,14 +302,14 @@ Le SET est <strong>muable</strong> par défaut. Sauf si l’on utilise un <code>
 <video width="1080" height="606" controls>
 <source src="VII.PythonLesStructuresDeDonnées\II-X._Rcapituler_les_notions_vues_sur_les_structures_de_donnes.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Liste en Python</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>ma_liste <span class="op">=</span> [..., ..., ...]</span>
-<span id="cb7-3"><a href="#cb7-3"></a></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># Tuple:</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>mon_tuple <span class="op">=</span> (..., ..., ...)</span>
-<span id="cb7-6"><a href="#cb7-6"></a></span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># Set (ensemble)</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>mon_set <span class="op">=</span> <span class="bu">set</span>([..., ..., ...])</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Liste en Python</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ma_liste <span class="op">=</span> [..., ..., ...]</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Tuple:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>mon_tuple <span class="op">=</span> (..., ..., ...)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set (ensemble)</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>mon_set <span class="op">=</span> <span class="bu">set</span>([..., ..., ...])</span></code></pre></div>
 <h1 id="certification">CERTIFICATION</h1>
 <p style="text-align: center; text-decoration-color: red">
 <a href="VII.PythonLesStructuresDeDonnées\CertificateOfCompletion_Python%20Les%20structures%20de%20donnees.pdf">CertificateOfCompletion_Python Les structures de donnees.pdf</a>

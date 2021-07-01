@@ -1,8 +1,13 @@
 ---
-  box: 'ubuntu/focal64'
-  hostname: 'My-Ubuntu'
-  
-  name: 'demo4'
+  script_path: 'Scripts'
+  # name: 'demo5'
   memory: '512'
   cpus: '1'
+
+
+  machines:
+    - ['s1.formation.lan', '192.168.0.11', '512', '1', 'ubuntu/focal64']
+    - ['s2.formation.lan', '192.168.0.12', '512', '1', 'centos/7']
+    - ['s3.formation.lan', '192.168.0.13', '512', '1', 'archlinux/archlinux']
+
 ...

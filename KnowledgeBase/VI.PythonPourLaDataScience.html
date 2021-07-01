@@ -16,6 +16,7 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -75,6 +76,7 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="styleLight.css" />
   <!--[if lt IE 9]>
@@ -273,32 +275,32 @@ Compréhensions VS Générateurs
 <p>*CSV: Comma Separated Values <video width="1000" height="562" controls> <source src="VI.PythonPourLaDataScience\III-II. Charger des fichiers Excel & CSV.mp4" type="video/mp4"> </video></p>
 <h2 id="iii-iii.-charger-un-fichier-json">III-III. Charger un fichier JSON</h2>
 <p>JSON*: JavaScript Object Notation <video width="1000" height="562" controls> <source src="VI.PythonPourLaDataScience\III-III. Charger un fichier JSON.mp4" type="video/mp4"> </video></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> json</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span></code></pre></div>
 <h2 id="iii-iv.-interroger-une-base-de-données-sql">III-IV. Interroger une base de données SQL</h2>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-IV. Interroger une base de données SQL.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Import modules</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="im">import</span> numpy</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="im">import</span> pyodbc</span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># DB Connection</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>conn <span class="op">=</span> pyodbc.<span class="ex">connect</span>(</span>
-<span id="cb2-8"><a href="#cb2-8"></a>    <span class="st">&quot;Driver={SQL Server Native Client 11.0};&quot;</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a>    <span class="st">&quot;Server=MGR2-BTH108W\SQLSERVER;&quot;</span></span>
-<span id="cb2-10"><a href="#cb2-10"></a>    <span class="st">&quot;Database=irissql;&quot;</span></span>
-<span id="cb2-11"><a href="#cb2-11"></a>    <span class="st">&quot;Trusted_Connection=yes;&quot;</span></span>
-<span id="cb2-12"><a href="#cb2-12"></a>)</span>
-<span id="cb2-13"><a href="#cb2-13"></a></span>
-<span id="cb2-14"><a href="#cb2-14"></a>requête <span class="op">=</span> <span class="st">&quot;&quot;&quot;SELECT [Sépales.Longueur], EspècesId</span></span>
-<span id="cb2-15"><a href="#cb2-15"></a><span class="st">           FROM dbo.iris_données;&quot;&quot;&quot;</span></span>
-<span id="cb2-16"><a href="#cb2-16"></a>T <span class="op">=</span> pd.read_sql(requête, conn)</span>
-<span id="cb2-17"><a href="#cb2-17"></a></span>
-<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># Programme</span></span>
-<span id="cb2-19"><a href="#cb2-19"></a>T.head()</span>
-<span id="cb2-20"><a href="#cb2-20"></a></span>
-<span id="cb2-21"><a href="#cb2-21"></a>T.shape</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Import modules</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyodbc</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># DB Connection</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>conn <span class="op">=</span> pyodbc.<span class="ex">connect</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Driver={SQL Server Native Client 11.0};&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Server=MGR2-BTH108W\SQLSERVER;&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Database=irissql;&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;Trusted_Connection=yes;&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>requête <span class="op">=</span> <span class="st">&quot;&quot;&quot;SELECT [Sépales.Longueur], EspècesId</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="st">           FROM dbo.iris_données;&quot;&quot;&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> pd.read_sql(requête, conn)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Programme</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>T.head()</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>T.shape</span></code></pre></div>
 <h2 id="iii-v.-concaténer-différentes-sources-de-données">III-V. Concaténer différentes sources de données</h2>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-V. Concaténer différentes sources de données.mp4" type="video/mp4">
@@ -315,9 +317,9 @@ Compréhensions VS Générateurs
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-VIII. Maîtriser les statistiques descriptives avec NumPy.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">%</span>timeit <span class="bu">sum</span>(tab)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="dv">156</span> ms ± <span class="dv">392</span> µs per loop (mean ± std. dev. of <span class="dv">7</span> runs, <span class="dv">10</span> loops each)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit <span class="bu">sum</span>(tab)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="dv">156</span> ms ± <span class="dv">392</span> µs per loop (mean ± std. dev. of <span class="dv">7</span> runs, <span class="dv">10</span> loops each)</span></code></pre></div>
 <h2 id="iii-ix.-maîtriser-les-statistiques-descriptives-avec-pandas">III-IX. Maîtriser les statistiques descriptives avec <code>Pandas</code></h2>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-IX. Maîtriser les statistiques descriptives avec Pandas.mp4" type="video/mp4">
@@ -340,7 +342,7 @@ Compréhensions VS Générateurs
 <source src="VI.PythonPourLaDataScience\IV-I. Découvrir différents types de données.mp4" type="video/mp4">
 </video>
 <figure>
-<img src="VI.PythonPourLaDataScience/Untitled.png" alt="" /><figcaption><em>Schéma des différents types de données</em></figcaption>
+<img src="VI.PythonPourLaDataScience/Untitled.png" alt="Schéma des différents types de données" /><figcaption aria-hidden="true"><em>Schéma des différents types de données</em></figcaption>
 </figure>
 <h3 id="données-qualitatives">Données <em>QUALITATIVES:</em></h3>
 <ol type="1">
@@ -395,17 +397,17 @@ Compréhensions VS Générateurs
 <blockquote>
 <p>**Tokenisation*:** Découper en jeton. Découper une chaîne en maillons</p>
 </blockquote>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> nltk</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> WordPunctTokenizer</span>
-<span id="cb4-3"><a href="#cb4-3"></a>nltk.download(<span class="st">&#39;punkt&#39;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4"></a>nltk.download(<span class="st">&#39;stopwords&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> nltk</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> WordPunctTokenizer</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">&#39;punkt&#39;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>nltk.download(<span class="st">&#39;stopwords&#39;</span>)</span></code></pre></div>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\IV-V. Manipuler des données textuelles avec NLTK.mp4" type="video/mp4">
 </video>
 <h2 id="iv-vi.-utiliser-les-séries-temporelles">IV-VI. Utiliser les séries temporelles</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Module temporel pour Python:</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># Moins performant que les outils NumPy ou Pandas</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Module temporel pour Python:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Moins performant que les outils NumPy ou Pandas</span></span></code></pre></div>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\IV-VI. Utiliser les séries temporelles.mp4" type="video/mp4">
 </video>
@@ -577,7 +579,7 @@ Analyse en Composantes Principales <em>(PCA)</em>
 <source src="VI.PythonPourLaDataScience\VIII-I. Comprendre le deep learning.mp4" type="video/mp4">
 </video>
 <figure>
-<img src="VI.PythonPourLaDataScience\VIII-I.%20Comprendre%20le%20deep%20learning.png" title="Comprendre le Deep Learning" alt="" /><figcaption><em>Comprendre le Deep Learning</em></figcaption>
+<img src="VI.PythonPourLaDataScience\VIII-I.%20Comprendre%20le%20deep%20learning.png" title="Comprendre le Deep Learning" alt="Comprendre le Deep Learning" /><figcaption aria-hidden="true"><em>Comprendre le Deep Learning</em></figcaption>
 </figure>
 <h2 id="viii-ii.-aborder-les-concepts-du-deep-learning">VIII-II. Aborder les concepts du deep learning</h2>
 <video width="1000" height="562" controls>

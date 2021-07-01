@@ -641,9 +641,273 @@ vagrant snapshot save snap1
 
 Vérification:
 
-![](2021-06-07-POEI-Linux/snapshot-1.png)
+![](2021-06-30-POEI-Vagrant-Packer/snapshot-1.png)
+
+
+Création d'un `snap2`, puis `delete`:
+
+![](2021-06-30-POEI-Vagrant-Packer/snapshot-2.png) ![](2021-06-30-POEI-Vagrant-Packer/snapshot-3.png)
+
 
 
 
 
 # Provisioning
+
+<div class=warning> Attention chez Vagrant le mot Provisioning n'est pas adapté!
+
+Il vaut mieux parlé d'outil de **Compliance**.</div>
+
+
+Dans le fichier `values.yaml` on rajoute une provision:
+
+```ruby
+Vagrant.configure("2") do |config|                          
+  # On charge le fichier de values.yaml
+  require 'yaml'                                           
+  if File.file?('values.yaml')                             
+    conf = YAML.load_file('values.yaml')                
+  else                                                     
+    raise "Configuration file 'values.yaml' does not exist"
+  end                                                      
+
+  if ARGV[1] and ARGV[1] != '-f' and ARGV[1] != 'save' and ARGV[1] != 'restore' and ARGV[1] != 'delete'  
+    conf['machines'] = [
+      [
+        ARGV[1],
+        ARGV[2] || '0.0.0.0',
+        ARGV[3] || '256',
+        ARGV[4] || '1',
+        ARGV[5] || 'ubuntu/focal64'
+      ]
+    ]
+  end
+                                                           
+  # Les ressources
+  conf['machines'].each do |name, ip ,memory, cpus, box|
+    config.vm.define "#{name}" do |vm|
+      vm.vm.hostname = "#{name}"
+      vm.vm.box = "#{box}" || 'ubuntu/focal64'
+      vm.vm.network :private_network, ip: "#{ip}"                                                                      
+      vm.vm.provider "virtualbox" do |v|                     
+        v.memory = conf['memory']                            
+        v.cpus = conf['cpus']                                
+        v.name = conf['name']                                
+      end 
+      vm.vm.provision :shell do |shell|
+        shell.inline = "echo $1"
+        shell.args = "'Super Formation !!!'"
+      end
+    end
+  end
+end 
+
+```
+
+```bash
+vagrant provision s1.formation.lan
+==> s1.formation.lan: Running provisioner: shell...
+    s1.formation.lan: Running: inline script
+    s1.formation.lan: Super Formation !!!
+```
+
+## Exemple de *provisioning*
+
+
+Exemple de ***provisioning*** notre serveur `s1.formation.lan` *(Ubuntu)*; dans le fichier `vagrantfile`:
+
+```ruby
+Vagrant.configure("2") do |config|                          
+  # On charge le fichier de values.yaml
+  require 'yaml'                                           
+  if File.file?('values.yaml')                             
+    conf = YAML.load_file('values.yaml')                
+  else                                                     
+    raise "Configuration file 'values.yaml' does not exist"
+  end                                                      
+
+  if ARGV[1] and ARGV[1] != '-f' and ARGV[1] != 'save' and ARGV[1] != 'restore' and ARGV[1] != 'delete'  
+    conf['machines'] = [
+      [
+        ARGV[1],
+        ARGV[2] || '0.0.0.0',
+        ARGV[3] || '256',
+        ARGV[4] || '1',
+        ARGV[5] || 'ubuntu/focal64'
+      ]
+    ]
+  end
+                                                           
+  # Les ressources
+  conf['machines'].each do |name, ip ,memory, cpus, box|
+    config.vm.define "#{name}" do |vm|
+      vm.vm.hostname = "#{name}"
+      vm.vm.box = "#{box}" || 'ubuntu/focal64'
+      vm.vm.network :private_network, ip: "#{ip}"                                                                      
+      vm.vm.provider "virtualbox" do |v|                     
+        v.memory = conf['memory']                            
+        v.cpus = conf['cpus']                                
+        v.name = conf['name']                                
+      end 
+      vm.vm.provision :shell do |shell|
+        shell.inline = <<-SHELL
+        echo -e "\e[31;43m***** DIST-UPGRADE *****\e[0m" 
+        apt-get update && apt-get dist-upgrade -yq
+        echo -e "\e[31;43m***** CLEANUP *****\e[0m" 
+        apt-get autoremove && apt-get autoclean -yq
+        echo -e "\e[31;43m***** DONE *****\e[0m"
+        SHELL
+      end
+    end
+  end
+end 
+
+```
+
+Mise à jour et nettoyage du serveur avec la commande `vagrant provision s1.formation.lan`:
+
+```sh
+$ vagrant provision s1.formation.lan
+==> s1.formation.lan: Running provisioner: shell...
+    s1.formation.lan: Running: inline script
+    s1.formation.lan: ***** DIST-UPGRADE *****
+    s1.formation.lan: Hit:1 http://archive.ubuntu.com/ubuntu focal InRelease
+    s1.formation.lan: Hit:2 http://archive.ubuntu.com/ubuntu focal-updates InRelease
+    s1.formation.lan: Hit:3 http://archive.ubuntu.com/ubuntu focal-backports InRelease
+    s1.formation.lan: Hit:4 http://security.ubuntu.com/ubuntu focal-security InRelease
+    s1.formation.lan: Reading package lists...
+    s1.formation.lan: Reading package lists...
+    s1.formation.lan: Building dependency tree...
+    s1.formation.lan: Reading state information...
+    s1.formation.lan: Calculating upgrade...
+    s1.formation.lan: 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+    s1.formation.lan: ***** CLEANUP *****
+    s1.formation.lan: Reading package lists...
+    s1.formation.lan: Building dependency tree...
+    s1.formation.lan: Reading state information...
+    s1.formation.lan: 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+    s1.formation.lan: Reading package lists...
+    s1.formation.lan: Building dependency tree...
+    s1.formation.lan: Reading state information...
+    s1.formation.lan: ***** DONE *****
+
+```
+
+# Config Finale *Vagrant*
+
+Les Fichiers:
+
+```shell
+ ~/GitHub/Documentations/KnowledgeBase/2021-06-30-POEI-Vagrant-Packer/vagrant (main)
+$ ls -al
+total 10
+drwxr-xr-x 1 Admin stagiaire 197121    0 juil.  1 17:07 .
+drwxr-xr-x 1 Admin stagiaire 197121    0 juil.  1 15:06 ..
+drwxr-xr-x 1 Admin stagiaire 197121    0 juil.  1 10:25 .vagrant   
+-rw-r--r-- 1 Admin stagiaire 197121  381 juin  30 14:16 README.md  
+drwxr-xr-x 1 Admin stagiaire 197121    0 juil.  1 16:59 Scripts    
+-rw-r--r-- 1 Admin stagiaire 197121 1971 juil.  1 16:45 Vagrantfile
+-rw-r--r-- 1 Admin stagiaire 197121  323 juil.  1 16:31 values.yaml
+
+```
+
+
+Contenu de `values.yaml`:
+```yml
+---
+  script_path: 'Scripts'
+  # name: 'demo5'
+  memory: '512'
+  cpus: '1'
+
+
+  machines:
+    - ['s1.formation.lan', '192.168.0.11', '512', '1', 'ubuntu/focal64']
+    - ['s2.formation.lan', '192.168.0.12', '512', '1', 'centos/7']
+    - ['s3.formation.lan', '192.168.0.13', '512', '1', 'archlinux/archlinux']
+
+...
+
+```
+
+Les Fichiers de `Scripts`:
+
+```shell
+# s1.formation.lan.sh:
+
+set -ex
+
+apt-get update -y
+```
+
+```shell
+# s2.formation.lan.sh:
+
+set -ex
+
+yum update -y
+```
+
+```shell
+# s3.formation.lan.sh:
+
+set -ex
+
+pacman -Syu
+```
+
+
+Contenu de `vagranfile`:
+
+```ruby
+Vagrant.configure("2") do |config|                          
+  # On charge le fichier de values.yaml
+  require 'yaml'                                           
+  if File.file?('values.yaml')                             
+    conf = YAML.load_file('values.yaml')                
+  else                                                     
+    raise "Configuration file 'values.yaml' does not exist"
+  end                                                      
+
+  if ARGV[1] and ARGV[1] != '-f' and ARGV[1] != 'save' and ARGV[1] != 'restore' and ARGV[1] != 'delete'  
+    conf['machines'] = [
+      [
+        ARGV[1],
+        ARGV[2] || '0.0.0.0',
+        ARGV[3] || '256',
+        ARGV[4] || '1',
+        ARGV[5] || 'ubuntu/focal64'
+      ]
+    ]
+  end
+                                                           
+  # Les ressources
+  conf['machines'].each do |name, ip ,memory, cpus, box|
+    config.vm.define "#{name}" do |vm|
+      vm.vm.hostname = "#{name}"
+      vm.vm.box = "#{box}" || 'ubuntu/focal64'
+      vm.vm.network :private_network, ip: "#{ip}"                                                                      
+      vm.vm.provider "virtualbox" do |v|                     
+        v.memory = conf['memory']                            
+        v.cpus = conf['cpus']                                
+        v.name = conf['name']                                
+      end 
+      vm.vm.provision :shell do |shell|
+        shell.inline = "echo $1"
+        shell.args = " 'Super Formation !!!' "
+      end
+      vm.vm.provision :shell do |shell|
+        shell.path = conf['script_path'] + '\common-bootstrap.sh'
+      end
+      vm.vm.provision :shell do |shell|
+        puts conf['script_path'] + "\\#{name}.sh"
+        if conf['script_path'] + "\\#{name}.sh"
+          shell.path = conf['script_path'] + "\\#{name}.sh"
+        else
+          shell.inline = "echo __END__"
+        end
+      end
+    end
+  end
+end 
+```

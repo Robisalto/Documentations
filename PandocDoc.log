@@ -1,14 +1,9 @@
 [
     {
-        "type": "BlockNotRendered",
+        "type": "LoadedResource",
         "verbosity": "INFO",
-        "contents": {
-            "t": "RawBlock",
-            "c": [
-                "tex",
-                "\\usepackage[margin=.5in]{geometry}"
-            ]
-        }
+        "from": "footer.html",
+        "for": "footer.html"
     },
     {
         "type": "BlockNotRendered",
@@ -17,7 +12,7 @@
             "t": "RawBlock",
             "c": [
                 "tex",
-                "\\newpage"
+                "\\usepackage[margin=.5in]{geometry}"
             ]
         }
     },

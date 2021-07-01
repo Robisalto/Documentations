@@ -16,6 +16,7 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -75,6 +76,7 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="styleLight.css" />
   <!--[if lt IE 9]>
@@ -154,11 +156,11 @@ This is a video:
 <iframe width="600" height="337" src="https://www.youtube.com/embed/fNJf7yPhpJs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p>Code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a>  <span class="kw">&lt;p</span><span class="ot"> style=</span><span class="st">&quot;align-content: center;&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">&lt;video</span><span class="ot"> width=</span><span class="st">&quot;600&quot;</span><span class="ot"> height=</span><span class="st">&quot;337&quot;</span><span class="ot"> controls</span><span class="kw">&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="kw">&lt;source</span><span class="ot"> src=</span><span class="st">&quot;III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4&quot;</span><span class="ot"> type=</span><span class="st">&quot;video/mp4&quot;</span><span class="kw">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>  <span class="kw">&lt;/video&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>  <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;p</span> <span class="er">style</span><span class="ot">=</span><span class="st">&quot;align-content: center;&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;video</span> <span class="er">width</span><span class="ot">=</span><span class="st">&quot;600&quot;</span> <span class="er">height</span><span class="ot">=</span><span class="st">&quot;337&quot;</span> <span class="er">controls</span><span class="kw">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;source</span> <span class="er">src</span><span class="ot">=</span><span class="st">&quot;III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4&quot;</span> <span class="er">type</span><span class="ot">=</span><span class="st">&quot;video/mp4&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/video&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <h1 id="text-formating">Text Formating</h1>
 <h2 id="checkbox">Checkbox</h2>
 <ul class="task-list">
@@ -169,70 +171,70 @@ Not yet done =&gt; <code>[ ] Not yet done</code></li>
 </ul>
 <h2 id="some-code-examples">Some <code>CODE</code> Examples</h2>
 <p>Some <strong>BASH</strong>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># This is some bash</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello world ^^&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># This is some bash</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello world ^^&quot;</span></span></code></pre></div>
 <p>Some <strong>Python</strong>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">print</span>(<span class="st">&quot;This is some Python code&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>choice <span class="op">=</span> <span class="bu">str</span>(<span class="bu">input</span>(<span class="bu">print</span>(<span class="st">&quot;Voulez-vous continuer? (Y/n&quot;</span>)))</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="cf">if</span> choice <span class="op">==</span> (Y <span class="op">|</span> y):</span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi de continuer !!! &quot;</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="cf">elif</span> choice <span class="op">==</span> (N <span class="op">|</span> n):</span>
-<span id="cb3-8"><a href="#cb3-8"></a>  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi d&#39;abandonner... &quot;</span>)</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="cf">else</span>:</span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="bu">print</span>(<span class="st">&quot;Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;This is some Python code&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>choice <span class="op">=</span> <span class="bu">str</span>(<span class="bu">input</span>(<span class="bu">print</span>(<span class="st">&quot;Voulez-vous continuer? (Y/n&quot;</span>)))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> choice <span class="op">==</span> (Y <span class="op">|</span> y):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi de continuer !!! &quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> choice <span class="op">==</span> (N <span class="op">|</span> n):</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi d&#39;abandonner... &quot;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">&quot;Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. &quot;</span>)</span></code></pre></div>
 <!-- Page Break -->
 <h2 id="nouvelle-page-pdf">Nouvelle Page (PDF)</h2>
 <p>Nouvelle page créée avec la commande: <code>\newpage</code> <em>(latex)</em><br />
 Example de <em>LATEX</em>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="bu">\usepackage</span>{<span class="ex">comment</span>}</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">% uncomment to include stuff in standard comment-environment</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">%\includecomment{comment}</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">% define a mysection env which content is excluded</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">\excludecomment</span>{mysection}</span>
-<span id="cb4-9"><a href="#cb4-9"></a></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
-<span id="cb4-11"><a href="#cb4-11"></a>    This text will be displayed</span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="kw">\begin</span>{<span class="ex">comment</span>}</span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">    This text will only be displayed, if \includecomment{comment} was given</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="kw">\end</span>{<span class="ex">comment</span>}</span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="kw">\begin</span>{<span class="ex">mysection</span>}</span>
-<span id="cb4-16"><a href="#cb4-16"></a>    This text will only be displayed, if <span class="fu">\includecomment</span>{mysection} was given</span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="kw">\end</span>{<span class="ex">mysection</span>}</span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">\usepackage</span>{<span class="ex">comment</span>}</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">% uncomment to include stuff in standard comment-environment</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">%\includecomment{comment}</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">% define a mysection env which content is excluded</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\excludecomment</span>{mysection}</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    This text will be displayed</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">comment</span>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co">    This text will only be displayed, if \includecomment{comment} was given</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">comment</span>}</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">\begin</span>{<span class="ex">mysection</span>}</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    This text will only be displayed, if <span class="fu">\includecomment</span>{mysection} was given</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">mysection</span>}</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
 <h2 id="callouts">Callouts</h2>
 <p>Callouts can be <strong>SUPER</strong> <em>useful</em>:</p>
 <p class="info">
 This is just some information
 </p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;info&quot;</span><span class="kw">&gt;</span> This is just some information<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;info&quot;</span><span class="kw">&gt;</span> This is just some information<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="success">
 This is a SUCCESS !
 </p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;success&quot;</span><span class="kw">&gt;</span> This is a SUCCESS !<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;success&quot;</span><span class="kw">&gt;</span> This is a SUCCESS !<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="warning">
 This is a WARNING !
 </p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;warning&quot;</span><span class="kw">&gt;</span> This is a WARNING !<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;warning&quot;</span><span class="kw">&gt;</span> This is a WARNING !<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="alert">
 This is an ALERT !!!
 </p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;alert&quot;</span><span class="kw">&gt;</span> This is an ALERT !!! <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&quot;alert&quot;</span><span class="kw">&gt;</span> This is an ALERT !!! <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p>Consult <code>styleDark.css</code> and modify the color scheme using: <a href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a></p>
 <h2 id="questions-answers">Questions &amp; Answers</h2>
 <p class="question">
 Is this a question ???
 </p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&#39;question&#39;</span><span class="kw">&gt;</span> Is this a question ???<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&#39;question&#39;</span><span class="kw">&gt;</span> Is this a question ???<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="answer">
 Yes it is ! <em>(This is an answer)</em>
 </p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&#39;answer&#39;</span><span class="kw">&gt;</span> Yes it is ! *(This is an answer)* <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;p</span> <span class="er">class</span><span class="ot">=</span><span class="st">&#39;answer&#39;</span><span class="kw">&gt;</span> Yes it is ! *(This is an answer)* <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p>Example:</p>
 <p class="question">
 What was that thing that Lemony Snicket said ?
@@ -257,14 +259,14 @@ Tragedy is when I cut my finger. Comedy is when you walk into an open sewer and 
 <h1 id="mathematics">Mathematics</h1>
 <p>To write an equation, we use the double-dollar signs: `<code>$$...$$</code>’, like so:</p>
 <h2 id="pythagore">Pythagore:</h2>
-<p><br /><span class="math display"><em>a</em><sup>2</sup> + <em>b</em><sup>2</sup> = <em>c</em><sup>2</sup></span><br /></p>
+<p><span class="math display"><em>a</em><sup>2</sup> + <em>b</em><sup>2</sup> = <em>c</em><sup>2</sup></span></p>
 <h2 id="enstein">Enstein:</h2>
-<p><br /><span class="math display"><em>E</em> = <em>m</em><em>c</em>/<em>e</em><em>x</em><em>p</em>2</span><br /></p>
+<p><span class="math display"><em>E</em> = <em>m</em><em>c</em>/<em>e</em><em>x</em><em>p</em>2</span></p>
 <h2 id="other-equations">Other Equations</h2>
-<p><br /><span class="math display">∫<sub>0</sub><sup>1</sup><em>f</em>(<em>t</em>)<em>d</em><em>t</em></span><br /></p>
-<p><br /><span class="math display">∑<sub><em>j</em></sub><em>γ</em><sub><em>j</em></sub><sup>2</sup>/<em>d</em><sub><em>j</em></sub></span><br /></p>
-<p>The <em>Gamma function</em> satisfying <span class="math inline"><em>Γ</em>(<em>n</em>) = (<em>n</em> − 1)!  ∀<em>n</em> ∈ ℕ</span> is via the Euler integral</p>
-<p><br /><span class="math display"><em>Γ</em>(<em>z</em>) = ∫<sub>0</sub><sup>∞</sup><em>t</em><sup><em>z</em> − 1</sup><em>e</em><sup> − <em>t</em></sup><em>d</em><em>t</em> .</span><br /></p>
+<p><span class="math display">∫<sub>0</sub><sup>1</sup><em>f</em>(<em>t</em>)d<em>t</em></span></p>
+<p><span class="math display">∑<sub><em>j</em></sub><em>γ</em><sub><em>j</em></sub><sup>2</sup>/<em>d</em><sub><em>j</em></sub></span></p>
+<p>The <em>Gamma function</em> satisfying <span class="math inline"><em>Γ</em>(<em>n</em>) = (<em>n</em>−1)!  ∀<em>n</em> ∈ ℕ</span> is via the Euler integral</p>
+<p><span class="math display"><em>Γ</em>(<em>z</em>) = ∫<sub>0</sub><sup>∞</sup><em>t</em><sup><em>z</em> − 1</sup><em>e</em><sup>−<em>t</em></sup><em>d</em><em>t</em> .</span></p>
 <p>For more: <a href="https://csrgxtu.github.io/2015/03/20/Writing-Mathematic-Fomulars-in-Markdown/">Writing Mathematic Fomulars in Markdown</a></p>
 <h1 id="workflow">Workflow</h1>
 <h2 id="uml">UML</h2>

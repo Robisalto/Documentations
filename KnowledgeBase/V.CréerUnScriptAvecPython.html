@@ -16,6 +16,7 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -75,6 +76,7 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="styleLight.css" />
   <!--[if lt IE 9]>
@@ -216,14 +218,14 @@
 <video width="1000" height="562" controls>
 <source src="V.CréerUnScriptAvecPython\IV-II. Effectuer une suppression de différentes manières.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># 1ère façon</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="cf">try</span>:</span>
-<span id="cb1-3"><a href="#cb1-3"></a>            <span class="kw">del</span> reponse[<span class="st">&#39;cache--control&#39;</span>]</span>
-<span id="cb1-4"><a href="#cb1-4"></a>        <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
-<span id="cb1-5"><a href="#cb1-5"></a>            <span class="cf">pass</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># 2ème</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>reponse.pop(<span class="st">&#39;cache--control&#39;</span>, <span class="va">None</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1ère façon</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>            <span class="kw">del</span> reponse[<span class="st">&#39;cache--control&#39;</span>]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">KeyError</span>:</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">pass</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 2ème</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>reponse.pop(<span class="st">&#39;cache--control&#39;</span>, <span class="va">None</span>)</span></code></pre></div>
 <h2 id="iv-iii.-comprendre-le-dictionnaire">IV-III. Comprendre le dictionnaire</h2>
 <video width="1000" height="562" controls>
 <source src="V.CréerUnScriptAvecPython\IV-III. Comprendre le dictionnaire.mp4" type="video/mp4">
@@ -244,15 +246,15 @@ Opérateur d’unpacking (*x)
 <video width="1000" height="562" controls>
 <source src="V.CréerUnScriptAvecPython\V-I. Etablir les différences entre bytes et STR.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># En BYTES (Tableau d&#39;octets)</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="bu">print</span>(<span class="bu">type</span>(b<span class="st">&quot;coucou&quot;</span>))</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co"># retourne:</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;bytes&#39;</span><span class="op">&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># En STR (Chaîne de caratères)</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="bu">print</span> (<span class="bu">type</span>(<span class="st">&quot;coucou&quot;</span>))</span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="co"># retourne:</span></span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;str&#39;</span><span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># En BYTES (Tableau d&#39;octets)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(b<span class="st">&quot;coucou&quot;</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># retourne:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;bytes&#39;</span><span class="op">&gt;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># En STR (Chaîne de caratères)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span> (<span class="bu">type</span>(<span class="st">&quot;coucou&quot;</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># retourne:</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span><span class="kw">class</span> <span class="st">&#39;str&#39;</span><span class="op">&gt;</span></span></code></pre></div>
 <h2 id="v-ii.-convertir-des-bytes-vers-str">V-II. Convertir des bytes vers STR</h2>
 <video width="1000" height="562" controls>
 <source src="V.CréerUnScriptAvecPython\V-II. Convertir des bytes vers STR.mp4" type="video/mp4">
