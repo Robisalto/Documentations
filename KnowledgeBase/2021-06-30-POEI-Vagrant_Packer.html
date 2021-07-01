@@ -114,13 +114,30 @@
 <li><a href="#validate-linter">Validate <em>(linter)</em></a></li>
 <li><a href="#fichier-values.yaml">Fichier <em>values.yaml</em></a></li>
 <li><a href="#administration-des-machines-précédentes">Administration des machines précédentes</a></li>
+<li><a href="#etapes">Etapes</a></li>
+<li><a href="#création-de-plusieurs-vms">Création de plusieurs VMs</a></li>
+<li><a href="#tp-attribuer-une-box">TP: Attribuer une BOX</a>
+<ul>
+<li><a href="#recherche-de-boxes">Recherche de BOXES</a></li>
+<li><a href="#définition-des-boxes">Définition des BOXES</a></li>
+</ul></li>
+<li><a href="#surcharge-des-noms">Surcharge des noms</a></li>
+<li><a href="#gestion-des-boxes">Gestion des Boxes</a>
+<ul>
+<li><a href="#lister-les-boxes">Lister les Boxes</a></li>
+<li><a href="#vérification-mises-à-jour">Vérification Mises à jour</a></li>
+<li><a href="#mise-à-jour">Mise à jour</a></li>
+<li><a href="#nettoyage">Nettoyage</a></li>
+<li><a href="#suppresion-de-boxes">Suppresion de boxes</a></li>
+</ul></li>
+<li><a href="#snapshots">Snapshots</a></li>
+<li><a href="#provisioning">Provisioning</a></li>
 </ul>
 </nav>
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h4 id="formation-vagrant-packer">Formation Vagrant &amp; Packer</h4>
-<p>Damien BERAUD Responsable du pôle système Tel: +33 761 049 539 21H</p>
-<p>Tel : <em>07.63.88.76.21</em> - Mail: <em><a href="mailto:psable@dawan.fr" class="email">psable@dawan.fr</a></em></p>
+<p>Damien BERAUD Responsable du pôle système Tel: +33 761 049 539</p>
 <h1 id="doc-source">Doc Source</h1>
 <p>Documentation Source en PDF:</p>
 <iframe src="2021-06-24-POEI-Ansible/.pdf" width="100%" height="320px" allowfullscreen="yes">
@@ -128,6 +145,7 @@
 <p>Site officiel: <a href="https://www.ansible.com/overview/it-automation" class="uri">https://www.ansible.com/overview/it-automation</a></p>
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h1 id="installation">Installation</h1>
+<p><img src="https://www.vagrantup.com/img/logo-hashicorp.svg" /></p>
 <p>Lien install officiel: <a href="https://www.vagrantup.com/" class="uri">https://www.vagrantup.com/</a></p>
 <p>On vérifie l’installation avec les commandes:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="ex">vagrant</span> version</span>
@@ -372,6 +390,183 @@ On se connecte automatiquement en <strong><em>ssh</em></strong> dans la machine 
 <span id="cb13-3"><a href="#cb13-3"></a>  <span class="kw">end</span></span></code></pre></div>
 <p>Nous permette de reprendre le contrôle sur les machines gérées précédemment et de les détruire, exemple:</p>
 <p><code>vagrant destroy demo2</code></p>
+<h1 id="etapes">Etapes</h1>
+<ol type="1">
+<li>Provisionning</li>
+<li>Bootstrap</li>
+<li>Requirements</li>
+<li>Compliance</li>
+</ol>
+<h1 id="création-de-plusieurs-vms">Création de plusieurs VMs</h1>
+<p>On renseigne les machines dans le fichier <code>values.yaml</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1"></a><span class="pp">---</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;ubuntu/focal64&#39;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="at">  </span><span class="fu">hostname</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;My-Ubuntu&#39;</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="at">  </span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="co"> # name: &#39;demo5&#39;</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="at">  </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;512&#39;</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="at">  </span><span class="fu">cpus</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;1&#39;</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="at">  </span><span class="fu">machines</span><span class="kw">:</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;s1.formation.lan&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;192.168.0.11&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;512&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;1&#39;</span><span class="kw">]</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;s2.formation.lan&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;192.168.0.12&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;512&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;1&#39;</span><span class="kw">]</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;s3.formation.lan&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;192.168.0.13&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;512&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;1&#39;</span><span class="kw">]</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="co">...</span></span></code></pre></div>
+<p>Puis dans <code>vagrantfile</code>:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb15-1"><a href="#cb15-1"></a><span class="dt">Vagrant</span>.configure(<span class="st">&quot;2&quot;</span>) <span class="kw">do</span> |config|                          </span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="co"># On charge le fichier de values.yaml</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  require <span class="st">&#39;yaml&#39;</span>                                           </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="kw">if</span> <span class="dt">File</span>.file?(<span class="st">&#39;values.yaml&#39;</span>)                             </span>
+<span id="cb15-5"><a href="#cb15-5"></a>    conf = <span class="dt">YAML</span>.load_file(<span class="st">&#39;values.yaml&#39;</span>)                </span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="kw">else</span>                                                     </span>
+<span id="cb15-7"><a href="#cb15-7"></a>    raise <span class="st">&quot;Configuration file &#39;values.yaml&#39; does not exist&quot;</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a>  <span class="kw">end</span>                                                      </span>
+<span id="cb15-9"><a href="#cb15-9"></a>  </span>
+<span id="cb15-10"><a href="#cb15-10"></a>  config.vm.box = conf[<span class="st">&#39;box&#39;</span>] || <span class="st">&quot;ubuntu/focal64&quot;</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a></span>
+<span id="cb15-12"><a href="#cb15-12"></a>  <span class="kw">if</span> <span class="dt">ARGV</span>[<span class="dv">1</span>] <span class="kw">and</span> <span class="dt">ARGV</span>[<span class="dv">1</span>] != conf[<span class="st">&#39;name&#39;</span>]</span>
+<span id="cb15-13"><a href="#cb15-13"></a>    conf[<span class="st">&#39;name&#39;</span>] = <span class="dt">ARGV</span>[<span class="dv">1</span>]</span>
+<span id="cb15-14"><a href="#cb15-14"></a>  <span class="kw">end</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a>                                                           </span>
+<span id="cb15-16"><a href="#cb15-16"></a>  <span class="co"># Les ressources</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a>  conf[<span class="st">&#39;machines&#39;</span>].each <span class="kw">do</span> |name, ip ,memory, cpus|</span>
+<span id="cb15-18"><a href="#cb15-18"></a>    config.vm.define <span class="st">&quot;</span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">do</span> |vm|</span>
+<span id="cb15-19"><a href="#cb15-19"></a>      vm.vm.hostname = <span class="st">&quot;</span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb15-20"><a href="#cb15-20"></a>      vm.vm.network <span class="st">:private_network</span>, <span class="st">ip: &quot;</span><span class="ot">#{</span>ip<span class="ot">}</span><span class="st">&quot;</span>                                                                      </span>
+<span id="cb15-21"><a href="#cb15-21"></a>      vm.vm.provider <span class="st">&quot;virtualbox&quot;</span> <span class="kw">do</span> |v|                     </span>
+<span id="cb15-22"><a href="#cb15-22"></a>        v.memory = conf[<span class="st">&#39;memory&#39;</span>]                            </span>
+<span id="cb15-23"><a href="#cb15-23"></a>        v.cpus = conf[<span class="st">&#39;cpus&#39;</span>]                                </span>
+<span id="cb15-24"><a href="#cb15-24"></a>        v.name = conf[<span class="st">&#39;name&#39;</span>]                                </span>
+<span id="cb15-25"><a href="#cb15-25"></a>      <span class="kw">end</span>                                                           </span>
+<span id="cb15-26"><a href="#cb15-26"></a>    <span class="kw">end</span></span>
+<span id="cb15-27"><a href="#cb15-27"></a>  <span class="kw">end</span></span>
+<span id="cb15-28"><a href="#cb15-28"></a><span class="kw">end</span> </span></code></pre></div>
+<h1 id="tp-attribuer-une-box">TP: Attribuer une BOX</h1>
+<p>On veut attribuer un OS différent pour chaque machines: s1, s2, s3.</p>
+<ul>
+<li>s1: ubuntu</li>
+<li>s2: centos</li>
+<li>s3: arch</li>
+</ul>
+<h2 id="recherche-de-boxes">Recherche de BOXES</h2>
+<p><a href="https://app.vagrantup.com/boxes/search" class="uri">https://app.vagrantup.com/boxes/search</a></p>
+<h2 id="définition-des-boxes">Définition des BOXES</h2>
+<p>Dans le fichier <code>values.yaml</code>:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode yml"><code class="sourceCode yaml"><span id="cb16-1"><a href="#cb16-1"></a><span class="pp">---  </span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;demo5&#39;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="at">  </span><span class="fu">memory</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;512&#39;</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="at">  </span><span class="fu">cpus</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;1&#39;</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="at">  </span><span class="fu">machines</span><span class="kw">:</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;S1-Ubuntu&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;s1.formation.lan&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;192.168.0.11&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;512&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;1&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;ubuntu/focal64&#39;</span><span class="kw">]</span></span>
+<span id="cb16-8"><a href="#cb16-8"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;S2-CentOS&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;s2.formation.lan&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;192.168.0.12&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;512&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;1&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;centos/8&#39;</span><span class="kw">]</span></span>
+<span id="cb16-9"><a href="#cb16-9"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="kw">[</span><span class="st">&#39;S3-Arch&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;s3.formation.lan&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;192.168.0.13&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;512&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;1&#39;</span><span class="kw">,</span><span class="at"> </span><span class="st">&#39;archlinux/archlinux&#39;</span><span class="kw">]</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a><span class="co">...</span></span></code></pre></div>
+<h1 id="surcharge-des-noms">Surcharge des noms</h1>
+<p>Dans <code>vagrantfile</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb17-1"><a href="#cb17-1"></a><span class="dt">Vagrant</span>.configure(<span class="st">&quot;2&quot;</span>) <span class="kw">do</span> |config|                          </span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="co"># On charge le fichier de values.yaml</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  require <span class="st">&#39;yaml&#39;</span>                                           </span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="kw">if</span> <span class="dt">File</span>.file?(<span class="st">&#39;values.yaml&#39;</span>)                             </span>
+<span id="cb17-5"><a href="#cb17-5"></a>    conf = <span class="dt">YAML</span>.load_file(<span class="st">&#39;values.yaml&#39;</span>)                </span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="kw">else</span>                                                     </span>
+<span id="cb17-7"><a href="#cb17-7"></a>    raise <span class="st">&quot;Configuration file &#39;values.yaml&#39; does not exist&quot;</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="kw">end</span>                                                      </span>
+<span id="cb17-9"><a href="#cb17-9"></a></span>
+<span id="cb17-10"><a href="#cb17-10"></a>  <span class="kw">if</span> <span class="dt">ARGV</span>[<span class="dv">1</span>]</span>
+<span id="cb17-11"><a href="#cb17-11"></a>    conf[<span class="st">&#39;machines&#39;</span>] = [</span>
+<span id="cb17-12"><a href="#cb17-12"></a>      [</span>
+<span id="cb17-13"><a href="#cb17-13"></a>        <span class="dt">ARGV</span>[<span class="dv">1</span>],</span>
+<span id="cb17-14"><a href="#cb17-14"></a>        <span class="dt">ARGV</span>[<span class="dv">2</span>],</span>
+<span id="cb17-15"><a href="#cb17-15"></a>        <span class="dt">ARGV</span>[<span class="dv">3</span>] || <span class="st">&#39;0.0.0.0&#39;</span>,</span>
+<span id="cb17-16"><a href="#cb17-16"></a>        <span class="dt">ARGV</span>[<span class="dv">4</span>] || <span class="st">&#39;256&#39;</span>,</span>
+<span id="cb17-17"><a href="#cb17-17"></a>        <span class="dt">ARGV</span>[<span class="dv">5</span>] || <span class="ch">&#39;1&#39;</span>,</span>
+<span id="cb17-18"><a href="#cb17-18"></a>        <span class="dt">ARGV</span>[<span class="dv">6</span>] || <span class="st">&#39;ubuntu/focal64&#39;</span></span>
+<span id="cb17-19"><a href="#cb17-19"></a>      ]</span>
+<span id="cb17-20"><a href="#cb17-20"></a>    ]</span>
+<span id="cb17-21"><a href="#cb17-21"></a>  <span class="kw">end</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a>                                                           </span>
+<span id="cb17-23"><a href="#cb17-23"></a>  <span class="co"># Les ressources</span></span>
+<span id="cb17-24"><a href="#cb17-24"></a>  conf[<span class="st">&#39;machines&#39;</span>].each <span class="kw">do</span> |name, hostname, ip ,memory, cpus, box|</span>
+<span id="cb17-25"><a href="#cb17-25"></a>    config.vm.define <span class="st">&quot;</span><span class="ot">#{</span>name<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">do</span> |vm|</span>
+<span id="cb17-26"><a href="#cb17-26"></a>      vm.vm.hostname = <span class="st">&quot;</span><span class="ot">#{</span>hostname<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb17-27"><a href="#cb17-27"></a>      vm.vm.box = <span class="st">&quot;</span><span class="ot">#{</span>box<span class="ot">}</span><span class="st">&quot;</span> || <span class="st">&quot;</span><span class="ot">#{</span>box_default<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb17-28"><a href="#cb17-28"></a>      vm.vm.network <span class="st">:private_network</span>, <span class="st">ip: &quot;</span><span class="ot">#{</span>ip<span class="ot">}</span><span class="st">&quot;</span>                                                                      </span>
+<span id="cb17-29"><a href="#cb17-29"></a>      vm.vm.provider <span class="st">&quot;virtualbox&quot;</span> <span class="kw">do</span> |v|                     </span>
+<span id="cb17-30"><a href="#cb17-30"></a>        v.memory = conf[<span class="st">&#39;memory&#39;</span>]                            </span>
+<span id="cb17-31"><a href="#cb17-31"></a>        v.cpus = conf[<span class="st">&#39;cpus&#39;</span>]                                </span>
+<span id="cb17-32"><a href="#cb17-32"></a>        v.name = conf[<span class="st">&#39;name&#39;</span>]                                </span>
+<span id="cb17-33"><a href="#cb17-33"></a>      <span class="kw">end</span>                                                           </span>
+<span id="cb17-34"><a href="#cb17-34"></a>    <span class="kw">end</span></span>
+<span id="cb17-35"><a href="#cb17-35"></a>  <span class="kw">end</span></span>
+<span id="cb17-36"><a href="#cb17-36"></a><span class="kw">end</span> </span></code></pre></div>
+<h1 id="gestion-des-boxes">Gestion des Boxes</h1>
+<h2 id="lister-les-boxes">Lister les Boxes</h2>
+<ul>
+<li><code>vagrant box list</code>: Retourne une liste des boxes disponibles <em>(téléchargées)</em></li>
+</ul>
+<div class="sourceCode" id="cb18"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/GitHub/Documentations/KnowledgeBase/2021-06-30-POEI-Vagrant-Packer/vagrant (main)</span>
+<span id="cb18-2"><a href="#cb18-2"></a>$ <span class="ex">vagrant</span> box list</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="ex">archlinux/archlinux</span> (virtualbox, 20210619.26314)</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="ex">centos/7</span>            (virtualbox, 2004.01)</span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="ex">ubuntu/focal64</span>      (virtualbox, 20210624.0.0)</span></code></pre></div>
+<h2 id="vérification-mises-à-jour">Vérification Mises à jour</h2>
+<ul>
+<li><code>vagrant box outdated</code>: Vérifie si il existe des mises à jours disponibles.</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a>$ <span class="ex">vagrant</span> box outdated</span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="ex">Checking</span> if box <span class="st">&#39;ubuntu/focal64&#39;</span> version <span class="st">&#39;20210624.0.0&#39;</span> is up to date...</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="ex">Checking</span> if box <span class="st">&#39;centos/7&#39;</span> version <span class="st">&#39;2004.01&#39;</span> is up to date...</span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="ex">Checking</span> if box <span class="st">&#39;archlinux/archlinux&#39;</span> version <span class="st">&#39;20210619.26314&#39;</span> is up to date...</span></code></pre></div>
+<ul>
+<li><code>vagrant box outdated --global</code>: Vérifie si il existe des mises à jours disponibles au niveau <strong>global</strong>.</li>
+</ul>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a>$ <span class="ex">vagrant</span> box outdated --global</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="ex">*</span> <span class="st">&#39;ubuntu/focal64&#39;</span> for <span class="st">&#39;virtualbox&#39;</span> (v20210624.0.0) <span class="ex">is</span> up to date</span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="ex">*</span> <span class="st">&#39;centos/7&#39;</span> for <span class="st">&#39;virtualbox&#39;</span> (v2004.01) <span class="ex">is</span> up to date</span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="ex">*</span> <span class="st">&#39;archlinux/archlinux&#39;</span> for <span class="st">&#39;virtualbox&#39;</span> (v20210619.26314) <span class="ex">is</span> up to date</span></code></pre></div>
+<h2 id="mise-à-jour">Mise à jour</h2>
+<ul>
+<li><code>vagrant box update --box nom_de_la_box</code>: Met à jour la box nommée.</li>
+<li><code>vagrant box update</code>: Met à jour l’ensemble des boxes.</li>
+</ul>
+<div class="sourceCode" id="cb21"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a>$ <span class="ex">vagrant</span> box update</span>
+<span id="cb21-2"><a href="#cb21-2"></a>==<span class="op">&gt;</span> <span class="ex">s1.formation.lan</span>: Checking for updates to <span class="st">&#39;ubuntu/focal64&#39;</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>    <span class="ex">s1.formation.lan</span>: Latest installed version: 20210624.0.0</span>
+<span id="cb21-4"><a href="#cb21-4"></a>    <span class="ex">s1.formation.lan</span>: Version constraints: </span>
+<span id="cb21-5"><a href="#cb21-5"></a>    <span class="ex">s1.formation.lan</span>: Provider: virtualbox</span>
+<span id="cb21-6"><a href="#cb21-6"></a>==<span class="op">&gt;</span> <span class="ex">s1.formation.lan</span>: Box <span class="st">&#39;ubuntu/focal64&#39;</span> (v20210624.0.0) <span class="ex">is</span> running the latest version.</span>
+<span id="cb21-7"><a href="#cb21-7"></a>==<span class="op">&gt;</span> <span class="ex">s2.formation.lan</span>: Checking for updates to <span class="st">&#39;centos/7&#39;</span></span>
+<span id="cb21-8"><a href="#cb21-8"></a>    <span class="ex">s2.formation.lan</span>: Latest installed version: 2004.01</span>
+<span id="cb21-9"><a href="#cb21-9"></a>    <span class="ex">s2.formation.lan</span>: Version constraints: </span>
+<span id="cb21-10"><a href="#cb21-10"></a>    <span class="ex">s2.formation.lan</span>: Provider: virtualbox</span>
+<span id="cb21-11"><a href="#cb21-11"></a>==<span class="op">&gt;</span> <span class="ex">s2.formation.lan</span>: Box <span class="st">&#39;centos/7&#39;</span> (v2004.01) <span class="ex">is</span> running the latest version.</span>
+<span id="cb21-12"><a href="#cb21-12"></a>==<span class="op">&gt;</span> <span class="ex">s3.formation.lan</span>: Checking for updates to <span class="st">&#39;archlinux/archlinux&#39;</span></span>
+<span id="cb21-13"><a href="#cb21-13"></a>    <span class="ex">s3.formation.lan</span>: Latest installed version: 20210619.26314</span>
+<span id="cb21-14"><a href="#cb21-14"></a>    <span class="ex">s3.formation.lan</span>: Version constraints: </span>
+<span id="cb21-15"><a href="#cb21-15"></a>    <span class="ex">s3.formation.lan</span>: Provider: virtualbox</span>
+<span id="cb21-16"><a href="#cb21-16"></a>==<span class="op">&gt;</span> <span class="ex">s3.formation.lan</span>: Box <span class="st">&#39;archlinux/archlinux&#39;</span> (v20210619.26314) <span class="ex">is</span> running the latest version.</span></code></pre></div>
+<h2 id="nettoyage">Nettoyage</h2>
+<div class="warning">
+Attention les anciennes version restent stockées sur le disque
+</div>
+<ul>
+<li>On nettoye avec <code>vagrant box prune</code></li>
+</ul>
+<h2 id="suppresion-de-boxes">Suppresion de boxes</h2>
+<p>On supprime une/des boxe(s) avec: <code>vagrant box remove</code></p>
+<h1 id="snapshots">Snapshots</h1>
+<p>Doc officielle: <a href="https://www.vagrantup.com/docs/cli/snapshot" class="uri">https://www.vagrantup.com/docs/cli/snapshot</a></p>
+<p>Options de la commande <code>vagrant snapshot</code>:</p>
+<ul>
+<li><p><code>vagrant snapshot push</code>: Prend un snapshot et le “pousse” vers le “snapshot stack”.</p></li>
+<li><p><code>vagrant snapshot pop</code>:</p></li>
+<li><p><code>vagrant snapshot save</code>:</p></li>
+<li><p><code>vagrant snapshot restore</code>:</p></li>
+<li><p><code>vagrant snapshot list</code>:</p></li>
+<li><p><code>vagrant snapshot delete</code>:</p></li>
+</ul>
+<h1 id="provisioning">Provisioning</h1>
 <div class="footer">
   <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
 </div>
