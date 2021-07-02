@@ -1,13 +1,14 @@
 ---
-  script_path: 'Scripts'
-  # name: 'demo5'
-  memory: '512'
-  cpus: '1'
-
-
-  machines:
-    - ['s1.formation.lan', '192.168.0.11', '512', '1', 'ubuntu/focal64']
-    - ['s2.formation.lan', '192.168.0.12', '512', '1', 'centos/7']
-    - ['s3.formation.lan', '192.168.0.13', '512', '1', 'archlinux/archlinux']
+script_path: 'scripts'                                                         
+ansible_playbook: 'provisioning/playbook.yml'                                  
+ansible_inventory_path: 'provisioning/hosts'                                   
+ansible_config_file: 'provisioning/ansible.cfg'                                
+                                                                       
+machines:                                                                      
+   - ['s1.formation.lan', '192.168.0.11', '512', '1', 'ubuntu/focal64', '8011']
+     #- ['s2.formation.lan', '192.168.0.12', '512', '1', 'centos/7']           
+   - ['s2.formation.lan', '192.168.0.12', '512', '1', 'ubuntu/focal64', '8012']
+     #- ['s3.formation.lan', '192.168.0.13', '512', '1', 'archlinux/archlinux']
+   - ['s3.formation.lan', '192.168.0.13', '512', '1', 'ubuntu/focal64', '8013']
 
 ...

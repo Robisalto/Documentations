@@ -1,3 +1,4 @@
 #!/bin/bash
 
-pacman -Syu
+pacman -Syu \
+apt-plouf -wtf

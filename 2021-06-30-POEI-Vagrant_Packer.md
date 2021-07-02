@@ -311,7 +311,7 @@ vagrant validate
 ```
 
 
-# Administration des machines précédentes
+# Machines précédentes
 
 
 ```ruby
@@ -356,13 +356,6 @@ Les lignes:
 Nous permette de reprendre le contrôle sur les machines gérées précédemment et de les détruire, exemple:
 
 `vagrant destroy demo2`
-
-# Etapes
-
-1. Provisionning
-2. Bootstrap
-3. Requirements
-4. Compliance
 
 
 # Création de plusieurs VMs
@@ -911,3 +904,24 @@ Vagrant.configure("2") do |config|
   end
 end 
 ```
+
+# Intégration avec *Ansible*
+
+## vagrant ssh config
+
+```shell
+vagrant ssh-config s1.formation.lan
+scripts/s1.formation.lan.sh
+Host s1.formation.lan
+  HostName 127.0.0.1
+  User vagrant
+  Port 2201
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile D:/FormationPOECapG/projet_vagrant/.vagrant/machines/s1.formation.lan/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+```
+

@@ -1,50 +1,71 @@
-Vagrant.configure("2") do |config|                          
-  # On charge le fichier de values.yaml
-  require 'yaml'                                           
-  if File.file?('values.yaml')                             
-    conf = YAML.load_file('values.yaml')                
-  else                                                     
-    raise "Configuration file 'values.yaml' does not exist"
-  end                                                      
+Vagrant.configure("2") do |config|
 
-  if ARGV[1] and ARGV[1] != '-f' and ARGV[1] != 'save' and ARGV[1] != 'restore' and ARGV[1] != 'delete'  
+  require 'yaml'
+  if File.file?('values.yaml')
+    conf = YAML.load_file('values.yaml')
+  else
+    raise "Configuration file 'values.yaml' does not exist"
+  end
+
+  if ARGV[1] and ARGV[1] != '-f' and ARGV[1] != 'save' and ARGV[1] != 'restore' and ARGV[1] != 'delete'
     conf['machines'] = [
-      [
-        ARGV[1],
-        ARGV[2] || '0.0.0.0',
-        ARGV[3] || '256',
-        ARGV[4] || '1',
-        ARGV[5] || 'ubuntu/focal64'
-      ]
-    ]
+	  [ARGV[1],
+	   ARGV[2]||'0.0.0.0',
+	   ARGV[3]||'256',
+	   ARGV[4]||'1',
+	   ARGV[5]||'ubuntu/focal64']
+	]
   end
-                                                           
+
   # Les ressources
-  conf['machines'].each do |name, ip ,memory, cpus, box|
+  conf['machines'].each do |name, ip, memory, cpus, box, port|
     config.vm.define "#{name}" do |vm|
-      vm.vm.hostname = "#{name}"
-      vm.vm.box = "#{box}" || 'ubuntu/focal64'
-      vm.vm.network :private_network, ip: "#{ip}"                                                                      
-      vm.vm.provider "virtualbox" do |v|                     
-        v.memory = conf['memory']                            
-        v.cpus = conf['cpus']                                
-        v.name = conf['name']                                
-      end 
-      vm.vm.provision :shell do |shell|
-        shell.inline = "echo $1"
-        shell.args = " 'Super Formation !!!' "
+      vm.vm.box = "#{box}" || "ubuntu/focal64"
+	  vm.vm.hostname = "#{name}"
+	  vm.vm.network :private_network, ip: "#{ip}"
+      vm.vm.provider "virtualbox" do |v|
+	    v.memory = "#{memory}"
+	    v.cpus = "#{cpus}"
+	    v.name = "#{name}"
+	  end
+	  vm.vm.provision :shell do |shell|
+	    shell.inline = "echo $1"
+		shell.args   = "'Super formation!!'"
       end
-      vm.vm.provision :shell do |shell|
-        shell.path = conf['script_path'] + '\common-bootstrap.sh'
+	  vm.vm.provision :shell do |shell|
+	    shell.path = conf['script_path'] + '/common-bootstrap.sh'
       end
-      vm.vm.provision :shell do |shell|
-        puts conf['script_path'] + "\\#{name}.sh"
-        if conf['script_path'] + "\\#{name}.sh"
-          shell.path = conf['script_path'] + "\\#{name}.sh"
+	  vm.vm.provision :shell do |shell|
+	    puts conf['script_path'] + "/#{name}.sh"
+		if File.file?(conf['script_path'] + "/#{name}.sh")
+          shell.path = conf['script_path'] + "/#{name}.sh"
         else
-          shell.inline = "echo __END__"
-        end
+		   shell.inline = "echo __END__"
+		end
       end
-    end
+	  if "#{name}" == 's1.formation.lan'
+	    vm.vm.synced_folder "./www", "/var/www/html"
+	  end
+	  vm.vm.network "forwarded_port", guest: 80, host: "#{port}"
+	end
   end
-end 
+  config.vm.provision :ansible do |ansible|
+    ansible.verbose = "v"
+    ansible.limit = "all"
+    ansible.compatibility_mode = "2.0"
+    ansible.playbook = conf['ansible_playbook']
+    ansible.inventory_path = conf['ansible_inventory_path']
+    ansible.config_file = conf['ansible_config_file']
+    ansible.become = true
+  end
+  config.trigger.before [ :up, :provision ] do |trigger|
+    trigger.name = '[ANSIBLE]'
+	trigger.info = 'Syntax check'
+	trigger.run = { inline: "ansible-playbook " + conf['ansible_playbook'] + " --inventory " + conf['ansible_inventory_path'] + " --syntax-check" }
+  end
+  config.trigger.before [ :up, :provision ] do |trigger|
+    trigger.name = '[SCRIPTING]'
+    trigger.info = 'Syntax check'
+    trigger.run = { path: conf['script_path'] + '/linter.sh' }
+  end
+end

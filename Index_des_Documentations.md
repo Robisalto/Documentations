@@ -24,7 +24,7 @@ extensions: 'extra'
 - [Formation Programmation **Shell** (21H)](2021-06-14-POEI-Script-Shell.html)
 - [Formation **Git** (14H)](2021-06-17-POEI-Git.html)
 - [Formation **Docker**: Initiation](2021-06-21-POEI-Docker.html)
-- [Formation **Ansible**: Initiation]()
+- [Formation **Ansible**: Initiation](2021-06-24-POEI-Ansible.html)
 - Mise en Situation Docker/Ansible - Cursus DevOps
 - [Formation **Vagrant/Packer** (21H)](2021-06-30-POEI-Vagrant_Packer.html)
 

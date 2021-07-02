@@ -2,7 +2,4 @@
 
 set -ex
 
-sudo apt-get update -y 
-
-
-
+apt-get update -yq

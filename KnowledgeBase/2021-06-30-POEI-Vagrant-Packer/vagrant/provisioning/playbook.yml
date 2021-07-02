@@ -1,0 +1,32 @@
+- hosts: server
+  gather_facts: yes
+  # become: yes
+
+  vars:
+    users:
+      admin:
+        groups: sudo
+        state: present
+        shell: /bin/bash
+    key_file_path: '/mnt/c/Users/Admin\ stagiaire.DESKTOP-8967908/.ssh/dawan-ed25519.pub'
+
+
+  tasks:
+    - name: Manage users
+      user:
+        name: '{{ item.key }}'
+        state: "{{ item.value.state }}"
+        shell: "{{ item.value.shell|d('/bin/sh') }}"
+        groups: "{{ item.value.groups|d(item.key) }}"
+      loop: '{{ users|dict2items }}'
+      when: >-
+        users is defined
+        and users|length > 0
+
+    - name: Ajout de la clef
+      authorized_key:
+        user: '{{ item.key }}'
+        state: present
+        key: "{{ lookup('file', key_file_path ) }}"
+      loop: "{{ users|dict2items }}"
+      when: item.value.state|lower == 'present'

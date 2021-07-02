@@ -6,82 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David DEBRAY - Index des Documentations" />
   <title>III. L’essentiel de Python</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      {   }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.at { color: #7d9029; } /* Attribute */
-    code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #4070a0; } /* Char */
-    code span.cn { color: #880000; } /* Constant */
-    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code span.dt { color: #902000; } /* DataType */
-    code span.dv { color: #40a070; } /* DecVal */
-    code span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #40a070; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code span.op { color: #666666; } /* Operator */
-    code span.ot { color: #007020; } /* Other */
-    code span.pp { color: #bc7a00; } /* Preprocessor */
-    code span.sc { color: #4070a0; } /* SpecialChar */
-    code span.ss { color: #bb6688; } /* SpecialString */
-    code span.st { color: #4070a0; } /* String */
-    code span.va { color: #19177c; } /* Variable */
-    code span.vs { color: #4070a0; } /* VerbatimString */
-    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleLight.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 </head>
 <body>
@@ -90,10 +84,9 @@
 <p class="subtitle">Devenir un développeur Python (26 Academy)</p>
 <p class="author">David DEBRAY - <a href="Index_des_Documentations.html">Index des Documentations</a></p>
 </header>
-<nav id="TOC" role="doc-toc">
+<nav id="TOC">
 <ul>
-<li><a href="#i.-aborder-python">I. Aborder Python</a>
-<ul>
+<li><a href="#i.-aborder-python">I. Aborder Python</a><ul>
 <li><a href="#i-i.-profiter-des-fichiers-dexercise">I-I. Profiter des fichiers d’exercise</a></li>
 <li><a href="#i-iii.-choisir-son-environnement-de-développement-intégré">I-III. Choisir son environnement de développement intégré</a></li>
 <li><a href="#i-iv.-utiliser-python-comme-une-calculatrice">I-IV. Utiliser Python comme une calculatrice</a></li>
@@ -104,8 +97,7 @@
 <li><a href="#i-ix.-ecrire-un-script-dans-python">I-IX. Ecrire un script dans Python</a></li>
 <li><a href="#i-x.-découvrir-la-méthode-print">I-X. Découvrir la méthode <code>print()</code></a></li>
 </ul></li>
-<li><a href="#ii.-débuter-avec-les-structures-de-contrôle-et-les-fonctions">II. Débuter avec les structures de contrôle et les fonctions</a>
-<ul>
+<li><a href="#ii.-débuter-avec-les-structures-de-contrôle-et-les-fonctions">II. Débuter avec les structures de contrôle et les fonctions</a><ul>
 <li><a href="#ii-i.-aborder-la-structure-conditionnelle-en-if">II-I. Aborder la structure conditionnelle en <code>IF</code></a></li>
 <li><a href="#ii-ii.-aborder-la-structure-conditionelle-en-if-elseif-else">II-II. Aborder la structure conditionelle en <code>if</code>, <code>elseif</code>, <code>else</code></a></li>
 <li><a href="#ii-iii.-travailler-avec-la-structure-ditération-while">II-III. Travailler avec la structure d’itération <code>while</code></a></li>
@@ -119,8 +111,7 @@
 <li><a href="#ii-xi.-manipuler-les-tuples">II-XI. Manipuler les Tuples</a></li>
 <li><a href="#ii-xii.-utiliser-les-dictionnaires">II-XII. Utiliser les Dictionnaires</a></li>
 </ul></li>
-<li><a href="#iii.-comprendre-la-programmation-orientée-objet-et-le-fonctionnement-des-classes">III. Comprendre la programmation orientée objet et le fonctionnement des classes</a>
-<ul>
+<li><a href="#iii.-comprendre-la-programmation-orientée-objet-et-le-fonctionnement-des-classes">III. Comprendre la programmation orientée objet et le fonctionnement des classes</a><ul>
 <li><a href="#iii-i.-utiliser-les-méthodes-natives-de-python">III-I. Utiliser les méthodes natives de Python</a></li>
 <li><a href="#iii-ii.-aborder-la-notion-dobjet">III-II. Aborder la notion d’objet</a></li>
 <li><a href="#iii-iii.-fragmenter-son-projet">III-III. Fragmenter son projet</a></li>
@@ -138,8 +129,7 @@
 <li><a href="#iii-v.-exporter-de-python-et-importer-dans-un-tableur">III-V. Exporter de Python et importer dans un tableur</a></li>
 <li><a href="#iii-vi.-chapter-quizz">III-VI. Chapter Quizz</a></li>
 </ul></li>
-<li><a href="#iv.-construire-un-interface-graphique-sous-tkinter">IV. Construire un interface graphique sous Tkinter</a>
-<ul>
+<li><a href="#iv.-construire-un-interface-graphique-sous-tkinter">IV. Construire un interface graphique sous Tkinter</a><ul>
 <li><a href="#iv-i.-insérer-des-widgets-sous-tkinter">IV-I. Insérer des widgets sous Tkinter</a></li>
 <li><a href="#iv-ii.-découvrir-des-widgets-pour-les-textures">IV-II. Découvrir des widgets pour les textures</a></li>
 <li><a href="#iv-iii.-installer-dautres-widgets">IV-III. Installer d’autres widgets</a></li>
@@ -156,8 +146,7 @@
 <li><a href="#iv-xiv.-effectuer-une-complétion-avec-un-code-dinteraction">IV-XIV. Effectuer une complétion avec un code d’interaction</a></li>
 <li><a href="#iv-xv.-chapter-quizz">IV-XV. Chapter Quizz</a></li>
 </ul></li>
-<li><a href="#v.-exploiter-la-data-science-avec-python">V. Exploiter la Data Science avec Python</a>
-<ul>
+<li><a href="#v.-exploiter-la-data-science-avec-python">V. Exploiter la Data Science avec Python</a><ul>
 <li><a href="#v-i.-utiliser-les-tableaux-de-données">V-I. Utiliser les tableaux de données</a></li>
 <li><a href="#v-ii.-passer-en-revue-quelques-notions-mathématiques">V-II. Passer en revue quelques notions mathématiques</a></li>
 <li><a href="#v-iii.-utiliser-les-fonctions-de-base-de-numpy">V-III. Utiliser les fonctions de base de <code>NumPy</code></a></li>
@@ -168,8 +157,7 @@
 <li><a href="#v-viii.-aborder-la-bibliothèque-sympy">V-VIII. Aborder la bibliothèque <code>SymPy</code></a></li>
 <li><a href="#v-ix.-chapter-quizz">V-IX. Chapter Quizz</a></li>
 </ul></li>
-<li><a href="#vi.-construire-une-interface-graphique-sous-pyqt5">VI. Construire une interface graphique sous PyQt5</a>
-<ul>
+<li><a href="#vi.-construire-une-interface-graphique-sous-pyqt5">VI. Construire une interface graphique sous PyQt5</a><ul>
 <li><a href="#vi-i.-installer-pyqt5-et-qt-designer">VI-I. Installer PyQt5 et Qt Designer</a></li>
 <li><a href="#vi-ii.-créer-une-fenêtre-sous-pyqt5">VI-II. Créer une fenêtre sous PyQt5</a></li>
 <li><a href="#vi-iii.-utiliser-des-widgets-sous-pyqt5">VI-III. Utiliser des widgets sous PyQt5</a></li>
@@ -185,8 +173,7 @@
 <li><a href="#vi-xiii.-charger-son-interface-à-la-volée-dans-python">VI-XIII. Charger son interface à la volée dans Python</a></li>
 <li><a href="#vi-xiv.-chapter-quizz">VI-XIV. Chapter Quizz</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a>
-<ul>
+<li><a href="#conclusion">Conclusion</a><ul>
 <li><a href="#certification">Certification</a></li>
 </ul></li>
 </ul>
@@ -311,13 +298,13 @@ src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
 <blockquote>
 <p><strong>Attention à la portée globale d’une variable</strong></p>
 </blockquote>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Portée globale d&#39;une variable</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>rayon <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> valeurRayon():</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> rayon</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    rayon<span class="op">=</span><span class="dv">20</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">&quot;La valeur du rayon dans la fonction est :&quot;</span>,rayon)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># !!! La valeur &quot;10&quot; sera utilisée par le programme !!! #</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Portée globale d&#39;une variable</span></a>
+<a class="sourceLine" id="cb1-2" title="2">rayon <span class="op">=</span> <span class="dv">10</span></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">def</span> valeurRayon():</a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="kw">global</span> rayon</a>
+<a class="sourceLine" id="cb1-5" title="5">    rayon<span class="op">=</span><span class="dv">20</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    <span class="bu">print</span>(<span class="st">&quot;La valeur du rayon dans la fonction est :&quot;</span>,rayon)</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="co"># !!! La valeur &quot;10&quot; sera utilisée par le programme !!! #</span></a></code></pre></div>
 <h2 id="ii-ix.-utiliser-la-fonction-lambda">II-IX. Utiliser la fonction <code>lambda</code></h2>
 <p style="align-content: center;">
 <video width="600" height="337" controls>
@@ -359,16 +346,16 @@ src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
 <source src="III.EssentielDePython\III-II. Aborder la notion d'objet.mp4" type="video/mp4">
 </video>
 </p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Creation de Class</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">class</span> nomExpliciteDeClass: </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Exemple de Class</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">class</span> Rectangle(<span class="bu">object</span>):         <span class="co"># Définition</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="co">&quot;Classe de rectangle&quot;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>      <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, longueur <span class="op">=</span><span class="dv">0</span>, largeur <span class="op">=</span><span class="dv">0</span>): <span class="co"># CONSTRUCTEUR</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.cetteLongueur <span class="op">=</span> longueur</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.cetteLargeur <span class="op">=</span> largeur</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>          <span class="va">self</span>.ceNom <span class="op">=</span><span class="st">&quot;rectangle&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">  <span class="co"># Creation de Class</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="kw">class</span> nomExpliciteDeClass: </a>
+<a class="sourceLine" id="cb2-3" title="3"></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="co"># Exemple de Class</span></a>
+<a class="sourceLine" id="cb2-5" title="5">  <span class="kw">class</span> Rectangle(<span class="bu">object</span>):         <span class="co"># Définition</span></a>
+<a class="sourceLine" id="cb2-6" title="6">      <span class="co">&quot;Classe de rectangle&quot;</span></a>
+<a class="sourceLine" id="cb2-7" title="7">      <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, longueur <span class="op">=</span><span class="dv">0</span>, largeur <span class="op">=</span><span class="dv">0</span>): <span class="co"># CONSTRUCTEUR</span></a>
+<a class="sourceLine" id="cb2-8" title="8">          <span class="va">self</span>.cetteLongueur <span class="op">=</span> longueur</a>
+<a class="sourceLine" id="cb2-9" title="9">          <span class="va">self</span>.cetteLargeur <span class="op">=</span> largeur</a>
+<a class="sourceLine" id="cb2-10" title="10">          <span class="va">self</span>.ceNom <span class="op">=</span><span class="st">&quot;rectangle&quot;</span></a></code></pre></div>
 <h2 id="iii-iii.-fragmenter-son-projet">III-III. Fragmenter son projet</h2>
 <p style="align-content: center;">
 <video width="600" height="337" controls>
@@ -376,10 +363,10 @@ src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
 </video>
 </p>
 <ul>
-<li><p>Un fichier “main.py” va servir pour appeler les différentes classes.</p></li>
-<li><p>Chaque Classes est séparées dans un fichier différent</p></li>
+<li>Un fichier “main.py” va servir pour appeler les différentes classes.</li>
+<li>Chaque Classes est séparées dans un fichier différent</li>
 <li><p>Pour appeler les classes dans le fichier MAIN, on utilise:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>    <span class="im">from</span> NomDuFichierClass <span class="im">import</span> NomDeLaClasse</span></code></pre></div></li>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1">    <span class="im">from</span> NomDuFichierClass <span class="im">import</span> NomDeLaClasse</a></code></pre></div></li>
 </ul>
 <h2 id="iii-iv.-définir-une-classe">III-IV. Définir une classe</h2>
 <p style="align-content: center;">
@@ -427,55 +414,55 @@ src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
 </video>
 </p>
 <p>Pour signaler une exception <code>raise</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> maFonction(parametre):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> parametre <span class="kw">not</span> <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>):</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;&#39;parametre&#39; ne peut prendre que les valeurs 1, 2 ou 3.&quot;</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># RAISE permet de signaler une erreur (exception)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">def</span> maFonction(parametre):</a>
+<a class="sourceLine" id="cb4-2" title="2">    <span class="cf">if</span> parametre <span class="kw">not</span> <span class="kw">in</span> (<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>):</a>
+<a class="sourceLine" id="cb4-3" title="3">        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">&quot;&#39;parametre&#39; ne peut prendre que les valeurs 1, 2 ou 3.&quot;</span>)</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="co"># RAISE permet de signaler une erreur (exception)</span></a></code></pre></div>
 <p>Gérer des exceptions <code>try/except</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plusieursExceptions():</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> menbreDeLaFamille[<span class="dv">100</span> <span class="op">/</span> ma_variable2]</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Est exécuté pour ces deux exceptions</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> (<span class="pp">IndexError</span>, <span class="pp">ZeroDivisionError</span>):</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">print</span>(<span class="st">&quot;Aïe, division par 0 et un index inconnu&quot;</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Est exécuté pour cette exception</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">TypeError</span>:</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Houlaaa, c&#39;est quoi cette histoire ? Mon indice est un float !&quot;</span>)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">def</span> plusieursExceptions():</a>
+<a class="sourceLine" id="cb5-2" title="2">    <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb5-3" title="3">        <span class="cf">return</span> menbreDeLaFamille[<span class="dv">100</span> <span class="op">/</span> ma_variable2]</a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="co"># Est exécuté pour ces deux exceptions</span></a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="cf">except</span> (<span class="pp">IndexError</span>, <span class="pp">ZeroDivisionError</span>):</a>
+<a class="sourceLine" id="cb5-6" title="6">        <span class="cf">return</span> <span class="bu">print</span>(<span class="st">&quot;Aïe, division par 0 et un index inconnu&quot;</span>)</a>
+<a class="sourceLine" id="cb5-7" title="7">    <span class="co"># Est exécuté pour cette exception</span></a>
+<a class="sourceLine" id="cb5-8" title="8">    <span class="cf">except</span> <span class="pp">TypeError</span>:</a>
+<a class="sourceLine" id="cb5-9" title="9">        <span class="bu">print</span>(<span class="st">&quot;Houlaaa, c&#39;est quoi cette histoire ? Mon indice est un float !&quot;</span>)</a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="co"># </span></a></code></pre></div>
 <p>Si tout c’est bien passé on met à la fin du test:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code...</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#else est le bloc exécuté si aucune exception n’est levée :</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&#39;En fait, tout va bien.&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb6-1" title="1"><span class="co"># code...</span></a>
+<a class="sourceLine" id="cb6-2" title="2"><span class="co">#else est le bloc exécuté si aucune exception n’est levée :</span></a>
+<a class="sourceLine" id="cb6-3" title="3">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb6-4" title="4">        <span class="bu">print</span>(<span class="st">&#39;En fait, tout va bien.&#39;</span>)</a></code></pre></div>
 <p>Forcer un message à la fin:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># code...</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">finally</span>:</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">&quot;Finalement, c&#39;est Flash que je préfére !&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="co"># code...</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="cf">finally</span>:</a>
+<a class="sourceLine" id="cb7-3" title="3">        <span class="bu">print</span>(<span class="st">&quot;Finalement, c&#39;est Flash que je préfére !&quot;</span>)</a></code></pre></div>
 <h2 id="iii-xi.-découvrir-le-principe-des-décorateurs">III-XI. Découvrir le principe des décorateurs</h2>
 <p style="align-content: center;">
 <video width="600" height="337" controls>
 <source src="III.EssentielDePython\III-XI. Découvrir le principe des décorateurs.mp4" type="video/mp4">
 </video>
 </p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ------- Définition des Fonctions ------- #</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Fonction Décorateur &quot;Vérification&quot;</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> verification(fonction):</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> wrapper(<span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> valeur <span class="kw">in</span> args:</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(<span class="bu">type</span>(valeur) <span class="kw">is</span> <span class="kw">not</span> <span class="bu">int</span>):</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">TypeError</span>(<span class="st">&quot;L&#39;un des paramètres n&#39;est pas un entier!&quot;</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fonction(<span class="op">*</span>args, <span class="op">**</span>kwargs)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> wrapper</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Appel du décorateur</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="at">@verification</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> addition(nombre1, nombre2):</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> nombre1 <span class="op">+</span> nombre2</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># ------- Programme ------- #</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>resultat <span class="op">=</span> addition(<span class="dv">1</span>, <span class="st">&quot;2&quot;</span>)</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;L&#39;addition donne:&quot;</span>, resultat)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb8-1" title="1"><span class="co"># ------- Définition des Fonctions ------- #</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="co"># Fonction Décorateur &quot;Vérification&quot;</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">def</span> verification(fonction):</a>
+<a class="sourceLine" id="cb8-4" title="4">  <span class="kw">def</span> wrapper(<span class="op">*</span>args, <span class="op">**</span>kwargs):</a>
+<a class="sourceLine" id="cb8-5" title="5">    <span class="cf">for</span> valeur <span class="kw">in</span> args:</a>
+<a class="sourceLine" id="cb8-6" title="6">      <span class="cf">if</span>(<span class="bu">type</span>(valeur) <span class="kw">is</span> <span class="kw">not</span> <span class="bu">int</span>):</a>
+<a class="sourceLine" id="cb8-7" title="7">        <span class="cf">raise</span> <span class="pp">TypeError</span>(<span class="st">&quot;L&#39;un des paramètres n&#39;est pas un entier!&quot;</span>)</a>
+<a class="sourceLine" id="cb8-8" title="8">    <span class="cf">return</span> fonction(<span class="op">*</span>args, <span class="op">**</span>kwargs)</a>
+<a class="sourceLine" id="cb8-9" title="9">  <span class="cf">return</span> wrapper</a>
+<a class="sourceLine" id="cb8-10" title="10"></a>
+<a class="sourceLine" id="cb8-11" title="11"></a>
+<a class="sourceLine" id="cb8-12" title="12"><span class="co"># Appel du décorateur</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="at">@verification</span></a>
+<a class="sourceLine" id="cb8-14" title="14"><span class="kw">def</span> addition(nombre1, nombre2):</a>
+<a class="sourceLine" id="cb8-15" title="15">    <span class="cf">return</span> nombre1 <span class="op">+</span> nombre2</a>
+<a class="sourceLine" id="cb8-16" title="16"></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co"># ------- Programme ------- #</span></a>
+<a class="sourceLine" id="cb8-18" title="18">resultat <span class="op">=</span> addition(<span class="dv">1</span>, <span class="st">&quot;2&quot;</span>)</a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="bu">print</span>(<span class="st">&quot;L&#39;addition donne:&quot;</span>, resultat)</a></code></pre></div>
 <h2 id="iii-xii.-stocker-dans-des-fichiers">III-XII. Stocker dans des fichiers</h2>
 <p style="align-content: center;">
 <video width="600" height="337" controls>
@@ -483,34 +470,34 @@ src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
 </video>
 </p>
 <p>Import des modules:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#       Zone des &#39;imports&#39; de modules</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------------------------</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os.path  <span class="co"># Importation de la bibliothèque os.path pour utiliser la fonction getsize()</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># -----------------------------------------------</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="co">#       Zone des &#39;imports&#39; de modules</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="co"># -----------------------------------------------</span></a>
+<a class="sourceLine" id="cb9-4" title="4"></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="im">import</span> os.path  <span class="co"># Importation de la bibliothèque os.path pour utiliser la fonction getsize()</span></a></code></pre></div>
 <p>Créer un fichier:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> creer_fichier(nom_fichier):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="bu">open</span>(nom_fichier,<span class="st">&quot;w&quot;</span>)  <span class="co"># L&#39;ouverture du fichier en mode écriture.</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                                <span class="co"># Si le fichier existe son contenu sera écrasé sinon il sera créé.</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                                <span class="co"># Python va générer une erreur (exception) si le fichier en cours</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>                                <span class="co"># d&#39;utilisation par une autre application ou s&#39;il est ouvert.</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    f.close()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">def</span> creer_fichier(nom_fichier):</a>
+<a class="sourceLine" id="cb10-2" title="2">    f <span class="op">=</span> <span class="bu">open</span>(nom_fichier,<span class="st">&quot;w&quot;</span>)  <span class="co"># L&#39;ouverture du fichier en mode écriture.</span></a>
+<a class="sourceLine" id="cb10-3" title="3">                                <span class="co"># Si le fichier existe son contenu sera écrasé sinon il sera créé.</span></a>
+<a class="sourceLine" id="cb10-4" title="4">                                <span class="co"># Python va générer une erreur (exception) si le fichier en cours</span></a>
+<a class="sourceLine" id="cb10-5" title="5">                                <span class="co"># d&#39;utilisation par une autre application ou s&#39;il est ouvert.</span></a>
+<a class="sourceLine" id="cb10-6" title="6">    f.close()</a></code></pre></div>
 <p>Exemple:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Permet de choisir le répertoire de contenu du fichier</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>os.chdir(<span class="st">&quot;C:/Denis&quot;</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(os.getcwd())      <span class="co"># Permet de voir le chemin d&#39;accès du répertoire de travail</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>f<span class="op">=</span><span class="bu">open</span>(<span class="st">&quot;texte1.txt&quot;</span>,<span class="st">&quot;w&quot;</span>) <span class="co"># Ouverture du fichier texte1 en mode écriture... Ce sont des / et non des \ comme dans Windows</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Si le fichier existe son contenu sera écrasé, sinon il sera créé.</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;w&quot; est le mode d&#39;accès en écriture.</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Python va générer une erreur (exception) si le fichier est en cours d&#39;utilisation par une autre application ou s&#39;il est ouvert.</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># texte1.txt est le nom physique du fichier.</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># f est le nom logique du fichier</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>ligne<span class="op">=</span><span class="st">&#39;Vive la formation sur Python 3.</span><span class="ch">\n</span><span class="st">&#39;</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>ligne2<span class="op">=</span><span class="st">&quot;Votre formateur est ravi de vous accompagner dans cette formation !&quot;</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>f.write(ligne) <span class="co"># La méthode write permet d&#39;écrire un texte dans le fichier f (1 seul paramètre).</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>f.write(ligne2)</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>f.close() <span class="co"># Fermeture du fichier</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Permet de choisir le répertoire de contenu du fichier</span></a>
+<a class="sourceLine" id="cb11-2" title="2">os.chdir(<span class="st">&quot;C:/Denis&quot;</span>)</a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="bu">print</span>(os.getcwd())      <span class="co"># Permet de voir le chemin d&#39;accès du répertoire de travail</span></a>
+<a class="sourceLine" id="cb11-4" title="4">f<span class="op">=</span><span class="bu">open</span>(<span class="st">&quot;texte1.txt&quot;</span>,<span class="st">&quot;w&quot;</span>) <span class="co"># Ouverture du fichier texte1 en mode écriture... Ce sont des / et non des \ comme dans Windows</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co"># Si le fichier existe son contenu sera écrasé, sinon il sera créé.</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="co"># &quot;w&quot; est le mode d&#39;accès en écriture.</span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="co"># Python va générer une erreur (exception) si le fichier est en cours d&#39;utilisation par une autre application ou s&#39;il est ouvert.</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="co"># texte1.txt est le nom physique du fichier.</span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="co"># f est le nom logique du fichier</span></a>
+<a class="sourceLine" id="cb11-10" title="10">ligne<span class="op">=</span><span class="st">&#39;Vive la formation sur Python 3.</span><span class="ch">\n</span><span class="st">&#39;</span></a>
+<a class="sourceLine" id="cb11-11" title="11">ligne2<span class="op">=</span><span class="st">&quot;Votre formateur est ravi de vous accompagner dans cette formation !&quot;</span></a>
+<a class="sourceLine" id="cb11-12" title="12">f.write(ligne) <span class="co"># La méthode write permet d&#39;écrire un texte dans le fichier f (1 seul paramètre).</span></a>
+<a class="sourceLine" id="cb11-13" title="13">f.write(ligne2)</a>
+<a class="sourceLine" id="cb11-14" title="14">f.close() <span class="co"># Fermeture du fichier</span></a></code></pre></div>
 <h2 id="iii-xiii.-comprendre-les-itérateurs-et-les-énumérateurs">III-XIII. Comprendre les itérateurs et les énumérateurs</h2>
 <p style="align-content: center;">
 <video width="600" height="337" controls>
@@ -544,11 +531,11 @@ src="III.EssentielDePython\I-II. Découvrir Python.mp4" type="video/mp4">
 <li>Les variables de l’objet sont disponibles à l’intérieur de l’objet en les préfixant par le mot-clé <code>self</code></li>
 <li>Vous pouvez commenter votre classe avec des _. <code>docstrings</code></li>
 </ol>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> kos_root():</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">&quot;&quot;&quot;Return the pathname of the KOS root directory.&quot;&quot;&quot;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">global</span> _kos_root</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> _kos_root: <span class="cf">return</span> _kos_root</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1"><span class="kw">def</span> kos_root():</a>
+<a class="sourceLine" id="cb12-2" title="2">    <span class="co">&quot;&quot;&quot;Return the pathname of the KOS root directory.&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb12-3" title="3">    <span class="kw">global</span> _kos_root</a>
+<a class="sourceLine" id="cb12-4" title="4">    <span class="cf">if</span> _kos_root: <span class="cf">return</span> _kos_root</a>
+<a class="sourceLine" id="cb12-5" title="5">    ...</a></code></pre></div>
 <ol type="1">
 <li>Pour créer une classe de base, on peut la faire dériver de la classe _. <code>object</code></li>
 <li>Les variables membres d’une classe sont appelées des _. <code>attributs</code></li>

@@ -3,5 +3,3 @@
 set -ex
 
 yum update -y
-
-

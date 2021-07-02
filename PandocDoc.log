@@ -1,9 +1,19 @@
 [
     {
-        "type": "LoadedResource",
+        "type": "CouldNotLoadIncludeFile",
         "verbosity": "INFO",
-        "from": "footer.html",
-        "for": "footer.html"
+        "path": "geometry.sty",
+        "source": "source",
+        "line": 1,
+        "column": 35
+    },
+    {
+        "type": "CouldNotLoadIncludeFile",
+        "verbosity": "INFO",
+        "path": "geometry.sty",
+        "source": "source",
+        "line": 1,
+        "column": 35
     },
     {
         "type": "BlockNotRendered",
@@ -13,6 +23,17 @@
             "c": [
                 "tex",
                 "\\usepackage[margin=.5in]{geometry}"
+            ]
+        }
+    },
+    {
+        "type": "BlockNotRendered",
+        "verbosity": "INFO",
+        "contents": {
+            "t": "RawBlock",
+            "c": [
+                "tex",
+                "\\newpage"
             ]
         }
     },
