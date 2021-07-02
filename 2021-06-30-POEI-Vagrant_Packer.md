@@ -15,9 +15,10 @@ extensions: 'extra'
 
 #### Formation Vagrant & Packer
 
-Damien BERAUD
+**Damien BERAUD**
 Responsable du pôle système
-Tel: +33 761 049 539
+
+Tel: *+33 761 049 539*
 
 
 # Doc Source
@@ -925,3 +926,91 @@ Host s1.formation.lan
 
 ```
 
+# Packer
+
+Site officiel: <https://www.packer.io/>
+
+Intro: <https://www.packer.io/intro>
+
+Documentation: <https://www.packer.io/docs>
+
+
+<div class=info> **Packer** utilise des fichiers au format **JSON** </div>
+
+## What is Packer?
+
+> Packer is an open source tool for creating identical machine images for multiple platforms from a single source configuration. Packer is lightweight, runs on every major operating system, and is highly performant, creating machine images for multiple platforms in parallel. Packer does not replace configuration management like Chef or Puppet. In fact, when building images, Packer is able to use tools like Chef or Puppet to install software onto the image.
+> 
+> A machine image is a single static unit that contains a pre-configured operating system and installed software which is used to quickly create new running machines. Machine image formats change for each platform. Some examples include AMIs for EC2, VMDK/VMX files for VMware, OVF exports for VirtualBox, etc.
+
+## Packer Terminology
+
+There are a handful of terms used throughout the Packer documentation where the meaning may not be immediately obvious if you haven't used Packer before. Luckily, there are relatively few. This page documents all the terminology required to understand and use Packer. The terminology is in alphabetical order for quick referencing.
+
+ - `Artifacts` are the results of a single build, and are usually a set of IDs or files to represent a machine image. Every builder produces a single artifact. As an example, in the case of the Amazon EC2 builder, the artifact is a set of AMI IDs (one per region). For the VMware builder, the artifact is a directory of files comprising the created virtual machine.
+
+ - `Builds` are a single task that eventually produces an image for a single platform. Multiple builds run in parallel. Example usage in a sentence: "The Packer build produced an AMI to run our web application." Or: "Packer is running the builds now for VMware, AWS, and VirtualBox."
+
+ - `Builders` are components of Packer that are able to create a machine image for a single platform. Builders read in some configuration and use that to run and generate a machine image. A builder is invoked as part of a build in order to create the actual resulting images. Example builders include VirtualBox, VMware, and Amazon EC2.
+
+ - `Commands` are sub-commands for the packer program that perform some job. An example command is "build", which is invoked as packer build. Packer ships with a set of commands out of the box in order to define its command-line interface.
+
+ - `Data Sources` are components of Packer that fetch data from outside Packer and make it available to use within the template. Example of data sources include Amazon AMI, and Amazon Secrets Manager.
+
+ - `Post-processors` are components of Packer that take the result of a builder or another post-processor and process that to create a new artifact. Examples of post-processors are compress to compress artifacts, upload to upload artifacts, etc.
+
+ - `Provisioners` are components of Packer that install and configure software within a running machine prior to that machine being turned into a static image. They perform the major work of making the image contain useful software. Example provisioners include shell scripts, Chef, Puppet, etc.
+
+ - `Templates` are JSON files which define one or more builds by configuring the various components of Packer. Packer is able to read a template and use that information to create multiple machine images in parallel.
+
+
+### Communicators
+
+Communicators are the mechanism Packer uses to upload files, execute scripts, etc. with the machine being created.
+
+Communicators are configured within the builder section. Packer currently supports three kinds of communicators:
+
+ - `none` - No communicator will be used. If this is set, most provisioners also can't be used.
+
+ - [ssh](https://www.packer.io/docs/communicators/ssh) - An SSH connection will be established to the machine. This is usually the default.
+
+ - [winrm](https://www.packer.io/docs/communicators/winrm) - A WinRM connection will be established.
+
+In addition to the above, some builders have custom communicators they can use. For example, the Docker builder has a "docker" communicator that uses `docker exec` and `docker cp` to execute scripts and copy files.
+
+For more details on how to use each communicator, click the links above to be taken to each communicator's page.
+
+### Builders
+
+Builders are responsible for creating machines and generating images from them for various platforms. For example, there are separate builders for EC2, VMware, VirtualBox, etc. Packer comes with many builders by default, and can also be extended to add new builders.
+
+See the [source](https://www.packer.io/docs/templates/hcl_templates/blocks/source) block documentation to learn more about configuring builders in the Packer language. For information on an individual builder, choose it from the sidebar. Each builder has its own configuration options and parameters.
+
+### Data Sources
+
+Data sources allow data to be fetched for use in Packer configuration. Use of data sources allows a build to use information defined outside of Packer.
+
+See the [data](https://www.packer.io/docs/templates/hcl_templates/datasources) block documentation to learn more about working with data sources. For information on an individual data source, choose it from the sidebar.
+
+> Note: Data sources is a feature exclusively available to HCL2 templates included in Packer v1.7.0 (and newer).
+
+### Provisioners
+
+Provisioners use builtin and third-party software to install and configure the machine image after booting. Provisioners prepare the system for use, so common use cases for provisioners include:
+
+- installing packages
+- patching the kernel
+- creating users
+- downloading application code
+
+See the [provisioner](https://www.packer.io/docs/templates/hcl_templates/blocks/build/provisioner) block documentation to learn more about working with provisioners. For information on an individual provisioner, choose it from the sidebar.
+
+### Post-Processors
+
+Post-processors run after the image is built by the builder and provisioned by the provisioner(s). Post-processors are optional, and they can be used to upload artifacts, re-package, or more. For more information about post-processors, please choose an option from the sidebar.
+
+See post-processor and [post-processors](https://www.packer.io/docs/templates/hcl_templates/blocks/build/post-processor) blocks documentations to learn more about working with [post-processors](https://www.packer.io/docs/templates/hcl_templates/blocks/build/post-processors).
+
+# Code Source Damien:
+
+[Code Source Formation Vagrant/Packer](2021-06-30-POEI-Vagrant-Packer/vagrant-packer-code-source)

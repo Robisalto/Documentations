@@ -6,13 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Arthur Ulfeldt" />
   <title>Graphite and Grafana - Visualizing Application Performance</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -20,14 +26,16 @@
 <h1 class="title">Graphite and Grafana - Visualizing Application Performance</h1>
 <p class="author">Arthur Ulfeldt</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
 <li><a href="#introduction-monitoring-and-visualizing-system-performance">Introduction-Monitoring and visualizing system performance</a></li>
 <li><a href="#introduction-what-you-should-know">Introduction-What you should know</a></li>
 <li><a href="#introduction-exercise-files">Introduction-Exercise files</a></li>
 </ul></li>
-<li><a href="#i.-metrics-gathering-with-statsd">I. Metrics Gathering with StatsD</a><ul>
+<li><a href="#i.-metrics-gathering-with-statsd">I. Metrics Gathering with StatsD</a>
+<ul>
 <li><a href="#i-i.-statsd-overview">I-I. StatsD overview</a></li>
 <li><a href="#i-ii.-installing-statsd">I-II. Installing StatsD</a></li>
 <li><a href="#i-iii.-configuring-statsd">I-III. Configuring StatsD</a></li>
@@ -35,7 +43,8 @@
 <li><a href="#i-v.-adding-statsd-to-an-application">I-V. Adding StatsD to an application</a></li>
 <li><a href="#i-vi.-first-look-with-statsd-and-grafana">I-VI. First look with StatsD and Grafana</a></li>
 </ul></li>
-<li><a href="#ii.-graphite-metrics-aggregation">II. Graphite: Metrics Aggregation</a><ul>
+<li><a href="#ii.-graphite-metrics-aggregation">II. Graphite: Metrics Aggregation</a>
+<ul>
 <li><a href="#ii-i.-graphite-basics-and-components">II-I. Graphite basics and components</a></li>
 <li><a href="#ii-ii.-installing-graphite">II-II. Installing Graphite</a></li>
 <li><a href="#ii-iii.-setting-up-the-graphite-web-database">II-III. Setting up the Graphite-web database</a></li>
@@ -47,7 +56,8 @@
 <li><a href="#ii-ix.-the-graphite-ui">II-IX. The Graphite UI</a></li>
 <li><a href="#ii-x.-graphite-scaling-and-performance">II-X. Graphite scaling and performance</a></li>
 </ul></li>
-<li><a href="#iii.-grafana-metrics-visualization">III. Grafana: Metrics Visualization</a><ul>
+<li><a href="#iii.-grafana-metrics-visualization">III. Grafana: Metrics Visualization</a>
+<ul>
 <li><a href="#iii-i.-grafana-basics">III-I. Grafana basics</a></li>
 <li><a href="#iii-ii.-installing-grafana">III-II. Installing Grafana</a></li>
 <li><a href="#iii-iii.-grafana-security-basics">III-III. Grafana security basics</a></li>
@@ -57,13 +67,15 @@
 <li><a href="#iii-vii.-deep-dive-grafana-panel-types">III-VII. Deep dive Grafana panel types</a></li>
 <li><a href="#iii-viii.-high-availability-grafana">III-VIII. High-availability Grafana</a></li>
 </ul></li>
-<li><a href="#iv.-using-graphite-and-grafana-together">IV. Using Graphite and Grafana together</a><ul>
+<li><a href="#iv.-using-graphite-and-grafana-together">IV. Using Graphite and Grafana together</a>
+<ul>
 <li><a href="#iv-i.-the-graphite-render-endpoint">IV-I. The Graphite render endpoint</a></li>
 <li><a href="#iv-ii.-building-graphite-queries">IV-II. Building Graphite queries</a></li>
 <li><a href="#iv-iii.-interpreting-graphs">IV-III. Interpreting graphs</a></li>
 <li><a href="#iv-iv.-example-dashboards">IV-IV. Example dashboards</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a><ul>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
 <li><a href="#next-steps">Next steps</a></li>
 <li><a href="#certification">CERTIFICATION</a></li>
 </ul></li>
