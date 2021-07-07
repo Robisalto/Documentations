@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David CLÉMENT" />
+  <meta name="dcterms.date" content="2021-07-05" />
+  <title>POEI DevOps - VMWare Vsphere7</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="styleLight.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - VMWare Vsphere7</h1>
+<p class="author">David CLÉMENT</p>
+<p class="date">2021-07-05</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#doc-source">Doc Source</a></li>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a></li>
+<li><a href="#formation-vmware-vsphere">Formation VMWare vSphere</a>
+<ul>
+<li><a href="#vsphere">vSphere</a></li>
+<li><a href="#schéma-du-lab">Schéma du lab</a></li>
+<li><a href="#nouveautés-de-la-version-7">Nouveautés de la version 7</a></li>
+</ul></li>
+<li><a href="#hyperviseurs-esxi">Hyperviseurs ESXi</a>
+<ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#console">Console</a></li>
+<li><a href="#configurations-basiques">Configurations basiques</a>
+<ul>
+<li><a href="#mise-en-réseau">Mise en réseau</a></li>
+<li><a href="#vswitch">vSwitch</a></li>
+<li><a href="#vmkernel">vmKernel</a></li>
+<li><a href="#stockage">Stockage</a></li>
+<li><a href="#services-pare-feu">Services, Pare-feu</a></li>
+<li><a href="#matériel">Matériel</a></li>
+<li><a href="#délégation">Délégation</a></li>
+<li><a href="#vm">VM</a></li>
+<li><a href="#vmware-tools">VMWare Tools</a></li>
+<li><a href="#vm-fichiers">VM : Fichiers</a></li>
+<li><a href="#snapshots">Snapshots</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#vcenter">vCenter</a>
+<ul>
+<li><a href="#déploiement">Déploiement</a></li>
+<li><a href="#fonctionnalités-vm">Fonctionnalités VM</a>
+<ul>
+<li><a href="#migration-de-vm-vmotion">Migration de VM : vMotion</a></li>
+<li><a href="#clonage">Clonage</a></li>
+<li><a href="#balises-et-attributs-personnalisés">Balises et Attributs personnalisés</a></li>
+<li><a href="#allocation-de-ressources">Allocation de ressources</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#clusters">Clusters</a>
+<ul>
+<li><a href="#vsphere-ha">vSphere HA</a></li>
+<li><a href="#fault-tolerance">Fault Tolerance</a></li>
+<li><a href="#drs-distributed-resource-scheduler">DRS : Distributed Resource Scheduler</a></li>
+<li><a href="#reporting">Reporting</a></li>
+<li><a href="#vsan-hyper-convergence">vSAN : Hyper-convergence</a></li>
+</ul></li>
+<li><a href="#vds-vsphere-distributed-switch">VDS : vSphere Distributed Switch</a></li>
+<li><a href="#mises-à-jour-de-linfra">Mises à jour de l’infra</a></li>
+<li><a href="#sauvegarde-de-linfra">Sauvegarde de l’infra</a>
+<ul>
+<li><a href="#sauvegarde-des-esxi">Sauvegarde des ESXi</a></li>
+<li><a href="#profils-dhôtes">Profils d’hôtes</a></li>
+<li><a href="#bibliothèques-de-contenu">Bibliothèques de contenu</a></li>
+</ul></li>
+<li><a href="#api-automatisation-de-tâches">API : Automatisation de tâches</a></li>
+<li><a href="#glossaire">Glossaire</a></li>
+<li><a href="#tps-pratiques">TPs &amp; Pratiques</a></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h4 id="formation-vmware-vsphere7">Formation VMWare Vsphere7</h4>
+<p><strong>David CLÉMENT</strong></p>
+<p><em>09.72.37.73.73</em> - <em>07.61.04.94.46</em></p>
+<p>Formation de 35H du 5 au 9 Juillet 2021.</p>
+<p><img src="https://www.vmware.com/content/dam/digitalmarketing/vmware/en/images/infographic/vm-logo.png" /></p>
+<h1 id="doc-source">Doc Source</h1>
+<!-- Documentation Source en PDF:
+
+<iframe src="2021-07-05-POEI-VMWare-VSphere7/.pdf" width="100%"  height="320px" allowfullscreen="yes"></iframe> -->
+<p>Documentation sur HedgeDoc: <a href="https://hedgedoc.dawan.fr/s/yXS0kTRqJ#" class="uri">https://hedgedoc.dawan.fr/s/yXS0kTRqJ#</a></p>
+<p>Site officiel: <a href="https://www.vmware.com/fr/products/vsphere.html" class="uri">https://www.vmware.com/fr/products/vsphere.html</a></p>
+<p>Documentations sous pdf: <a href="2021-07-05-POEI-VMWare-VSphere7/DocsPDF">Docs PDFs</a></p>
+<h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
+<h1 id="formation-vmware-vsphere">Formation VMWare vSphere</h1>
+<h2 id="vsphere">vSphere</h2>
+<p>Eco-système des produits de virtualisation. - Hyperviseurs : ESXi (Electric Sky internal à partir de la version 5), ESX (avant la v5), VMVisor. OS permettant de faire tourner les VMs. - vCenter : gestionnaire d’infra vSphere (fonctionnalités: agrégation/centralisation des configurations des ESXi, clone, modèle, librairie, HA, DRS, VDS, …) - Clients : - lourd windows : n’existe plus - web client flash : deprecated - web client html5</p>
+<h2 id="schéma-du-lab">Schéma du lab</h2>
+<p><img src="2021-07-05-POEI-VMWare-VSphere7/upload_224b49851431cda9963f3c5540361ad6.png" /></p>
+<h2 id="nouveautés-de-la-version-7">Nouveautés de la version 7</h2>
+<ul>
+<li><p>Gestion des containers : vSphere with Kubernetes, Tanzu Kubernetes Grid clusters</p></li>
+<li><p>Improved Distributed Resource Scheduler (DRS)</p></li>
+<li><p>Assignable Hardware Framework</p></li>
+<li><p>Advanced Dynamic DirectPath I/O</p></li>
+<li><p>vSphere Lifecycle Manager</p></li>
+<li><p>Improved vMotion</p></li>
+<li><p>Advanced Security – implement multifactor authentication (MFA)</p></li>
+<li><p>Precision clock for PTP support</p></li>
+<li><p>Content Library, gestion des versions des modèles</p></li>
+<li><p>DRaaS : PRA sur VMWare Cloud</p></li>
+<li><p>Service Hybrid Cloud : gestion centralisée infra locale et Cloud public</p></li>
+<li><p>EVC sur GPU</p></li>
+<li><p>Option “Arrêt immédiat” sur les VMs</p></li>
+<li><p>…</p></li>
+</ul>
+<h1 id="hyperviseurs-esxi">Hyperviseurs ESXi</h1>
+<h2 id="installation">Installation</h2>
+<ul>
+<li>ISO / Clé USB -&gt; mode interactif/scripté en unattend</li>
+</ul>
+<p>ESXi Image Customizer -&gt; injection des fichiers unattend, drivers (vib)</p>
+<ul>
+<li><p>Boot via PXE</p></li>
+<li><p>Auto Deploy Service -&gt; déploiement automatisé (Enterprise Plus et VDS Switch Distribué)</p></li>
+</ul>
+<p>-&gt; HCL VMWare : Hardware Compatibility List <em>(<a href="https://www.vmware.com/resources/compatibility/search.php" class="uri">https://www.vmware.com/resources/compatibility/search.php</a>)</em></p>
+<h2 id="console">Console</h2>
+<p>Fonctionnalités: - Configuration du réseau de gestion - SSH et le shell (esxtop, esxcli) - Logs</p>
+<p>Raccourcis clavier: - F2 : paramètres - F12 : reboot/shutdown - ctrl+alt+F1 : shell - ctrl+alt+F2 : paramètres - ctrl+alt+F11 : logs</p>
+<h2 id="configurations-basiques">Configurations basiques</h2>
+<h3 id="mise-en-réseau">Mise en réseau</h3>
+<p>vmnic : interface réseau physique de l’ESXi vSwitch : interface entre les vmnic (“uplinks” du vSwitch, adaptateur réseau physique de l’hyperviseur) et les vmKernel et les groupes de ports de VMs. 2 types de switchs virtuels: - VSS : virtual Standard Switch (VLAN, formation de trafic en sortie) - VDS : virtual Distributed Switch(édition Entreprise Plus, filtrage/balisage, port mirroring, formation de trafic en in/out, PVLAN, NetFlow Collector, LACP, …)</p>
+<p>vmKernel : flux réseaux internes des hyperviseurs vm Port Group : groupe de ports des VMs, possède un nom unique et doit être identique sur l’ensemble des hyperviseurs d’un cluster.</p>
+<p>Exemple 1: <img src="2021-07-05-POEI-VMWare-VSphere7/upload_499e7938dc7fc7d0af9b1fab0015f013.png" /></p>
+<p>Exemple 2: <img src="2021-07-05-POEI-VMWare-VSphere7/upload_8850d402dc619b616bcd8c3303c5edc1.png" /></p>
+<h3 id="vswitch">vSwitch</h3>
+<p>MTU : Maximum Transmission Unit =&gt; taille des trames Ethernet. Permet de diminuer les commutations au niveau des switchs. Jumbo Frame : augmenter la taille des trames Ethernet MTU 9000 octets ou +</p>
+<p>Découverte de liaison : utilisation du protocole CDP ou LLDP pour établir une cartographie du réseau pour mieux au panne réseau.</p>
+<p>Sécurité: - mode de promiscuité : fonctionnement en mode Hub - modification d’adresse MAC : autorise la VM à modifier à modifier son adresse MAC - transmission forgée : autorise une VM à émettre un trafic avec une autre MAC que la sienne</p>
+<p>Association de cartes réseau: principe de répartition des VM sur les Nic physiques. 3 algos de répartition: round robin en fonction de l’ip ou de la MAC ou du port du switch Et 1 algo de failover: basculement explicite (utilisation de la 1ère interface et bascule sur la 2ème si pb)</p>
+<p>Détection de basculement: déterminer l’état d’un lien réseau Utilisation du Beacon probing(“Balise seulement”, broadcast sur le LAN entre les ESXi sur le management network) possible pour mieux déterminer si le lien actif</p>
+<p>Restauration automatique: si un lien est “Up” après une phase de panne alors il est remis dans le round robin</p>
+<p>Formation de trafic: Fixer une bande passante maximum en sortie (VSS ou VDS) ou en entrée (VDS).</p>
+<h3 id="vmkernel">vmKernel</h3>
+<p>Flux réseaux internes des hyperviseurs:</p>
+<ul>
+<li>Management network: administration des hyperviseurs</li>
+<li>Stockage: provisionnement, provisioning. Accès aux stockages(serveurs de fichiers, baie de disques, etc.)</li>
+<li>vMotion:
+<ul>
+<li>vMotion : kit Essential plus, déplacement à chaud de VM</li>
+<li>Storage vMotion : Licence Standard, déplacement à chaud du stockage</li>
+</ul></li>
+<li>Journalisation de Fault Tolerance: copie en temps réel de VM entre ESXi (Licence Standard)</li>
+<li>vSAN et vSAN witness : stockage hyperconvergé (licence séparée)</li>
+<li>Replication et Replication NFC : utilisé par l’outil SRM (Site Recovery Manager), DRaaS (Disaster Recovery as a Service)</li>
+</ul>
+<p>Possibilité d’utiliser des piles TCP/IP spécifiques pour ces vmKernels. Pile TCP/IP : configuration DNS et passerelle. Et optimisation des communications de certains vmKernel : vMotion et Provisionnement (stockage, pré-requis baie de stockage compatible VAAI)</p>
+<h3 id="stockage">Stockage</h3>
+<ul>
+<li>DAS : Direct Attached Storage</li>
+<li>NAS : pour VMWare uniquement le NFS 3 et 4 (hyperviseurs authentifiés sur Kerberos auprès d’un annuaire)</li>
+<li>SAN : iSCSI logiciel, FCoE(Fiber Channel over Ethernet) ou FC(Fiber Channel)
+<ul>
+<li>configuration du vmKernel de stockage (remonter la MTU)</li>
+<li>Configuration préalable des adaptateurs de stockage(liaison de port et cibles)</li>
+</ul></li>
+<li>vVol : cluster de stockage SAN ou NAS</li>
+<li>vSAN : Stockage hyperconvergé</li>
+</ul>
+<p>VMFS:</p>
+<ul>
+<li>Utiliser la v6 (la v5 n’est là que pour la rétrocompatibilité)</li>
+<li>64TB max</li>
+<li>Fichiers 2TB max</li>
+<li>recommandé 16 VMs max par LUN</li>
+</ul>
+<p>Plus d’info: <a href="https://syskb.com/san-ou-nas-quelle-est-la-difference/" class="uri">https://syskb.com/san-ou-nas-quelle-est-la-difference/</a></p>
+<h3 id="services-pare-feu">Services, Pare-feu</h3>
+<p>NTP ou PTP(nouveauté de la v7)</p>
+<h3 id="matériel">Matériel</h3>
+<p>PCI PassThrough : 1 matériel alloué à 1 VM SR-IOV (Single Root-Input Output Virtualization) : 1 matériel alloué à n VM</p>
+<h3 id="délégation">Délégation</h3>
+<p>RBAC : Role Based Access Control Role = ensemble d’opération</p>
+<h3 id="vm">VM</h3>
+<p>Par défaut, principe de l’émulation/virtualisation complète. Goulots d’étranglement:</p>
+<ul>
+<li>Processeur : Intel-VTx, AMD-V jeux d’instructions de virtu</li>
+<li>RAM : Intel-EPT, AMD-RVI -&gt; SLAT Second Level Address Translation, RAM gérée par les VM</li>
+<li>Stockage : paravirtualisation, matériel virtu + drivers spécifiques sur les OS des VMs =&gt; accès plus direct au matériel par les VMs</li>
+<li>Réseau : idem stockage =&gt; éviter de consommer du CPU sur l’ESXi pour les IO</li>
+</ul>
+<p>Format d’échange de VM : Appliance virtuelle</p>
+<ul>
+<li>OVF : Open Virtualization Folder</li>
+<li>OVA : Open Virtualization Archive (tar de l’OVF)</li>
+</ul>
+<p>Vmware Converter : P2V ou V2V, conversion de machines physiques ou virtuelles</p>
+<p>Compatibilité de la VM : Version du matériel de la VM. Prendre la dernière version par défaut sauf si volonté d’export vers des ESXi plus ancien.</p>
+<p>OS : préselection du matériel virtuel le plus adapté à l’OS de la VM.</p>
+<p>Linux : Possibilité de se passer de LVM. 1 disque virtuel = 1 point de montage.</p>
+<p>Bonnes pratiques:</p>
+<ul>
+<li>limiter le nombre d’OS (déduplication des pages de RAM)</li>
+<li>utiliser le matériel virtuel para-virtualisé(contrôleur VMWare Paravirtual et VMXNet3)</li>
+<li>ne pas installer d’interface graphique</li>
+<li>toujours installer les <strong>VMWare Tools</strong></li>
+<li>supprimer si pas utile Lecteur disquette, lecteur CD/DVD, contrôleur USB.</li>
+</ul>
+<p>Exemple pour une VM Windows:</p>
+<h3 id="vmware-tools">VMWare Tools</h3>
+<p>Meilleure intégration de l’OS Guest au sein de l’Hyperviseur</p>
+<h4 id="intérêts">Intérêts:</h4>
+<ul>
+<li>remontée d’infos(IP, nom DNS, OS, partition, etc) =&gt; classification des VMs</li>
+<li>exécution de commandes sur les VMs : Invoke-VMScript</li>
+<li>gestion de l’ACPI</li>
+<li>Drivers VMXNet3</li>
+<li>mise au repos du système de fichier (snapshot)</li>
+<li>ballooning : service permettant de faire croire à la VM qu’elle dispose de l’intégralité de sa RAM. Ram allouée éventuellement à d’autres VM (en cas de contention/sur-allocation)</li>
+<li>…</li>
+</ul>
+<h4 id="installation-1">Installation:</h4>
+<ul>
+<li><p>Windows : Installation en mode graphique</p></li>
+<li><p>Linux : Installer le paquet de la distrib “open-vm-tools” Ou git clone https://github.com/vmware/open-vm-tools.git</p></li>
+</ul>
+<p>Documentation pour la compilation : https://github.com/vmware/open-vm-tools</p>
+<ul>
+<li>Linux ancien (debian &lt; v6, Centos &lt;5, …): A n’utiliser qu’en cas d’indispobilité du package Open-vm-tools pour la distribution. Compilation des VMWare officiels depuis le CD d’installation:
+<ul>
+<li>Debian/Ubuntu: <code>apt-get install gcc make linux-headers-\$(uname -r) nettools dns-utils</code></li>
+<li>CentOs/RedHat: <code>yum install gcc perl linux-headers-$(uname -r)</code></li>
+<li>Tout OS, monter le cd, décompresser l’archive tar.gz, exécuter : <code>./vmware-install.pl</code></li>
+</ul></li>
+</ul>
+<h3 id="vm-fichiers">VM : Fichiers</h3>
+<p>1 VM = 1 dossier de même nom</p>
+<p>Fichiers de base:</p>
+<ul>
+<li>vmx : configuration de la VM</li>
+<li>vmdk : disque virtuel</li>
+</ul>
+<p>Fichiers volatiles:</p>
+<ul>
+<li>vmx~ : configuration à chaud</li>
+<li>vmx.lck : verrou</li>
+<li>nvram : pagination de la RAM de la VM</li>
+<li>vswp : Cache (swap) de la VM (provisionné au démarrage des VM)</li>
+<li>log : traces de fonctionnement du processus de la VM (8 fichiers conservés)</li>
+</ul>
+<p>Snapshots:</p>
+<ul>
+<li>vmsd : vm snapshot data, informations sur les snapshots</li>
+<li>vmsn : vm snapshot, info d’1 snapshot</li>
+<li>vmem : dump de la RAM de la VM lié à un snapshot</li>
+<li>.000000XX.vmdk : disque delta en provisionnement dynamique (lié à un vmdk parent)</li>
+</ul>
+<h3 id="snapshots">Snapshots</h3>
+<ul>
+<li>:warning: un snapshot n’est pas une sauvegarde !</li>
+<li>La configuration matérielle n’est pas prise en compte dans les snapshots. Uniquement les disques de la VM !</li>
+<li>utilisé pour créer des modèles, tester des màj, faire du recettage, installer des applis…</li>
+<li>Pré-requis:
+<ul>
+<li>à froid: pas de disque en RDM physique (Raw Device Mapping : mappage de LUN vers une VM) et disques indépendants</li>
+<li>à chaud:
+<ul>
+<li>pas de disque en RDM physique(Raw Device Mapping, disque brut), disque indépendant</li>
+<li>pas de périphérique en PCI-Passthrough</li>
+<li>pas de Fault Tolerance activé sur la VM</li>
+</ul></li>
+</ul></li>
+<li>Les snapshots ne doivent pas dépasser “15 jours” (nombre d’opérations IOps mulitiplié sur le stockage)</li>
+<li>limite de 4096 snapshots par VM</li>
+<li>Interdire les snapshots sur une VM:
+<ul>
+<li>paramètre avancé de VM : snapshot.MaxSnapshots à 0</li>
+<li>ou utiliser un disque “Indépendant - Persistant”</li>
+</ul></li>
+</ul>
+<h1 id="vcenter">vCenter</h1>
+<ul>
+<li>Gestion centralisée d’ESXi</li>
+<li>Ajout de fonctionnalités d’admin : Clonage, Modèles, Migration(vMotion et Storage vMotion), Librairie, Tag/Attributs personnalisés, Alarmes, Tâches planifiées, profils VM/ESXi …</li>
+<li>Nouveaux objets : vAPP, Pool de ressources, Cluster, Datacenter et Dossiers</li>
+<li>Lifecycle Manager : gestion des mises à jour</li>
+</ul>
+<p>Fonctionnalités de clusterisation:</p>
+<ul>
+<li>Essential plus:
+<ul>
+<li>HA : High Avaibility, redémarrage de VM (reprise d’activité)</li>
+</ul></li>
+<li>Standard:
+<ul>
+<li>FT : Fault Tolerance (continuité d’activité, copie temps réel de VM sur 2 hyperviseurs)</li>
+<li>vSAN : hyper convergence (licence supplémentaire)</li>
+</ul></li>
+<li>Enterpise Plus:
+<ul>
+<li>DRS : Dynamic Resource Scheduler -&gt; load balancing</li>
+<li>DPM : Distributed Power Management, gestion de l’alim électrique (mise en veille/allumage automatisé des hyperviseurs en cas de baisse/montée de charge dans le cluster)</li>
+<li>Proactive HA : Détection de panne, bascule de VM en fonction d’événements matériels</li>
+<li>Predictive DRS : Provisionnement d’espace libre sur les ESXi en fonctions d’opérations de provisionnement de VM avec vROp (vRealize Operation Manager)</li>
+<li>SDRS : Storage DRS, load balancing de stockage</li>
+<li>VDS : vSphere Distributed Switch, configuration centralisée des mises en réseau des ESXi</li>
+<li>AutoDeploy : déploiement automatique d’ESXi</li>
+<li>vCenter HA : cluster applicatif du serveur vCenter</li>
+<li>…</li>
+</ul></li>
+</ul>
+<h2 id="déploiement">Déploiement</h2>
+<ul>
+<li>Depuis la v6.5, uniquement le VCSA, vcenter linux virtualisé Pour les vCenter sous Windows Server =&gt; migration obligatoire.</li>
+<li>C’est une VM! Minimum : 4vCPU, 12Go de RAM et 250Go de DD</li>
+<li>Déploiement d’un modèle OVA depuis un assistant</li>
+</ul>
+<h2 id="fonctionnalités-vm">Fonctionnalités VM</h2>
+<ul>
+<li>Migration de VM</li>
+<li>Clonage</li>
+<li>Modèle</li>
+<li>Spécification de personnalisation d’OS</li>
+<li>Balise/Attributs personnalisés</li>
+</ul>
+<h3 id="migration-de-vm-vmotion">Migration de VM : vMotion</h3>
+<ul>
+<li>Editions:
+<ul>
+<li>vMotion : à partir de Essential plus, déplacement d’état CPU/RAM entre HV sans interruption de la VM</li>
+<li>Storage vMotion : à partir de Standard, déplacement de stockage entre datastores sans interruption de la VM</li>
+</ul></li>
+<li>Pré-requis : Stockage partagé entre les HV
+<ul>
+<li>à froid, pas de pré-requis (pas de PCI-PassThrough, pas de DAS)</li>
+<li>à chaud :
+<ul>
+<li>activer le vmKernel avec le service vMotion,</li>
+<li>CPU identiques sur les ESXi</li>
+<li>pas de média amovible (floppy, cd/dvd, usb),</li>
+<li>pas de disque indépendant et en RDM,</li>
+<li>ni de périphériques PCI-PassThrough.</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="clonage">Clonage</h3>
+<ul>
+<li>à froid, copie de fichiers</li>
+<li>à chaud, basé sur les snapshots(pas de périph en pci passtrough ou sr-iov, pas de disque en RDM ou indépendant)</li>
+<li>Utilise le vmkernel de Gestion</li>
+<li>Personnalisation d’OS dispo pour :
+<ul>
+<li>Windows(sysprep)</li>
+<li>Linux Centos/RedHat</li>
+</ul></li>
+</ul>
+<h3 id="balises-et-attributs-personnalisés">Balises et Attributs personnalisés</h3>
+<p>Personnalisation des différents types d’objets de l’inventaire.</p>
+<ul>
+<li>Balises : attribution sur un objet (pas de valeur) Plus simple à utiliser en script. Option “-Tag” en PowerCLI.</li>
+<li>Attribut personnalisé : Nom = Valeur Utilisable dans l’interface web</li>
+</ul>
+<p>=&gt; exemples : - propriétaire, service (balises) - date de création (attribut personnalisé)</p>
+<h3 id="allocation-de-ressources">Allocation de ressources</h3>
+<p>Permet de privilégier certaines VMs. Utile si on a de la surallocation sur une ressource de l’ESXi (CPU, RAM, Disque).</p>
+<p>3 mécanismes : - pondération : notion de parts sur RAM, CPU et stockage - réservation : allocation définitive d’une partie de la ressource concernée sur RAM et CPU (machine critique) - limitation : bridage sur la ressource concernée sur RAM, CPU et stockage</p>
+<p>-&gt; pondération : utilisée uniquement lors de la saturation(&gt;90%) de la ressource concernée</p>
+<p>Objets pour gérer les allocations: - pool de ressources : conteneur de VMs - vAPP : méta-VM (pseudo vm constituée de plusieurs VMs, pré-requis : cluster DRS)</p>
+<h1 id="clusters">Clusters</h1>
+<p>Création, choix des fonctionnalités de clustering: - DRS : répartition de charge (Distributed Resource Scheduler) - vSphere HA : Redémarrage automatisé de VM en cas de défaillance d’un ESXi (High Avaibility) - vSAN : virtual SAN, stockage hyper-convergé -&gt; stockage interne aux ESXi, cluster de stockage tolérant au panne</p>
+<h2 id="vsphere-ha">vSphere HA</h2>
+<p>Licence : à partir d’Essential Plus Pré-requis : - hyperviseurs identiques recommandés - stockage partagé entre les HV - 2 interfaces réseau sur le vmKernel de Gestion</p>
+<p><strong>Redémarrage automatisé de VM en cas de défaillance d’ESXi ou de la VM elle-même.</strong></p>
+<p>Les VMs sont redémarrées par le maître du cluster sur l’ensemble des ESXi restants.</p>
+<p>Maître est désigné par : - le nombre le + important de datastore monté - l’identifiant de l’ESXi, premier par ordre alphab.</p>
+<p>Types de panne :<br />
+- Panne de l’hôte - Isolation d’hôte : perte du réseau heartbeat entre les esxi sur le vmkernel de gestion (à partir de 3 HV) - Perte de stockage (système de heartbeat entre esxi et les datastores) - PDL : nfs/iscsi san, Permanent Device Loss - APD : fc multipathing, All Path Down</p>
+<p>:arrow_right: permet d’éviter la création de monstre à 2 têtes :arrow_right: on arrête les vms sur l’hôte isolé</p>
+<p><strong>Contrôle d’admission</strong> : Contrôle des ressources CPU et RAM réservées sur chaque HV pour assurer les bascules.</p>
+<p>VMs doivent être indépendantes par rapport au matériel de l’esxi, éviter : - usb, floppy, cd/dvd - pci-passtrough - série/parallèle physique - pas de stockage DAS</p>
+<h2 id="fault-tolerance">Fault Tolerance</h2>
+<ul>
+<li>édition : Standard(2vCPU par VM en FT max) et Enterprise Plus (4vCPU max/VM)</li>
+<li>Copie de vm en temps réel entre 2 ESXi</li>
+</ul>
+<p>Pré-requis ESXi : - activer le vmkernel avec le service Fault Tolerance Logging - vswitch séparé avec adaptateurs réseau physiques dédiés avec minimum 10Gb/s - HA activée (utilisée pour le redémarrage d’une VM secondaire en cas de défaillance d’un esxi)utilisée pour le redémarrage d’une VM secondaire en cas de défaillance d’un esxi)</p>
+<p>Pré-requis VM : - 2 vCPU max (licence standard), 4 vCPU max(licence Enterprise) - EFI pas pris en charge - CPU et RAM hotplug non pris en charge - Verrouillage de la RAM - Disque dur gonflé (provis. statique) - Virtualisation CPU/MMU matérielle - pas de périphériques : USB, série, parallèle, RDM, pci-passthrough ou sr-iov, contrôleur NVMe - entre 1 (1Gb/s sur le vmk FT) et 4 vCPU (4Gb/s)</p>
+<p>:warning: Stockage dupliqué sur un autre datastore pour protéger la VM de la perte d’un stockage</p>
+<p><img src="2021-07-05-POEI-VMWare-VSphere7/upload_16fd2c1179a43e9306d065a2044e8656.png" /></p>
+<p>Limites : - 1 à 4 vCPU par VM (2 max pour l’édition standard et 4 pour Entreprise Plus) - 4 VM en FT / hôte - 8 vCPU en FT / hôte - 98 VM en FT / cluster - 256 vCPU en FT / cluster - plus de snapshot possible sur les VMs</p>
+<h2 id="drs-distributed-resource-scheduler">DRS : Distributed Resource Scheduler</h2>
+<ul>
+<li>Edition : Enterprise plus</li>
+<li>répartition de charge (VM déplacée automatiquement à chaud ou au démarrage)</li>
+</ul>
+<p>Pré-requis ESXi : - vMotion activé - Activer l’EVC si besoin (Enhanced vMotion Compatibility) -&gt; sert à masquer les jeux d’instructions CPU non compatibles entre ESXi (inutile si les CPU sont homogènes). Garantie de déplacement à chaud de VM entre HV. Surtout utile pour le DRS, uniquement pour des plateformes de virtu hétérogènes en terme de CPU.</p>
+<p>Pré-requis VM : - pas de périphériques : usb, série/parallèle, pci pass-through, floppy/cd, RDM</p>
+<p>Règles de DRS : - affinité VM-VM et VM-Hôte - anti-affinité VM-VM et VM-Hôte</p>
+<p>Fonctionnalités liées : - ProActive HA : évacuation automatisée de VM en fonction de l’état de santé des HV - Predictive DRS : option pour faciliter les déploiements avec vROp (vRealize Operation Management) - SDRS : Storage DRS, répartition automatisée sur les datastores - DPM : Distributed Power Management, mise en veille/allumage automatisé d’hyperviseurs</p>
+<p>Objets utilisables au sein d’un cluster avec DRS :<br />
+- pool de ressource - vApp</p>
+<h2 id="reporting">Reporting</h2>
+<p>RVTools : https://www.robware.net/rvtools/ vCheck : https://vcheck.report/</p>
+<h2 id="vsan-hyper-convergence">vSAN : Hyper-convergence</h2>
+<ul>
+<li>Edition : Standard, licence supplémentaire</li>
+<li>Définition : virtual SAN, stockage virtuel Créer un stockage unique mutualisé avec l’ensemble des “DAS” des ESXi.</li>
+</ul>
+<p>Intérêt : Apporter de la scalabilité (évolutivité simplifiée) aux infra de virtu.</p>
+<ul>
+<li>Pré-requis matériel :
+<ul>
+<li>au minimum 3 volumes de stockage (Flash : SSD ou NVMe) par hyperviseur :
+<ul>
+<li>1 pour l’OS</li>
+<li>1 pour le cache (bufferisation des opérations de redondance des données de VM entre les HV)</li>
+<li>1 pour la capacité (stockage des VMs) (Hyperviseur AFA chez EMC, All Flash Array, vxRail chez Dell, …)</li>
+</ul></li>
+<li>interface réseau 10GB/s mini</li>
+</ul></li>
+<li>Pré-requis ESXi:
+<ul>
+<li>vmkernel vSAN activé sur les hôtes</li>
+</ul></li>
+<li>Domaines de panne = tolérance de la perte d’un ou plusieurs HV</li>
+</ul>
+<h1 id="vds-vsphere-distributed-switch">VDS : vSphere Distributed Switch</h1>
+<ul>
+<li><p>Edition : Enterprise plus</p></li>
+<li><p>vSphere Distributed Switch : configuration centralisée de switch virtuel sur un ensemble d’hyperviseurs</p></li>
+<li><p>fonctionnalités supplémentaires : pvlan, pool de ressource, mirroring de port, traffic shaping en entrée et en sortie, filtrage/balisage, association statique sur port de switch, netflow/netflow-collector …</p></li>
+</ul>
+<p><img src="2021-07-05-POEI-VMWare-VSphere7/upload_02a4fdebcc2a2332646eae38de37e4a7.png" /></p>
+<div class="info">
+<p>Schéma</p>
+</div>
+<h1 id="mises-à-jour-de-linfra">Mises à jour de l’infra</h1>
+<p>Problèmes de sécurité : https://www.vmware.com/in/security/advisories.html</p>
+<ul>
+<li>Éléments à mettre à jour dans cet ordre:
+<ul>
+<li>vCenter : soit à partir du Web ou via ISO d’install</li>
+<li>ESXi : soit avec LifeCycle Manager(ancien Update Manager), ou via ISO</li>
+<li>VM : matériel virtuel et vmware tools</li>
+</ul></li>
+<li>Types de màj :
+<ul>
+<li>update : changement de version mineure
+<ul>
+<li>vCenter à faire depuis https://vcsa.formation.lan:5480</li>
+<li>esxi : avec un support d’install ISO ou avec le Lifecycle Manager</li>
+<li>VM : mettre à jour d’abord les VMWare Tools puis le matériel virtuel</li>
+</ul></li>
+<li>upgrade : changement de version majeure à partir des supports d’install (iso). A faire en direct sur les hyperviseurs ou via le Lifecycle Manager.</li>
+</ul></li>
+<li>Update Manager ou Licycle manager : mise à jour des ESXi
+<ul>
+<li>Licence Standard</li>
+<li>ligne de base : ensemble de correctifs</li>
+<li>référentiel de correctif : url pour récupérer les définitions des correctifs (ajouter celui du constructeur)</li>
+</ul></li>
+</ul>
+<h1 id="sauvegarde-de-linfra">Sauvegarde de l’infra</h1>
+<p>Backup du vcenter, des confs des esxi(VSS, VM Network, VM Kernel si pas de VDS, certif SSL si modifié), VM.</p>
+<p>vCenter : - backup complet de la VM - ou backup de la config : https://vcsa:5480 (ftp, sftp, http, …)</p>
+<p>ESXi: - via PowerCLI - via shell ESXi : vicfg-cfgbackup - via VMA : vicfg-cfgbackup (vSphere Management Assistant)</p>
+<p>Installation de la PowerCLI: - powershell en tant qu’admin:</p>
+<pre><code>    Install-Module VMWare.PowerCLI</code></pre>
+<ul>
+<li>powershell en tant qu’utilisateur:</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>    Install<span class="op">-</span>Module VMWare<span class="op">.</span><span class="fu">PowerCLI</span> <span class="op">-</span>Scope CurrentUser</span></code></pre></div>
+<h2 id="sauvegarde-des-esxi">Sauvegarde des ESXi</h2>
+<p>Connexion sur esxi:</p>
+<pre><code>    Connect-VIServer 192.168.76.17 -Force</code></pre>
+<p>ou sur vcenter:</p>
+<pre><code>    Connect-VIServer vcsa -Force</code></pre>
+<p>Backup:</p>
+<pre><code>    # depuis un hyperviseur
+    Get-VMHostFirmware -BackupConfiguration -DestinationPath c:\users\admin\
+    
+    # depuis le vcenter : VMHost indique l&#39;hyperviseur à sauvegarder
+    Get-VMHostFirmware -VMHost 192.168.76.17 -DestinationPath c:\temp\</code></pre>
+<p>Restore : Mettre en mode maintenance l’ESXi (reboot requis)</p>
+<pre><code>Set-VMHostFirmware -SourcePath configBundle-192.168.76.17.tgz -VMHost 192.168.75.90 -HostUser root -HostPassword &#39;F0rmation!&#39; -Restore -Force</code></pre>
+<p>Le paramètre ‘-Force’ permet de restaurer une sauvegarde même si l’UUID de l’ESXi ne correspond pas.</p>
+<h2 id="profils-dhôtes">Profils d’hôtes</h2>
+<p>Mise en conformité des configurations des ESXi au sein des clusters (Licence Enterprise Plus).</p>
+<p>Mise en place: * Construction d’un profil à partir d’un ESXi déjà configuré * Attacher le profil sur un ESXi/Cluster * Personnalisation des ESXi (configuration variable entre les hyperviseurs : ip, adresse mac, …) * Valider la conformité et faire de la correction automatique</p>
+<h2 id="bibliothèques-de-contenu">Bibliothèques de contenu</h2>
+<p>Licence Standard</p>
+<p>Stocker et gérer les modèles de déploiement, OVA/OVF ISO.</p>
+<p><img src="2021-07-05-POEI-VMWare-VSphere7/upload_ed1c29075bdc1b53dcd4c4feaf92a60a.png" /></p>
+<h1 id="api-automatisation-de-tâches">API : Automatisation de tâches</h1>
+<ul>
+<li><p>API REST : Centre de développement (exemples dispo : https://github.com/vmware)</p></li>
+<li><p>CLI : obsolète</p></li>
+<li><p>PowerCLI : librairies de commandes Powershell (compatibles Linux, Mac et Windows) Installer au préalable : Install-Module Wmware.PowerCLI Ou Install-Module Wmware.PowerCLI -scope CurrentUser</p></li>
+<li><p>pyvmomi : API pour le python</p></li>
+<li><p>govmomi : API pour le langage Go</p></li>
+<li><p>SDK pour Java, .Net, …</p></li>
+<li><p>Ressources pour outils DevOps : Ansible, Puppet, DSC, … —–&gt; assurance d’idempotence</p></li>
+</ul>
+<h1 id="glossaire">Glossaire</h1>
+<ul>
+<li>ESX : ancien nom des ESXi</li>
+<li>ESXi : Electric Sky internal, Hyperviseur</li>
+<li>DCUI : Direct Control User Interface, interface web de gestion des hyperviseurs</li>
+<li>VAAI: VStorage API for Array Integration (VMware, Inc.), gestion intelligente du stockage</li>
+<li>PCI-Passthrough : Partage d’un périph physique vers 1 VM</li>
+<li>SR-ioV : Single Root IO Virtualization, Partage d’un périph physique vers n VM</li>
+<li>VMFS : Système de fichiers VMWare</li>
+<li>NFS : Network file system, partage de dossier de type NAS</li>
+<li>VMDK : Disque de VM</li>
+<li>HA : High Avaibility, redémarrage de VMs</li>
+<li>vMotion : déplacement à chaud de VMs</li>
+<li>EVC : Enhanced vMotion Compatibility,</li>
+</ul>
+<p>Standard :</p>
+<ul>
+<li>DRS : Distributed Resource Scheduler -&gt; load balancing</li>
+<li>vApp : vSphere Application, ensemble de VMs regroupées</li>
+<li>FT : Fault Tolerance (continuité d’activité, copie temps réel de VM)</li>
+<li>VSAN : hyper convergence</li>
+</ul>
+<p>Enterpise :</p>
+<ul>
+<li>DPM : Distributed Power Management, gestion de l’alim électrique des ESXi</li>
+<li>Proactive HA : Détection de panne</li>
+<li>Predictive DRS : Bascule de VM en fonction d’événements matériels</li>
+<li>SDRS : Storage DRS, load balancing de stockage</li>
+<li>VDS : vSphere Distributed Switch</li>
+</ul>
+<hr />
+<h1 id="tps-pratiques">TPs &amp; Pratiques</h1>
+<p>Ici c’est <strong><em>moi</em></strong> qui écrit !</p>
+<div class="footer">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

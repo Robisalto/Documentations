@@ -5,6 +5,7 @@
 2021-06-21-POEI-Docker
 2021-06-24-POEI-Ansible
 2021-06-30-POEI-Vagrant_Packer
+2021-07-05-POEI-VMWare-VSphere7
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet

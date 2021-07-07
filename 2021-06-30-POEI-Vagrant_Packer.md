@@ -16,18 +16,14 @@ extensions: 'extra'
 #### Formation Vagrant & Packer
 
 **Damien BERAUD**
-Responsable du pôle système
+Responsable du pôle système DAWAN
 
 Tel: *+33 761 049 539*
 
 
 # Doc Source
 
-Documentation Source en PDF:
-
-<iframe src="2021-06-24-POEI-Ansible/.pdf" width="100%"  height="320px" allowfullscreen="yes"></iframe>
-
-Site officiel: <https://www.ansible.com/overview/it-automation>
+Site officiel: <https://www.hashicorp.com/>
 
 # *Tips & Tricks*
 

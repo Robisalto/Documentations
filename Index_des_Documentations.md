@@ -20,17 +20,19 @@ extensions: 'extra'
 *[Dawan Présentation POEI DevOps.pdf](2021-06-07-POEI-Linux/Dawan_Présentation_POEI_DevOps.pdf)*
 
 
-- [Formation **Linux** Administration: Bases & Services (35H)](2021-06-07-POEI-Linux.html)
-- [Formation Programmation **Shell** (21H)](2021-06-14-POEI-Script-Shell.html)
-- [Formation **Git** (14H)](2021-06-17-POEI-Git.html)
-- [Formation **Docker**: Initiation](2021-06-21-POEI-Docker.html)
-- [Formation **Ansible**: Initiation](2021-06-24-POEI-Ansible.html)
-- Mise en Situation Docker/Ansible - Cursus DevOps
-- [Formation **Vagrant/Packer** (21H)](2021-06-30-POEI-Vagrant_Packer.html)
+- [**Linux** Administration: Bases & Services *(35H)*](2021-06-07-POEI-Linux.html)
+- [Programmation **Shell** *(21H)*](2021-06-14-POEI-Script-Shell.html)
+- [**Git** *(14H)*](2021-06-17-POEI-Git.html)
+- [**Docker**: Initiation *(21H)*](2021-06-21-POEI-Docker.html)
+- [**Ansible**: Initiation *(21H)*](2021-06-24-POEI-Ansible.html)
+- Mise en Situation Docker/Ansible - Cursus DevOps *(7H)*
+- [**Vagrant/Packer** *(21H)*](2021-06-30-POEI-Vagrant_Packer.html)
+- [**VMWare VSphere7** *(35H)*](2021-07-05-POEI-VMWare-VSphere7.html)
 
 ## **Linux Academy** 
 
-[**Linux Academy**] *(https://app.linuxacademy.com/)*](https://app.linuxacademy.com/)*
+[**Linux Academy** *(https://app.linuxacademy.com)* ](https://app.linuxacademy.com/)
+
 
 - [Certified Entry-Level Python Programmer Certification](Certified_Entry-Level_Python_Programmer_Certification.html)
 
