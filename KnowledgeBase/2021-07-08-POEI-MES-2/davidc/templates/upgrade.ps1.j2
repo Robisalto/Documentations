@@ -1,0 +1,10 @@
+$WarningPareference='SilentlyContinue'
+
+$conn = Connect-VIServer "{{ lookup('env','VMWARE_HOST') }}" -User "{{ lookup('env','VMWARE_USER') }}" `
+  -Password "{{ lookup('env','VMWARE_PASSWORD') }}" -Force -wa SilentlyContinue
+
+$vm = Get-VM "{{ vm_name }}"
+
+$vm.ExtensionData.UpgradeVM('vmx-19')
+
+Disconnect-VIServer $conn -Confirm:$false

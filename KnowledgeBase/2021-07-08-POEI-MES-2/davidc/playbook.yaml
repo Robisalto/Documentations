@@ -1,0 +1,333 @@
+---
+- name: "acte 1, vcenter"
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  tasks:
+
+    - name: prerequisite
+      assert:
+        that:
+          - lookup('env','VMWARE_HOST') | length > 0
+          - lookup('env','VMWARE_USER') | length > 0
+          - lookup('env','VMWARE_PASSWORD') | length > 0
+        fail_msg: "Please provide values for env vars : VMWARE_HOST, VMWARE_USER, VMWARE_PASSWORD"
+      tags: always
+
+    - name: chargement des variables
+      include_vars: common.yaml
+      tags: always
+
+    - name: Création de variables
+      set_fact:
+        vm_name: "Deb-{{ prenom }}"
+        pg_name: "VLAN-{{ prenom }}"
+        tag_name: "{{ prenom }}"
+      tags: always
+
+    - name: Add Management Network VM Portgroup to specific hosts
+      vmware_portgroup:
+        cluster: "{{ cluster_name }}"
+        switch: "{{ vswitch_name }}"
+        portgroup: "{{ pg_name }}"
+        vlan_id: "{{ vlan_id }}"
+        state: present
+      tags: vcenter
+
+    - name: Create a tag
+      vmware_tag:
+        category_id: 'urn:vmomi:InventoryServiceCategory:ae1957ef-839b-468c-ac6a-df722535aeb1:GLOBAL'
+        tag_name: "{{ tag_name }}"
+        tag_description: "les vms à bibi"
+        state: present
+      tags: vcenter
+
+    - name: Clone the template
+      vmware_guest:
+        name: "{{ vm_name }}"
+        template: "{{ template }}"
+        datacenter: "{{ datacenter_name }}"
+        datastore: "{{ datastore_name }}"
+        folder: "{{ folder_name }}"
+        state: poweredoff
+        cluster: "{{ cluster_name }}"
+      tags: vm, creation
+
+    - name: update the vm guestid
+      vmware_guest:
+        name: "{{ vm_name }}"
+        guest_id: debian10_64Guest
+        state: present
+      tags: vm, update
+
+    - name: generate upgrade script for vm hardware
+      template:
+        src: upgrade.ps1.j2
+        dest: /tmp/upgrade.ps1
+      tags: vm, upgrade
+
+    - name: upgrade vm hardware
+      command: pwsh -NoProfile -NoLogo -File /tmp/upgrade.ps1
+      changed_when: false
+
+      tags: vm, upgrade
+
+    - name: delete tmp file
+      file:
+        path: /tmp/upgrade.ps1
+        state: file
+      tags: vm, upgrade
+
+    - name: Power on the VM
+      vmware_guest:
+        name: "{{ vm_name }}"
+        state: poweredon
+        wait_for_ip_address: yes
+      register: vm_result
+      tags: always
+
+    - name: Retrieve VM Ipv4
+      set_fact:
+         vm_ip: "{{ vm_result.instance.ipv4 }}"
+      tags: always
+
+    - name: Add tag to VM
+      vmware_tag_manager:
+        tag_names:
+          - "{{ tag_name }}"
+        object_name: "{{ vm_name }}"
+        object_type: VirtualMachine
+        state: add
+      tags: vm, customization, tag
+
+    - name: Add virtual machine custom attribute
+      vmware_guest_custom_attributes:
+        name: "{{ vm_name }}"
+        state: present
+        attributes:
+          - name: DateCreation
+            value: "{{ lookup('pipe', 'date +%d/%m/%Y') }}"
+      tags: vm, customization, attribute
+
+    - name: Modify disk from virtual machine
+      vmware_guest_disk:
+        datacenter: "{{ datacenter_name }}"
+        name: "{{ vm_name }}"
+        disk:
+          - state: present
+            datastore: "{{ datastore_name }}"
+            scsi_controller: 0
+            unit_number: 0
+            size_gb: 5
+      tags: vm, customization, disk
+
+    - name: Gather info
+      vmware_guest_info:
+        datacenter: "{{ datacenter_name }}"
+        name: "{{ vm_name }}"
+      register: info
+      tags: vm, customization, network
+
+    - name: Change network adapter settings of virtual machine
+      vmware_guest_network:
+        validate_certs: no
+        name: "{{ vm_name }}"
+        gather_network_info: false
+        networks:
+          - name: "VM Network"
+            state: present
+            device_type: vmxnet3
+          - state: new
+            device_type: vmxnet3
+            name: "{{ pg_name }}"
+      when: (info.instance.hw_eth1 is not defined)
+      tags: vm, customization, network
+
+    - name: Create a snapshot
+      vmware_guest_snapshot:
+        datacenter: "{{ datacenter_name }}"
+        folder: "{{ folder_name }}"
+        name: "{{ vm_name }}"
+        memory_dump: yes
+        quiesce: yes
+        state: present
+        snapshot_name: Avant Install
+        description: "Ansible Rulez !"
+      tags: vm, snapshot
+
+    - name: Create group with my VMs
+      add_host:
+        hostname: "{{ vm_ip }}"
+        ansible_inventory: "{{ vm_name }}"
+        ansible_user: dawan
+        ansible_password: dawan
+        host_key_checking: false
+        groups:
+          - "New_VM"
+      tags: always
+
+    - name: inv
+      debug:
+        verbosity: 1
+        var: groups
+
+    - name: Gather SSH host key
+      shell: "ssh-keyscan {{ vm_ip }} >> ~/.ssh/known_hosts"
+      changed_when: false
+      tags: sshkey
+
+- name: Acte 2 Scène 1, copie de la clé SSH
+  hosts: "New_VM"
+  user: dawan
+  tasks:
+    - name: SSH Key copy
+      authorized_key:
+        user: dawan
+        key: "{{ lookup('file', 'david.pub') }}"
+        state: present
+      tags: sshkey
+
+- name: Acte 2 Scène2, à l'intérieur de la vm :)
+  hosts: "New_VM"
+  user: dawan
+  become: true
+  vars:
+    db_password: "F0rmation!"
+    wp_url: "https://fr.wordpress.org/latest-fr_FR.zip"
+    tmp_dir: "/tmp/davidc"
+    tmp_file: "{{ tmp_dir }}/wp.zip"
+    packages:
+      - zip
+      - apache2
+      - mariadb-server
+      - php7.3
+      - php7.3-mysql
+      - python3-pymysql
+      - python-pymysql
+  tasks:
+    - name: create temp dir
+      file:
+        path: "{{ tmp_dir }}"
+        state: directory
+      tags: os
+
+    - name: rename VM
+      hostname:
+        name: "deb-{{ prenom }}"
+      tags: os, hostname
+
+    - name: resize file system
+      filesystem:
+        fstype: 'ext4'
+        dev: '/dev/sda1'
+        resizefs: yes
+      tags: os, filesystem
+
+    - name: Get if name
+      set_fact:
+        if_name: "{{ ansible_interfaces[2] }}"
+      tags: os, netadapter
+
+    - name: network adapter configuration
+      template:
+        src: interface.j2
+        dest: "/etc/network/interfaces.d/{{ if_name }}"
+      tags: os, netadapter
+
+    - name: ifup adapter
+      command: "ifup {{ if_name }}"
+      changed_when: false
+      tags: os, netadapter
+
+    - name: update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 7200
+      tags: os, software
+
+    - name: Install packages
+      apt:
+        name: "{{ packages }}"
+        state: present
+      tags: os, software
+
+    - name: Enable, start services
+      systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: started
+      loop:
+        - apache2
+        - mysqld
+      tags: os, service
+
+    - name: Create database
+      mysql_db:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wordpress
+        state: present
+      tags: os, db
+
+    - name: Create database user
+      mysql_user:
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        name: wp_dba
+        password: "{{ db_password }}"
+        priv: 'wordpress.*:ALL'
+        state: present
+      no_log: true
+      tags: os, db
+
+    - name: download WP
+      get_url:
+        url: "{{ wp_url }}"
+        dest: "{{ tmp_file }}"
+      tags: os, wordpress
+
+    - name: Unzip WP
+      unarchive:
+        src: "{{ tmp_file }}"
+        remote_src: yes
+        dest: "/var/www"
+      tags: os, wordpress
+
+    - name: remove html directory
+      file:
+        path: /var/www/html
+        state: absent
+      tags: os, wordpress
+
+    - name: rename wordpress dir
+      command: mv /var/www/wordpress /var/www/html
+      changed_when: false
+      tags: os, wordpress
+
+    - name: Recursively change ownership of a directory
+      file:
+        path: /war/www/html
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+      tags: os, wordpress
+
+    - name: Clean tmp
+      file:
+        path: "{{ tmp_dir }}"
+        state: absent
+      tags: os, wordpress
+
+- name: Acte 3, nettoyage
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  tasks:
+    - name: Remove all snapshots
+      vmware_guest_snapshot:
+        datacenter: "{{ datacenter_name }}"
+        folder: "/{{ datacenter_name }}/vm/"
+        name: "{{ vm_name }}"
+        state: remove_all
+      tags: vm, snapshot
+
+...

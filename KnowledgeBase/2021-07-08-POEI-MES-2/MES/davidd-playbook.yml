@@ -1,0 +1,196 @@
+---
+
+- name: "Acte 1, vcenter"
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  tasks:
+
+    - name: prerequisite
+      assert:
+        that:
+          - lookup('env', 'VMWARE_HOST') != ''
+          - lookup('env', 'VMWARE_USER') != ''
+          - lookup('env', 'VMWARE_PASSWORD') != ''
+        fail_msg: "No values for ENV_VARS: VMWARE_HOST, VMWARE_USER, VMWARE_PASSWORD"
+      tags: always
+
+
+    - name: Include secrets Environment Items
+      include_vars: secrets.yml
+      tags: always
+
+
+    - name: Ajout groupe de ports
+      vmware_portgroup:
+        hostname: '{{ vcenter_hostname }}'
+        cluster_name: "{{cluster_name}}"
+        switch: "{{vSwitch_name}}"
+        portgroup: "VLAN-{{prenom}}"
+        vlan_id: "{{vlan_id}}"
+        state: present
+      delegate_to: "{{delegate_to_default}}"
+
+
+    - name: creation vm
+      vmware_guest:
+        datacenter: "{{esx_datacenter_name}}"
+        name: "{{vm_name}}"
+        template: "{{template_name}}"
+        datastore: "{{esx_datastore_name}}"
+        datacenter: "Datacenter"
+        folder: "{{folder_name}}"
+        state: poweredon
+        disk:
+          - size_gb: "{{disk_size}}"
+            type: "{{disk_type_default}}"
+            autoselect_datastore: "{{autoselect_datastore_default}}"
+        wait_for_ip_address: "{{wait_for_ip_address_default}}"
+      delegate_to: "{{delegate_to_default}}"
+      register: vm_result
+      tags: always
+
+
+    - name: CREATE TAG
+      vmware_tag:
+        category_id: "{{tag_category_id}}" 
+        tag_name: "{{tag_name}}"
+        tag_description: "{{tag_description}}"
+        state: present
+      delegate_to: "{{delegate_to_default}}"
+
+    - name: ADD TAG TO VM
+      vmware_tag_manager:
+        object_type: VirtualMachine
+        object_name: "{{vm_name}}"
+        tag_names:
+          - "{{tag_name}}"
+        state: add
+      delegate_to: "{{delegate_to_default}}"
+
+
+    - name: CREATION DATE
+      vmware_guest_custom_attributes:
+        name: "{{vm_name}}"
+        attributes:
+          - name: DateCreation
+            value: "{{ansible_date_time.date}}"
+      delegate_to: "{{delegate_to_default}}"
+      register: attributes
+      tags: never
+
+    - name: ADD VMXNET3
+      vmware_guest_network:
+        validate_certs: no
+        name: "{{vm_name}}"
+        gather_network_info: true
+        networks:
+          - name: "VM Network"
+            state: present
+            device_type: vmxnet3
+          - state: new
+            name: "VLAN-{{prenom}}"
+            device_type: vmxnet3
+      when: (info.instance.hw_eth1 is not defined)
+      tags: vm, customization, network
+
+    - name: GET VM IP
+      set_fact:
+        vm_ip: "{{ vm_result.instance.ipv4 }}"
+      debugger: on_failed
+      tags: always
+    - debug:
+        var: vm_ip
+
+
+    - name: COPY SSH-KEY
+      block:
+        - name: mkdir .ssh
+          file:
+            path: "/home/{{vcenter_username}}/.ssh"
+            state: directory
+        - name: touch authorized_keys
+          file:
+            path: "/home/{{vcenter_username}}/.ssh/authorized_keys"
+            state: touch
+        - name: push key.pub
+          lineinfile:
+            path: "/home/{{vcenter_username}}/.ssh/authorized_keys"
+            line: "{{pubkey}}"
+      tags: never
+
+    - name: Create VMs Group
+      add_host:
+        hostname: "{{vm_ip}}"
+        ansible_inventory: "{{vm_name}}"
+        ansible_user: "{{ansible_username}}"
+        ansible_password: "{{ansible_user_password}}"
+        host_key_checking: false
+        groups:
+          - "New_VM"
+        tags: always
+
+    - name: inv
+      debug:
+        verbosity: 1
+        var: groups
+
+    - name: Gather SSH host key
+      shell: "ssh-keyscan {{vm_ip}} >> ~/.ssh/known_hosts"
+      tags: ssh
+
+    
+
+
+
+# --------------------------------------------------------------------------- #      
+
+- name: "Acte 2"
+  hosts: "New_VM"
+  connection: ssh
+  gather_facts: yes
+  tasks:
+
+    - name: Include Act2 vars
+      include_vars: secrets.yml
+      tags: always
+
+    - name: DEBUGGING
+      debug:
+        var: vm_ip
+        var: ansible_username
+
+
+    - name: Act2-Scene1; ssh key copy
+      ansible.posix.authorized_key:
+        user: "{{ansible_username}}"
+        state: present
+        key: "{{lookup('file', '{{ssh_public_key}}')}}"
+
+
+    - name: Create a snapshot
+      vmware_guest_snapshot:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        datacenter: "{{ esx_datacenter_name }}"
+        folder: "/{{ esx_datacenter_name }}/vm/"
+        name: "{{ vm_name }}"
+        state: present
+        snapshot_name: snap-"{{ansible_date_time.date}}"
+        description: Petite description de Snapshot
+      delegate_to: localhost
+
+
+    #- name: Act2-Scene2; Resize2fs
+      
+
+
+
+    #- name: Act2-Scene2; static ip
+
+
+
+
+
+...

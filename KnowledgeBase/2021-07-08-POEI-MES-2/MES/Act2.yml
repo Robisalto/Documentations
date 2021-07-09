@@ -1,0 +1,12 @@
+---
+
+
+# ANSIBLE VARIABLES
+ansible_username: dawan
+ansible_user_password: dawan
+ssh_public_key: /home/davidd/.ssh/id_rsa.pub
+pubkey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDoUiaurRnlZOJVi1O65kd/KNg0/XJHtZXBNfWDJ9L1teOlH+1fPrrl5z3979Dae/r+v1uqttkvCGHVWVu2gIOA1lvW3n+tY2ym4Iu6KMO5d+REl9PwqZlJuJXZ/dcPU/rQEg8aAV69eLQJ9GOnA4dVRZtrJpfiiDkxbQ5uzYomOzuKWFL2JZa1daJTZnKKtQ0Ah3KUsL+3BBUN1NgMq6UVAotVqhWycOShr1o9hPI0hs0Zixv5wsXh5n5iHHja4cHLQqQzMyETnTdgR2N5l/5s/iy9lrgPnfbEQJjOa8MPRj7xyhlU0N0DDVX7lUfXJwbHuHDXlf4migYBPVdYLXyt davidd@ubansible"
+
+
+
+...

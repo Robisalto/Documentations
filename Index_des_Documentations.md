@@ -29,6 +29,8 @@ extensions: 'extra'
 - [**Vagrant/Packer** *(21H)*](2021-06-30-POEI-Vagrant_Packer.html)
 - [**VMWare VSphere7** *(35H)*](2021-07-05-POEI-VMWare-VSphere7.html)
 
+- [**Mise en situation n°2: VMWare / Ansible**](2021-07-08-POEI-MES-2.html)
+
 ## **Linux Academy** 
 
 [**Linux Academy** *(https://app.linuxacademy.com)* ](https://app.linuxacademy.com/)

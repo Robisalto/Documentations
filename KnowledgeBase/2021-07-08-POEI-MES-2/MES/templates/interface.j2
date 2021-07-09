@@ -1,0 +1,8 @@
+# Ansible managed
+# NO TOCAR !!!
+
+allow-hotplug {{ if_name }}
+iface {{ if_name }} inet static
+  address 10.10.10.20
+  netmask 24
+  

@@ -1,0 +1,29 @@
+- name: supprime les éléments
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: chargement des variables
+      include_vars: common.yaml
+
+    - name: Delete tag
+      vmware_tag:
+        hostname: '{{ vcenter_hostname }}'
+        username: '{{ vcenter_username }}'
+        password: '{{ vcenter_password }}'
+        validate_certs: no
+        tag_name: "{{ prenom }}"
+        state: absent
+
+
+    - name: Remove Management Network VM Portgroup to all hosts in a cluster
+      vmware_portgroup:
+        hostname: "{{ vcenter_hostname }}"
+        username: "{{ vcenter_username }}"
+        password: "{{ vcenter_password }}"
+        validate_certs: no
+        cluster_name: "{{ cluster_name }}"
+        switch: "{{ vswitch_name }}"
+        portgroup: "VLAN-{{ prenom }}"
+        vlan_id: "{{ vlan_id }}"
+        state: absent
+

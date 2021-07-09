@@ -1,0 +1,8 @@
+---
+template: "DebTemplate"
+vlan_id: "1101"
+vswitch_name: "vSwitch0"
+cluster_name: "Cluster"
+datacenter_name: "Datacenter"
+datastore_name: "DatastoreCluster"
+folder_name: "/"
