@@ -20,16 +20,21 @@ extensions: 'extra'
 *[Dawan Présentation POEI DevOps.pdf](2021-06-07-POEI-Linux/Dawan_Présentation_POEI_DevOps.pdf)*
 
 
-- [**Linux** Administration: Bases & Services *(35H)*](2021-06-07-POEI-Linux.html)
-- [Programmation **Shell** *(21H)*](2021-06-14-POEI-Script-Shell.html)
-- [**Git** *(14H)*](2021-06-17-POEI-Git.html)
-- [**Docker**: Initiation *(21H)*](2021-06-21-POEI-Docker.html)
-- [**Ansible**: Initiation *(21H)*](2021-06-24-POEI-Ansible.html)
-- Mise en Situation Docker/Ansible - Cursus DevOps *(7H)*
-- [**Vagrant/Packer** *(21H)*](2021-06-30-POEI-Vagrant_Packer.html)
-- [**VMWare VSphere7** *(35H)*](2021-07-05-POEI-VMWare-VSphere7.html)
+- [Linux Administration: Bases & Services *(35H)*](2021-06-07-POEI-Linux.html)
+- [Programmation Shell *(21H)*](2021-06-14-POEI-Script-Shell.html)
+- [Git *(14H)*](2021-06-17-POEI-Git.html)
+- [Docker: Initiation *(21H)*](2021-06-21-POEI-Docker.html)
+- [Ansible: Initiation *(21H)*](2021-06-24-POEI-Ansible.html)
+
+- **Mise en Situation Docker/Ansible** - Cursus DevOps *(7H)* =>> Not implemented :(
+
+- [Vagrant/Packer *(21H)*](2021-06-30-POEI-Vagrant_Packer.html)
+- [VMWare VSphere7 *(35H)*](2021-07-05-POEI-VMWare-VSphere7.html)
 
 - [**Mise en situation n°2: VMWare / Ansible**](2021-07-08-POEI-MES-2.html)
+
+- [Amazon Web Services *(21H)*](2021-07-12-POEI-AWS.html)
+
 
 ## **Linux Academy** 
 
@@ -108,6 +113,10 @@ extensions: 'extra'
 - [Apprendre à dire "non" *(LinkedIn Learning)*]() 
 
 # Docs Perso
+
+## Python Projects
+
+[My Python Projects](2021-07-13-Python-Projects.html)
 
 - [Workout](MyWORKOUT.html)
 - [Quotes](Quotes.html)
