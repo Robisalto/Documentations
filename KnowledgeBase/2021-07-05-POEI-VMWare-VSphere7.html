@@ -7,76 +7,80 @@
   <meta name="author" content="David CLÉMENT" />
   <meta name="dcterms.date" content="2021-07-05" />
   <title>POEI DevOps - VMWare Vsphere7</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-  </style>
-  <link rel="stylesheet" href="styleLight.css" />
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -85,19 +89,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p class="author">David CLÉMENT</p>
 <p class="date">2021-07-05</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#doc-source">Doc Source</a></li>
 <li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a></li>
-<li><a href="#formation-vmware-vsphere">Formation VMWare vSphere</a><ul>
+<li><a href="#formation-vmware-vsphere">Formation VMWare vSphere</a>
+<ul>
 <li><a href="#vsphere">vSphere</a></li>
 <li><a href="#schéma-du-lab">Schéma du lab</a></li>
 <li><a href="#nouveautés-de-la-version-7">Nouveautés de la version 7</a></li>
 </ul></li>
-<li><a href="#hyperviseurs-esxi">Hyperviseurs ESXi</a><ul>
+<li><a href="#hyperviseurs-esxi">Hyperviseurs ESXi</a>
+<ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#console">Console</a></li>
-<li><a href="#configurations-basiques">Configurations basiques</a><ul>
+<li><a href="#configurations-basiques">Configurations basiques</a>
+<ul>
 <li><a href="#mise-en-réseau">Mise en réseau</a></li>
 <li><a href="#vswitch">vSwitch</a></li>
 <li><a href="#vmkernel">vmKernel</a></li>
@@ -111,16 +118,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#snapshots">Snapshots</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#vcenter">vCenter</a><ul>
+<li><a href="#vcenter">vCenter</a>
+<ul>
 <li><a href="#déploiement">Déploiement</a></li>
-<li><a href="#fonctionnalités-vm">Fonctionnalités VM</a><ul>
+<li><a href="#fonctionnalités-vm">Fonctionnalités VM</a>
+<ul>
 <li><a href="#migration-de-vm-vmotion">Migration de VM : vMotion</a></li>
 <li><a href="#clonage">Clonage</a></li>
 <li><a href="#balises-et-attributs-personnalisés">Balises et Attributs personnalisés</a></li>
 <li><a href="#allocation-de-ressources">Allocation de ressources</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#clusters">Clusters</a><ul>
+<li><a href="#clusters">Clusters</a>
+<ul>
 <li><a href="#vsphere-ha">vSphere HA</a></li>
 <li><a href="#fault-tolerance">Fault Tolerance</a></li>
 <li><a href="#drs-distributed-resource-scheduler">DRS : Distributed Resource Scheduler</a></li>
@@ -129,7 +139,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li><a href="#vds-vsphere-distributed-switch">VDS : vSphere Distributed Switch</a></li>
 <li><a href="#mises-à-jour-de-linfra">Mises à jour de l’infra</a></li>
-<li><a href="#sauvegarde-de-linfra">Sauvegarde de l’infra</a><ul>
+<li><a href="#sauvegarde-de-linfra">Sauvegarde de l’infra</a>
+<ul>
 <li><a href="#sauvegarde-des-esxi">Sauvegarde des ESXi</a></li>
 <li><a href="#profils-dhôtes">Profils d’hôtes</a></li>
 <li><a href="#bibliothèques-de-contenu">Bibliothèques de contenu</a></li>
@@ -161,19 +172,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="2021-07-05-POEI-VMWare-VSphere7/upload_224b49851431cda9963f3c5540361ad6.png" /></p>
 <h2 id="nouveautés-de-la-version-7">Nouveautés de la version 7</h2>
 <ul>
-<li>Gestion des containers : vSphere with Kubernetes, Tanzu Kubernetes Grid clusters</li>
-<li>Improved Distributed Resource Scheduler (DRS)</li>
-<li>Assignable Hardware Framework</li>
-<li>Advanced Dynamic DirectPath I/O</li>
-<li>vSphere Lifecycle Manager</li>
-<li>Improved vMotion</li>
-<li>Advanced Security – implement multifactor authentication (MFA)</li>
-<li>Precision clock for PTP support</li>
-<li>Content Library, gestion des versions des modèles</li>
-<li>DRaaS : PRA sur VMWare Cloud</li>
+<li><p>Gestion des containers : vSphere with Kubernetes, Tanzu Kubernetes Grid clusters</p></li>
+<li><p>Improved Distributed Resource Scheduler (DRS)</p></li>
+<li><p>Assignable Hardware Framework</p></li>
+<li><p>Advanced Dynamic DirectPath I/O</p></li>
+<li><p>vSphere Lifecycle Manager</p></li>
+<li><p>Improved vMotion</p></li>
+<li><p>Advanced Security – implement multifactor authentication (MFA)</p></li>
+<li><p>Precision clock for PTP support</p></li>
+<li><p>Content Library, gestion des versions des modèles</p></li>
+<li><p>DRaaS : PRA sur VMWare Cloud</p></li>
 <li><p>Service Hybrid Cloud : gestion centralisée infra locale et Cloud public</p></li>
-<li>EVC sur GPU</li>
-<li>Option “Arrêt immédiat” sur les VMs</li>
+<li><p>EVC sur GPU</p></li>
+<li><p>Option “Arrêt immédiat” sur les VMs</p></li>
 <li><p>…</p></li>
 </ul>
 <h1 id="hyperviseurs-esxi">Hyperviseurs ESXi</h1>
@@ -490,7 +501,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <h1 id="vds-vsphere-distributed-switch">VDS : vSphere Distributed Switch</h1>
 <ul>
-<li>Edition : Enterprise plus</li>
+<li><p>Edition : Enterprise plus</p></li>
 <li><p>vSphere Distributed Switch : configuration centralisée de switch virtuel sur un ensemble d’hyperviseurs</p></li>
 <li><p>fonctionnalités supplémentaires : pvlan, pool de ressource, mirroring de port, traffic shaping en entrée et en sortie, filtrage/balisage, association statique sur port de switch, netflow/netflow-collector …</p></li>
 </ul>
@@ -533,7 +544,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li>powershell en tant qu’utilisateur:</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><a class="sourceLine" id="cb2-1" title="1">    Install-Module VMWare.<span class="fu">PowerCLI</span> -Scope CurrentUser</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb2-1"><a href="#cb2-1"></a>    Install-Module VMWare.<span class="fu">PowerCLI</span> -Scope CurrentUser</span></code></pre></div>
 <h2 id="sauvegarde-des-esxi">Sauvegarde des ESXi</h2>
 <p>Connexion sur esxi:</p>
 <pre><code>    Connect-VIServer 192.168.76.17 -Force</code></pre>
@@ -557,11 +568,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="2021-07-05-POEI-VMWare-VSphere7/upload_ed1c29075bdc1b53dcd4c4feaf92a60a.png" /></p>
 <h1 id="api-automatisation-de-tâches">API : Automatisation de tâches</h1>
 <ul>
-<li>API REST : Centre de développement (exemples dispo : https://github.com/vmware)</li>
-<li>CLI : obsolète</li>
-<li>PowerCLI : librairies de commandes Powershell (compatibles Linux, Mac et Windows) Installer au préalable : Install-Module Wmware.PowerCLI Ou Install-Module Wmware.PowerCLI -scope CurrentUser</li>
-<li>pyvmomi : API pour le python</li>
-<li>govmomi : API pour le langage Go</li>
+<li><p>API REST : Centre de développement (exemples dispo : https://github.com/vmware)</p></li>
+<li><p>CLI : obsolète</p></li>
+<li><p>PowerCLI : librairies de commandes Powershell (compatibles Linux, Mac et Windows) Installer au préalable : Install-Module Wmware.PowerCLI Ou Install-Module Wmware.PowerCLI -scope CurrentUser</p></li>
+<li><p>pyvmomi : API pour le python</p></li>
+<li><p>govmomi : API pour le langage Go</p></li>
 <li><p>SDK pour Java, .Net, …</p></li>
 <li><p>Ressources pour outils DevOps : Ansible, Puppet, DSC, … —–&gt; assurance d’idempotence</p></li>
 </ul>
@@ -599,7 +610,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 id="tps-pratiques">TPs &amp; Pratiques</h1>
 <p>Ici c’est <strong><em>moi</em></strong> qui écrit !</p>
 <div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
 </div>
 </body>
 </html>

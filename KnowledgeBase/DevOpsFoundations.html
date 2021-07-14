@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Ernest Mueller and James Wickett" />
   <title>DevOps Foundations</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleLight.css" />
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -20,13 +25,15 @@
 <h1 class="title">DevOps Foundations</h1>
 <p class="author">Ernest Mueller and James Wickett</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#welcome">Welcome</a></li>
-<li><a href="#i.-devops-basics">I. DevOps Basics</a><ul>
+<li><a href="#i.-devops-basics">I. DevOps Basics</a>
+<ul>
 <li><a href="#i-i.-what-is-devops">I-I. What is DevOps?</a></li>
 <li><a href="#i-ii.-devops-core-values-cams">I-II. DevOps core values: CAMS</a></li>
-<li><a href="#i-iii.-devops-principles-the-three-ways">I-III. DevOps principles: The three ways</a><ul>
+<li><a href="#i-iii.-devops-principles-the-three-ways">I-III. DevOps principles: The three ways</a>
+<ul>
 <li><a href="#i-iii-i.-systems-thinking">I-III-I. <strong>Systems Thinking:</strong></a></li>
 <li><a href="#i-iii-ii.-amplifing-feedback-loops">I-III-II. <strong>Amplifing Feedback Loops:</strong></a></li>
 <li><a href="#i-iii-iiii.-culture-of-continuous-experimentation-and-learning">I-III-IIII. <strong>Culture of continuous experimentation and learning</strong></a></li>
@@ -35,7 +42,8 @@
 <li><a href="#i-vi.-10-practices-for-devops-success-10-through-6">I-VI. 10 practices for DevOps success (10 through 6)</a></li>
 <li><a href="#i-vii.-10-practices-for-devops-success-5-through-1">I-VII. 10 practices for DevOps success (5 through 1)</a></li>
 <li><a href="#i-v.-devops-tools-the-cart-or-the-horse">I-V. DevOps tools: The cart or the horse?</a></li>
-<li><a href="#i-vi.-quizz">I-VI. Quizz</a><ul>
+<li><a href="#i-vi.-quizz">I-VI. Quizz</a>
+<ul>
 <li><a href="#lets-say-your-companys-server-went-down-for-a-few-days-due-to-a-hurricane.-how-would-having-a-status-page-affect-your-companys-reputation-throughout-the-outage">3. Let’s say your company’s server went down for a few days due to a hurricane. How would having a status page affect your company’s reputation throughout the outage?</a></li>
 <li><a href="#when-considering-the-people-over-process-over-tools-methodology-why-is-it-important-to-focus-on-people-first">4. When considering the People over Process over Tools methodology, why is it important to focus on People first?</a></li>
 <li><a href="#what-are-the-five-levels-of-devops-practice">5. What are the five levels of DevOps practice?</a></li>
@@ -45,7 +53,8 @@
 <li><a href="#what-are-the-four-values-in-the-cams-model">9. What are the four values in the CAMS model?</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#ii.-devops-a-culture-problem">II. DevOps: A Culture Problem</a><ul>
+<li><a href="#ii.-devops-a-culture-problem">II. DevOps: A Culture Problem</a>
+<ul>
 <li><a href="#ii-i.-the-it-crowd-and-the-coming-storm">II-I. The IT crowd and the coming storm</a></li>
 <li><a href="#ii-ii.-use-your-words">II-II. Use your words</a></li>
 <li><a href="#ii-iii.-do-unto-others">II-III. Do unto others</a></li>
@@ -53,20 +62,23 @@
 <li><a href="#ii-v.-kaizen-continuous-improvement">II-V. Kaizen Continuous improvement</a></li>
 <li><a href="#ii-vi.-quizz">II-VI. QUIZZ</a></li>
 </ul></li>
-<li><a href="#iii.-the-building-blocks-of-devops">III. The Building Blocks of DevOps</a><ul>
+<li><a href="#iii.-the-building-blocks-of-devops">III. The Building Blocks of DevOps</a>
+<ul>
 <li><a href="#iii-i.-devops-building-block-agile">III-I. DevOps building block: Agile</a></li>
 <li><a href="#iii-ii.-devops-building-block-lean">III-II. DevOps building block: Lean</a></li>
 <li><a href="#iii-iii.-itil-itsm-and-the-sdlc">III-III. ITIL, ITSM, and the SDLC</a></li>
 <li><a href="#iii-iv.-quizz">III-IV. QUIZZ</a></li>
 </ul></li>
-<li><a href="#iv.-infrastrucutre-automation">IV. Infrastrucutre Automation</a><ul>
+<li><a href="#iv.-infrastrucutre-automation">IV. Infrastrucutre Automation</a>
+<ul>
 <li><a href="#iv-i.-infrastructure-as-code">IV-I. Infrastructure as code</a></li>
 <li><a href="#iv-ii.-golden-image-to-foil-ball">IV-II. Golden image to foil ball</a></li>
 <li><a href="#iv-iii.-immutable-deployment">IV-III. Immutable deployment</a></li>
 <li><a href="#iv-iv.-your-infrastructure-toolchain">IV-IV. Your infrastructure toolchain</a></li>
 <li><a href="#iv-v.-quizz">IV-V. QUIZZ</a></li>
 </ul></li>
-<li><a href="#v.-continuous-delivery">V. Continuous Delivery</a><ul>
+<li><a href="#v.-continuous-delivery">V. Continuous Delivery</a>
+<ul>
 <li><a href="#v-i.-small-fast-better">V-I. Small + fast = better</a></li>
 <li><a href="#v-ii.-continuous-integration-practices">V-II. Continuous integration practices</a></li>
 <li><a href="#v-iii.-the-continuous-delivery-pipeline">V-III. The continuous delivery pipeline</a></li>
@@ -74,7 +86,8 @@
 <li><a href="#v-v.-your-ci-toolchain">V-V. Your CI toolchain</a></li>
 <li><a href="#v-vi.-quizz">V-VI. QUIZZ</a></li>
 </ul></li>
-<li><a href="#vi.-reliability-engineering">VI. Reliability Engineering</a><ul>
+<li><a href="#vi.-reliability-engineering">VI. Reliability Engineering</a>
+<ul>
 <li><a href="#vi-i.-engineering-doesnt-end-with-deployment">VI-I. Engineering doesn’t end with deployment</a></li>
 <li><a href="#vi-ii.-design-for-operation-theory">VI-II. Design for operation (Theory)</a></li>
 <li><a href="#vi-iii.-design-for-operation-practice">VI-III. Design for operation (Practice)</a></li>
@@ -83,18 +96,21 @@
 <li><a href="#vi-vi.-your-sre-toolchain">VI-VI. Your SRE toolchain</a></li>
 <li><a href="#v-vi.-quizz-1">V-VI. QUIZZ</a></li>
 </ul></li>
-<li><a href="#vii.-additionnal-devops-resources">VII. Additionnal DevOps Resources</a><ul>
+<li><a href="#vii.-additionnal-devops-resources">VII. Additionnal DevOps Resources</a>
+<ul>
 <li><a href="#vii-i.-unicorns-horses-and-donkeys-oh-my">VII-I. Unicorns, horses, and donkeys, oh my</a></li>
 <li><a href="#vii-ii.-the-10-best-devops-books-you-need-to-read">VII-II. The 10 best DevOps books you need to read</a></li>
 <li><a href="#vii-iii.-navigating-the-series-of-tubes">VII-III. Navigating The Series of Tubes</a></li>
 <li><a href="#vii-iv.-quizz">VII-IV. QUIZZ</a></li>
 </ul></li>
-<li><a href="#viii.-the-future-of-devops">VIII. The Future of DevOps</a><ul>
+<li><a href="#viii.-the-future-of-devops">VIII. The Future of DevOps</a>
+<ul>
 <li><a href="#viii-i.cloud-to-containers-to-serverless-solutions">VIII-I.Cloud to containers to serverless solutions</a></li>
 <li><a href="#viii-ii.-the-rugged-frontier-of-devops-security">VIII-II. The rugged frontier of DevOps: Security</a></li>
 <li><a href="#viii-iii.-quizz">VIII-III. QUIZZ</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a><ul>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
 <li><a href="#next-steps-am-i-a-devop-now">Next steps: Am I a DevOp now?</a></li>
 <li><a href="#resources">Resources</a></li>
 <li><a href="#certification">CERTIFICATION</a></li>
@@ -549,7 +565,7 @@
 </p>
 <hr />
 <div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
 </div>
 </body>
 </html>

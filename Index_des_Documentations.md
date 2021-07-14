@@ -116,7 +116,7 @@ extensions: 'extra'
 
 ## Python Projects
 
-[My Python Projects](2021-07-13-Python-Projects.html)
+[My Python Projects](2021-07-13-My-Python-Projects.html)
 
 - [Workout](MyWORKOUT.html)
 - [Quotes](Quotes.html)

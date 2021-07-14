@@ -10,10 +10,12 @@ classoption: "12pt"
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-# This is a TITLE
-## This is a Sub-Title
-### This is a SubSubTitle ;)
-#### This is a SubSubSubTitle ^^
+# This is a TITLE  --1
+
+## This is a Sub-Title --2
+
+### This is a SubSubTitle ;) --3
+#### This is a SubSubSubTitle ^^ --4
 ##### And This is a SubSubSubSubTitle ... 5!
 ###### This a SubSubSubSubSubSubTitle ... 6 This is the last !!!
 This is some text and such...

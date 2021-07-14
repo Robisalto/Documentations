@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Madecraft and Sam Pettus" />
   <title>Using Python For Automation</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleLight.css" />
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -20,39 +25,48 @@
 <h1 class="title">Using Python For Automation</h1>
 <p class="author">Madecraft and Sam Pettus</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
 <li><a href="#automate-everything-with-python">Automate everything with Python</a></li>
 <li><a href="#course-prerequisites">Course prerequisites</a></li>
 </ul></li>
-<li><a href="#i.-automate-file-folder-and-terminal-interactions">I. Automate File, Folder, and Terminal Interactions</a><ul>
+<li><a href="#i.-automate-file-folder-and-terminal-interactions">I. Automate File, Folder, and Terminal Interactions</a>
+<ul>
 <li><a href="#i-i.-using-python-for-file-automation">I-I. Using Python for file automation</a></li>
 <li><a href="#i-ii.-how-to-read-files">I-II. How to read files</a></li>
 <li><a href="#i-iii.-how-to-write-files">I-III. How to write files</a></li>
 <li><a href="#i-iv.-executing-terminal-commands">I-IV. Executing terminal commands</a></li>
 <li><a href="#i-v.-organising-directories">I-V. Organising directories</a></li>
 </ul></li>
-<li><a href="#ii.-web-scraping-with-beautifulsoup">II. Web Scraping with BeautifulSoup</a><ul>
-<li><a href="#ii-i-the-value-of-web-scraping">II-I The value of web scraping</a><ul>
+<li><a href="#ii.-web-scraping-with-beautifulsoup">II. Web Scraping with BeautifulSoup</a>
+<ul>
+<li><a href="#ii-i-the-value-of-web-scraping">II-I The value of web scraping</a>
+<ul>
 <li><a href="#libraries-for-web-scraping">Libraries for Web Scraping</a></li>
 </ul></li>
 <li><a href="#ii-ii.-creating-a-request-and-parsing">II-II. Creating a request and parsing</a></li>
-<li><a href="#ii-iii.-exploring-html-structure">II-III. Exploring HTML structure</a><ul>
+<li><a href="#ii-iii.-exploring-html-structure">II-III. Exploring HTML structure</a>
+<ul>
 <li><a href="#website">Website:</a></li>
 </ul></li>
 <li><a href="#ii-iv.-how-to-isolate-data">II-IV. How to isolate data</a></li>
-<li><a href="#ii-v.-preparing-for-paginated-scraping">II-V. Preparing for paginated scraping</a><ul>
+<li><a href="#ii-v.-preparing-for-paginated-scraping">II-V. Preparing for paginated scraping</a>
+<ul>
 <li><a href="#website-1">Website:</a></li>
 </ul></li>
 <li><a href="#ii-vi.-scraping-paginated-content">II-VI. Scraping paginated content</a></li>
 </ul></li>
-<li><a href="#iii.-automate-web-browsing-with-selenium">III. Automate Web Browsing with Selenium</a><ul>
+<li><a href="#iii.-automate-web-browsing-with-selenium">III. Automate Web Browsing with Selenium</a>
+<ul>
 <li><a href="#iii-i.-automating-web-browsing">III-I. Automating Web Browsing</a></li>
 <li><a href="#iii-ii.-basic-browser-interactions">III-II. Basic browser interactions</a></li>
 </ul></li>
-<li><a href="#iv.-automate-with-apis">IV. Automate with APIs</a><ul>
-<li><a href="#iv-i.-understanding-api-calls">IV-I. Understanding API calls</a><ul>
+<li><a href="#iv.-automate-with-apis">IV. Automate with APIs</a>
+<ul>
+<li><a href="#iv-i.-understanding-api-calls">IV-I. Understanding API calls</a>
+<ul>
 <li><a href="#api">API:</a></li>
 </ul></li>
 <li><a href="#iv-ii.-creating-api-requests">IV-II. Creating API requests</a></li>
@@ -60,8 +74,10 @@
 <li><a href="#iv-iv.-using-api-keys">IV-IV. Using API keys</a></li>
 <li><a href="#iv-v.-linking-api-calls">IV-V. Linking API calls</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a><ul>
-<li><a href="#next-steps">Next Steps</a><ul>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
+<li><a href="#next-steps">Next Steps</a>
+<ul>
 <li><a href="#documentations">Documentations</a></li>
 </ul></li>
 <li><a href="#certification">CERTIFICATION</a></li>
@@ -203,7 +219,7 @@
 </p>
 <hr />
 <div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
 </div>
 </body>
 </html>

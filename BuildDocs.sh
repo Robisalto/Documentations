@@ -8,11 +8,11 @@ sed -i -e 's/.md//g' nav.txt
 echo " " > PandocDoc.log # Clearing log file
 
 ## Light html theme
-for n in $(cat nav.txt); do pandoc $n.md -s -c styleLight.css -A footer.html --toc -o KnowledgeBase/$n.html --log=PandocDoc.log ; done
+# for n in $(cat nav.txt); do pandoc $n.md -s -c styleLight.css -A footer.html --toc -o KnowledgeBase/$n.html --log=PandocDoc.log ; done
 
 
-## Default HTML theme
-# for n in $(cat nav.txt); do pandoc $n.md -s -c styleDark.css -A footer.html --toc -o KnowledgeBase/$n.html; done
+## Dark theme
+for n in $(cat nav.txt); do pandoc $n.md -s -c styleDark.css -A footer.html --toc -o KnowledgeBase/$n.html; done
 
 ## TEST html theme
 # for n in $(cat nav.txt); do pandoc $n.md -s -c test.css -A footer.html --toc -o KnowledgeBase/$n.html; done

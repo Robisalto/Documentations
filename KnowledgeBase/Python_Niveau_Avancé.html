@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Omar SOUISSI" />
   <title>Python - Niveau Avancé</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleLight.css" />
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -20,16 +25,18 @@
 <h1 class="title">Python - Niveau Avancé</h1>
 <p class="author">Omar SOUISSI</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#i.-aborder-le-langage-python">I. Aborder le langage Python</a><ul>
+<li><a href="#i.-aborder-le-langage-python">I. Aborder le langage Python</a>
+<ul>
 <li><a href="#i-i.-maîtriser-python">I-I. Maîtriser Python</a></li>
 <li><a href="#i-ii.-connaître-les-prérequis">I-II. Connaître les prérequis</a></li>
 <li><a href="#i-iii.-découvrir-lenvironnement-de-travail">I-III. Découvrir l’environnement de travail</a></li>
 <li><a href="#i-iv.-quizz">I-IV. QUIZZ</a></li>
 </ul></li>
-<li><a href="#ii.-appréhender-les-meilleures-pratiques">II. Appréhender les meilleures pratiques</a><ul>
+<li><a href="#ii.-appréhender-les-meilleures-pratiques">II. Appréhender les meilleures pratiques</a>
+<ul>
 <li><a href="#ii-i.-employer-les-appellations-adéquates">II-I. Employer les appellations adéquates</a></li>
 <li><a href="#ii-ii.-ecrire-un-code-propre">II-II. Ecrire un code propre</a></li>
 <li><a href="#ii-iii.-gérer-les-exceptions">II-III. Gérer les exceptions</a></li>
@@ -37,7 +44,8 @@
 <li><a href="#ii-v.-utiliser-les-compréhensions-avec-dictionnaires">II-V. Utiliser les compréhensions avec dictionnaires</a></li>
 <li><a href="#ii-vi.-quizz">II-VI. QUIZZ</a></li>
 </ul></li>
-<li><a href="#iii.-passer-à-lutilisation-avancée-des-fonctions">III. Passer à l’utilisation avancée des fonctions</a><ul>
+<li><a href="#iii.-passer-à-lutilisation-avancée-des-fonctions">III. Passer à l’utilisation avancée des fonctions</a>
+<ul>
 <li><a href="#iii-i.-créer-une-fonction">III-I. Créer une fonction</a></li>
 <li><a href="#iii-ii.-connaître-les-fonctions-natives-de-python">III-II. Connaître les fonctions natives de Python</a></li>
 <li><a href="#iii-iii.-maîtriser-lutilisation-des-arguments">III-III. Maîtriser l’utilisation des arguments</a></li>
@@ -45,7 +53,8 @@
 <li><a href="#iii-v.-utiliser-une-fonction-lambda">III-V. Utiliser une fonction lambda</a></li>
 <li><a href="#iii-vi.-quizz">III-VI. QUIZZ</a></li>
 </ul></li>
-<li><a href="#iv.-aller-plus-loin-dans-lutilisation-des-classes">IV. Aller plus loin dans l’utilisation des classes</a><ul>
+<li><a href="#iv.-aller-plus-loin-dans-lutilisation-des-classes">IV. Aller plus loin dans l’utilisation des classes</a>
+<ul>
 <li><a href="#iv-i.-construire-une-classe">IV-I. Construire une classe</a></li>
 <li><a href="#iv-ii.-aborder-la-notion-dhéritage">IV-II. Aborder la notion d’héritage</a></li>
 <li><a href="#iv-iii.-comprendre-le-polymorphisme">IV-III. Comprendre le polymorphisme <a name="IV-III. Comprendre le polymorphisme"></a></a></li>
@@ -53,7 +62,8 @@
 <li><a href="#iv-v.-mieux-utiliser-les-classes">IV-V. Mieux utiliser les classes</a></li>
 <li><a href="#iv-vi.-quizz">IV-VI. QUIZZ</a></li>
 </ul></li>
-<li><a href="#v.-mettre-en-oeuvre-les-décorateurs">V. Mettre en oeuvre les décorateurs</a><ul>
+<li><a href="#v.-mettre-en-oeuvre-les-décorateurs">V. Mettre en oeuvre les décorateurs</a>
+<ul>
 <li><a href="#v-i.-comprendre-lintérêt-des-décorateurs">V-I. Comprendre l’intérêt des décorateurs</a></li>
 <li><a href="#v-ii.-utiliser-les-décorateurs">V-II. Utiliser les décorateurs</a></li>
 <li><a href="#v-iii.-exploiter-les-décorateurs-multiples">V-III. Exploiter les décorateurs multiples</a></li>
@@ -61,14 +71,16 @@
 <li><a href="#v-vii.-utiliser-la-librairie-functools">V-VII. Utiliser la librairie functools</a></li>
 <li><a href="#v-viii.-quizz">V-VIII. QUIZZ</a></li>
 </ul></li>
-<li><a href="#vi.-tirer-parti-des-itérateurs-et-des-générateurs">VI. Tirer parti des itérateurs et des générateurs</a><ul>
+<li><a href="#vi.-tirer-parti-des-itérateurs-et-des-générateurs">VI. Tirer parti des itérateurs et des générateurs</a>
+<ul>
 <li><a href="#vi-i.-comprendre-lintérêt-des-itérateurs-et-des-générateurs">VI-I. Comprendre l’intérêt des itérateurs et des générateurs</a></li>
 <li><a href="#vi-ii.-mettre-en-pratique-les-itérateurs-basiques">VI-II. Mettre en pratique les itérateurs basiques</a></li>
 <li><a href="#vi-iii.-découvrir-le-module-itertools">VI-III. Découvrir le module itertools</a></li>
 <li><a href="#vi-iv.-employer-les-générateurs-basiques">VI-IV. Employer les générateurs basiques</a></li>
 <li><a href="#vi-v.-quizz">VI-V. QUIZZ</a></li>
 </ul></li>
-<li><a href="#vii.-conclusion">VII. Conclusion</a><ul>
+<li><a href="#vii.-conclusion">VII. Conclusion</a>
+<ul>
 <li><a href="#vii-i.-conclure-sur-lutilisation-avancée-du-langage-python">VII-I. Conclure sur l’utilisation avancée du langage Python</a></li>
 <li><a href="#vii-ii.-certification">VII-II. CERTIFICATION</a></li>
 </ul></li>
@@ -257,7 +269,7 @@
 </p>
 <hr />
 <div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
 </div>
 </body>
 </html>

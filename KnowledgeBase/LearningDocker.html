@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Arthur Ulfeldt" />
   <title>Learning Docker</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleLight.css" />
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -20,22 +25,25 @@
 <h1 class="title">Learning Docker</h1>
 <p class="author">Arthur Ulfeldt</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
 <li><a href="#why-create-containers-using-docker">Why create containers using Docker?</a></li>
 <li><a href="#what-you-should-know">What you should know</a></li>
 <li><a href="#what-is-docker">What is Docker?</a></li>
 <li><a href="#using-the-exercise-files">Using the exercise files</a></li>
 <li><a href="#chapter-quizz">Chapter Quizz</a></li>
 </ul></li>
-<li><a href="#i.-installing-docker">I. Installing Docker</a><ul>
+<li><a href="#i.-installing-docker">I. Installing Docker</a>
+<ul>
 <li><a href="#i-i.-setting-up-docker">I-I. Setting up Docker</a></li>
 <li><a href="#i-ii.-docker-desktop">I-II. Docker Desktop</a></li>
 <li><a href="#i-iii.-install-docker-on-mac">I-III. Install Docker on Mac</a></li>
 <li><a href="#i-iv.-install-docker-on-windows">I-IV. Install Docker on Windows</a></li>
 <li><a href="#i-v.-install-docker-on-linux">I-V. Install Docker on Linux</a></li>
-<li><a href="#i-vi.-chapter-quizz">I-VI. Chapter Quizz</a><ul>
+<li><a href="#i-vi.-chapter-quizz">I-VI. Chapter Quizz</a>
+<ul>
 <li><a href="#question-1-of-5">Question 1 of 5</a></li>
 <li><a href="#question-2-of-5">Question 2 of 5</a></li>
 <li><a href="#question-3-of-5">Question 3 of 5</a></li>
@@ -43,7 +51,8 @@
 <li><a href="#question-5-of-5">Question 5 of 5</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#ii.-using-docker">II. Using Docker</a><ul>
+<li><a href="#ii.-using-docker">II. Using Docker</a>
+<ul>
 <li><a href="#ii-i.-the-docker-flow-images-to-containers">II-I. The Docker flow: Images to containers</a></li>
 <li><a href="#ii-ii.-the-docker-flow-containers-to-images">II-II. The Docker flow: Containers to images</a></li>
 <li><a href="#ii-iii.-run-processes-in-containers">II-III. Run processes in containers</a></li>
@@ -54,7 +63,8 @@
 <li><a href="#ii-viii.-images">II-VIII. Images</a></li>
 <li><a href="#ii-ix.-volumes">II-IX. Volumes</a></li>
 <li><a href="#ii-x.-docker-registries">II-X. Docker registries</a></li>
-<li><a href="#ii-xi.-chapter-quizz">II-XI. Chapter Quizz</a><ul>
+<li><a href="#ii-xi.-chapter-quizz">II-XI. Chapter Quizz</a>
+<ul>
 <li><a href="#question-1-of-9">Question 1 of 9</a></li>
 <li><a href="#question-2-of-9">Question 2 of 9</a></li>
 <li><a href="#question-3-of-9">Question 3 of 9</a></li>
@@ -66,13 +76,15 @@
 <li><a href="#question-9-of-9">Question 9 of 9</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#iii.-building-docker-images">III. Building Docker Images</a><ul>
+<li><a href="#iii.-building-docker-images">III. Building Docker Images</a>
+<ul>
 <li><a href="#iii-i.-what-are-dockerfiles">III-I. What are Dockerfiles?</a></li>
 <li><a href="#iii-ii.-building-dockerfiles">III-II. Building Dockerfiles</a></li>
 <li><a href="#iii-iii.-dockerfile-syntax">III-III. Dockerfile syntax</a></li>
 <li><a href="#iii-iv.-multi-project-docker-files">III-IV. Multi-project Docker files</a></li>
 <li><a href="#iii-v.-avoid-golden-images">III-V. Avoid golden images</a></li>
-<li><a href="#iii-vi.-chapter-quizz">III-VI. Chapter Quizz</a><ul>
+<li><a href="#iii-vi.-chapter-quizz">III-VI. Chapter Quizz</a>
+<ul>
 <li><a href="#question-1-of-5-1">Question 1 of 5</a></li>
 <li><a href="#question-2-of-5-1">Question 2 of 5</a></li>
 <li><a href="#question-3-of-5-1">Question 3 of 5</a></li>
@@ -80,31 +92,36 @@
 <li><a href="#question-5-of-5-1">Question 5 of 5</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#iv.-under-the-hood">IV. Under the hood</a><ul>
+<li><a href="#iv.-under-the-hood">IV. Under the hood</a>
+<ul>
 <li><a href="#iv-i.-docker-the-program">IV-I. Docker the program</a></li>
 <li><a href="#iv-ii.-networking-and-namespaces">IV-II. Networking and namespaces</a></li>
 <li><a href="#iv-iii.-processes-and-cgroups">IV-III. Processes and cgroups</a></li>
 <li><a href="#iv-iv.-storage">IV-IV. Storage</a></li>
-<li><a href="#iv-v.-chapter-quizz">IV-V. Chapter Quizz</a><ul>
+<li><a href="#iv-v.-chapter-quizz">IV-V. Chapter Quizz</a>
+<ul>
 <li><a href="#question-1-of-4">Question 1 of 4</a></li>
 <li><a href="#question-2-of-4">Question 2 of 4</a></li>
 <li><a href="#question-3-of-4">Question 3 of 4</a></li>
 <li><a href="#question-4-of-4">Question 4 of 4</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#v.-orchestration-building-systems-with-docker">V. Orchestration: Building Systems with Docker</a><ul>
+<li><a href="#v.-orchestration-building-systems-with-docker">V. Orchestration: Building Systems with Docker</a>
+<ul>
 <li><a href="#v-i.-registries-in-detail">V-I. Registries in detail</a></li>
 <li><a href="#v-ii.-intro-to-orchestration">V-II. Intro to orchestration</a></li>
 <li><a href="#v-iii.-kubernetes-in-aws">V-III. Kubernetes in AWS</a></li>
 <li><a href="#v-iv.-google-kubernetes-engine">V-IV. Google Kubernetes Engine</a></li>
-<li><a href="#v-v.-chapter-quizz">V-V. Chapter Quizz</a><ul>
+<li><a href="#v-v.-chapter-quizz">V-V. Chapter Quizz</a>
+<ul>
 <li><a href="#question-1-of-4-1">Question 1 of 4</a></li>
 <li><a href="#question-2-of-4-1">Question 2 of 4</a></li>
 <li><a href="#question-3-of-4-1">Question 3 of 4</a></li>
 <li><a href="#question-4-of-4-1">Question 4 of 4</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a><ul>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
 <li><a href="#next-steps">Next steps</a></li>
 <li><a href="#certification">CERTIFICATION</a></li>
 </ul></li>
@@ -473,7 +490,7 @@ docker exec </code></pre>
 </p>
 <hr />
 <div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#quote">Bottom / Fin</a> *** </p>
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
 </div>
 </body>
 </html>
