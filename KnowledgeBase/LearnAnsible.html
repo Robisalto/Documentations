@@ -6,18 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Jesse Keating" />
   <title>Learn Ansible</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
   <link rel="stylesheet" href="styleDark.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 </head>
 <body>
@@ -25,21 +20,18 @@
 <h1 class="title">Learn Ansible</h1>
 <p class="author">Jesse Keating</p>
 </header>
-<nav id="TOC" role="doc-toc">
+<nav id="TOC">
 <ul>
-<li><a href="#introduction">Introduction</a>
-<ul>
+<li><a href="#introduction">Introduction</a><ul>
 <li><a href="#welcome">Welcome</a></li>
 <li><a href="#what-you-should-know">What you should know</a></li>
 </ul></li>
-<li><a href="#i.-what-is-ansible">I. What is Ansible?</a>
-<ul>
+<li><a href="#i.-what-is-ansible">I. What is Ansible?</a><ul>
 <li><a href="#i-i.-an-introduction-to-ansible">I-I. An introduction to Ansible</a></li>
 <li><a href="#i-ii.-low-cost-fleet-management">I-II. Low-cost fleet management</a></li>
 <li><a href="#i-iii.-get-started-with-ansible">I-III. Get started with Ansible</a></li>
 </ul></li>
-<li><a href="#ii.-what-are-the-parts-of-ansible">II. What are the parts of Ansible?</a>
-<ul>
+<li><a href="#ii.-what-are-the-parts-of-ansible">II. What are the parts of Ansible?</a><ul>
 <li><a href="#ii-i.-work-with-hosts-and-variables">II-I. Work with hosts and variables</a></li>
 <li><a href="#ii-ii.-provided-code-to-accomplish-work">II-II. Provided code to accomplish work</a></li>
 <li><a href="#ii-iii.-playbooks-collections-of-tasks">II-III. Playbooks: Collections of tasks</a></li>
@@ -47,8 +39,7 @@
 <li><a href="#ii-v.-challenge-write-a-playbook">II-V. Challenge: Write a playbook</a></li>
 <li><a href="#ii-vi.-solution-write-a-playbook">II-VI. Solution: Write a playbook</a></li>
 </ul></li>
-<li><a href="#iii.-what-is-ansible-good-for">III. What is Ansible good for?</a>
-<ul>
+<li><a href="#iii.-what-is-ansible-good-for">III. What is Ansible good for?</a><ul>
 <li><a href="#iii-i.-code-driven-deployments-and-operations">III-I. Code-driven deployments and operations</a></li>
 <li><a href="#iii-ii.-coordinate-complicated-sets-of-actions">III-II. Coordinate complicated sets of actions</a></li>
 <li><a href="#iii-iii.-manage-system-configurations">III-III. Manage system configurations</a></li>
@@ -58,14 +49,12 @@
 <li><a href="#iii-vii.-challenge-ad-hoc-task">III-VII. Challenge: Ad-hoc task</a></li>
 <li><a href="#iii-viii.-solution-ad-hoc-task">III-VIII. Solution: Ad-hoc task</a></li>
 </ul></li>
-<li><a href="#iv.-why-choose-ansible">IV. Why choose Ansible?</a>
-<ul>
+<li><a href="#iv.-why-choose-ansible">IV. Why choose Ansible?</a><ul>
 <li><a href="#iv-i.-ansible-ease-of-use">IV-I. Ansible ease of use</a></li>
 <li><a href="#iv-ii.-manage-extensions-in-ansible">IV-II. Manage extensions in Ansible</a></li>
 <li><a href="#iv-iii.-advantages-to-using-ansible">IV-III. Advantages to using Ansible</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a>
-<ul>
+<li><a href="#conclusion">Conclusion</a><ul>
 <li><a href="#certification">CERTIFICATION</a></li>
 </ul></li>
 </ul>

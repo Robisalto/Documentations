@@ -6,80 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="Digital Ocean Tutorials" />
   <title>How To Use Python-Markdown to Convert Markdown Text to HTML</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      {   }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.at { color: #7d9029; } /* Attribute */
-    code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #4070a0; } /* Char */
-    code span.cn { color: #880000; } /* Constant */
-    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code span.dt { color: #902000; } /* DataType */
-    code span.dv { color: #40a070; } /* DecVal */
-    code span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #40a070; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code span.op { color: #666666; } /* Operator */
-    code span.ot { color: #007020; } /* Other */
-    code span.pp { color: #bc7a00; } /* Preprocessor */
-    code span.sc { color: #4070a0; } /* SpecialChar */
-    code span.ss { color: #bb6688; } /* SpecialString */
-    code span.st { color: #4070a0; } /* String */
-    code span.va { color: #19177c; } /* Variable */
-    code span.vs { color: #4070a0; } /* VerbatimString */
-    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleDark.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 </head>
 <body>
@@ -87,10 +83,9 @@
 <h1 class="title">How To Use Python-Markdown to Convert Markdown Text to HTML</h1>
 <p class="author">Digital Ocean Tutorials</p>
 </header>
-<nav id="TOC" role="doc-toc">
+<nav id="TOC">
 <ul>
-<li><a href="#prerequisite-setup-python-programming-environement">Prerequisite: Setup Python Programming Environement</a>
-<ul>
+<li><a href="#prerequisite-setup-python-programming-environement">Prerequisite: Setup Python Programming Environement</a><ul>
 <li><a href="#build-programming-environment">Build Programming Environment:</a></li>
 </ul></li>
 <li><a href="#introduction">Introduction</a></li>
@@ -114,18 +109,18 @@
 <li>On MacOS: <a href="https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos" class="uri">https://www.digitalocean.com/community/tutorials/how-to-install-python-3-and-set-up-a-local-programming-environment-on-macos</a></li>
 </ul>
 <h3 id="build-programming-environment">Build Programming Environment:</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Upgrade PIP</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="ex">python</span> -m pip install --upgrade pip</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># Creates the Virtual Environement folder &quot;Environments&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">mkdir</span> Environments</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="bu">cd</span> Environments</span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Builds the Virtual Environement</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="ex">python</span> -m venv my_env</span>
-<span id="cb1-10"><a href="#cb1-10"></a></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># Activates the Virtual Environement</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a><span class="ex">my_env</span>\Scripts\activate</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># Upgrade PIP</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">python</span> -m pip install --upgrade pip</a>
+<a class="sourceLine" id="cb1-3" title="3"></a>
+<a class="sourceLine" id="cb1-4" title="4"><span class="co"># Creates the Virtual Environement folder &quot;Environments&quot;</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="fu">mkdir</span> Environments</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="bu">cd</span> Environments</a>
+<a class="sourceLine" id="cb1-7" title="7"></a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="co"># Builds the Virtual Environement</span></a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="ex">python</span> -m venv my_env</a>
+<a class="sourceLine" id="cb1-10" title="10"></a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="co"># Activates the Virtual Environement</span></a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="ex">my_env</span>\Scripts\activate</a></code></pre></div>
 <h1 id="introduction">Introduction</h1>
 <p><a href="https://daringfireball.net/projects/markdown/">Markdown</a> is a markup language commonly used to simplify the process of writing content in an easy-to-read text format, which a software tool or programming library can convert into <a href="https://www.digitalocean.com/community/tags/html">HTML</a> to display in a browser or another writing program. Because it uses plain-text syntax, Markdown is compatible with any text editor and can convert headings, lists, links, and other components. Bloggers, tutorial authors, and documentation writers use Markdown widely and websites, such as <a href="https://github.com/">Github</a>, <a href="https://stackoverflow.com/">StackOverflow</a>, and <a href="https://pypi.org/">The Python Package Index (PyPI)</a>, support it.</p>
 <p>You can learn how to use Markdown from the <a href="https://daringfireball.net/projects/markdown/syntax">Markdown syntax</a> standard. Alternatively, you can also try a different Markdown implementation in a web editor, like the <a href="https://www.digitalocean.com/community/markdown">DigitalOcean Markdown Preview</a> or the <a href="https://stackedit.io/">StackEdit</a> editor.</p>
@@ -140,186 +135,186 @@
 <h1 id="installing-python-markdown">1. Installing Python-Markdown</h1>
 <p>n this step, you will install Python-Markdown and explore one of its functions to convert Markdown strings to HTML in the <a href="https://www.digitalocean.com/community/tutorials/how-to-work-with-the-python-interactive-console">Python REPL</a>.</p>
 <p>If you haven’t already activated your programming environment, make sure you’re in your project directory (<code>pymark</code>) and use the following command to activate the environment:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="bu">source</span> env/bin/activate</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">$ <span class="bu">source</span> env/bin/activate</a></code></pre></div>
 <p>Once you have activated your programming environment, your prompt will now have an <code>env</code> prefix like the following:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$</a></code></pre></div>
 <p>Now you’ll install Python packages and isolate your project code away from the main Python system installation.</p>
 <p>Use <code>pip</code> to install the Python-Markdown library (<code>markdown</code>) by running the following command:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python</a></code></pre></div>
 <p>You will notice a new prompt with the prefix <code>&gt;&gt;&gt;</code>; you can use this to type in Python code and receive immediate output.</p>
 <p>First you will import the <code>markdown</code> package and use it to convert a piece of Markdown text from Markdown syntax to HTML:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="im">import</span> markdown</span>
-<span id="cb5-2"><a href="#cb5-2"></a>markdown.markdown(<span class="st">&#39;#Hi&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="im">import</span> markdown</a>
+<a class="sourceLine" id="cb5-2" title="2">markdown.markdown(<span class="st">&#39;#Hi&#39;</span>)</a></code></pre></div>
 <p>In this code, you import the <code>markdown</code> package you installed earlier. You use the <code>markdown.markdown()</code> function to convert the Markdown text <code>#Hi</code> (with <code>#</code> representing an H1-level header) to its HTML equivalent. If you type the code into the Python REPL, you will receive the following output:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">&lt;!-- Output --&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a>&#39;<span class="kw">&lt;h1&gt;</span>Hi<span class="kw">&lt;/h1&gt;</span>&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb6-1" title="1"><span class="co">&lt;!-- Output --&gt;</span></a>
+<a class="sourceLine" id="cb6-2" title="2">&#39;<span class="kw">&lt;h1&gt;</span>Hi<span class="kw">&lt;/h1&gt;</span>&#39;</a></code></pre></div>
 <p>The HTML output is the equivalent of the <code>#Hi</code>Markdown text.</p>
 <p>You can use triple single quotes (<code>'''</code>) to type multi-line Markdown text into the Python REPL like so:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="im">import</span> markdown</span>
-<span id="cb7-2"><a href="#cb7-2"></a>output <span class="op">=</span> markdown.markdown(<span class="st">&#39;&#39;&#39;</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="st"># Step 1</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="st">## Step 2</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="st">* item 1</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="st">* item 2</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="st">Visit [the tutorials page](https://www.digitalocean.com/community/tutorials) for more tutorials!</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a><span class="st">&#39;&#39;&#39;</span>)</span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="bu">print</span>(output)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb7-1" title="1"><span class="im">import</span> markdown</a>
+<a class="sourceLine" id="cb7-2" title="2">output <span class="op">=</span> markdown.markdown(<span class="st">&#39;&#39;&#39;</span></a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="st"># Step 1</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="st">## Step 2</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="st">* item 1</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">* item 2</span></a>
+<a class="sourceLine" id="cb7-7" title="7"></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">Visit [the tutorials page](https://www.digitalocean.com/community/tutorials) for more tutorials!</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">&#39;&#39;&#39;</span>)</a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="bu">print</span>(output)</a></code></pre></div>
 <p>In this example, you pass an H1 header, an H2 header, two list items, and a paragraph containing a link. You then save the output in a variable called <code>output</code> and print it with the <code>print()</code> Python function.</p>
 <p>You will receive the following output:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1"></a>Output</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">&lt;h1&gt;</span>Step 1<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="kw">&lt;h2&gt;</span>Step 2<span class="kw">&lt;/h2&gt;</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="kw">&lt;ul&gt;</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="kw">&lt;li&gt;</span>item 1<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="kw">&lt;li&gt;</span>item 2<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="kw">&lt;/ul&gt;</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="kw">&lt;p&gt;</span>Visit <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;https://www.digitalocean.com/community/tutorials&quot;</span><span class="kw">&gt;</span>the tutorials page<span class="kw">&lt;/a&gt;</span> for more tutorials!<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb8-1" title="1">Output</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">&lt;h1&gt;</span>Step 1<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">&lt;h2&gt;</span>Step 2<span class="kw">&lt;/h2&gt;</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="kw">&lt;li&gt;</span>item 1<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="kw">&lt;li&gt;</span>item 2<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="kw">&lt;p&gt;</span>Visit <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;https://www.digitalocean.com/community/tutorials&quot;</span><span class="kw">&gt;</span>the tutorials page<span class="kw">&lt;/a&gt;</span> for more tutorials!<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
 <p>You’ll notice that the output results in the HTML version of the provided Markdown text.</p>
 <p>Now that you’ve used the <code>markdown</code> package to convert Markdown text to HTML, you will make a small program to read and convert Markdown files to HTML files.</p>
 <h1 id="creating-a-program-to-convert-markdown-files-to-html">2. Creating a Program to Convert Markdown Files to HTML</h1>
 <p>In this step, you will create a Python program that reads a Markdown file, converts its contents to HTML using the <code>markdown.markdown()</code> function, and saves the HTML code in a new file.</p>
 <p>First, open a new file called <code>Picnic.md</code> to hold the Markdown text:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ nano Picnic.md</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ nano Picnic.md</a></code></pre></div>
 <p>Type the following Markdown text into it:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">[</span><span class="ot">label pymark/Picnic.md</span><span class="co">]</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="fu"># Things to bring</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="ss">* </span>Food.</span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="ss">* </span>Water.</span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="ss">* </span>Knife.</span>
-<span id="cb10-8"><a href="#cb10-8"></a><span class="ss">* </span>Plates.</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb10-1" title="1">[label pymark/Picnic.md]</a>
+<a class="sourceLine" id="cb10-2" title="2"></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="fu"># Things to bring</span></a>
+<a class="sourceLine" id="cb10-4" title="4"></a>
+<a class="sourceLine" id="cb10-5" title="5">* <span class="fl">Food.</span></a>
+<a class="sourceLine" id="cb10-6" title="6"><span class="fl">* Water.</span></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="fl">* Knife.</span></a>
+<a class="sourceLine" id="cb10-8" title="8"><span class="fl">* Plates.</span></a></code></pre></div>
 <p>In this file you have an H1 header and four list items.</p>
 <p>Once you’re done, save and close the file.</p>
 <p>Next, open a new file called <code>convert.py</code> to hold the code for converting the <code>Picnic.md</code> Markdown file to an HTML file:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ nano convert.py</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ nano convert.py</a></code></pre></div>
 <p>Type the following Python code into it:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1"></a><span class="im">import</span> markdown</span>
-<span id="cb12-2"><a href="#cb12-2"></a></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;Picnic.md&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb12-4"><a href="#cb12-4"></a>    text <span class="op">=</span> f.read()</span>
-<span id="cb12-5"><a href="#cb12-5"></a>    html <span class="op">=</span> markdown.markdown(text)</span>
-<span id="cb12-6"><a href="#cb12-6"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;Picnic.html&#39;</span>, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb12-8"><a href="#cb12-8"></a>    f.write(html)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb12-1" title="1"><span class="im">import</span> markdown</a>
+<a class="sourceLine" id="cb12-2" title="2"></a>
+<a class="sourceLine" id="cb12-3" title="3"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;Picnic.md&#39;</span>, <span class="st">&#39;r&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb12-4" title="4">    text <span class="op">=</span> f.read()</a>
+<a class="sourceLine" id="cb12-5" title="5">    html <span class="op">=</span> markdown.markdown(text)</a>
+<a class="sourceLine" id="cb12-6" title="6"></a>
+<a class="sourceLine" id="cb12-7" title="7"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;Picnic.html&#39;</span>, <span class="st">&#39;w&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb12-8" title="8">    f.write(html)</a></code></pre></div>
 <p>Here, you first import the <code>markdown</code> package. You use the <code>open()</code> function to open the <code>Picnic.md</code> file; passing the value <code>'r'</code> to the mode parameter to signify that Python should open it for reading.</p>
 <p>You save the file object in a variable called <code>f</code>, which you can use to reference the file. Then you read the file and save its contents inside the <code>text</code> variable. After, you convert the text using <code>markdown.markdown()</code>, saving the result in a variable called <code>html</code>.</p>
 <p>With the same pattern, you open a new file called <code>Picnic.html</code> in writing mode (<code>'w'</code>)—note that this file does not yet exist—and write the contents of the <code>html</code> variable to the file. This creates and saves the new file on your system. Using the <code>with</code> statement when opening a file guarantees that Python will close it once processing has finished.</p>
 <p>Save and close the file.</p>
 <p>Run the <code>convert.py</code> program:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python convert.py</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python convert.py</a></code></pre></div>
 <p>This creates a new file called <code>Picnic.html</code> in your project directory with the following contents:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb14-1"><a href="#cb14-1"></a>[Label: pymark/Picnic.html]</span>
-<span id="cb14-2"><a href="#cb14-2"></a></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">&lt;h1&gt;</span>Things to bring<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="kw">&lt;ul&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="kw">&lt;li&gt;</span>Food.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a><span class="kw">&lt;li&gt;</span>Water.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a><span class="kw">&lt;li&gt;</span>Knife.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a><span class="kw">&lt;li&gt;</span>Plates.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb14-1" title="1">[Label: pymark/Picnic.html]</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">&lt;h1&gt;</span>Things to bring<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb14-4" title="4"><span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="kw">&lt;li&gt;</span>Food.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb14-6" title="6"><span class="kw">&lt;li&gt;</span>Water.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb14-7" title="7"><span class="kw">&lt;li&gt;</span>Knife.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="kw">&lt;li&gt;</span>Plates.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb14-9" title="9"><span class="kw">&lt;/ul&gt;</span></a></code></pre></div>
 <p>Now that you know how to open and convert Markdown files using the <code>markdown.markdown()</code> function, you can generate Markdown text in Python and convert Markdown files without the need to read them first.</p>
 <h1 id="generating-markdown-from-data-and-converting-it-to-html">3. Generating Markdown from Data and Converting it to HTML</h1>
 <p>In this step, you will create a program that generates Markdown text from a Python dictionary, saves it to a Markdown file, and converts the Markdown text to an HTML file using the <code>markdown.markdownFromFile()</code> function.</p>
 <p>Your program will generate a Markdown file called cities.md with a list of countries and their top three largest cities. After, the program will convert the generated Markdown text into HTML, then it will save the HTML in a file called <code>cities.html</code>.</p>
 <p>First open a new Python file called <code>citygen.py</code>:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ nano citygen.py</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ nano citygen.py</a></code></pre></div>
 <p>Then add the following Python code:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># [Label: pymark/citygen.py]</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="im">import</span> markdown</span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a></span>
-<span id="cb16-6"><a href="#cb16-6"></a>country_cities <span class="op">=</span> {<span class="st">&#39;Japan&#39;</span>: [<span class="st">&#39;Tokyo&#39;</span>, <span class="st">&#39;Osaka&#39;</span>, <span class="st">&#39;Nagoya&#39;</span>],</span>
-<span id="cb16-7"><a href="#cb16-7"></a>                  <span class="st">&#39;France&#39;</span>: [<span class="st">&#39;Paris&#39;</span>, <span class="st">&#39;Marseille&#39;</span>, <span class="st">&#39;Lyon&#39;</span>],</span>
-<span id="cb16-8"><a href="#cb16-8"></a>                  <span class="st">&#39;Germany&#39;</span>: [<span class="st">&#39;Berlin&#39;</span>, <span class="st">&#39;Hamburg&#39;</span>, <span class="st">&#39;Munich&#39;</span>],</span>
-<span id="cb16-9"><a href="#cb16-9"></a>                  }</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># [Label: pymark/citygen.py]</span></a>
+<a class="sourceLine" id="cb16-2" title="2"></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="im">import</span> markdown</a>
+<a class="sourceLine" id="cb16-4" title="4"></a>
+<a class="sourceLine" id="cb16-5" title="5"></a>
+<a class="sourceLine" id="cb16-6" title="6">country_cities <span class="op">=</span> {<span class="st">&#39;Japan&#39;</span>: [<span class="st">&#39;Tokyo&#39;</span>, <span class="st">&#39;Osaka&#39;</span>, <span class="st">&#39;Nagoya&#39;</span>],</a>
+<a class="sourceLine" id="cb16-7" title="7">                  <span class="st">&#39;France&#39;</span>: [<span class="st">&#39;Paris&#39;</span>, <span class="st">&#39;Marseille&#39;</span>, <span class="st">&#39;Lyon&#39;</span>],</a>
+<a class="sourceLine" id="cb16-8" title="8">                  <span class="st">&#39;Germany&#39;</span>: [<span class="st">&#39;Berlin&#39;</span>, <span class="st">&#39;Hamburg&#39;</span>, <span class="st">&#39;Munich&#39;</span>],</a>
+<a class="sourceLine" id="cb16-9" title="9">                  }</a></code></pre></div>
 <p>In this code you first import the Python-Markdown library with <code>import markdown</code>. Then you define a <code>country_cities</code> dictionary containing a few countries as the keys and a <a href="https://www.digitalocean.com/community/tutorials/understanding-lists-in-python-3">list</a> of the largest three cities for each country as the value. This dictionary is an example data structure; you can replace it with fetched data from a web API, a database, or any other data source.</p>
 <p>Next add the following code after your dictionary:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># [Label: pymark/citygen.py]</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>. . .</span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;cities.md&#39;</span>, <span class="st">&#39;bw+&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb17-5"><a href="#cb17-5"></a>    <span class="cf">for</span> country, cities <span class="kw">in</span> country_cities.items():</span>
-<span id="cb17-6"><a href="#cb17-6"></a>        f.write(<span class="st">&#39;# </span><span class="sc">{}</span><span class="ch">\n</span><span class="st">&#39;</span>.<span class="bu">format</span>(country).encode(<span class="st">&#39;utf-8&#39;</span>))</span>
-<span id="cb17-7"><a href="#cb17-7"></a>        <span class="cf">for</span> city <span class="kw">in</span> cities:</span>
-<span id="cb17-8"><a href="#cb17-8"></a>            f.write(<span class="st">&#39;* </span><span class="sc">{}</span><span class="ch">\n</span><span class="st">&#39;</span>.<span class="bu">format</span>(city).encode(<span class="st">&#39;utf-8&#39;</span>))</span>
-<span id="cb17-9"><a href="#cb17-9"></a>    f.seek(<span class="dv">0</span>)</span>
-<span id="cb17-10"><a href="#cb17-10"></a>    markdown.markdownFromFile(<span class="bu">input</span><span class="op">=</span>f, output<span class="op">=</span><span class="st">&#39;cities.html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># [Label: pymark/citygen.py]</span></a>
+<a class="sourceLine" id="cb17-2" title="2"></a>
+<a class="sourceLine" id="cb17-3" title="3">. . .</a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="cf">with</span> <span class="bu">open</span>(<span class="st">&#39;cities.md&#39;</span>, <span class="st">&#39;bw+&#39;</span>) <span class="im">as</span> f:</a>
+<a class="sourceLine" id="cb17-5" title="5">    <span class="cf">for</span> country, cities <span class="kw">in</span> country_cities.items():</a>
+<a class="sourceLine" id="cb17-6" title="6">        f.write(<span class="st">&#39;# </span><span class="sc">{}</span><span class="ch">\n</span><span class="st">&#39;</span>.<span class="bu">format</span>(country).encode(<span class="st">&#39;utf-8&#39;</span>))</a>
+<a class="sourceLine" id="cb17-7" title="7">        <span class="cf">for</span> city <span class="kw">in</span> cities:</a>
+<a class="sourceLine" id="cb17-8" title="8">            f.write(<span class="st">&#39;* </span><span class="sc">{}</span><span class="ch">\n</span><span class="st">&#39;</span>.<span class="bu">format</span>(city).encode(<span class="st">&#39;utf-8&#39;</span>))</a>
+<a class="sourceLine" id="cb17-9" title="9">    f.seek(<span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb17-10" title="10">    markdown.markdownFromFile(<span class="bu">input</span><span class="op">=</span>f, output<span class="op">=</span><span class="st">&#39;cities.html&#39;</span>)</a></code></pre></div>
 <p>After constructing the dictionary that holds the data, you use the <code>with open(...) as ...</code> syntax to open a file called <code>cities.md</code>, which doesn’t exist yet. You open it in binary mode (<code>'b'</code>) for writing and reading (<code>'w+'</code>). You use binary mode, because if you pass a string to <code>markdown.markdownFromFile()</code>, it will be interpreted as a path to a readable file on the file system (that is, <code>'/home/file.md'</code>). Also <a href="https://python-markdown.github.io/reference/#markdownFromFile">binary mode</a> allows you to avoid issues related to converting characters to a platform-specific representation; this guarantees that the Python program will behave the same way on any platform.</p>
 <p>You then go through the dictionary’s items extracting each key that contains the country’s name and saving it in the <code>country</code> variable. Alongside this, you extract the value that represents the list of the country’s largest cities and save it in the <code>cities</code> variable.</p>
 <p>Inside the first loop, you write the country’s name to the new <code>cities.md</code> file in a <code>#</code> Markdown header (the <code>&lt;h1&gt;</code> HTML tag). <code>\n</code> is a special character for inserting a new line. You use <code>.encode()</code> because you have opened the file in binary mode. The second <code>for</code> loop iterates through each city and writes its name to the Markdown file as a <code>*</code> list item (the <code>&lt;li&gt;</code> HTML tag).</p>
 <p>After the first loop finishes, you have moved to the end of the file, which means <code>markdown.markdownFromFile()</code> won’t be able to read its contents; therefore, you use <code>f.seek(0)</code> to go back to the top of the file. Before passing the <code>f</code> object to <code>markdown.markdownFromFile()</code> as input, to convert it to HTML and save it to a new file called <code>cities.html</code>.</p>
 <p>Once you’re done, save and close the file.</p>
 <p>Run the <code>citygen.py</code> program:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ citygen.py</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ citygen.py</a></code></pre></div>
 <p>This command will generate two files:</p>
 <ul>
 <li><code>cities.md</code>: A Markdown file with the following contents:</li>
 </ul>
-<div class="sourceCode" id="cb19"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">&lt;!-- [Label: pymark/cities.md] --&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a></span>
-<span id="cb19-3"><a href="#cb19-3"></a><span class="fu"># Japan</span></span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="ss">* </span>Tokyo</span>
-<span id="cb19-5"><a href="#cb19-5"></a><span class="ss">* </span>Osaka</span>
-<span id="cb19-6"><a href="#cb19-6"></a><span class="ss">* </span>Nagoya</span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="fu"># France</span></span>
-<span id="cb19-8"><a href="#cb19-8"></a><span class="ss">* </span>Paris</span>
-<span id="cb19-9"><a href="#cb19-9"></a><span class="ss">* </span>Marseille</span>
-<span id="cb19-10"><a href="#cb19-10"></a><span class="ss">* </span>Lyon</span>
-<span id="cb19-11"><a href="#cb19-11"></a><span class="fu"># Germany</span></span>
-<span id="cb19-12"><a href="#cb19-12"></a><span class="ss">* </span>Berlin</span>
-<span id="cb19-13"><a href="#cb19-13"></a><span class="ss">* </span>Hamburg</span>
-<span id="cb19-14"><a href="#cb19-14"></a><span class="ss">* </span>Munich</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb19-1" title="1">&lt;!--<span class="co"> [Label: pymark/cities.md] --&gt;</span></a>
+<a class="sourceLine" id="cb19-2" title="2"></a>
+<a class="sourceLine" id="cb19-3" title="3"><span class="fu"># Japan</span></a>
+<a class="sourceLine" id="cb19-4" title="4">* <span class="fl">Tokyo</span></a>
+<a class="sourceLine" id="cb19-5" title="5"><span class="fl">* Osaka</span></a>
+<a class="sourceLine" id="cb19-6" title="6"><span class="fl">* Nagoya</span></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="fl"># France</span></a>
+<a class="sourceLine" id="cb19-8" title="8"><span class="fl">* Paris</span></a>
+<a class="sourceLine" id="cb19-9" title="9"><span class="fl">* Marseille</span></a>
+<a class="sourceLine" id="cb19-10" title="10"><span class="fl">* Lyon</span></a>
+<a class="sourceLine" id="cb19-11" title="11"><span class="fl"># Germany</span></a>
+<a class="sourceLine" id="cb19-12" title="12"><span class="fl">* Berlin</span></a>
+<a class="sourceLine" id="cb19-13" title="13"><span class="fl">* Hamburg</span></a>
+<a class="sourceLine" id="cb19-14" title="14"><span class="fl">* Munich</span></a></code></pre></div>
 <ul>
 <li><strong>cities.html</strong>: An HTML file that contains the result of converting the contents of <strong>cities.md</strong>:</li>
 </ul>
-<div class="sourceCode" id="cb20"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">&lt;!-- [Label:pymark/cities.html] --&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="kw">&lt;h1&gt;</span>Japan<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="kw">&lt;ul&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a><span class="kw">&lt;li&gt;</span>Tokyo<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a><span class="kw">&lt;li&gt;</span>Osaka<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a><span class="kw">&lt;li&gt;</span>Nagoya<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a><span class="kw">&lt;/ul&gt;</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a><span class="kw">&lt;h1&gt;</span>France<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a><span class="kw">&lt;ul&gt;</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a><span class="kw">&lt;li&gt;</span>Paris<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a><span class="kw">&lt;li&gt;</span>Marseille<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-13"><a href="#cb20-13"></a><span class="kw">&lt;li&gt;</span>Lyon<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-14"><a href="#cb20-14"></a><span class="kw">&lt;/ul&gt;</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a><span class="kw">&lt;h1&gt;</span>Germany<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb20-16"><a href="#cb20-16"></a><span class="kw">&lt;ul&gt;</span></span>
-<span id="cb20-17"><a href="#cb20-17"></a><span class="kw">&lt;li&gt;</span>Berlin<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-18"><a href="#cb20-18"></a><span class="kw">&lt;li&gt;</span>Hamburg<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-19"><a href="#cb20-19"></a><span class="kw">&lt;li&gt;</span>Munich<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb20-20"><a href="#cb20-20"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb20-1" title="1"><span class="co">&lt;!-- [Label:pymark/cities.html] --&gt;</span></a>
+<a class="sourceLine" id="cb20-2" title="2"></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="kw">&lt;h1&gt;</span>Japan<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="kw">&lt;li&gt;</span>Tokyo<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-6" title="6"><span class="kw">&lt;li&gt;</span>Osaka<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-7" title="7"><span class="kw">&lt;li&gt;</span>Nagoya<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-8" title="8"><span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="kw">&lt;h1&gt;</span>France<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb20-10" title="10"><span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb20-11" title="11"><span class="kw">&lt;li&gt;</span>Paris<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-12" title="12"><span class="kw">&lt;li&gt;</span>Marseille<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-13" title="13"><span class="kw">&lt;li&gt;</span>Lyon<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-14" title="14"><span class="kw">&lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb20-15" title="15"><span class="kw">&lt;h1&gt;</span>Germany<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb20-16" title="16"><span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb20-17" title="17"><span class="kw">&lt;li&gt;</span>Berlin<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-18" title="18"><span class="kw">&lt;li&gt;</span>Hamburg<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-19" title="19"><span class="kw">&lt;li&gt;</span>Munich<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb20-20" title="20"><span class="kw">&lt;/ul&gt;</span></a></code></pre></div>
 <p>You can also use the function <strong>markdown.markdownFromFile()</strong> to convert an existing Markdown file. For example, you can convert the <strong>Picnic.md</strong> file to a file called <strong>Picnic-out.html</strong> using the following code:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># [Label: example.py]</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="im">import</span> markdown</span>
-<span id="cb21-4"><a href="#cb21-4"></a></span>
-<span id="cb21-5"><a href="#cb21-5"></a>markdown.markdownFromFile(<span class="bu">input</span><span class="op">=</span><span class="st">&#39;Picnic.md&#39;</span>, output<span class="op">=</span><span class="st">&#39;Picnic-out.html&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># [Label: example.py]</span></a>
+<a class="sourceLine" id="cb21-2" title="2"></a>
+<a class="sourceLine" id="cb21-3" title="3"><span class="im">import</span> markdown</a>
+<a class="sourceLine" id="cb21-4" title="4"></a>
+<a class="sourceLine" id="cb21-5" title="5">markdown.markdownFromFile(<span class="bu">input</span><span class="op">=</span><span class="st">&#39;Picnic.md&#39;</span>, output<span class="op">=</span><span class="st">&#39;Picnic-out.html&#39;</span>)</a></code></pre></div>
 <p>You can use the <code>markdown.markdownFromFile()</code> function to directly convert a file, if the file does not need any modification. If you do need to modify the Markdown file, you can read it, then convert it using the method demonstrated in <a href="#creating-a-program-to-convert-markdown-files-to-html"><strong>Step 2</strong></a>.</p>
 <p>You’ve converted Markdown text to HTML in Python code, but Python-Markdown also provides a helpful command line interface (CLI) to quickly convert Markdown files to HTML—you’ll review this tool in the next step.</p>
 <h1 id="using-python-markdowns-command-line-interface">4. Using Python-Markdown’s Command Line Interface</h1>
 <p>In this step you will use Python-Markdown’s CLI to convert a Markdown file to HTML and print the output, or save it to an HTML file.</p>
 <p>You can run the Python-Markdown command line script using the <code>-m</code> flag supported by Python, which runs a library module as a script. For example, to convert a Markdown file, you can pass it to the <code>markdown</code> command as follows, replacing <code>filename.md</code> with the name of the file you want to convert:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python -m markdown filename.md</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python -m markdown filename.md</a></code></pre></div>
 <p>Executing this command will print the HTML code for the Markdown text that’s present in the <code>filename.md</code> file.</p>
 <p>For example, to convert the <code>Picnic.md</code> file, run the following command:</p>
 <p>This will print the following output:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb23-1"><a href="#cb23-1"></a><span class="co">&lt;!-- Output --&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="kw">&lt;h1&gt;</span>Things to bring<span class="kw">&lt;/h1&gt;</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="kw">&lt;ul&gt;</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="kw">&lt;li&gt;</span>Food.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb23-5"><a href="#cb23-5"></a><span class="kw">&lt;li&gt;</span>Water.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb23-6"><a href="#cb23-6"></a><span class="kw">&lt;li&gt;</span>Knife.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a><span class="kw">&lt;li&gt;</span>Plates.<span class="kw">&lt;/li&gt;</span></span>
-<span id="cb23-8"><a href="#cb23-8"></a><span class="kw">&lt;/ul&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb23-1" title="1"><span class="co">&lt;!-- Output --&gt;</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="kw">&lt;h1&gt;</span>Things to bring<span class="kw">&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="kw">&lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="kw">&lt;li&gt;</span>Food.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="kw">&lt;li&gt;</span>Water.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="kw">&lt;li&gt;</span>Knife.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="kw">&lt;li&gt;</span>Plates.<span class="kw">&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="kw">&lt;/ul&gt;</span></a></code></pre></div>
 <p>To save the output to a file called output.html, use the following command:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python -m markdown Picnic.md -f output.html</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">(</span><span class="fu">env</span><span class="kw">)</span><span class="ex">sammy@localhost</span>:$ python -m markdown Picnic.md -f output.html</a></code></pre></div>
 <p>With this, you’ve now used the <code>markdown</code> command line interface to convert a Markdown file to HTML.</p>
 <h1 id="conclusion">Conclusion</h1>
 <p>In this tutorial, you have used Python to convert Markdown text to HTML. You can now write your own Python programs that take advantage of the Markdown syntax in different contexts, such as web applications using a web framework like <a href="https://www.digitalocean.com/community/tags/flask">Flask</a> or <a href="https://www.digitalocean.com/community/tags/django">Django</a>. For a tutorial on how to build an app with Python-Markdown and Flask, read <a href="https://digitalocean.com/community/tutorials/how-to-use-python-markdown-with-flask-and-sqlite">How To Use Python-Markdown with Flask and SQLite</a>.</p>
