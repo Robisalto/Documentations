@@ -6,76 +6,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David DEBRAY" />
   <title>This is my template</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -83,17 +87,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title">This is my template</h1>
 <p class="author">David DEBRAY</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#this-is-a-title-1">This is a TITLE –1</a><ul>
-<li><a href="#this-is-a-sub-title-2">This is a Sub-Title –2</a><ul>
+<li><a href="#this-is-a-title-1">This is a TITLE –1</a>
+<ul>
+<li><a href="#this-is-a-sub-title-2">This is a Sub-Title –2</a>
+<ul>
 <li><a href="#this-is-a-subsubtitle-3">This is a SubSubTitle ;) –3</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#video">Video</a><ul>
+<li><a href="#video">Video</a>
+<ul>
 <li><a href="#video-on-youtube">Video on Youtube:</a></li>
 </ul></li>
-<li><a href="#text-formating">Text Formating</a><ul>
+<li><a href="#text-formating">Text Formating</a>
+<ul>
 <li><a href="#checkbox">Checkbox</a></li>
 <li><a href="#some-code-examples">Some <code>CODE</code> Examples</a></li>
 <li><a href="#nouvelle-page-pdf">Nouvelle Page (PDF)</a></li>
@@ -103,15 +111,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#notes">Notes</a></li>
 <li><a href="#quotes">Quotes</a></li>
 </ul></li>
-<li><a href="#mathematics">Mathematics</a><ul>
+<li><a href="#mathematics">Mathematics</a>
+<ul>
 <li><a href="#pythagore">Pythagore:</a></li>
 <li><a href="#enstein">Enstein:</a></li>
 <li><a href="#other-equations">Other Equations</a></li>
 </ul></li>
-<li><a href="#workflow">Workflow</a><ul>
+<li><a href="#workflow">Workflow</a>
+<ul>
 <li><a href="#uml">UML</a></li>
 </ul></li>
-<li><a href="#data-collections">Data Collections</a><ul>
+<li><a href="#data-collections">Data Collections</a>
+<ul>
 <li><a href="#tables">Tables</a></li>
 </ul></li>
 </ul>
@@ -133,94 +144,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul>
 <h1 id="video">Video</h1>
-This is a video:
-<p style="align-content: center;">
-<video width="600" height="337" controls>
-<source src="III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4" type="video/mp4">
-</video>
-</p>
 <h2 id="video-on-youtube">Video on Youtube:</h2>
 <iframe width="600" height="337" src="https://www.youtube.com/embed/fNJf7yPhpJs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 </iframe>
 <p>Code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb1-1" title="1">  <span class="kw">&lt;p</span><span class="ot"> style=</span><span class="st">&quot;align-content: center;&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-2" title="2">  <span class="kw">&lt;video</span><span class="ot"> width=</span><span class="st">&quot;600&quot;</span><span class="ot"> height=</span><span class="st">&quot;337&quot;</span><span class="ot"> controls</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">&lt;source</span><span class="ot"> src=</span><span class="st">&quot;III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4&quot;</span><span class="ot"> type=</span><span class="st">&quot;video/mp4&quot;</span><span class="kw">&gt;</span></a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="kw">&lt;/video&gt;</span></a>
-<a class="sourceLine" id="cb1-5" title="5">  <span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a>  <span class="kw">&lt;iframe</span><span class="ot"> src=</span><span class="st">&quot;https://www.youtube.com/embed/fNJf7yPhpJs&quot;</span><span class="ot"> allowfullscreen=</span><span class="st">&quot;yes&quot;</span><span class="ot"> class=</span><span class="st">&quot;iframe&quot;</span><span class="ot"> scrolling=</span><span class="st">&quot;no&quot;</span><span class="ot"> frameborder=</span><span class="st">&quot;0&quot;</span><span class="kw">&gt;&lt;/iframe&gt;</span></span></code></pre></div>
 <h1 id="text-formating">Text Formating</h1>
 <h2 id="checkbox">Checkbox</h2>
-<ul>
-<li>[x] Done =&gt; <code>[x] Done</code></li>
-<li>[ ] Not yet done =&gt; <code>[ ] Not yet done</code></li>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" checked="" />
+Done =&gt; <code>[x] Done</code></li>
+<li><input type="checkbox" disabled="" />
+Not yet done =&gt; <code>[ ] Not yet done</code></li>
 </ul>
 <h2 id="some-code-examples">Some <code>CODE</code> Examples</h2>
 <p>Some <strong>BASH</strong>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="co"># This is some bash</span></a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="bu">echo</span> <span class="st">&quot;Hello world ^^&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/bin/bash</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co"># This is some bash</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello world ^^&quot;</span></span></code></pre></div>
 <p>Some <strong>Python</strong>:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="bu">print</span>(<span class="st">&quot;This is some Python code&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3">choice <span class="op">=</span> <span class="bu">str</span>(<span class="bu">input</span>(<span class="bu">print</span>(<span class="st">&quot;Voulez-vous continuer? (Y/n&quot;</span>)))</a>
-<a class="sourceLine" id="cb3-4" title="4"></a>
-<a class="sourceLine" id="cb3-5" title="5"><span class="cf">if</span> choice <span class="op">==</span> (Y <span class="op">|</span> y):</a>
-<a class="sourceLine" id="cb3-6" title="6">  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi de continuer !!! &quot;</span>)</a>
-<a class="sourceLine" id="cb3-7" title="7"><span class="cf">elif</span> choice <span class="op">==</span> (N <span class="op">|</span> n):</a>
-<a class="sourceLine" id="cb3-8" title="8">  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi d&#39;abandonner... &quot;</span>)</a>
-<a class="sourceLine" id="cb3-9" title="9"><span class="cf">else</span>:</a>
-<a class="sourceLine" id="cb3-10" title="10">  <span class="bu">print</span>(<span class="st">&quot;Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. &quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">print</span>(<span class="st">&quot;This is some Python code&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>choice <span class="op">=</span> <span class="bu">str</span>(<span class="bu">input</span>(<span class="bu">print</span>(<span class="st">&quot;Voulez-vous continuer? (Y/n&quot;</span>)))</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="cf">if</span> choice <span class="op">==</span> (Y <span class="op">|</span> y):</span>
+<span id="cb3-6"><a href="#cb3-6"></a>  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi de continuer !!! &quot;</span>)</span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="cf">elif</span> choice <span class="op">==</span> (N <span class="op">|</span> n):</span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="bu">print</span>(<span class="st">&quot;Vous avez choisi d&#39;abandonner... &quot;</span>)</span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="cf">else</span>:</span>
+<span id="cb3-10"><a href="#cb3-10"></a>  <span class="bu">print</span>(<span class="st">&quot;Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. Mauvaise réponse, Erreur. &quot;</span>)</span></code></pre></div>
 <!-- Page Break -->
-
 <h2 id="nouvelle-page-pdf">Nouvelle Page (PDF)</h2>
 <p>Nouvelle page créée avec la commande: <code>\newpage</code> <em>(latex)</em><br />
 Example de <em>LATEX</em>:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb4-1" title="1"><span class="bu">\documentclass</span>{<span class="ex">article</span>}</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="bu">\usepackage</span>{<span class="ex">comment</span>}</a>
-<a class="sourceLine" id="cb4-3" title="3"></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co">% uncomment to include stuff in standard comment-environment</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co">%\includecomment{comment}</span></a>
-<a class="sourceLine" id="cb4-6" title="6"></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co">% define a mysection env which content is excluded</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="fu">\excludecomment</span>{mysection}</a>
-<a class="sourceLine" id="cb4-9" title="9"></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="kw">\begin</span>{<span class="ex">document</span>}</a>
-<a class="sourceLine" id="cb4-11" title="11">    This text will be displayed</a>
-<a class="sourceLine" id="cb4-12" title="12"><span class="kw">\begin</span>{<span class="ex">comment</span>}</a>
-<a class="sourceLine" id="cb4-13" title="13"><span class="co">    This text will only be displayed, if \includecomment{comment} was given</span></a>
-<a class="sourceLine" id="cb4-14" title="14"><span class="kw">\end</span>{<span class="ex">comment</span>}</a>
-<a class="sourceLine" id="cb4-15" title="15"><span class="kw">\begin</span>{<span class="ex">mysection</span>}</a>
-<a class="sourceLine" id="cb4-16" title="16">    This text will only be displayed, if <span class="fu">\includecomment</span>{mysection} was given</a>
-<a class="sourceLine" id="cb4-17" title="17"><span class="kw">\end</span>{<span class="ex">mysection</span>}</a>
-<a class="sourceLine" id="cb4-18" title="18"><span class="kw">\end</span>{<span class="ex">document</span>}</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="cb4-1"><a href="#cb4-1"></a><span class="bu">\documentclass</span>{<span class="ex">article</span>}</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="bu">\usepackage</span>{<span class="ex">comment</span>}</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">% uncomment to include stuff in standard comment-environment</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">%\includecomment{comment}</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="co">% define a mysection env which content is excluded</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">\excludecomment</span>{mysection}</span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="kw">\begin</span>{<span class="ex">document</span>}</span>
+<span id="cb4-11"><a href="#cb4-11"></a>    This text will be displayed</span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="kw">\begin</span>{<span class="ex">comment</span>}</span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co">    This text will only be displayed, if \includecomment{comment} was given</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="kw">\end</span>{<span class="ex">comment</span>}</span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="kw">\begin</span>{<span class="ex">mysection</span>}</span>
+<span id="cb4-16"><a href="#cb4-16"></a>    This text will only be displayed, if <span class="fu">\includecomment</span>{mysection} was given</span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="kw">\end</span>{<span class="ex">mysection</span>}</span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="kw">\end</span>{<span class="ex">document</span>}</span></code></pre></div>
 <h2 id="callouts">Callouts</h2>
 <p>Callouts can be <strong>SUPER</strong> <em>useful</em>:</p>
 <p class="info">
 This is just some information
 </p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;info&quot;</span><span class="kw">&gt;</span> This is just some information<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;info&quot;</span><span class="kw">&gt;</span> This is just some information<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="success">
 This is a SUCCESS !
 </p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;success&quot;</span><span class="kw">&gt;</span> This is a SUCCESS !<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;success&quot;</span><span class="kw">&gt;</span> This is a SUCCESS !<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="warning">
 This is a WARNING !
 </p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;warning&quot;</span><span class="kw">&gt;</span> This is a WARNING !<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;warning&quot;</span><span class="kw">&gt;</span> This is a WARNING !<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="alert">
 This is an ALERT !!!
 </p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;alert&quot;</span><span class="kw">&gt;</span> This is an ALERT !!! <span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&quot;alert&quot;</span><span class="kw">&gt;</span> This is an ALERT !!! <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p>Consult <code>styleDark.css</code> and modify the color scheme using: <a href="https://www.w3schools.com/colors/colors_picker.asp">https://www.w3schools.com/colors/colors_picker.asp</a></p>
 <h2 id="questions-answers">Questions &amp; Answers</h2>
 <p class="question">
 Is this a question ???
 </p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&#39;question&#39;</span><span class="kw">&gt;</span> Is this a question ???<span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&#39;question&#39;</span><span class="kw">&gt;</span> Is this a question ???<span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p class="answer">
 Yes it is ! <em>(This is an answer)</em>
 </p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&#39;answer&#39;</span><span class="kw">&gt;</span> Yes it is ! *(This is an answer)* <span class="kw">&lt;/p&gt;</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">&lt;p</span><span class="ot"> class=</span><span class="st">&#39;answer&#39;</span><span class="kw">&gt;</span> Yes it is ! *(This is an answer)* <span class="kw">&lt;/p&gt;</span></span></code></pre></div>
 <p>Example:</p>
 <p class="question">
 What was that thing that Lemony Snicket said ?
@@ -251,7 +253,7 @@ Tragedy is when I cut my finger. Comedy is when you walk into an open sewer and 
 <h2 id="other-equations">Other Equations</h2>
 <p><br /><span class="math display">∫<sub>0</sub><sup>1</sup><em>f</em>(<em>t</em>)<em>d</em><em>t</em></span><br /></p>
 <p><br /><span class="math display">∑<sub><em>j</em></sub><em>γ</em><sub><em>j</em></sub><sup>2</sup>/<em>d</em><sub><em>j</em></sub></span><br /></p>
-<p>The <em>Gamma function</em> satisfying <span class="math inline"><em>Γ</em>(<em>n</em>) = (<em>n</em> − 1)! ∀<em>n</em> ∈ ℕ</span> is via the Euler integral</p>
+<p>The <em>Gamma function</em> satisfying <span class="math inline"><em>Γ</em>(<em>n</em>) = (<em>n</em> − 1)!  ∀<em>n</em> ∈ ℕ</span> is via the Euler integral</p>
 <p><br /><span class="math display"><em>Γ</em>(<em>z</em>) = ∫<sub>0</sub><sup>∞</sup><em>t</em><sup><em>z</em> − 1</sup><em>e</em><sup> − <em>t</em></sup><em>d</em><em>t</em> .</span><br /></p>
 <p>For more: <a href="https://csrgxtu.github.io/2015/03/20/Writing-Mathematic-Fomulars-in-Markdown/">Writing Mathematic Fomulars in Markdown</a></p>
 <h1 id="workflow">Workflow</h1>
@@ -299,8 +301,13 @@ Alice-&gt;John: Yes... John, how are you?</code></pre>
 <a href="template.pdf">Template - Version PDF</a>
 </p>
 <hr />
-<div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
 </div>
+
 </body>
 </html>

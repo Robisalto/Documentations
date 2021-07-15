@@ -26,12 +26,6 @@ This is some text and such...
 
 
 # Video
-This is a video:
-<p style="align-content: center;">
-<video width="600" height="337" controls>
-  <source src="III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4" type="video/mp4">
-</video>
-</p>
 
 ## Video on Youtube:
 
@@ -40,11 +34,7 @@ This is a video:
 Code:
 
 ```html
-  <p style="align-content: center;">
-  <video width="600" height="337" controls>
-    <source src="III.EssentielDePython\I-III. Choisir son environnement de développement intégré.mp4" type="video/mp4">
-  </video>
-  </p>
+  <iframe src="https://www.youtube.com/embed/fNJf7yPhpJs" allowfullscreen="yes" class="iframe" scrolling="no" frameborder="0"></iframe>
 ```
 
 # Text Formating

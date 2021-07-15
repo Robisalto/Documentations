@@ -6,76 +6,80 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David DEBRAY" />
   <title>VI. Python pour la data science</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
-  </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-div.sourceCode
-  {  }
-@media screen {
-a.sourceLine::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -83,25 +87,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 class="title">VI. Python pour la data science</h1>
 <p class="author">David DEBRAY</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
 <li><a href="#bienvenue-dans-python-pour-la-data-science">Bienvenue dans « Python pour la data science »</a></li>
 </ul></li>
-<li><a href="#i.-aborder-le-langage-python">I. Aborder le langage Python</a><ul>
+<li><a href="#i.-aborder-le-langage-python">I. Aborder le langage Python</a>
+<ul>
 <li><a href="#i-i.-comprendre-limportance-de-la-data-science">I-I. Comprendre l’importance de la data science</a></li>
 <li><a href="#i-ii.-expliquer-le-choix-de-python">I-II. Expliquer le choix de Python</a></li>
 <li><a href="#i-iii.-installer-python">I-III. Installer Python</a></li>
 <li><a href="#i-iv.-chapter-quizz">I-IV. Chapter QUIZZ</a></li>
 </ul></li>
-<li><a href="#ii.-mener-des-opérations-basiques">II. Mener des opérations basiques</a><ul>
+<li><a href="#ii.-mener-des-opérations-basiques">II. Mener des opérations basiques</a>
+<ul>
 <li><a href="#ii-i.-effectuer-des-opérations-basiques-sur-les-listes">II-I. Effectuer des opérations basiques sur les listes</a></li>
 <li><a href="#ii-ii.-effectuer-des-opérations-avancées-sur-les-listes">II-II. Effectuer des opérations avancées sur les listes</a></li>
 <li><a href="#ii-iii.-tirer-parti-des-dictionnaires">II-III. Tirer parti des dictionnaires</a></li>
 <li><a href="#ii-iv.-découvrir-les-compréhensions">II-IV. Découvrir les compréhensions</a></li>
 <li><a href="#ii-v.-chapter-quizz">II-V. Chapter QUIZZ</a></li>
 </ul></li>
-<li><a href="#iii.-charger-et-préparer-les-données">III. Charger et préparer les données</a><ul>
+<li><a href="#iii.-charger-et-préparer-les-données">III. Charger et préparer les données</a>
+<ul>
 <li><a href="#iii-i.-comprendre-lintérêt-du-prétraitement-de-données">III-I. Comprendre l’intérêt du prétraitement de données</a></li>
 <li><a href="#iii-ii.-charger-des-fichiers-excel-csv">III-II. Charger des fichiers Excel &amp; CSV</a></li>
 <li><a href="#iii-iii.-charger-un-fichier-json">III-III. Charger un fichier JSON</a></li>
@@ -113,8 +121,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#iii-ix.-maîtriser-les-statistiques-descriptives-avec-pandas">III-IX. Maîtriser les statistiques descriptives avec <code>Pandas</code></a></li>
 <li><a href="#iii-x.-quizz">III-X. QUIZZ</a></li>
 </ul></li>
-<li><a href="#iv.-manipuler-différents-types-de-données">IV. Manipuler différents types de données</a><ul>
-<li><a href="#iv-i.-découvrir-différents-types-de-données">IV-I. Découvrir différents types de données</a><ul>
+<li><a href="#iv.-manipuler-différents-types-de-données">IV. Manipuler différents types de données</a>
+<ul>
+<li><a href="#iv-i.-découvrir-différents-types-de-données">IV-I. Découvrir différents types de données</a>
+<ul>
 <li><a href="#données-qualitatives">Données <em>QUALITATIVES:</em></a></li>
 <li><a href="#données-quantitatives">Données <em>QUANTITATIVES</em>:</a></li>
 </ul></li>
@@ -126,7 +136,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#iv-vii.-manipuler-les-images">IV-VII. Manipuler les images</a></li>
 <li><a href="#iv-viii.-quizz">IV-VIII. QUIZZ</a></li>
 </ul></li>
-<li><a href="#v.-aborder-la-visualisation-des-données">V. Aborder la visualisation des données</a><ul>
+<li><a href="#v.-aborder-la-visualisation-des-données">V. Aborder la visualisation des données</a>
+<ul>
 <li><a href="#v-i.-découvrir-les-bases-de-la-visualisation-de-données">V-I. Découvrir les bases de la visualisation de données</a></li>
 <li><a href="#v-ii.-aborder-matplotlib">V-II. Aborder Matplotlib</a></li>
 <li><a href="#v-ii.-appréhender-seaborn">V-II. Appréhender Seaborn</a></li>
@@ -134,8 +145,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#v-iv.-aller-plus-loin-avec-matplotlib">V-IV. Aller plus loin avec Matplotlib</a></li>
 <li><a href="#v-v.-chapter-quizz">V-V. Chapter QUIZZ</a></li>
 </ul></li>
-<li><a href="#vi.-sinitier-au-web-scraping">VI. S’initier au web scraping</a><ul>
-<li><a href="#vi-i.-comprendre-le-web-scraping">VI-I. Comprendre le web scraping</a><ul>
+<li><a href="#vi.-sinitier-au-web-scraping">VI. S’initier au web scraping</a>
+<ul>
+<li><a href="#vi-i.-comprendre-le-web-scraping">VI-I. Comprendre le web scraping</a>
+<ul>
 <li><a href="#les-étapes-du-web-scrapping">Les étapes du Web Scrapping:</a></li>
 </ul></li>
 <li><a href="#vi-ii.-explorer-un-document-html-avec-beautiful-soup">VI-II. Explorer un document HTML avec Beautiful Soup</a></li>
@@ -144,12 +157,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#vi-v.-pratiquer-le-web-scraping">VI-V. Pratiquer le web scraping</a></li>
 <li><a href="#vi-vi.-chapter-quizz">VI-VI. Chapter QUIZZ</a></li>
 </ul></li>
-<li><a href="#vii.-se-familiariser-avec-les-algorithmes-de-machine-learning">VII. Se familiariser avec les algorithmes de machine learning</a><ul>
+<li><a href="#vii.-se-familiariser-avec-les-algorithmes-de-machine-learning">VII. Se familiariser avec les algorithmes de machine learning</a>
+<ul>
 <li><a href="#vii-i.-comprendre-la-régression-linéaire">VII-I. Comprendre la régression linéaire</a></li>
 <li><a href="#vii-ii.-mettre-en-œuvre-la-régression-linéaire">VII-II. Mettre en œuvre la régression linéaire</a></li>
 <li><a href="#vii-iii.-comprendre-lalgorithme-svm">VII-III. Comprendre l’algorithme SVM</a></li>
 <li><a href="#vii-iv.-utiliser-lalgorithme-svm">VII-IV. Utiliser l’algorithme SVM</a></li>
-<li><a href="#vii-v.-comprendre-la-classification-naïve-bayésienne">VII-V. Comprendre la classification naïve bayésienne</a><ul>
+<li><a href="#vii-v.-comprendre-la-classification-naïve-bayésienne">VII-V. Comprendre la classification naïve bayésienne</a>
+<ul>
 <li><a href="#exemples">Exemples</a></li>
 </ul></li>
 <li><a href="#vii-vi.-pratiquer-la-classification-naïve-bayésienne">VII-VI. Pratiquer la classification naïve bayésienne</a></li>
@@ -158,7 +173,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#vii-ix.-analyser-en-composante-principale-pca">VII-IX. Analyser en composante principale PCA</a></li>
 <li><a href="#vii-x.-chapter-quizz">VII-X. Chapter QUIZZ</a></li>
 </ul></li>
-<li><a href="#viii.-aborder-le-deep-learning-avec-keras-et-tensorflow">VIII. Aborder le deep learning avec Keras et TensorFlow</a><ul>
+<li><a href="#viii.-aborder-le-deep-learning-avec-keras-et-tensorflow">VIII. Aborder le deep learning avec Keras et TensorFlow</a>
+<ul>
 <li><a href="#viii-i.-comprendre-le-deep-learning">VIII-I. Comprendre le deep learning</a></li>
 <li><a href="#viii-ii.-aborder-les-concepts-du-deep-learning">VIII-II. Aborder les concepts du deep learning</a></li>
 <li><a href="#viii-ii.-aborder-les-concepts-du-deep-learning-1">VIII-II. Aborder les concepts du deep learning</a></li>
@@ -168,7 +184,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#viii-vi.-déployer-le-modèle">VIII-VI. Déployer le modèle</a></li>
 <li><a href="#viii-vii.-chapter-quizz">VIII-VII. Chapter QUIZZ</a></li>
 </ul></li>
-<li><a href="#conclusion">Conclusion</a><ul>
+<li><a href="#conclusion">Conclusion</a>
+<ul>
 <li><a href="#clonclure-sur-python-pour-la-data-science">Clonclure sur Python pour la Data Science</a></li>
 </ul></li>
 <li><a href="#certification">CERTIFICATION</a></li>
@@ -256,32 +273,32 @@ Compréhensions VS Générateurs
 <p>*CSV: Comma Separated Values <video width="1000" height="562" controls> <source src="VI.PythonPourLaDataScience\III-II. Charger des fichiers Excel & CSV.mp4" type="video/mp4"> </video></p>
 <h2 id="iii-iii.-charger-un-fichier-json">III-III. Charger un fichier JSON</h2>
 <p>JSON*: JavaScript Object Notation <video width="1000" height="562" controls> <source src="VI.PythonPourLaDataScience\III-III. Charger un fichier JSON.mp4" type="video/mp4"> </video></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="im">import</span> json</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="im">import</span> json</span></code></pre></div>
 <h2 id="iii-iv.-interroger-une-base-de-données-sql">III-IV. Interroger une base de données SQL</h2>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-IV. Interroger une base de données SQL.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1"><span class="co"># Import modules</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="im">import</span> numpy</a>
-<a class="sourceLine" id="cb2-3" title="3"><span class="im">import</span> pandas <span class="im">as</span> pd</a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="im">import</span> pyodbc</a>
-<a class="sourceLine" id="cb2-5" title="5"></a>
-<a class="sourceLine" id="cb2-6" title="6"><span class="co"># DB Connection</span></a>
-<a class="sourceLine" id="cb2-7" title="7">conn <span class="op">=</span> pyodbc.<span class="ex">connect</span>(</a>
-<a class="sourceLine" id="cb2-8" title="8">    <span class="st">&quot;Driver={SQL Server Native Client 11.0};&quot;</span></a>
-<a class="sourceLine" id="cb2-9" title="9">    <span class="st">&quot;Server=MGR2-BTH108W\SQLSERVER;&quot;</span></a>
-<a class="sourceLine" id="cb2-10" title="10">    <span class="st">&quot;Database=irissql;&quot;</span></a>
-<a class="sourceLine" id="cb2-11" title="11">    <span class="st">&quot;Trusted_Connection=yes;&quot;</span></a>
-<a class="sourceLine" id="cb2-12" title="12">)</a>
-<a class="sourceLine" id="cb2-13" title="13"></a>
-<a class="sourceLine" id="cb2-14" title="14">requête <span class="op">=</span> <span class="st">&quot;&quot;&quot;SELECT [Sépales.Longueur], EspècesId</span></a>
-<a class="sourceLine" id="cb2-15" title="15"><span class="st">           FROM dbo.iris_données;&quot;&quot;&quot;</span></a>
-<a class="sourceLine" id="cb2-16" title="16">T <span class="op">=</span> pd.read_sql(requête, conn)</a>
-<a class="sourceLine" id="cb2-17" title="17"></a>
-<a class="sourceLine" id="cb2-18" title="18"><span class="co"># Programme</span></a>
-<a class="sourceLine" id="cb2-19" title="19">T.head()</a>
-<a class="sourceLine" id="cb2-20" title="20"></a>
-<a class="sourceLine" id="cb2-21" title="21">T.shape</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Import modules</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="im">import</span> numpy</span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="im">import</span> pyodbc</span>
+<span id="cb2-5"><a href="#cb2-5"></a></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="co"># DB Connection</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>conn <span class="op">=</span> pyodbc.<span class="ex">connect</span>(</span>
+<span id="cb2-8"><a href="#cb2-8"></a>    <span class="st">&quot;Driver={SQL Server Native Client 11.0};&quot;</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="st">&quot;Server=MGR2-BTH108W\SQLSERVER;&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="st">&quot;Database=irissql;&quot;</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="st">&quot;Trusted_Connection=yes;&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a>)</span>
+<span id="cb2-13"><a href="#cb2-13"></a></span>
+<span id="cb2-14"><a href="#cb2-14"></a>requête <span class="op">=</span> <span class="st">&quot;&quot;&quot;SELECT [Sépales.Longueur], EspècesId</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a><span class="st">           FROM dbo.iris_données;&quot;&quot;&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16"></a>T <span class="op">=</span> pd.read_sql(requête, conn)</span>
+<span id="cb2-17"><a href="#cb2-17"></a></span>
+<span id="cb2-18"><a href="#cb2-18"></a><span class="co"># Programme</span></span>
+<span id="cb2-19"><a href="#cb2-19"></a>T.head()</span>
+<span id="cb2-20"><a href="#cb2-20"></a></span>
+<span id="cb2-21"><a href="#cb2-21"></a>T.shape</span></code></pre></div>
 <h2 id="iii-v.-concaténer-différentes-sources-de-données">III-V. Concaténer différentes sources de données</h2>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-V. Concaténer différentes sources de données.mp4" type="video/mp4">
@@ -298,9 +315,9 @@ Compréhensions VS Générateurs
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-VIII. Maîtriser les statistiques descriptives avec NumPy.mp4" type="video/mp4">
 </video>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb3-1" title="1"><span class="op">%</span>timeit <span class="bu">sum</span>(tab)</a>
-<a class="sourceLine" id="cb3-2" title="2"></a>
-<a class="sourceLine" id="cb3-3" title="3"><span class="dv">156</span> ms ± <span class="dv">392</span> µs per loop (mean ± std. dev. of <span class="dv">7</span> runs, <span class="dv">10</span> loops each)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="op">%</span>timeit <span class="bu">sum</span>(tab)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="dv">156</span> ms ± <span class="dv">392</span> µs per loop (mean ± std. dev. of <span class="dv">7</span> runs, <span class="dv">10</span> loops each)</span></code></pre></div>
 <h2 id="iii-ix.-maîtriser-les-statistiques-descriptives-avec-pandas">III-IX. Maîtriser les statistiques descriptives avec <code>Pandas</code></h2>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\III-IX. Maîtriser les statistiques descriptives avec Pandas.mp4" type="video/mp4">
@@ -323,7 +340,7 @@ Compréhensions VS Générateurs
 <source src="VI.PythonPourLaDataScience\IV-I. Découvrir différents types de données.mp4" type="video/mp4">
 </video>
 <figure>
-<img src="VI.PythonPourLaDataScience/Untitled.png" alt="Schéma des différents types de données" /><figcaption><em>Schéma des différents types de données</em></figcaption>
+<img src="VI.PythonPourLaDataScience/Untitled.png" alt="" /><figcaption><em>Schéma des différents types de données</em></figcaption>
 </figure>
 <h3 id="données-qualitatives">Données <em>QUALITATIVES:</em></h3>
 <ol type="1">
@@ -378,17 +395,17 @@ Compréhensions VS Générateurs
 <blockquote>
 <p>**Tokenisation*:** Découper en jeton. Découper une chaîne en maillons</p>
 </blockquote>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb4-1" title="1"><span class="im">import</span> nltk</a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="im">from</span> nltk.tokenize <span class="im">import</span> WordPunctTokenizer</a>
-<a class="sourceLine" id="cb4-3" title="3">nltk.download(<span class="st">&#39;punkt&#39;</span>)</a>
-<a class="sourceLine" id="cb4-4" title="4">nltk.download(<span class="st">&#39;stopwords&#39;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="im">import</span> nltk</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> WordPunctTokenizer</span>
+<span id="cb4-3"><a href="#cb4-3"></a>nltk.download(<span class="st">&#39;punkt&#39;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>nltk.download(<span class="st">&#39;stopwords&#39;</span>)</span></code></pre></div>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\IV-V. Manipuler des données textuelles avec NLTK.mp4" type="video/mp4">
 </video>
 <h2 id="iv-vi.-utiliser-les-séries-temporelles">IV-VI. Utiliser les séries temporelles</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Module temporel pour Python:</span></a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="im">from</span> datetime <span class="im">import</span> datetime</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="co"># Moins performant que les outils NumPy ou Pandas</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Module temporel pour Python:</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># Moins performant que les outils NumPy ou Pandas</span></span></code></pre></div>
 <video width="1000" height="562" controls>
 <source src="VI.PythonPourLaDataScience\IV-VI. Utiliser les séries temporelles.mp4" type="video/mp4">
 </video>
@@ -560,7 +577,7 @@ Analyse en Composantes Principales <em>(PCA)</em>
 <source src="VI.PythonPourLaDataScience\VIII-I. Comprendre le deep learning.mp4" type="video/mp4">
 </video>
 <figure>
-<img src="VI.PythonPourLaDataScience\VIII-I.%20Comprendre%20le%20deep%20learning.png" title="Comprendre le Deep Learning" alt="Comprendre le Deep Learning" /><figcaption><em>Comprendre le Deep Learning</em></figcaption>
+<img src="VI.PythonPourLaDataScience\VIII-I.%20Comprendre%20le%20deep%20learning.png" title="Comprendre le Deep Learning" alt="" /><figcaption><em>Comprendre le Deep Learning</em></figcaption>
 </figure>
 <h2 id="viii-ii.-aborder-les-concepts-du-deep-learning">VIII-II. Aborder les concepts du deep learning</h2>
 <video width="1000" height="562" controls>
@@ -610,8 +627,13 @@ Analyse en Composantes Principales <em>(PCA)</em>
 <a href="VI.PythonPourLaDataScience.pdf">VI. Python pour la data science - Version PDF</a>
 </p>
 <hr />
-<div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
 </div>
+
 </body>
 </html>

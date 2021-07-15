@@ -1,33 +1,137 @@
-/* Do not show subsubsections in menu: */
+nav {    
+    display: block;
+    text-align: center;
+  }
+  nav ul {
+    margin: 0;
+    padding:0;
+    list-style: none;
+  }
+  .nav a {
+    display:block; 
+    background: #111; 
+    color:#fff; 
+    text-decoration: none;
+    padding: .8em 1.8em;
+    text-transform: uppercase;
+    font-size: 80%;letter-spacing: 2px;
+    text-shadow: 0 -1px 0 #000;
+    position: relative;
+  }
+  .nav{  
+    vertical-align: top; 
+    display: inline-block;
+    box-shadow: 1px -1px -1px 1px #000, -1px 1px -1px 1px #fff, 0 0 6px 3px #fff;
+    border-radius:6px;
+  }
+  .nav li{position: relative;}
+  .nav > li { 
+    float:left; 
+    border-bottom: 4px #aaa solid; 
+    margin-right: 1px; 
+  } 
+  .nav > li > a { 
+    margin-bottom:1px;
+    box-shadow:inset 0 2em .33em -.5em #555; 
+  }
+  .nav > li:hover , .nav > li:hover >a{  border-bottom-color:orange;}
+  .nav li:hover > a { color:orange; }
+  .nav > li:first-child  { border-radius: 4px 0 0 4px;} 
+  .nav > li:first-child>a{border-radius: 4px 0 0 0;}
+  .nav > li:last-child  { 
+    border-radius: 0 0 4px 0; 
+    margin-right: 0;
+  } 
+  .nav > li:last-child >a{border-radius: 0 4px 0 0; }
+  .nav li li a { margin-top:1px}
+  
+  
+  
+    .nav li a:first-child:nth-last-child(2):before { 
+     content:""; 
+     position: absolute; 
+     height:0; 
+     width: 0; 
+     border: 5px solid transparent; 
+     top: 50% ;
+     right:5px;  
+   }
+   
+   /* submenu positioning*/
+.nav ul {
+  position: absolute;
+  white-space: nowrap;
+  border-bottom: 5px solid  orange;
+  z-index: 1;
+  left: -99999em;
+}
+.nav > li:hover > ul {
+  left: auto;
+  padding-top: 5px  ;
+  min-width: 100%;
+}
+.nav > li li ul {  border-left:1px solid #fff;}
 
-nav li li li {display: inline-block; }
 
-nav {
+.nav > li li:hover > ul { 
+ /* margin-left: 1px */
+  left: 100%;
+  top: -1px;
+}
+/* arrow hover styling */
+.nav > li > a:first-child:nth-last-child(2):before { 
+  border-top-color: #aaa; 
+}
+.nav > li:hover > a:first-child:nth-last-child(2):before {
+  border: 5px solid transparent; 
+  border-bottom-color: orange; 
+  margin-top:-5px
+}
+.nav li li > a:first-child:nth-last-child(2):before {  
+  border-left-color: #aaa; 
+  margin-top: -5px
+}
+.nav li li:hover > a:first-child:nth-last-child(2):before {
+  border: 5px solid transparent; 
+  border-right-color: orange;
+  right: 10px; 
+}
+
+
+
+
+/* nav li li li {display: inline-block; } */
+
+/* nav {
 	display: inline-block;
-    	text-align:center;
+  text-align:center;
 	margin: 0px auto;
 }
 
 nav ul {
 	padding: 0;
 	margin: 0 auto;
+  font-size: large;
+  font-weight: bold;
 }
 
 nav a {
 	padding: 10px;
 	background: #000000;
 	border-radius: 20px;
+  text-decoration: none;
 }
 
 nav li {
 	list-style: none;
 	position: relative;
 	float: left;
+
 }
 
 nav a {
 	display: block;
-	width: 200px;
+	width: 175px;
   align-items: center;
 }
 
@@ -40,21 +144,11 @@ nav ul ul {
   font-size: 90%;
 }
 
-nav ul ul ul {
-  padding: 0px;
-  margin: 0px;
-  position: absolute;
-  font-size: small;
-}
-
-/* Niv 2 */
 nav li:hover ul {
 	display: block;
 }
 
 nav li:hover a {
-	/* Niveau 2 */
-  /*background-color: #fff;*/
   background-color: #000000;
 }
 
@@ -62,6 +156,18 @@ nav li:hover a:hover {
 	background-color: #5f08ff;
   color: #ccc;
 }
+
+
+nav ul ul ul {
+  padding: 0px;
+	margin: 0px;
+	position: absolute;
+	z-index: +1;
+  display: none;
+  font-size: small;
+  
+} */
+
 
 header::after {
   display: block;
@@ -108,17 +214,17 @@ a:link {
 
 /* visited link */
 a:visited {
-  color: #00A388;
+  color: #0395DE;
 }
 
 /* mouse over link */
 a:hover {
-  color: #0395DE;
+  color: #00A388;
 }
 
 /* selected link */
 a:active {
-  color: #0395DE;
+  color: #FF6138;
 } 
 
 
@@ -709,6 +815,23 @@ blockquote em{
     height: 100%;
 }
 
+
+/* IFRAME */
+iframe {
+  /* padding-top: 56.25%; */
+  width: 1000px;
+  height: 712.5px;
+  
+  margin-top: 20px;
+  margin-bottom: 30px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  -moz-box-shadow: 4px 4px 14px #000;
+  -webkit-box-shadow: 4px 4px 14px #000;
+  box-shadow: 4px 4px 14px #000;
+}
+
 /* Footer */
 .footer {
   position: sticky;
@@ -717,11 +840,10 @@ blockquote em{
   width: 100%;
   background-color: #000000;
   color: #00A388;
-  /*color:  #d1d1d1;*/
   text-align: center;
 }
 
-
+/* 
 % Color definitions
 % Awesome colors
 \definecolor{awesome-emerald}{HTML}{00A388}
@@ -731,4 +853,4 @@ blockquote em{
 \definecolor{awesome-orange}{HTML}{FF6138}
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
-\definecolor{awesome-darknight}{HTML}{131A28}
+\definecolor{awesome-darknight}{HTML}{131A28} */

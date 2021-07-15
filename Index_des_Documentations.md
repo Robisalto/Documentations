@@ -115,16 +115,22 @@ extensions: 'extra'
 # Docs Perso
 
 ## Python Projects
-
 [My Python Projects](2021-07-13-My-Python-Projects.html)
 
+## Recipes / Recettes
+- [Recipes](Recipes.html)
+
+## Workout / Health
 - [Workout](MyWORKOUT.html)
+- [Guitare](Guitare.html)
+
+## Art
 - [Quotes](Quotes.html)
 - [Lyrics](Lyrics.html)
 - [Poems](Poems.html)
 - [Growing Weed](Growing_Weed.html)
-- [Guitare](Guitare.html)
-- [Recipes](Recipes.html)
+
+
 
 # Docs Techniques
 

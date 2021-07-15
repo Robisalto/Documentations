@@ -7,13 +7,80 @@
   <meta name="author" content="Frédéric KIBANZA" />
   <meta name="dcterms.date" content="2021-07-12" />
   <title>POEI DevOps - AWS</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
   
 </head>
 <body>
@@ -22,20 +89,36 @@
 <p class="author">Frédéric KIBANZA</p>
 <p class="date">2021-07-12</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#doc-source">Doc Source</a><ul>
+<li><a href="#doc-source">Doc Source</a>
+<ul>
 <li><a href="#doc-formation">Doc Formation</a></li>
 <li><a href="#docs-amazon">Docs Amazon</a></li>
 </ul></li>
-<li><a href="#notions">Notions</a><ul>
+<li><a href="#notions">Notions</a>
+<ul>
 <li><a href="#différents-types-de-cloud">Différents types de Cloud</a></li>
 </ul></li>
-<li><a href="#liste-des-services">Liste des Services</a></li>
-<li><a href="#aws-windows-server">AWS &amp; Windows Server</a><ul>
+<li><a href="#liste-des-services">Liste des Services</a>
+<ul>
 <li><a href="#ressources-aws">Ressources AWS</a></li>
 </ul></li>
-<li><a href="#tp-qwiklabs">TP Qwiklabs</a></li>
+<li><a href="#tp-qwiklabs">TP Qwiklabs</a>
+<ul>
+<li><a href="#tp-1">TP-1</a></li>
+<li><a href="#tp-2">TP-2</a>
+<ul>
+<li><a href="#aws-windows-server">AWS &amp; Windows Server</a></li>
+</ul></li>
+<li><a href="#tp-3">TP-3</a>
+<ul>
+<li><a href="#additional-resources">Additional Resources</a></li>
+</ul></li>
+<li><a href="#tp-4">TP-4</a></li>
+<li><a href="#tp-5">TP-5</a></li>
+</ul></li>
+<li><a href="#liens-utiles">Liens utiles</a></li>
 </ul>
 </nav>
 <link rel="icon" href="favicon.png" type="image/png" />
@@ -47,7 +130,7 @@
 <p>Découvrez notre webTV : <a href="http://www.dawan.tv" class="uri">http://www.dawan.tv</a></p>
 <h1 id="doc-source">Doc Source</h1>
 <h2 id="doc-formation">Doc Formation</h2>
-<iframe src="2021-07-12-POEI-AWS/Frederic_Kibanza_Support_AWS_Init.pdf" width="100%" height="75%" allowfullscreen="yes">
+<iframe src="2021-07-12-POEI-AWS/Frederic_Kibanza_Support_AWS_Init.pdf" allowfullscreen="yes" class="iframe" scrolling="no" frameborder="0">
 </iframe>
 <h2 id="docs-amazon">Docs Amazon</h2>
 <ul>
@@ -78,20 +161,225 @@
 <li>Amazon <strong>CloudFront</strong>, un Content Delivery Network (CDN) pour distribuer des objets stockés sur S3 vers un emplacement proche de l’appelant.</li>
 <li><strong>AWS Management Console</strong> (AWS Console), est une interface point and click basé sur le web pour gérer et surveiller les infrastructures Amazon, incluant EC2, EBS, S3, and SQS.</li>
 </ul>
-<h1 id="aws-windows-server">AWS &amp; Windows Server</h1>
-<p>By creating <strong>IAM</strong> roles and <strong>AD FS Groups</strong>, you are able to assign specific permissions to users to limit their access to appropriate parts of the AWS Management Console.</p>
-<p>For reference, see the followingdetailed blog article on this topic (with Windows Server 2008 R2):</p>
-<p><a href="https://blogs.aws.amazon.com/security/post/Tx71TWXXJ3UI14/Enabling-Federation-to-AWS-using-Windows-Active-Directory-ADFS-and-SAML-2-0" class="uri">https://blogs.aws.amazon.com/security/post/Tx71TWXXJ3UI14/Enabling-Federation-to-AWS-using-Windows-Active-Directory-ADFS-and-SAML-2-0</a></p>
 <h2 id="ressources-aws">Ressources AWS</h2>
 <ul>
 <li><a href="https://aws.amazon.com/fr/ec2/?ec2-whats-new.sort-by=item.additionalFields.postDateTime&amp;ec2-whats-new.sort-order=desc">Amazon EC2</a></li>
 </ul>
 <p>For more information about AWS Training &amp; Certification, see: <a href="http://aws.amazon.com/training/" class="uri">http://aws.amazon.com/training/</a></p>
 <h1 id="tp-qwiklabs">TP Qwiklabs</h1>
+<h2 id="tp-1">TP-1</h2>
 <p>TP-1: <a href="https://www.qwiklabs.com/focuses/16438?catalog_rank=%7B%22rank%22%3A2%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&amp;parent=catalog&amp;search_id=10984620">Introduction à Amazon Simple Storage Service (S3)</a></p>
+<h2 id="tp-2">TP-2</h2>
 <p>TP-2: <a href="https://www.qwiklabs.com/focuses/18123?catalog_rank=%7B%22rank%22%3A2%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&amp;parent=catalog&amp;search_id=11911521">Introduction to AWS Identity and Access Management (IAM)</a></p>
-<div class="footer">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#footer">Bottom / Fin</a> *** </p>
+<h3 id="aws-windows-server">AWS &amp; Windows Server</h3>
+<p>By creating <strong>IAM</strong> roles and <strong>AD FS Groups</strong>, you are able to assign specific permissions to users to limit their access to appropriate parts of the AWS Management Console.</p>
+<p>For reference, see the followingdetailed blog article on this topic (with Windows Server 2008 R2):</p>
+<p><a href="https://blogs.aws.amazon.com/security/post/Tx71TWXXJ3UI14/Enabling-Federation-to-AWS-using-Windows-Active-Directory-ADFS-and-SAML-2-0" class="uri">https://blogs.aws.amazon.com/security/post/Tx71TWXXJ3UI14/Enabling-Federation-to-AWS-using-Windows-Active-Directory-ADFS-and-SAML-2-0</a></p>
+<h2 id="tp-3">TP-3</h2>
+<p>TP-3: <a href="https://www.qwiklabs.com/focuses/17876?catalog_rank=%7B%22rank%22%3A3%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&amp;parent=catalog&amp;search_id=11947373">Introduction to Amazon EC2</a></p>
+<h3 id="additional-resources">Additional Resources</h3>
+<ul>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/LaunchingAndUsingInstances.html">Launch your instance</a></li>
+<li><a href="https://aws.amazon.com/ec2/instance-types">Amazon EC2 Instance Types</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html">Amazon Machine Images (AMI)</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html">Amazon EC2 - User Data and Shell Scripts</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/RootDeviceStorage.html">Amazon EC2 Root Device Volume</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tagging your Amazon EC2 Resources</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">Security Groups</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html">Amazon EC2 KeyPairs</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html?icmpid=docs_ec2_console">Status Check for your Instances</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html">Getting Console Output and Rebooting Instances</a></li>
+<li><a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ec2-metricscollected.html">Amazon EC2 Metrics and Dimensions</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-resize.html">Resizing Your Instance</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html">Stop and Start Your Instance</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-resource-limits.htm">Amazon EC2 Service Limits</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html">Terminate Your Instance</a></li>
+<li><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html">Termination Protection for an Instance</a></li>
+</ul>
+<h2 id="tp-4">TP-4</h2>
+<p><a href="https://www.qwiklabs.com/focuses/15485?catalog_rank=%7B%22rank%22%3A3%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&amp;parent=catalog&amp;search_id=11948000">Automating AWS Services with Scripting and the AWS CLI</a></p>
+<h4 id="création-de-clé">Création de clé</h4>
+<p>Script Python pour créer des clés SSH:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#!/usr/bin/env python</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="im">import</span> boto3</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Connect to the Amazon EC2 service</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>ec2_client <span class="op">=</span> boto3.client(<span class="st">&#39;ec2&#39;</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="co"># Create a Key Pair</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>key <span class="op">=</span> ec2_client.create_key_pair(KeyName <span class="op">=</span> <span class="st">&#39;SDK&#39;</span>)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># Print the private Fingerprint of the private key</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a><span class="bu">print</span>(key.get(<span class="st">&#39;KeyFingerprint&#39;</span>))</span></code></pre></div>
+<p>Cleanup Key pairs:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#!/usr/bin/env python</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="im">import</span> boto3</span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Connect to the Amazon EC2 service</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>ec2_client <span class="op">=</span> boto3.client(<span class="st">&#39;ec2&#39;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7"></a></span>
+<span id="cb2-8"><a href="#cb2-8"></a>keypairs <span class="op">=</span> ec2_client.describe_key_pairs()</span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="cf">for</span> key <span class="kw">in</span> keypairs[<span class="st">&#39;KeyPairs&#39;</span>]:</span>
+<span id="cb2-11"><a href="#cb2-11"></a>  <span class="cf">if</span> <span class="st">&#39;lab&#39;</span> <span class="kw">not</span> <span class="kw">in</span> key[<span class="st">&#39;KeyName&#39;</span>].lower():</span>
+<span id="cb2-12"><a href="#cb2-12"></a>    <span class="bu">print</span> <span class="st">&quot;Deleting key pair&quot;</span>, key[<span class="st">&#39;KeyName&#39;</span>]</span>
+<span id="cb2-13"><a href="#cb2-13"></a>    ec2_client.delete_key_pair(KeyName<span class="op">=</span>key[<span class="st">&#39;KeyName&#39;</span>])</span></code></pre></div>
+<h4 id="snapshots">Snapshots</h4>
+<p>snapshotter.py:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/usr/bin/env python</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="im">import</span> boto3</span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="im">import</span> datetime</span>
+<span id="cb3-5"><a href="#cb3-5"></a></span>
+<span id="cb3-6"><a href="#cb3-6"></a>MAX_SNAPSHOTS <span class="op">=</span> <span class="dv">2</span>   <span class="co"># Number of snapshots to keep</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a></span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="co"># Connect to the Amazon EC2 service</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>ec2 <span class="op">=</span> boto3.resource(<span class="st">&#39;ec2&#39;</span>)</span>
+<span id="cb3-10"><a href="#cb3-10"></a></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="co"># Loop through each volume</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a><span class="cf">for</span> volume <span class="kw">in</span> ec2.volumes.<span class="bu">all</span>():</span>
+<span id="cb3-13"><a href="#cb3-13"></a></span>
+<span id="cb3-14"><a href="#cb3-14"></a>  <span class="co"># Create a snapshot of the volume with the current time as a Description</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>  new_snapshot <span class="op">=</span> volume.create_snapshot(Description <span class="op">=</span> <span class="bu">str</span>(datetime.datetime.now()))</span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="bu">print</span> (<span class="st">&quot;Created snapshot &quot;</span> <span class="op">+</span> new_snapshot.<span class="bu">id</span>)</span>
+<span id="cb3-17"><a href="#cb3-17"></a></span>
+<span id="cb3-18"><a href="#cb3-18"></a>  <span class="co"># Too many snapshots?</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a>  snapshots <span class="op">=</span> <span class="bu">list</span>(volume.snapshots.<span class="bu">all</span>())</span>
+<span id="cb3-20"><a href="#cb3-20"></a>  <span class="cf">if</span> <span class="bu">len</span>(snapshots) <span class="op">&gt;</span> MAX_SNAPSHOTS:</span>
+<span id="cb3-21"><a href="#cb3-21"></a></span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="co"># Delete oldest snapshots, but keep MAX_SNAPSHOTS available</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>    snapshots_sorted <span class="op">=</span> <span class="bu">sorted</span>([(s, s.start_time) <span class="cf">for</span> s <span class="kw">in</span> snapshots], key<span class="op">=</span><span class="kw">lambda</span> k: k[<span class="dv">1</span>])</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    <span class="cf">for</span> snapshot <span class="kw">in</span> snapshots_sorted[:<span class="op">-</span>MAX_SNAPSHOTS]:</span>
+<span id="cb3-25"><a href="#cb3-25"></a>      <span class="bu">print</span> (<span class="st">&quot;Deleted snapshot &quot;</span> <span class="op">+</span> snapshot[<span class="dv">0</span>].<span class="bu">id</span>)</span>
+<span id="cb3-26"><a href="#cb3-26"></a>      snapshot[<span class="dv">0</span>].delete()</span></code></pre></div>
+<h4 id="bastion">Bastion</h4>
+<p>Give access to specific IP to security group:</p>
+<pre class="shell"><code>aws ec2 authorize-security-group-ingress --group-id $SECURITY_GROUP_ID --protocol tcp --port 22 --cidr 92.138.170.139/32
+</code></pre>
+<p>Revoke access:</p>
+<pre class="shell"><code>aws ec2 revoke-security-group-ingress --group-id $SECURITY_GROUP_ID --protocol tcp --port 22 --cidr 92.138.170.139/32
+</code></pre>
+<h5 id="avec-des-scripts">Avec des scripts:</h5>
+<p>Grant access: <code>bastion-open</code></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="va">IP=</span><span class="kw">`</span><span class="ex">curl</span> -s checkip.amazonaws.com<span class="kw">`</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="va">SECURITY_GROUP_ID=</span><span class="kw">`</span><span class="ex">aws</span> ec2 describe-security-groups --filters Name=group-name,Values=Bastion --query SecurityGroups[*].GroupId --output text<span class="kw">`</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">aws</span> ec2 authorize-security-group-ingress --group-id <span class="va">$SECURITY_GROUP_ID</span> --protocol tcp --port 22 --cidr <span class="va">$IP</span>/32</span></code></pre></div>
+<p>Revoke access: <code>bastion-close.py</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#!/usr/bin/env python</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="im">import</span> boto3</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a>GROUP_NAME <span class="op">=</span> <span class="st">&quot;Bastion&quot;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># Connect to the Amazon EC2 service</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>ec2 <span class="op">=</span> boto3.resource(<span class="st">&#39;ec2&#39;</span>)</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co"># Retrieve the security group</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>security_groups <span class="op">=</span> ec2.security_groups.<span class="bu">filter</span>(Filters<span class="op">=</span>[{<span class="st">&#39;Name&#39;</span>:<span class="st">&#39;group-name&#39;</span>, <span class="st">&#39;Values&#39;</span>:[<span class="st">&#39;Bastion&#39;</span>]}])</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="co"># Delete all rules in the group</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="cf">for</span> group <span class="kw">in</span> security_groups:</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    group.revoke_ingress(IpPermissions <span class="op">=</span> group.ip_permissions)</span></code></pre></div>
+<h4 id="the-stopinator">The Stopinator</h4>
+<p>The Stopinator is a simple Linux script that turns off Amazon EC2 Instances.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#!/usr/bin/env python</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="im">import</span> boto3</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co"># Connect to the Amazon EC2 service</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>ec2 <span class="op">=</span> boto3.resource(<span class="st">&#39;ec2&#39;</span>)</span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="co"># Loop through each instance</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="cf">for</span> instance <span class="kw">in</span> ec2.instances.<span class="bu">all</span>():</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  state <span class="op">=</span> instance.state[<span class="st">&#39;Name&#39;</span>]</span>
+<span id="cb8-11"><a href="#cb8-11"></a>  <span class="cf">for</span> tag <span class="kw">in</span> instance.tags:</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>    <span class="co"># Check for the &#39;stopinator&#39; tag</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a>    <span class="cf">if</span> tag[<span class="st">&#39;Key&#39;</span>] <span class="op">==</span> <span class="st">&#39;stopinator&#39;</span>:</span>
+<span id="cb8-15"><a href="#cb8-15"></a>      action <span class="op">=</span> tag[<span class="st">&#39;Value&#39;</span>].lower()</span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a>      <span class="co"># Stop?</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>      <span class="cf">if</span> action <span class="op">==</span> <span class="st">&#39;stop&#39;</span> <span class="kw">and</span> state <span class="op">==</span> <span class="st">&#39;running&#39;</span>:</span>
+<span id="cb8-19"><a href="#cb8-19"></a>        <span class="bu">print</span> <span class="st">&quot;Stopping instance&quot;</span>, instance.<span class="bu">id</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>        instance.stop()</span>
+<span id="cb8-21"><a href="#cb8-21"></a></span>
+<span id="cb8-22"><a href="#cb8-22"></a>      <span class="co"># Terminate?</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a>      <span class="cf">elif</span> action <span class="op">==</span> <span class="st">&#39;terminate&#39;</span> <span class="kw">and</span> state <span class="op">!=</span> <span class="st">&#39;terminated&#39;</span>:</span>
+<span id="cb8-24"><a href="#cb8-24"></a>        <span class="bu">print</span> <span class="st">&quot;Terminating instance&quot;</span>, instance.<span class="bu">id</span></span>
+<span id="cb8-25"><a href="#cb8-25"></a>        instance.terminate()</span></code></pre></div>
+<p>Pour que le <code>stopinator</code> fonctionne, les instances doivent avoir le <strong>tag</strong>: <strong><em>stopinator</em></strong>.</p>
+<p>Tag confgiguration:</p>
+<ul>
+<li>Key: stopinator</li>
+<li>Value: stop|terminate</li>
+</ul>
+<h4 id="highlow-game">HighLow Game</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#!/usr/bin/env python</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="im">import</span> random, time, sys</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="im">import</span> boto3</span>
+<span id="cb9-5"><a href="#cb9-5"></a></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co"># Connect to the Amazon EC2 service</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>cloudwatch_client <span class="op">=</span> boto3.client(<span class="st">&#39;cloudwatch&#39;</span>)</span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co"># Let them guess</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a>count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="cf">while</span> <span class="va">True</span>:</span>
+<span id="cb9-12"><a href="#cb9-12"></a></span>
+<span id="cb9-13"><a href="#cb9-13"></a>  <span class="co"># Start of game?</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a>  <span class="cf">if</span> count <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb9-15"><a href="#cb9-15"></a>    start_time <span class="op">=</span> time.time()</span>
+<span id="cb9-16"><a href="#cb9-16"></a>    num <span class="op">=</span> random.randint(<span class="dv">1</span>, <span class="dv">100</span>)</span>
+<span id="cb9-17"><a href="#cb9-17"></a>    <span class="bu">print</span> <span class="st">&quot;I&#39;m thinking of a number from 1 to 100. Try to guess it! (Enter 0 to exit)&quot;</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a></span>
+<span id="cb9-19"><a href="#cb9-19"></a>  <span class="co"># Guess a number</span></span>
+<span id="cb9-20"><a href="#cb9-20"></a>  guess <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;&gt; &quot;</span>)</span>
+<span id="cb9-21"><a href="#cb9-21"></a>  count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb9-22"><a href="#cb9-22"></a></span>
+<span id="cb9-23"><a href="#cb9-23"></a>  <span class="co"># Respond</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a>  <span class="cf">if</span> guess <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb9-25"><a href="#cb9-25"></a>    <span class="co"># End game</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a>    sys.exit()</span>
+<span id="cb9-27"><a href="#cb9-27"></a>  <span class="cf">elif</span> guess <span class="op">&lt;</span> num:</span>
+<span id="cb9-28"><a href="#cb9-28"></a>    <span class="bu">print</span> <span class="st">&quot;Too low!&quot;</span></span>
+<span id="cb9-29"><a href="#cb9-29"></a>  <span class="cf">elif</span> guess <span class="op">&gt;</span> num:</span>
+<span id="cb9-30"><a href="#cb9-30"></a>    <span class="bu">print</span> <span class="st">&quot;Too high!&quot;</span></span>
+<span id="cb9-31"><a href="#cb9-31"></a>  <span class="cf">else</span>:</span>
+<span id="cb9-32"><a href="#cb9-32"></a>    <span class="co"># Correct answer</span></span>
+<span id="cb9-33"><a href="#cb9-33"></a>    seconds <span class="op">=</span> <span class="bu">int</span>(time.time() <span class="op">-</span> start_time)</span>
+<span id="cb9-34"><a href="#cb9-34"></a>    <span class="bu">print</span> <span class="st">&quot;That&#39;s correct! It took you </span><span class="sc">%d</span><span class="st"> guesses and </span><span class="sc">%d</span><span class="st"> seconds.</span><span class="ch">\n</span><span class="st">&quot;</span> <span class="op">%</span> (count, seconds)</span>
+<span id="cb9-35"><a href="#cb9-35"></a></span>
+<span id="cb9-36"><a href="#cb9-36"></a>    <span class="co"># Push metric to CloudWatch</span></span>
+<span id="cb9-37"><a href="#cb9-37"></a>    cloudwatch_client.put_metric_data(Namespace<span class="op">=</span><span class="st">&quot;Lab&quot;</span>, MetricData<span class="op">=</span>[{<span class="st">&#39;MetricName&#39;</span>:<span class="st">&#39;highlow&#39;</span>, <span class="st">&#39;Value&#39;</span>:seconds}])</span>
+<span id="cb9-38"><a href="#cb9-38"></a>    <span class="bu">print</span> <span class="st">&quot;The metric has been sent to CloudWatch.</span><span class="ch">\n</span><span class="st">&quot;</span></span>
+<span id="cb9-39"><a href="#cb9-39"></a></span>
+<span id="cb9-40"><a href="#cb9-40"></a>    <span class="co"># Start again</span></span>
+<span id="cb9-41"><a href="#cb9-41"></a>    count <span class="op">=</span> <span class="dv">0</span></span></code></pre></div>
+<h4 id="accessing-helpdoc">Accessing Help&amp;Doc</h4>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">aws</span> help</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="ex">aws</span> ec2 help</span>
+<span id="cb10-4"><a href="#cb10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="ex">aws</span> ec2 describe-instances help</span></code></pre></div>
+<p>The complete documentation for the AWS CLi is available at: <a href="https://boto3.amazonaws.com/v1/documentation/api/latest/index.html#">boto3 Documentation</a></p>
+<h4 id="additional-resources-1">Additional Resources</h4>
+<p>For more information about the AWS CLI, see: <a href="http://aws.amazon.com/cli" class="uri">http://aws.amazon.com/cli</a></p>
+<h2 id="tp-5">TP-5</h2>
+<p><a href="https://www.qwiklabs.com/focuses/17968?catalog_rank=%7B%22rank%22%3A2%2C%22num_filters%22%3A0%2C%22has_search%22%3Atrue%7D&amp;parent=catalog&amp;search_id=11948000">Introduction to Amazon Elastic Block Store (Amazon EBS)</a></p>
+<h1 id="liens-utiles">Liens utiles</h1>
+<ul>
+<li><p><a href="https://www.cnil.fr/fr/la-protection-des-donnees-dans-le-monde" class="uri">https://www.cnil.fr/fr/la-protection-des-donnees-dans-le-monde</a></p></li>
+<li><p><a href="https://www.submarinecablemap.com/" class="uri">https://www.submarinecablemap.com/</a></p></li>
+</ul>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
 </div>
+
 </body>
 </html>
