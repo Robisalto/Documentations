@@ -71,11 +71,6 @@ nav ul ul ul {
   
 }
 
-nav::after {
-  border-bottom: 5px solid white;
-}
-
-
 header::after {
   display: block;
   height: 2px;

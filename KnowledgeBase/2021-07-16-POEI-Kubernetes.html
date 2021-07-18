@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Pierre SABLE" />
+  <meta name="dcterms.date" content="2021-07-16" />
+  <title>POEI DevOps - Kubernetes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Kubernetes</h1>
+<p class="author">Pierre SABLE</p>
+<p class="date">2021-07-16</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#doc-source">Doc Source</a>
+<ul>
+<li><a href="#doc-officielle">Doc Officielle</a></li>
+</ul></li>
+<li><a href="#doc-de-pierre">Doc de Pierre</a>
+<ul>
+<li><a href="#historique-et-popularité">Historique et popularité</a></li>
+<li><a href="#le-cloud">Le Cloud</a></li>
+<li><a href="#conteneurisation">Conteneurisation</a></li>
+<li><a href="#le-mouvement-devops">Le mouvement DevOps</a></li>
+<li><a href="#objectifs-du-devops">Objectifs du DevOps</a></li>
+<li><a href="#apports-techniques-de-kubernetes-pour-le-devops">Apports techniques de Kubernetes pour le DevOps</a></li>
+<li><a href="#architecture-logicielle-optimale-pour-kubernetes">Architecture logicielle optimale pour Kubernetes</a></li>
+</ul></li>
+<li><a href="#install-conf">Install &amp; Conf</a>
+<ul>
+<li><a href="#démarrage">Démarrage</a></li>
+</ul></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h4 id="kubernetes">Kubernetes</h4>
+<p><strong>Pierre SABLE</strong> / Formateur</p>
+<p>Tél: 09.72.37.73.73 / Mail: <a href="mailto:fkibanza@dawan.fr" class="email">fkibanza@dawan.fr</a></p>
+<p><a href="http://www.dawan.fr" class="uri">http://www.dawan.fr</a></p>
+<p>Découvrez notre webTV : <a href="http://www.dawan.tv" class="uri">http://www.dawan.tv</a></p>
+<h1 id="doc-source">Doc Source</h1>
+<p><a href="https://gitlab.com/pierre.sable/poec_devops_kubernetes.git" class="uri">https://gitlab.com/pierre.sable/poec_devops_kubernetes.git</a></p>
+<h2 id="doc-officielle">Doc Officielle</h2>
+<ul>
+<li><a href="https://kubernetes.io/fr/" class="uri">https://kubernetes.io/fr/</a></li>
+</ul>
+<h1 id="doc-de-pierre">Doc de Pierre</h1>
+<p><code>https://gitlab.com/pierre.sable/poec_devops_kubernetes</code></p>
+<p>Philosophie derrière Kubernetes et le mouvement “Cloud Native”</p>
+<h2 id="historique-et-popularité">Historique et popularité</h2>
+<p>Kubernetes est un logiciel développé originellement par Google et basé sur une dizaine d’années d’expérience de déploiement d’applications énormes (distribuées) sur des clusters de machines.</p>
+<p>Dans la mythologie Cloud Native on raconte que son ancêtre est l’orchestrateur borg utilisé par Google dans les années 2000.</p>
+<p>La première version est sortie en 2015 et k8s est devenu depuis l’un des projets open source les plus populaires du monde.</p>
+<p>L’écosystème logiciel de Kubernetes s’est développée autour la Cloud Native Computing Foundation qui comprend notamment : Google, CoreOS, Mesosphere, Red Hat, Twitter, Huawei, Intel, Cisco, IBM, Docker, Univa et VMware. Cette fondation vise au pilotage et au financement collaboratif du développement de Kubernetes (un peut comme la Linux Foundation). Trois transformations profondes de l’informatique</p>
+<p>Kubernetes se trouve au coeur de trois transformations profondes techniques, humaines et économiques de l’informatique:</p>
+<ul>
+<li>Le cloud</li>
+<li>La conteneurisation logicielle</li>
+<li>Le mouvement DevOps</li>
+</ul>
+<blockquote>
+<p>Il est un des projets qui symbolise et supporte techniquement ces transformations. D’où son omniprésence dans les discussions informatiques actuellement.</p>
+</blockquote>
+<h2 id="le-cloud">Le Cloud</h2>
+<p>Au delà du flou dans l’emploi de ce terme, le cloud est un mouvement de réorganisation technique et économique de l’informatique.</p>
+<p>On retourne à la consommation de <strong>“temps de calcul”</strong> et de services après une <strong>“aire du Personnal Computer”</strong>.</p>
+<p>Pour organiser cela on définit trois niveaux à la fois techniques et économiques de l’informatique: - <strong>Software as a Service</strong>: location de services à travers internet pour les usagers finaux - <strong>Plateforme as a Service</strong>: location d’un environnement d’exécution logiciel flexible à destination des développeurs - <strong>Infrastructure as a Service</strong>: location de resources “matérielles” à la demande pour installer des logiciels sans avoir à maintenir un data center.</p>
+<h2 id="conteneurisation">Conteneurisation</h2>
+<p>La conteneurisation est permise par l’isolation au niveau du noyau du système d’exploitation du serveur : les processus sont isolés dans des namespaces au niveau du noyau.</p>
+<p>Cette innovation permet de simuler l’isolation sans ajouter une couche de virtualisation comme pour les machines virtuelles.</p>
+<p>Ainsi les conteneurs permettent d’avoir des performances proche d’une application traditionnelle tournant directement sur le système d’exploitation hote et ainsi d’optimiser les ressources.</p>
+<p>Les images de conteneurs sont aussi beaucoup plus légers qu’une image de VM</p>
+<p>Les technologies de conteneurisation permettent donc de faire des boîtes isolées avec les logiciels pour apporter l’uniformisation du déploiement:</p>
+<ul>
+<li>Un façon standard de packager un logiciel (basée sur le)</li>
+<li>Cela permet d’assembler de grosses applications comme des legos</li>
+<li>Cela réduit la complexité grâce:
+<ul>
+<li>à l’intégration de toutes les dépendance déjà dans la boîte</li>
+<li>au principe d’immutabilité qui implique de jeter les boîtes ( automatiser pour lutter contre la culture prudence).</li>
+<li>Rend l’infra prédictible.</li>
+</ul></li>
+</ul>
+<p>Les conteneurs sont souvent comparés à l’innovation du porte conteneur pour le transport de marchandise.</p>
+<h2 id="le-mouvement-devops">Le mouvement DevOps</h2>
+<ul>
+<li>Dépasser l’opposition culturelle et de métier entre les développeurs et les administrateurs système.</li>
+<li>Intégrer tout le monde dans une seule équipe et …</li>
+<li>Calquer les rythmes de travail sur l’organisation agile du développement logiciel</li>
+<li>Rapprocher techniquement la gestion de l’infrastructure du développement avec l’infrastructure as code.
+<ul>
+<li>Concrêtement on écrit des fichiers de code pour gérer les éléments d’infra</li>
+<li>l’état de l’infrastructure est plus claire et documentée par le code</li>
+<li>la complexité est plus gérable car tout est déclaré et modifiable au fur et à mesure de façon centralisée</li>
+<li>l’usage de git et des branches/tags pour la gestion de l’évolution d’infrastructure</li>
+</ul></li>
+</ul>
+<h2 id="objectifs-du-devops">Objectifs du DevOps</h2>
+<ul>
+<li>Rapidité (velocity) de déploiement logiciel (organisation agile du développement et livraison jusqu’à plusieurs fois par jour)
+<ul>
+<li>Implique l’automatisation du déploiement et ce qu’on appelle la CI/CD c’est à dire une infrastructure de déploiement continu à partir de code.</li>
+</ul></li>
+<li>Passage à l’échelle (horizontal scaling) des logiciels et des équipes de développement (nécessaire pour les entreprises du cloud qui doivent servir pleins d’utilisateurs)</li>
+<li>Meilleure organisation des équipes
+<ul>
+<li>meilleure compréhension globale du logiciel et de son installation de production car le savoir est mieux partagé</li>
+<li>organisation des équipes par thématique métier plutôt que par spécialité technique (l’équipe scale mieux)</li>
+</ul></li>
+</ul>
+<h2 id="apports-techniques-de-kubernetes-pour-le-devops">Apports techniques de Kubernetes pour le DevOps</h2>
+<ul>
+<li>Abstraction et standardisation des infrastructures:</li>
+<li>Langage descriptif et incrémental: on décrit ce qu’on veut plutôt que la logique complexe pour l’atteindre</li>
+<li>Logique opérationnelle intégrée dans l’orchestrateur: la responsabilité des l’état du cluster est laissé au controlleur k8s ce qui simplifie le travail</li>
+</ul>
+<p>On peut alors espérer <strong>fluidifier</strong> la gestion des défis techniques d’un grosse application et atteindre plus ou moins la livraison logicielle continue (CD de CI/CD)</p>
+<h2 id="architecture-logicielle-optimale-pour-kubernetes">Architecture logicielle optimale pour Kubernetes</h2>
+<p>Kubernetes est très versatile et permet d’installer des logiciels traditionnels “monolithiques” (gros backends situés sur une seule machine).</p>
+<p>Cependant aux vues des transformations humaines et techniques précédentes, l’organisation de Kubernetes prend vraiment sens pour le développement d’applications microservices:</p>
+<ul>
+<li>des applications avec de nombreux de “petits” services.</li>
+<li>chaque service a des problématiques très limitées (gestion des factures = un logiciel qui fait que ça)</li>
+<li>les services communiquent par le réseaux selon différents modes/API (REST, gRPC, job queues, GraphQL)</li>
+</ul>
+<p>Les microservices permettent justement le DevOps car:</p>
+<ul>
+<li>ils peuvent être déployés séparéments</li>
+<li>une petite équipe gère chaque service ou groupe thématique de services</li>
+</ul>
+<h1 id="install-conf">Install &amp; Conf</h1>
+<ul>
+<li>Kubernetes: <a href="https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/" class="uri">https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/</a></li>
+<li>Minikube: <a href="https://github.com/kubernetes/minikube/releases/download/v1.22.0/minikube-installer.exe" class="uri">https://github.com/kubernetes/minikube/releases/download/v1.22.0/minikube-installer.exe</a></li>
+</ul>
+<blockquote>
+<p>minikube quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows. We proudly focus on helping application developers and new Kubernetes users.</p>
+</blockquote>
+<h2 id="démarrage">Démarrage</h2>
+<p>On démarre avec la commande <code>minikube. start</code>:</p>
+<pre class="shell"><code>Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
+$ minikube.exe start
+�  minikube v1.22.0 sur Microsoft Windows 10 Pro 10.0.19041 Build 19041
+✨  Choix automatique du pilote virtualbox
+�  Téléchargement de l&#39;image de démarrage de la VM...
+    &gt; minikube-v1.22.0.iso.sha256: 65 B / 65 B [-------------] 100.00% ? p/s 0s
+    &gt; minikube-v1.22.0.iso: 46.90 KiB / 242.95 MiB [&gt;___________] 0.02% ? p    &gt; minikube-v1.22.0.iso: 94.89 KiB / 242.95 MiB [&gt;___________] 0.04% ? p    &gt; minikube-v1.22.0.iso: 174.89 KiB / 242.95 MiB [&gt;__________] 0.07% ? p
+...</code></pre>
+<p>Puis une fois tout installé:</p>
+<pre class="shell"><code>Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
+$ minikube start --driver=virtualbox --no-vtx-check
+�  minikube v1.22.0 sur Microsoft Windows 10 Pro 10.0.19041 Build 19041
+✨  Utilisation du pilote virtualbox basé sur le profil existant
+�  Démarrage du noeud de plan de contrôle minikube dans le cluster minikube
+�  StartHost a échoué, mais va réessayer : Error loading existing host. Please try running [minikube delete], then run [minikube start] again.: filestore &quot;minikube&quot;: open C:\Users\Admin stagiaire.DESKTOP-8967908\.minikube\machines\minikube\config.json: Le fichier spécifié est introuvable.
+�  Échec du démarrage de virtualbox VM. L&#39;exécution de &quot;minikube delete&quot; peut résoudre le problème : Error loading existing host. Please try running [minikube delete], then run [minikube start] again.: filestore &quot;minikube&quot;: open C:\Users\Admin stagiaire.DESKTOP-8967908\.minikube\machines\minikube\config.json: Le fichier spécifié est introuvable.
+
+❌  Fermeture en raison de GUEST_PROVISION : Failed to start host: Error loading existing host. Please try running [minikube delete], then run [minikube start] again.: filestore &quot;minikube&quot;: open C:\Users\Admin sta
+giaire.DESKTOP-8967908\.minikube\machines\minikube\config.json: Le fichier spécifié est introuvable.
+
+←[31m╭─────────────────────────────────────────────────────────────────────────────────────╮←[0m
+←[31m│←[0m                                                                                     ←[31m│←[0m
+←[31m│←[0m    �  Si les conseils ci-dessus ne vous aident pas, veuillez nous en informer :    ←[31m│←[0m
+←[31m│←[0m    �  https://github.com/kubernetes/minikube/issues/new/choose                     ←[31m│←[0m
+←[31m│←[0m                                                                                     ←[31m│←[0m
+←[31m│←[0m    Veuillez joindre le fichier suivant au problème GitHub :                         ←[31m│←[0m
+←[31m│←[0m    - C:\Users\Admin stagiaire.DESKTOP-8967908\.minikube\logs\lastStart.txt          ←[31m│←[0m
+←[31m│←[0m                                                                                     ←[31m│←[0m
+←[31m╰─────────────────────────────────────────────────────────────────────────────────────╯←[0m
+</code></pre>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
+</div>
+
+</body>
+</html>

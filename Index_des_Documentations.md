@@ -25,6 +25,7 @@ extensions: 'extra'
 - [Git *(14H)*](2021-06-17-POEI-Git.html)
 - [Docker: Initiation *(21H)*](2021-06-21-POEI-Docker.html)
 - [Ansible: Initiation *(21H)*](2021-06-24-POEI-Ansible.html)
+- [Kubernetes *(21H)*](2021-07-16-POEI-Kubernetes.html)
 
 - **Mise en Situation Docker/Ansible** - Cursus DevOps *(7H)* =>> Not implemented :(
 
