@@ -958,6 +958,23 @@ kbd{
 }
 
 
+/* IFRAME */
+iframe {
+  /* padding-top: 56.25%; */
+  width: 1000px;
+  height: 712.5px;
+  
+  margin-top: 20px;
+  margin-bottom: 30px;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  border-radius: 12px;
+  -moz-box-shadow: 4px 4px 14px #000;
+  -webkit-box-shadow: 4px 4px 14px #000;
+  box-shadow: 4px 4px 14px #000;
+}
+
+
 /*------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 

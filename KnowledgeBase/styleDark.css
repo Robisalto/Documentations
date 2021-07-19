@@ -299,8 +299,12 @@ dl:hover dd:last-of-type {
         white-space: pre-wrap;
         white-space: -moz-pre-wrap;
         white-space: -o-pre-wrap;
-        background-color: #131a28;
+        background-color: #333333;
         color: darkorange;
+        border-radius: 5px;
+        -moz-box-shadow: 1px 1px 1px #000;
+        -webkit-box-shadow: 1px 1px 1px #000;
+        box-shadow: 1px 1px 1px #000;
     }       
     
     code {
@@ -311,7 +315,7 @@ dl:hover dd:last-of-type {
         white-space: pre-wrap;
         white-space: -moz-pre-wrap;
         white-space: -o-pre-wrap;
-        background: #131a28;
+        background: #333333;
         color: darkorange;
     }
     
@@ -321,50 +325,6 @@ dl:hover dd:last-of-type {
         border: 1px solid #bebab0;
     }
 
-
-/* 
-pre{
-  border-left:6px solid #00458b;
-  border: block 10px solid #eee;
-  font-size:1rem;
-  line-height:1.4;
-  margin:0 0 24px;
-  max-width:100%;
-  padding:24px;
-  width:100%;
-  white-space:pre;
-  white-space:pre-wrap;
-  word-wrap:break-word
-}
-
-code,pre{
-  background-color: #000000;
-  word-wrap:normal;
-  white-space:pre-wrap;
-  -webkit-overflow-scrolling:auto;
-  overflow-x:auto;
-  color:#c76c0c
-  }
-code{
-  -webkit-box-decoration-break:clone;
-  box-decoration-break:clone;
-  font-family:consolas,"Liberation Mono",courier,monospace;
-  padding:0 3px;word-wrap:break-word}.notranslate code{
-    background-color:transparent}.example-bad{background-color:#ffeef0;border-color:#d0454c}.example-good{background-color:#ebf8e1;border-color:#529e66}
-
-
-
-kbd{
-  background:linear-gradient(180deg,#eee,#fff);
-  background-color:#eee;border:1px solid #cdd5d7;
-  border-radius:6px;box-shadow:0 1px 2px 1px #cdd5d7;
-  font-family:consolas,"Liberation Mono",courier,monospace;
-  font-size:.9rem;
-  font-weight:700;
-  line-height:1;
-  margin:3px;padding:4px 6px;
-  white-space:nowrap;
-} */
 
 
 /* Quotes */

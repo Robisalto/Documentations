@@ -14,6 +14,68 @@
     div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
@@ -35,6 +97,8 @@
 </ul></li>
 <li><a href="#doc-de-pierre">Doc de Pierre</a>
 <ul>
+<li><a href="#philosophie-derrière-kubernetes-et-le-mouvement-cloud-native">Philosophie derrière Kubernetes et le mouvement “Cloud Native”</a>
+<ul>
 <li><a href="#historique-et-popularité">Historique et popularité</a></li>
 <li><a href="#le-cloud">Le Cloud</a></li>
 <li><a href="#conteneurisation">Conteneurisation</a></li>
@@ -43,29 +107,52 @@
 <li><a href="#apports-techniques-de-kubernetes-pour-le-devops">Apports techniques de Kubernetes pour le DevOps</a></li>
 <li><a href="#architecture-logicielle-optimale-pour-kubernetes">Architecture logicielle optimale pour Kubernetes</a></li>
 </ul></li>
+</ul></li>
 <li><a href="#install-conf">Install &amp; Conf</a>
 <ul>
 <li><a href="#démarrage">Démarrage</a></li>
+</ul></li>
+<li><a href="#tp">TP</a>
+<ul>
+<li><a href="#tp1création-dun-pod">TP1:Création d’un Pod</a>
+<ul>
+<li><a href="#création-de-la-spécification">1. Création de la spécification</a></li>
+<li><a href="#lancement-du-pod">2. Lancement du Pod</a></li>
+<li><a href="#vérification">3. Vérification</a></li>
+<li><a href="#details-du-pod">4. Details du Pod</a></li>
+<li><a href="#accès-à-lapplication-via-un-port-forward">5. Accès à l’application via un port-forward</a></li>
+<li><a href="#suppression-du-pod">6. Suppression du Pod</a></li>
+</ul></li>
+<li><a href="#tp2-création-dun-pod-multi-conteneurs">TP2: Création d’un Pod multi conteneurs</a>
+<ul>
+<li><a href="#création-du-namespace-multi">1. Création du namespace : multi</a></li>
+<li><a href="#création-de-la-spécification-1">2. Création de la spécification</a></li>
+<li><a href="#lancement-du-pod-1">3. Lancement du Pod</a></li>
+<li><a href="#vérification-2">4. Vérification</a></li>
+<li><a href="#details-du-pod-1">5. Details du Pod</a></li>
+<li><a href="#se-connecter-dans-le-conteneur-debian-du-pod-multipod">6. Se connecter dans le conteneur debian du pod multipod</a></li>
+<li><a href="#suppression-du-pod-1">7. Suppression du Pod</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <h4 id="kubernetes">Kubernetes</h4>
-<p><strong>Pierre SABLE</strong> / Formateur</p>
-<p>Tél: 09.72.37.73.73 / Mail: <a href="mailto:fkibanza@dawan.fr" class="email">fkibanza@dawan.fr</a></p>
-<p><a href="http://www.dawan.fr" class="uri">http://www.dawan.fr</a></p>
+<p><strong>Pierre SABLE</strong> Formateur</p>
 <p>Découvrez notre webTV : <a href="http://www.dawan.tv" class="uri">http://www.dawan.tv</a></p>
 <h1 id="doc-source">Doc Source</h1>
 <p><a href="https://gitlab.com/pierre.sable/poec_devops_kubernetes.git" class="uri">https://gitlab.com/pierre.sable/poec_devops_kubernetes.git</a></p>
+<iframe src="2021-07-16-POEI-Kubernetes/Kubernetes.pdf" allowfullscreen>
+</iframe>
 <h2 id="doc-officielle">Doc Officielle</h2>
 <ul>
 <li><a href="https://kubernetes.io/fr/" class="uri">https://kubernetes.io/fr/</a></li>
 </ul>
 <h1 id="doc-de-pierre">Doc de Pierre</h1>
 <p><code>https://gitlab.com/pierre.sable/poec_devops_kubernetes</code></p>
-<p>Philosophie derrière Kubernetes et le mouvement “Cloud Native”</p>
-<h2 id="historique-et-popularité">Historique et popularité</h2>
+<h2 id="philosophie-derrière-kubernetes-et-le-mouvement-cloud-native">Philosophie derrière Kubernetes et le mouvement “Cloud Native”</h2>
+<h3 id="historique-et-popularité">Historique et popularité</h3>
 <p>Kubernetes est un logiciel développé originellement par Google et basé sur une dizaine d’années d’expérience de déploiement d’applications énormes (distribuées) sur des clusters de machines.</p>
 <p>Dans la mythologie Cloud Native on raconte que son ancêtre est l’orchestrateur borg utilisé par Google dans les années 2000.</p>
 <p>La première version est sortie en 2015 et k8s est devenu depuis l’un des projets open source les plus populaires du monde.</p>
@@ -76,14 +163,14 @@
 <li>La conteneurisation logicielle</li>
 <li>Le mouvement DevOps</li>
 </ul>
-<blockquote>
-<p>Il est un des projets qui symbolise et supporte techniquement ces transformations. D’où son omniprésence dans les discussions informatiques actuellement.</p>
-</blockquote>
-<h2 id="le-cloud">Le Cloud</h2>
+<div class="info">
+Il est un des projets qui symbolise et supporte techniquement ces transformations. D’où son omniprésence dans les discussions informatiques actuellement.
+</div>
+<h3 id="le-cloud">Le Cloud</h3>
 <p>Au delà du flou dans l’emploi de ce terme, le cloud est un mouvement de réorganisation technique et économique de l’informatique.</p>
 <p>On retourne à la consommation de <strong>“temps de calcul”</strong> et de services après une <strong>“aire du Personnal Computer”</strong>.</p>
 <p>Pour organiser cela on définit trois niveaux à la fois techniques et économiques de l’informatique: - <strong>Software as a Service</strong>: location de services à travers internet pour les usagers finaux - <strong>Plateforme as a Service</strong>: location d’un environnement d’exécution logiciel flexible à destination des développeurs - <strong>Infrastructure as a Service</strong>: location de resources “matérielles” à la demande pour installer des logiciels sans avoir à maintenir un data center.</p>
-<h2 id="conteneurisation">Conteneurisation</h2>
+<h3 id="conteneurisation">Conteneurisation</h3>
 <p>La conteneurisation est permise par l’isolation au niveau du noyau du système d’exploitation du serveur : les processus sont isolés dans des namespaces au niveau du noyau.</p>
 <p>Cette innovation permet de simuler l’isolation sans ajouter une couche de virtualisation comme pour les machines virtuelles.</p>
 <p>Ainsi les conteneurs permettent d’avoir des performances proche d’une application traditionnelle tournant directement sur le système d’exploitation hote et ainsi d’optimiser les ressources.</p>
@@ -100,7 +187,7 @@
 </ul></li>
 </ul>
 <p>Les conteneurs sont souvent comparés à l’innovation du porte conteneur pour le transport de marchandise.</p>
-<h2 id="le-mouvement-devops">Le mouvement DevOps</h2>
+<h3 id="le-mouvement-devops">Le mouvement DevOps</h3>
 <ul>
 <li>Dépasser l’opposition culturelle et de métier entre les développeurs et les administrateurs système.</li>
 <li>Intégrer tout le monde dans une seule équipe et …</li>
@@ -113,7 +200,7 @@
 <li>l’usage de git et des branches/tags pour la gestion de l’évolution d’infrastructure</li>
 </ul></li>
 </ul>
-<h2 id="objectifs-du-devops">Objectifs du DevOps</h2>
+<h3 id="objectifs-du-devops">Objectifs du DevOps</h3>
 <ul>
 <li>Rapidité (velocity) de déploiement logiciel (organisation agile du développement et livraison jusqu’à plusieurs fois par jour)
 <ul>
@@ -126,14 +213,14 @@
 <li>organisation des équipes par thématique métier plutôt que par spécialité technique (l’équipe scale mieux)</li>
 </ul></li>
 </ul>
-<h2 id="apports-techniques-de-kubernetes-pour-le-devops">Apports techniques de Kubernetes pour le DevOps</h2>
+<h3 id="apports-techniques-de-kubernetes-pour-le-devops">Apports techniques de Kubernetes pour le DevOps</h3>
 <ul>
 <li>Abstraction et standardisation des infrastructures:</li>
 <li>Langage descriptif et incrémental: on décrit ce qu’on veut plutôt que la logique complexe pour l’atteindre</li>
 <li>Logique opérationnelle intégrée dans l’orchestrateur: la responsabilité des l’état du cluster est laissé au controlleur k8s ce qui simplifie le travail</li>
 </ul>
 <p>On peut alors espérer <strong>fluidifier</strong> la gestion des défis techniques d’un grosse application et atteindre plus ou moins la livraison logicielle continue (CD de CI/CD)</p>
-<h2 id="architecture-logicielle-optimale-pour-kubernetes">Architecture logicielle optimale pour Kubernetes</h2>
+<h3 id="architecture-logicielle-optimale-pour-kubernetes">Architecture logicielle optimale pour Kubernetes</h3>
 <p>Kubernetes est très versatile et permet d’installer des logiciels traditionnels “monolithiques” (gros backends situés sur une seule machine).</p>
 <p>Cependant aux vues des transformations humaines et techniques précédentes, l’organisation de Kubernetes prend vraiment sens pour le développement d’applications microservices:</p>
 <ul>
@@ -155,7 +242,7 @@
 <p>minikube quickly sets up a local Kubernetes cluster on macOS, Linux, and Windows. We proudly focus on helping application developers and new Kubernetes users.</p>
 </blockquote>
 <h2 id="démarrage">Démarrage</h2>
-<p>On démarre avec la commande <code>minikube. start</code>:</p>
+<p>On démarre avec la commande <code>minikube start</code>:</p>
 <pre class="shell"><code>Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
 $ minikube.exe start
 �  minikube v1.22.0 sur Microsoft Windows 10 Pro 10.0.19041 Build 19041
@@ -166,26 +253,217 @@ $ minikube.exe start
 ...</code></pre>
 <p>Puis une fois tout installé:</p>
 <pre class="shell"><code>Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
-$ minikube start --driver=virtualbox --no-vtx-check
-�  minikube v1.22.0 sur Microsoft Windows 10 Pro 10.0.19041 Build 19041
+$ minikube start
+😄  minikube v1.22.0 sur Microsoft Windows 10 Pro 10.0.19041 Build 19041
 ✨  Utilisation du pilote virtualbox basé sur le profil existant
-�  Démarrage du noeud de plan de contrôle minikube dans le cluster minikube
-�  StartHost a échoué, mais va réessayer : Error loading existing host. Please try running [minikube delete], then run [minikube start] again.: filestore &quot;minikube&quot;: open C:\Users\Admin stagiaire.DESKTOP-8967908\.minikube\machines\minikube\config.json: Le fichier spécifié est introuvable.
-�  Échec du démarrage de virtualbox VM. L&#39;exécution de &quot;minikube delete&quot; peut résoudre le problème : Error loading existing host. Please try running [minikube delete], then run [minikube start] again.: filestore &quot;minikube&quot;: open C:\Users\Admin stagiaire.DESKTOP-8967908\.minikube\machines\minikube\config.json: Le fichier spécifié est introuvable.
+👍  Démarrage du noeud de plan de contrôle minikube dans le cluster minikube
+🔄  Redémarrage du virtualbox VM existant pour &quot;minikube&quot; ...
+🐳  Préparation de Kubernetes v1.21.2 sur Docker 20.10.6...
+    ▪ Génération des certificats et des clés
+    ▪ Démarrage du plan de contrôle ...
+    ▪ Configuration des règles RBAC ...
+🔎  Vérification des composants Kubernetes...
+    ▪ Utilisation de l&#39;image gcr.io/k8s-minikube/storage-provisioner:v5
+🌟  Modules activés: storage-provisioner, default-storageclass
 
-❌  Fermeture en raison de GUEST_PROVISION : Failed to start host: Error loading existing host. Please try running [minikube delete], then run [minikube start] again.: filestore &quot;minikube&quot;: open C:\Users\Admin sta
-giaire.DESKTOP-8967908\.minikube\machines\minikube\config.json: Le fichier spécifié est introuvable.
-
-←[31m╭─────────────────────────────────────────────────────────────────────────────────────╮←[0m
-←[31m│←[0m                                                                                     ←[31m│←[0m
-←[31m│←[0m    �  Si les conseils ci-dessus ne vous aident pas, veuillez nous en informer :    ←[31m│←[0m
-←[31m│←[0m    �  https://github.com/kubernetes/minikube/issues/new/choose                     ←[31m│←[0m
-←[31m│←[0m                                                                                     ←[31m│←[0m
-←[31m│←[0m    Veuillez joindre le fichier suivant au problème GitHub :                         ←[31m│←[0m
-←[31m│←[0m    - C:\Users\Admin stagiaire.DESKTOP-8967908\.minikube\logs\lastStart.txt          ←[31m│←[0m
-←[31m│←[0m                                                                                     ←[31m│←[0m
-←[31m╰─────────────────────────────────────────────────────────────────────────────────────╯←[0m
+❗  kubectl.exe est la version 1.18.17, qui peut comporter des incompatibilités avec Kubernetes 1.21.2.
+    ▪ Vous voulez kubectl v1.21.2 ? Essayez &#39;minikube kubectl -- get pods -A&#39;
+🏄  Terminé ! kubectl est maintenant configuré pour utiliser &quot;minikube&quot; cluster et espace de noms &quot;default&quot; par défaut.
 </code></pre>
+<p>On vérifie en recherchant les infos du cluster:</p>
+<pre class="shell"><code>Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
+$ kubectl cluster-info
+Kubernetes control plane is running at https://192.168.99.100:8443
+CoreDNS is running at https://192.168.99.100:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
+
+To further debug and diagnose cluster problems, use &#39;kubectl cluster-info dump&#39;.
+</code></pre>
+<h1 id="tp">TP</h1>
+<h2 id="tp1création-dun-pod">TP1:Création d’un Pod</h2>
+<p>Dans cet exercice, vous allez créer une spécification pour lancer un premier Pod.</p>
+<h3 id="création-de-la-spécification">1. Création de la spécification</h3>
+<p>Créez un fichier yaml <em>whoami.yaml</em> définissant un Pod ayant les propriétés suivantes: - nom du Pod: <em>whoami</em> - image du container: <em>containous/whoami</em> - nom du container: <em>whoami</em></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="at">  </span><span class="fu">creationTimestamp</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> whoami</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> containous/whoami</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> whoami</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="at">  </span><span class="fu">dnsPolicy</span><span class="kw">:</span><span class="at"> ClusterFirst</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="at">  </span><span class="fu">restartPolicy</span><span class="kw">:</span><span class="at"> Always</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="fu">status</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span></code></pre></div>
+<h3 id="lancement-du-pod">2. Lancement du Pod</h3>
+<p>Lancez le Pod à l’aide de <em>kubectl</em></p>
+<p><code>kubectl apply -f whoami.yaml</code></p>
+<h3 id="vérification">3. Vérification</h3>
+<p>Listez les Pods lancés et assurez vous que le Pod <em>whoami</em> apparait bien dans cette liste.</p>
+<pre class="shell"><code>$ kubectl get pods
+NAME     READY   STATUS    RESTARTS   AGE
+nginx    1/1     Running   0          37m
+whoami   1/1     Running   0          81s</code></pre>
+<h3 id="details-du-pod">4. Details du Pod</h3>
+<p>Observez les détails du Pod à l’aide de <em>kubectl</em> et retrouvez l’information de l’image utilisée par le container <em>whoami</em>.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a>$ <span class="ex">kubectl</span> describe pod whoami</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">Name</span>:         whoami</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">Namespace</span>:    default</span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="ex">Priority</span>:     0</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">Node</span>:         minikube/192.168.99.100</span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="ex">Start</span> Time:   Fri, 16 Jul 2021 15:49:53 +0200</span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">Labels</span>:       run=nginx</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="ex">Annotations</span>:  <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="ex">Status</span>:       Running</span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="ex">IP</span>:           172.17.0.4</span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="ex">IPs</span>:</span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="ex">IP</span>:  172.17.0.4</span>
+<span id="cb6-13"><a href="#cb6-13"></a><span class="ex">Containers</span>:</span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="ex">whoami</span>:</span>
+<span id="cb6-15"><a href="#cb6-15"></a>    <span class="ex">Container</span> ID:   docker://4497f232925a182598ddaddaa724b33729cc6230068a78951616c14b691fcd14</span>
+<span id="cb6-16"><a href="#cb6-16"></a>    <span class="ex">Image</span>:          containous/whoami</span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="ex">Image</span> ID:       docker-pullable://containous/whoami@sha256:7d6a3c8f91470a23ef380320609ee6e69ac68d20bc804f3a1c6065fb56cfa34e</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="ex">Port</span>:           <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="ex">Host</span> Port:      <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="ex">State</span>:          Running</span>
+<span id="cb6-21"><a href="#cb6-21"></a>      <span class="ex">Started</span>:      Fri, 16 Jul 2021 15:50:01 +0200</span>
+<span id="cb6-22"><a href="#cb6-22"></a>    <span class="ex">Ready</span>:          True</span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="ex">Restart</span> Count:  0</span>
+<span id="cb6-24"><a href="#cb6-24"></a>    <span class="ex">Environment</span>:    <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>    <span class="ex">Mounts</span>:</span>
+<span id="cb6-26"><a href="#cb6-26"></a>      <span class="ex">/var/run/secrets/kubernetes.io/serviceaccount</span> from kube-api-access-4p99m (ro)</span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="ex">Conditions</span>:</span>
+<span id="cb6-28"><a href="#cb6-28"></a>  <span class="ex">Type</span>              Status</span>
+<span id="cb6-29"><a href="#cb6-29"></a>  <span class="ex">Initialized</span>       True</span>
+<span id="cb6-30"><a href="#cb6-30"></a>  <span class="ex">Ready</span>             True</span>
+<span id="cb6-31"><a href="#cb6-31"></a>  <span class="ex">ContainersReady</span>   True</span>
+<span id="cb6-32"><a href="#cb6-32"></a>  <span class="ex">PodScheduled</span>      True</span>
+<span id="cb6-33"><a href="#cb6-33"></a><span class="ex">Volumes</span>:</span>
+<span id="cb6-34"><a href="#cb6-34"></a>  <span class="ex">kube-api-access-4p99m</span>:</span>
+<span id="cb6-35"><a href="#cb6-35"></a>    <span class="ex">Type</span>:                    Projected (a volume that contains injected data from multiple sources)</span>
+<span id="cb6-36"><a href="#cb6-36"></a>    <span class="ex">TokenExpirationSeconds</span>:  3607</span>
+<span id="cb6-37"><a href="#cb6-37"></a>    <span class="ex">ConfigMapName</span>:           kube-root-ca.crt</span>
+<span id="cb6-38"><a href="#cb6-38"></a>    <span class="ex">ConfigMapOptional</span>:       <span class="op">&lt;</span>nil<span class="op">&gt;</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a>    <span class="ex">DownwardAPI</span>:             true</span>
+<span id="cb6-40"><a href="#cb6-40"></a><span class="ex">QoS</span> Class:                   BestEffort</span>
+<span id="cb6-41"><a href="#cb6-41"></a><span class="ex">Node-Selectors</span>:              <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb6-42"><a href="#cb6-42"></a><span class="ex">Tolerations</span>:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s</span>
+<span id="cb6-43"><a href="#cb6-43"></a>                             <span class="ex">node.kubernetes.io</span>/unreachable:<span class="ex">NoExecute</span> op=Exists for 300s</span>
+<span id="cb6-44"><a href="#cb6-44"></a><span class="ex">Events</span>:</span>
+<span id="cb6-45"><a href="#cb6-45"></a>  <span class="ex">Type</span>    Reason     Age   From               Message</span>
+<span id="cb6-46"><a href="#cb6-46"></a>  <span class="ex">----</span>    ------     ----  ----               -------</span>
+<span id="cb6-47"><a href="#cb6-47"></a>  <span class="ex">Normal</span>  Scheduled  2m3s  default-scheduler  Successfully assigned default/whoami to minikube</span>
+<span id="cb6-48"><a href="#cb6-48"></a>  <span class="ex">Normal</span>  Pulling    2m2s  kubelet            Pulling image <span class="st">&quot;containous/whoami&quot;</span></span>
+<span id="cb6-49"><a href="#cb6-49"></a>  <span class="ex">Normal</span>  Pulled     115s  kubelet            Successfully pulled image <span class="st">&quot;containous/whoami&quot;</span> in 7.271245805s</span>
+<span id="cb6-50"><a href="#cb6-50"></a>  <span class="ex">Normal</span>  Created    115s  kubelet            Created container whoami</span>
+<span id="cb6-51"><a href="#cb6-51"></a>  <span class="ex">Normal</span>  Started    115s  kubelet            Started container whoami</span></code></pre></div>
+<h3 id="accès-à-lapplication-via-un-port-forward">5. Accès à l’application via un port-forward</h3>
+<p>Avec la commande <em>kubectl port-forward</em> envoyer une requête à l’application</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">kubectl</span> port-forward whoami 8080:80</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">Forwarding</span> from 127.0.0.1:8080 -<span class="op">&gt;</span> 80</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">Forwarding</span> from [::1]:8080 -<span class="op">&gt;</span> 80</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="ex">Handling</span> connection for 8080</span></code></pre></div>
+<h3 id="suppression-du-pod">6. Suppression du Pod</h3>
+<p>Supprimez le Pod.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a>$ <span class="ex">kubectl</span> delete pod whoami</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">pod</span> <span class="st">&quot;whoami&quot;</span> deleted</span></code></pre></div>
+<h2 id="tp2-création-dun-pod-multi-conteneurs">TP2: Création d’un Pod multi conteneurs</h2>
+<p>Dans cet exercice, vous allez créer un namespace dédié et une une spécification pour lancer un Pod avec deux conteneurs.</p>
+<h3 id="création-du-namespace-multi">1. Création du namespace : multi</h3>
+<p>Créer un fichier de spec “ns_multi.yml” pour le namespace multi à partir d’une commande impérative:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1"></a><span class="pp">---</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">...</span></span></code></pre></div>
+<p>Appliquer le fichier de spec:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>$ <span class="ex">kubectl</span> apply -f ns_multi.yml </span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="ex">namespace/multi</span> created</span></code></pre></div>
+<h4 id="vérification-1">Vérification</h4>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>$ <span class="ex">kubectl</span> get namespace</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">NAME</span>              STATUS   AGE</span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="ex">default</span>           Active   119m</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="ex">kube-node-lease</span>   Active   119m</span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="ex">kube-public</span>       Active   119m</span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="ex">kube-system</span>       Active   119m</span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="ex">multi</span>             Active   18m</span></code></pre></div>
+<h4 id="correction-de-pierre">Correction de Pierre</h4>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">kubectl</span> create namespace multi --dry-run=client <span class="op">&gt;</span> ns_multi.yaml</span></code></pre></div>
+<h3 id="création-de-la-spécification-1">2. Création de la spécification</h3>
+<p>Créez un fichier yaml <em>multipod.yaml</em> définissant un Pod ayant les propriétés suivantes:</p>
+<ul>
+<li><p>nom du Pod: <em>mulitpod</em></p></li>
+<li><p>namespace: <em>multi</em></p></li>
+<li><p>image du container nginx: <em>nginx:1.18-alpine</em></p></li>
+<li><p>nom du container: <em>nginx</em></p></li>
+<li><p>image du container debian : <em>debian:buster-slim</em></p></li>
+<li><p>nom du container: <em>debian</em></p></li>
+<li><p>command: [“sleep”, “600”]</p></li>
+</ul>
+<div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb13-1"><a href="#cb13-1"></a><span class="pp">---</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="at">  </span><span class="fu">creationTimestamp</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mulitpod</span></span>
+<span id="cb13-9"><a href="#cb13-9"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb13-11"><a href="#cb13-11"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:1.18-alpine</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb13-14"><a href="#cb13-14"></a></span>
+<span id="cb13-15"><a href="#cb13-15"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> debian:buster-slim</span></span>
+<span id="cb13-16"><a href="#cb13-16"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> debian</span></span>
+<span id="cb13-17"><a href="#cb13-17"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;sleep&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;600&quot;</span><span class="kw">]</span></span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="co">...</span></span></code></pre></div>
+<h3 id="lancement-du-pod-1">3. Lancement du Pod</h3>
+<p>Lancez le Pod à l’aide de <em>kubectl</em></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">kubectl</span> apply -f multipod.yaml</span></code></pre></div>
+<h3 id="vérification-2">4. Vérification</h3>
+<p>Listez les Pods lancés et assurez vous que le Pod <em>multipod</em> apparait bien dans cette liste.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a>$  <span class="ex">kubectl</span> get pods --namespace=multi</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ex">NAME</span>       READY   STATUS    RESTARTS   AGE</span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="ex">mulitpod</span>   2/2     Running   0          6s</span></code></pre></div>
+<h4 id="correction-pierre">Correction Pierre</h4>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a>$  <span class="ex">kubectl</span> get pods -n multi </span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">NAME</span>       READY   STATUS    RESTARTS   AGE</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="ex">mulitpod</span>   2/2     Running   1          12m</span></code></pre></div>
+<h5 id="all-namespaces">All namespaces</h5>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a>$  <span class="ex">kubectl</span> get pods --all-namespaces</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="ex">NAMESPACE</span>     NAME                               READY   STATUS    RESTARTS   AGE</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="ex">kube-system</span>   coredns-558bd4d5db-pr8h2           1/1     Running   0          125m</span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="ex">kube-system</span>   etcd-minikube                      1/1     Running   0          125m</span>
+<span id="cb17-5"><a href="#cb17-5"></a><span class="ex">kube-system</span>   kube-apiserver-minikube            1/1     Running   0          125m</span>
+<span id="cb17-6"><a href="#cb17-6"></a><span class="ex">kube-system</span>   kube-controller-manager-minikube   1/1     Running   0          125m</span>
+<span id="cb17-7"><a href="#cb17-7"></a><span class="ex">kube-system</span>   kube-proxy-npcdx                   1/1     Running   0          125m</span>
+<span id="cb17-8"><a href="#cb17-8"></a><span class="ex">kube-system</span>   kube-scheduler-minikube            1/1     Running   0          125m</span>
+<span id="cb17-9"><a href="#cb17-9"></a><span class="ex">kube-system</span>   storage-provisioner                1/1     Running   0          125m</span>
+<span id="cb17-10"><a href="#cb17-10"></a><span class="ex">multi</span>         mulitpod                           2/2     Running   1          13m</span></code></pre></div>
+<h3 id="details-du-pod-1">5. Details du Pod</h3>
+<p>Observez les détails du Pod à l’aide de <em>kubectl</em> et retrouvez l’information de l’image utilisée par le container <em>multipod</em>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">kubectl</span> -n multi describe pod multipod </span></code></pre></div>
+<h3 id="se-connecter-dans-le-conteneur-debian-du-pod-multipod">6. Se connecter dans le conteneur debian du pod multipod</h3>
+<p>Avec la commande <em>kubectl exec -it</em> se connecter dans le conteneur debian Installer le package curl</p>
+<p><code>apt update &amp;&amp; apt install curl</code></p>
+<p>Tester une requete curl vers le service pod_ngin <code>curl http://localhost:80</code></p>
+<h4 id="connexion-dans-le-conteneur">Connexion dans le conteneur</h4>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a>$  <span class="ex">kubectl</span> -n multi exec -it multipod -c debian -- bash</span></code></pre></div>
+<h4 id="update-test">Update &amp; Test</h4>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">apt</span> update</span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="ex">apt</span> install curl</span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="ex">curl</span> http://127.0.0.1:80</span></code></pre></div>
+<h3 id="suppression-du-pod-1">7. Suppression du Pod</h3>
+<p>Supprimez le Pod.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="ex">kubectl</span> delete -f multipod.yaml</span></code></pre></div>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
