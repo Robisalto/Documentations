@@ -109,6 +109,11 @@ body {
 	background: #1c1c1c;
 }
 
+a {
+  text-decoration: none;
+  font-style: italic;
+}
+
  /* unvisited link */
 a:link {
   color: #0395DE;
@@ -122,6 +127,9 @@ a:visited {
 /* mouse over link */
 a:hover {
   color: #00A388;
+  font-weight: bold;
+  font-size: larger;
+  transition: .4s ease;
 }
 
 /* selected link */

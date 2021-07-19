@@ -61,3 +61,5 @@ YGGTorrent
 template
 README
 README
+DIGESTS
+README

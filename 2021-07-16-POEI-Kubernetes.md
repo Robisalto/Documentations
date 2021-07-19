@@ -9,8 +9,13 @@ header-includes:
 classoption: "12pt"
 extensions: 'extra'
 ---
+
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
 
 
 #### Kubernetes
@@ -21,21 +26,20 @@ Découvrez notre webTV : <http://www.dawan.tv>
 
 # Doc Source
 
-<https://gitlab.com/pierre.sable/poec_devops_kubernetes.git>
-
 <iframe src="2021-07-16-POEI-Kubernetes/Kubernetes.pdf" allowfullscreen> </iframe>
+
+## Gitlab
+
+Lien vers le GitLab de Pierre: <https://gitlab.com/pierre.sable/poec_devops_kubernetes.git>
 
 ## Doc Officielle
 
 - <https://kubernetes.io/fr/>
 
 
-# Doc de Pierre
-
-`https://gitlab.com/pierre.sable/poec_devops_kubernetes`
+# K8S Intro
 
 ## Philosophie derrière Kubernetes et le mouvement “Cloud Native”
-
 
 ### Historique et popularité
 
@@ -55,7 +59,6 @@ Kubernetes se trouve au coeur de trois transformations profondes techniques, hum
 - Le mouvement DevOps
 
 <div class=info> Il est un des projets qui symbolise et supporte techniquement ces transformations. D’où son omniprésence dans les discussions informatiques actuellement. </div>
-
 
 ### Le Cloud
 
@@ -137,7 +140,30 @@ Les microservices permettent justement le DevOps car:
 
 
 
-# Install & Conf
+# Maquette
+
+## Déploiement de la maquette K8S + binaire kubectl
+
+### Installation du client kubectl
+
+> Nécessaire pour administrer, donner des ordres à un(des) cluster(s) Kubernetes
+
+https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/
+
+### Installation du cluster Kubernetes 
+
+> On utilise un outils "minikube" pour déployer automatiquement un VM cluster K8S
+
+https://kubernetes.io/fr/docs/tasks/tools/install-minikube/
+
+
+### Test CLIENT vers Cluster K8S :
+
+```bash
+$ kubectl cluster-info
+```
+
+##### Mein Stuff 😄
 
 - Kubernetes: <https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/>
 - Minikube: <https://github.com/kubernetes/minikube/releases/download/v1.22.0/minikube-installer.exe>
@@ -198,7 +224,7 @@ To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.
 
 
 
-# TP
+# TP 1
 ## TP1:Création d'un Pod
 
 Dans cet exercice, vous allez créer une spécification pour lancer un premier Pod.
@@ -327,7 +353,7 @@ pod "whoami" deleted
 
 
 
-
+# TP2
 
 ## TP2: Création d'un Pod multi conteneurs
 Dans cet exercice, vous allez créer un namespace dédié et une une spécification pour lancer un Pod avec deux conteneurs.
@@ -425,6 +451,8 @@ kubectl apply -f multipod.yaml
 
 Listez les Pods lancés et assurez vous que le Pod *multipod* apparait bien dans cette liste.
 
+<div class=warning> Penser au namespace !! </div>
+
 ```bash
 $  kubectl get pods --namespace=multi
 NAME       READY   STATUS    RESTARTS   AGE
@@ -504,3 +532,678 @@ Supprimez le Pod.
 kubectl delete -f multipod.yaml
 
 ```
+
+
+## Utilisation volume emptyDir et conteneur side-car 
+
+On souhaite utiliser un conteneur **side-car** *(ou satellite)* qui dispose de commandes pour télécharger du code source dans un volume de type `emptyDir` et ainsi le mettre à dispo du conteneur applicatif nginx.
+
+```bash
+$ kubectl apply -f multipod.yaml
+$ kubectl get po -n multi
+$ kubectl port-forward -n multi multipod 8080:80
+```
+
+
+# TP3
+
+## Création d'un Service NodePort
+
+Dans cet exercice, vous allez modifier le fichier de spécification multipod.yaml afin d'ajouter une ressource de type service NodePort
+
+Le but est d'exposer de facon définitive le port applicatif 80 sur le serveur nginx
+
+### Prépa : suppression des ressources
+
+```bash
+$ kubectl delete -f multipod
+```
+
+### 1. Ajout de label dans la spécification multipod
+
+Dans le fichier *multipod.yaml*, ajouter un label afin de pouvoir par la suite associer d'autres ressources à ce pod (service)
+
+- label: *app: multipod*
+
+### 2. Création de la spécification Service
+
+Dans le fichier *multipod.yaml* définissant ajouter une ressource de type service définissant les caractéristiques suivantes :
+- nom du service: *multipod*
+- type: *NodePort*
+- un selector permettant le groupement des Pods ayant le label *app: multipod*.
+- exposition du port *80* à l'intérieur du cluster
+- forward des requètes vers le port *80* des Pods sous-jacents
+- exposition du port 31001 sur chacun des nodes du cluster (accès depuis l'extérieur)
+
+- Ex definition service NodePort
+
+  ```yaml
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: my-service
+  spec:
+    selector:
+      app: MyApp
+    type: NodePort
+    ports:
+      - protocol: TCP
+        port: 80
+        targetPort: 80
+        nodePort: 31001
+  ```
+
+### 3. Application des ressources
+
+Relancer l'application à l'aide de *kubectl apply*
+
+Vérifier la création des ressources : *kubectl get*
+
+### 4. Accès au Service depuis l'extérieur
+
+Lancez un navigateur sur le port 31001 de l'une des machines du cluster.
+
+Note: vous pouvez obtenir les adresses IP des nodes de votre cluster dans la colonne *INTERNAL-IP* du résultat de la commande suivante:
+```bash
+$ kubectl get nodes -o wide
+```
+
+### Annexe
+
+<div class=warning> Attention au namespace </div>
+
+<div class=info> ``kubectl api-ressource`` pour lister les ressources, leur nom et raccourcis nom. 
+
+```kubectl delete {ressource} {nom_ressource}``` si besoin ;) </div>
+
+
+
+- Lister les ressources du namespace multi :
+
+```bash
+$ kubectl get -n multi all
+$ kubectl get -n multi pod,service
+```
+
+### Fichier YAML:
+
+Ci-dessous le résultat dans le fichier `multipod.yaml`:
+
+```yaml
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multi
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multipod
+  namespace: multi
+  labels:
+    app: multipod
+spec:
+  containers:
+    - name: nginx
+      image: nginx:1.18-alpine
+      volumeMounts:
+        - name: multipod-partage
+          mountPath: /usr/share/nginx/html
+  initContainers:
+    - name: alpine
+      image: alpine:3.12
+      command: ["/bin/sh"]
+      args: ["-c", "wget https://raw.githubusercontent.com/psable/k8s_html/master/index.html -P /partage/"]
+      volumeMounts:
+        - name: multipod-partage
+          mountPath: /partage
+  volumes:
+    - name: multipod-partage
+      emptyDir: {}
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: multipod
+  namespace: multi
+spec:
+  selector:
+    app: multipod
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 31001
+      protocol: TCP
+
+
+
+...
+```
+
+#### Vérification
+
+```bash
+Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
+$ kubectl.exe get all -n multi
+NAME           READY   STATUS    RESTARTS   AGE
+pod/multipod   1/1     Running   0          4m59s
+
+NAME               TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+service/multipod   NodePort   10.99.48.217   <none>        80:31001/TCP   4m59s
+
+Admin stagiaire@BBG58Y2 MINGW64 ~/Kubernetes
+$ kubectl.exe get nodes -o wide
+NAME       STATUS   ROLES                  AGE     VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE               KERNEL-VERSION   CONTAINER-RUNTIME
+minikube   Ready    control-plane,master   2d23h   v1.21.2   192.168.99.100   <none>        Buildroot 2020.02.12   4.19.182         docker://20.10.6
+
+```
+
+##### Page web
+
+![](2021-07-16-POEI-Kubernetes/2021-07-19_14h12_08.png)
+
+
+
+# Dashboard
+
+Documentation officielle du [Tableau de bord (Dashboard)](https://kubernetes.io/fr/docs/tasks/access-application-cluster/web-ui-dashboard/)
+
+## Installation du Dashboard
+
+On intalle le tableau de bord avec:
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml
+
+```
+
+# TP4
+
+## Création d'un déploiement
+
+Dans cet exercice, vous allez modifier le fichier de spécification multipod.yaml afin de transformer le simple en un deployment (+ replicaset + pod)
+
+
+### Prépa : suppression des ressources
+
+```bash
+$ kubectl delete -f multipod
+```
+
+### 1. Transformer la spécification multipod
+
+Ex :
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.7.9
+        ports:
+        - containerPort: 80
+```
+
+### 2. Application des ressources
+
+Relancer l'application à l'aide de *kubectl apply*
+
+Vérifier la création des ressources : *kubectl get*
+
+### Résultats
+
+#### Fichier YAML
+
+Contenu du fichier `multipod.yaml`:
+
+```yaml
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: multi
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: multipod
+  namespace: multi
+  labels:
+    app: multipod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: multipod
+  template:
+    metadata:
+      labels:
+        app: multipod
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.18-alpine
+          volumeMounts:
+            - name: multipod-partage
+              mountPath: /usr/share/nginx/html
+      initContainers:
+        - name: alpine
+          image: alpine:3.12
+          command: ["/bin/sh"]
+          args: ["-c", "wget https://raw.githubusercontent.com/psable/k8s_html/master/index.html -P /partage/"]
+          volumeMounts:
+            - name: multipod-partage
+              mountPath: /partage
+      volumes:
+        - name: multipod-partage
+          emptyDir: {}
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata: 
+  name: multipod
+  namespace: multi
+spec:
+  selector:
+    app: multipod
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 80
+      nodePort: 31001
+      protocol: TCP
+
+
+...
+```
+
+##### Création du Deployment
+
+```bash
+$ kubectl.exe apply -f multipod.yaml
+namespace/multi unchanged
+deployment.apps/multipod created
+service/multipod unchanged
+
+```
+
+##### Vérification
+
+```bash
+$ kubectl.exe get deployments -n multi
+NAME       READY   UP-TO-DATE   AVAILABLE   AGE
+multipod   1/1     1            1           24s
+```
+
+
+
+# TP5
+
+Dans cet exercice, vous allez créer un Deployment et l'exposer à l'intérieur du cluster en utilisant un Service de type *ClusterIP*.
+
+Schéma: 
+
+![](2021-07-16-POEI-Kubernetes/Diagramme_TP5.png)
+
+
+## 1. Création d'un fichier de spec backend
+
+- Créer un fichier de spec : myphp_backend.yaml
+
+### 1.1 Ressource namespace
+
+Créer un ressource de type namespace avec le spécificités suivantes :
+
+- name: myphp
+- labels:
+    - projet: myphp
+
+### 1.2 Ressource Déployment
+
+Créez définissant un Deployment ayant les propriétés suivantes:
+
+- nom: *backend-deploy*
+- label associé au Pod: *app: myphp_backend* (ce label est à spécifier dans les metadatas du Pod)
+- replica : 2
+- nom du container: *backend*
+- labels
+    - *app: myphp_backend*
+    - *projet: myphp*
+- namespace : myphp
+- image du container: *bilbloke/backend:1.0*
+
+
+### 1.3. Ressource service de type ClusterIP
+
+Créez une ressource définissant un service ayant les caractéristiques suivantes:
+- nom: *backend*
+- label: 
+    - *app: myphp_backend*
+    - *projet: myphp*
+- namespace : myphp
+- type: *ClusterIP*
+- un selector permettant le groupement des Pods ayant le label *app: myphp_backend*.
+- exposition du port *80* dans le cluster
+- forward des requètes vers le port *80* des Pods sous-jacents
+
+### 1.4 Application des ressources
+
+La commande suivante permet de créer le deployment
+
+```
+$ kubectl apply -f myphp_backend.yaml
+```
+
+### 1.5. Accès au Service depuis le cluster
+
+- Créer un fichier *client_pod.yaml* définissant le Pod dont la spécification est la suivante:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  namespace: myphp
+  labels: 
+    projet: myphp
+spec:
+  containers:
+  - name: debug
+    image: alpine:3.9
+    command:
+    - "sleep"
+    - "10000"
+```
+
+Nous allons utiliser ce Pod pour accèder au Service *backend* depuis l'intérieur du cluster. Ce Pod contient un seul container, basé sur alpine et qui est lancé avec la commande `sleep 10000`. Ce container sera donc en attente pendant 10000 secondes. Nous pourrons alors lancer un shell intéractif à l'intérieur de celui-ci et tester la communication avec le Service *backend*.
+
+- Lancez le Pod avec *kubectl*.
+
+```kubectl apply -f client_pod.yaml```
+
+- Lancez un shell intéractif *sh* dans le container *debug* du Pod.
+
+```kubectl exec -it debug -n myphp -- sh```
+
+- Installer l'utilitaire *curl*
+
+le container *debug* du Pod du même nom est basé sur l'image *alpine:3.9* qui ne contient pas l'utilitaire *curl* par défaut. Il faut donc l'installer avec la commande suivante:
+
+```
+/ # apk update && apk add curl
+```
+
+- Utilisez *curl* pour envoyer une requête HTTP Get sur le port *80* du service *myphp_backend*.
+Vous devriez obtenir le contenu, sous forme textuel, de la page *index.php* servie par défaut par *myphp_backend*.
+
+```
+curl http://backend/index.php
+```
+
+Ceci montre que depuis le cluster, si l'on accède au Service *backend* la requête est bien envoyée à l'un des Pods (nous en avons créé un seul ici) regroupé par le Service (via la clé *selector*).
+
+### 1.6. Utilisation ClusterIP + port-forward => accès extérieur temporaire
+
+Accèder au service backend depuis l'extérieur temporairement à l'aide de port-forward :
+
+```kubectl port-forward -n myphp svc/backend 8080:80```
+
+### 1.7. Visualisation de la ressource de type service 
+
+A l'aide de `kubectl get`, visualisez la *spécification* du service *backend*.
+
+```
+kubectl get service backend
+kubectl get service backend -o yaml
+```
+
+
+### 1.8. Détails du service
+
+A l'aide de *kubectl describe*, listez les détails du service *backend*
+
+Notez l'existence d'une entrée dans *Endpoints*, celle-ci correspond à l'IP du Pod qui est utilisé par le Service.
+
+Note: si plusieurs Pods avaient le label *app: backend*, il y aurait une entrée Endpoint pour chacun d'entre eux.
+
+```kubectl describe service backend```
+
+
+## Création d'un fichier de spec frontend
+
+## 2. Création d'un fichier de spec backend
+
+- Créer un fichier de spec : myphp_frontend.yaml
+
+
+### 2.1 Ressource Déployment
+
+Créez définissant un Deployment ayant les propriétés suivantes:
+
+- nom: *frontend-deploy*
+- label associé au Pod: *app: myphp_frontend* (ce label est à spécifier dans les metadatas du Pod)
+- replica : 2
+- nom du container: *frontend*
+- labels
+    - *app: myphp_frontend*
+    - *projet: myphp*
+- namespace : myphp
+- image du container: *bilbloke/frontend:1.0*
+
+
+### 2.2 Ressource service de type NodePort
+
+Créez une ressource définissant un service ayant les caractéristiques suivantes:
+- nom: *myphp_frontend*
+- label: 
+    - *app: myphp-frontend*
+    - *projet: myphp*
+- namespace : myphp
+- type: *NodePort*
+- un selector permettant le groupement des Pods ayant le label *app: myphp_frontend*.
+- exposition du port *80* dans le cluster
+- forward des requètes vers le port *80* des Pods sous-jacents
+- NodePort: 31500
+
+### 2.3 Application des ressources
+
+La commande suivante permet de créer le deployment
+
+```
+$ kubectl apply -f myphp_frontend.yaml
+```
+
+### 2.4 Accès au Service depuis le cluster
+
+Accèder à l'appli depuis un navigateur : http://IP_INTERNAL:31500/index.php
+
+
+
+
+
+
+--- 
+
+# Documentation
+
+## Client Kubectl
+
+- Info sur le cluster :
+
+```
+$ kubectl cluster-info
+```
+
+- Info sur les nodes :
+
+```
+$ kubectl get nodes
+$ kubectl get nodes -o wide
+```
+
+## Configuration du client :
+- Configuration kubectl
+    - Cient qui permet de manager des culster K8S
+    - Contextes à configurer
+        - a. fichier de config ou variables d'environnement
+        - b. Ligne de commande : kubectl config --help
+
+## Lister les ressources k8s
+
+```bash
+$ kubectl api-resources
+```
+
+## Lister les ressources créées dans le cluster
+
+```bash
+$ kubectl get pod
+$ kubectl get pod -n multi
+
+
+
+## Récuperer de l'info dans le cluster 
+
+> On interroge des ressources
+
+```bash
+$ kubectl get pod
+```
+
+> Les ressources sont déclarée dans des namespace. Cela permet de ranger, dissocier des ressources par équipe, projets, fonctionnalités, environnement.
+
+- Interroger la ressources de type pod dans le namespace systeme : kube-system
+
+```bash
+$ kubectl get pod -n kube-system
+```
+
+## Documentation - aide
+
+- Lister les ressources : 
+
+```bash
+$ kubectl api-resources
+```
+
+- Description, information, syntaxe :
+
+```bash
+$ kubectl explain pods
+$ kubectl explain pods.spec
+$ kubectl explain pods.spec.containers
+```
+
+
+## LES PODS
+
+https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/
+
+https://kubernetes.io/fr/docs/concepts/workloads/pods/pod/
+
+https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-lifecycle/
+
+https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/
+
+https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-pod-initialization/
+
+> Approche impérative : en ligne de commande pour déclarer des ressource
+
+1. Création d'une ressource de type pod :
+
+```bash
+$ kubectl run nginx --image nginx:1.18-alpine
+```
+
+2. Lister le pod (namespace default)
+
+```bash
+$ kubectl get pods
+```
+
+3. Obtenir les infos sur la ressource pod + les events (logs)
+
+```bash
+$ kubectl describe pod nginx
+```
+
+
+4. Utilisation du port-forwarding pour bind un port local vers le pod (test, debugging)
+
+> https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
+
+```bash
+$ kubectl port-forward nginx 8080:80
+```
+
+
+5. Transposer les commande docker à kubernetes
+
+- docker container exec -it
+    ==>  kubectl exec -it nginx --sh
+- docker logs 
+    ==> kubectl logs nginx
+
+6. Supprimer une ressource POD :
+
+```bash
+kubectl delete pod nginx
+```
+
+> Approche déclarative : spec (spécification YAML)
+
+1. Utiliser la commande impérative pour générer un fichier de spec 
+
+```bash
+$ kubectl run nginx --image nginx:1.18-alpine --dry-run=client -o yaml > spec_pod.yml
+```
+
+2. Déclarer la ressource
+
+```bash
+$ kubectl apply -f spec_pod.yml
+```
+
+
+## Mise en réseau - service
+
+https://kubernetes.io/fr/docs/concepts/services-networking/service/
+https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
+
+
+## ReplicatSet et Deployments
+
+https://kubernetes.io/fr/docs/concepts/workloads/controllers/replicaset/
+
+https://kubernetes.io/fr/docs/concepts/workloads/controllers/deployment/
+
+

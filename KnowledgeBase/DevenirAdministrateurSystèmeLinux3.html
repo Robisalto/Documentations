@@ -6,80 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David DEBRAY" />
   <title>III. L’Architecture Système</title>
-  <style>
-    code{white-space: pre-wrap;}
-    span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
-    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      {   }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.at { color: #7d9029; } /* Attribute */
-    code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
-    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #4070a0; } /* Char */
-    code span.cn { color: #880000; } /* Constant */
-    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code span.dt { color: #902000; } /* DataType */
-    code span.dv { color: #40a070; } /* DecVal */
-    code span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #40a070; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
-    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code span.op { color: #666666; } /* Operator */
-    code span.ot { color: #007020; } /* Other */
-    code span.pp { color: #bc7a00; } /* Preprocessor */
-    code span.sc { color: #4070a0; } /* SpecialChar */
-    code span.ss { color: #bb6688; } /* SpecialString */
-    code span.st { color: #4070a0; } /* String */
-    code span.va { color: #19177c; } /* Variable */
-    code span.vs { color: #4070a0; } /* VerbatimString */
-    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="styleDark.css" />
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
   
 </head>
 <body>
@@ -87,43 +83,36 @@
 <h1 class="title">III. L’Architecture Système</h1>
 <p class="author">David DEBRAY</p>
 </header>
-<nav id="TOC" role="doc-toc">
+<nav id="TOC">
 <ul>
-<li><a href="#i.-aborder-larchitecture-système-de-linux">I. Aborder l’architecture système de Linux</a>
-<ul>
+<li><a href="#i.-aborder-larchitecture-système-de-linux">I. Aborder l’architecture système de Linux</a><ul>
 <li><a href="#i-i.-découvrir-le-noyau">I-I. Découvrir le noyau</a></li>
 <li><a href="#i-ii.-examiner-les-sources-du-noyau">I-II. Examiner les sources du noyau</a></li>
-<li><a href="#i-iii.-utiliser-pstree-pour-voir-les-processus">I-III. Utiliser <code>pstree</code> pour voir les processus</a>
-<ul>
+<li><a href="#i-iii.-utiliser-pstree-pour-voir-les-processus">I-III. Utiliser <code>pstree</code> pour voir les processus</a><ul>
 <li><a href="#i-iii-i.-syntaxe-de-pstree">I-III-I. Syntaxe de <code>pstree</code></a></li>
 </ul></li>
 <li><a href="#i-iv.-explorer-le-répertoire-proc">I-IV. Explorer le répertoire <code>proc</code></a></li>
 <li><a href="#i-v.-observer-un-processus-dans-proc">I-V. Observer un processus dans <code>proc</code></a></li>
 <li><a href="#i-vi.-quizz">I-VI. Quizz 😬</a></li>
 </ul></li>
-<li><a href="#ii.-gérer-lexecution-des-processus">II. Gérer l’execution des processus</a>
-<ul>
-<li><a href="#ii-i.-comprendre-et-agir-sur-le-swap">II-I. Comprendre et agir sur le <code>swap</code></a>
-<ul>
+<li><a href="#ii.-gérer-lexecution-des-processus">II. Gérer l’execution des processus</a><ul>
+<li><a href="#ii-i.-comprendre-et-agir-sur-le-swap">II-I. Comprendre et agir sur le <code>swap</code></a><ul>
 <li><a href="#ii-i-i.-modifier-le-comportement-du-swap">II-I-I. Modifier le comportement du swap</a></li>
 </ul></li>
-<li><a href="#ii-ii.-installer-sysstat">II-II. Installer <code>sysstat</code></a>
-<ul>
+<li><a href="#ii-ii.-installer-sysstat">II-II. Installer <code>sysstat</code></a><ul>
 <li><a href="#ii-ii-i.-activer-la-collecte-de-données">II-II-I. Activer la collecte de données</a></li>
 <li><a href="#ii-ii-ii.-configurer-la-fréquence-de-collecte">II-II-II. Configurer la fréquence de collecte</a></li>
 <li><a href="#ii-ii-iii.-récupérer-les-informations">II-II-III. Récupérer les informations</a></li>
 </ul></li>
 <li><a href="#ii-iii.-comprendre-lordonnancement">II-III. Comprendre l’ordonnancement</a></li>
-<li><a href="#ii-iv.-utiliser-la-commande-nice">II-IV. Utiliser la commande <code>nice</code></a>
-<ul>
+<li><a href="#ii-iv.-utiliser-la-commande-nice">II-IV. Utiliser la commande <code>nice</code></a><ul>
 <li><a href="#ii-iv-i.-manuel-dutilisation-de-nice">II-IV-I. Manuel d’utilisation de <code>nice</code></a></li>
 <li><a href="#ii-iv-ii.-exemples-dutilisation">II-IV-II. Exemples d’utilisation</a></li>
 </ul></li>
 <li><a href="#ii-v.-voir-lactivité-des-processeurs">II-V. Voir l’activité des processeurs</a></li>
 <li><a href="#ii-vi.-quizz-sur-le-chapitre">II-VI. Quizz sur le chapitre 😬</a></li>
 </ul></li>
-<li><a href="#iii.-obtenir-des-informations-sur-le-système">III. Obtenir des informations sur le système</a>
-<ul>
+<li><a href="#iii.-obtenir-des-informations-sur-le-système">III. Obtenir des informations sur le système</a><ul>
 <li><a href="#iii-i.-utiliser-vmstat">III-I. Utiliser <code>vmstat</code></a></li>
 <li><a href="#iii-ii.-analyser-lutilisation-de-la-mémoire">III-II. Analyser l’utilisation de la mémoire</a></li>
 <li><a href="#iii-iii.-suivre-lexécution-dun-processus">III-III. Suivre l’exécution d’un processus</a></li>
@@ -155,50 +144,50 @@
 <p>La commande <code>pstree</code> permet de consulter l’achitecture/dépendance des processus</p>
 <p><img src="DevenirAdministrateurSystèmeLinux/pstree.png" /></p>
 <h3 id="i-iii-i.-syntaxe-de-pstree">I-III-I. Syntaxe de <code>pstree</code></h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="fu">pstree</span> [options] [pid or username]</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="fu">pstree</span> --help</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">pstree</span> : l<span class="st">&#39;option « --help » n&#39;</span>a pas été reconnue</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="ex">Usage</span>: pstree [-acglpsStTuZ] [ -h <span class="kw">|</span> <span class="ex">-H</span> PID ] [ -n <span class="kw">|</span> <span class="ex">-N</span> type ]</span>
-<span id="cb2-4"><a href="#cb2-4"></a>              [ <span class="ex">-A</span> <span class="kw">|</span> <span class="ex">-G</span> <span class="kw">|</span> <span class="ex">-U</span> ] [ PID <span class="kw">|</span> <span class="ex">UTILISATEUR</span> ]</span>
-<span id="cb2-5"><a href="#cb2-5"></a>   <span class="ex">ou</span>: pstree -V</span>
-<span id="cb2-6"><a href="#cb2-6"></a></span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="ex">Affiche</span> un arbre des processus.</span>
-<span id="cb2-8"><a href="#cb2-8"></a></span>
-<span id="cb2-9"><a href="#cb2-9"></a>  <span class="ex">-a</span>, --arguments     montrer les arguments de la ligne de commande</span>
-<span id="cb2-10"><a href="#cb2-10"></a>  <span class="ex">-A</span>, --ascii         utiliser les caractères de dessin de lignes ASCII</span>
-<span id="cb2-11"><a href="#cb2-11"></a>  <span class="ex">-c</span>, --compact-not   ne pas compacter des sous-arbres identiques</span>
-<span id="cb2-12"><a href="#cb2-12"></a>  <span class="ex">-C</span>, --color=TYPE    coloriser les processus par attribut</span>
-<span id="cb2-13"><a href="#cb2-13"></a>                      <span class="kw">(</span><span class="ex">age</span><span class="kw">)</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>  <span class="ex">-g</span>, --show-pgids    montrer les ids de groupes de processus <span class="kw">;</span> <span class="ex">implique</span> -c</span>
-<span id="cb2-15"><a href="#cb2-15"></a>  <span class="ex">-G</span>, --vt100         utiliser les caractères de dessin de lignes du VT100</span>
-<span id="cb2-16"><a href="#cb2-16"></a>  <span class="ex">-h</span>, --highlight-all mettre en évidence le processus courant et ses ancêtres</span>
-<span id="cb2-17"><a href="#cb2-17"></a>  <span class="ex">-H</span> PID, --highlight-pid=PID</span>
-<span id="cb2-18"><a href="#cb2-18"></a>                      <span class="ex">mettre</span> en évidence ce processus et ses ancêtres</span>
-<span id="cb2-19"><a href="#cb2-19"></a>  <span class="ex">-l</span>, --long          ne pas tronquer les longues lignes</span>
-<span id="cb2-20"><a href="#cb2-20"></a>  <span class="ex">-n</span>, --numeric-sort  trier la sortie par PID</span>
-<span id="cb2-21"><a href="#cb2-21"></a>  <span class="ex">-N</span> TYPE, --ns-sort=TYPE</span>
-<span id="cb2-22"><a href="#cb2-22"></a>                      <span class="ex">trier</span> la sortie par ce type d<span class="st">&#39;espace de noms</span></span>
-<span id="cb2-23"><a href="#cb2-23"></a><span class="st">                              (cgroup, ipc, mnt, net, pid, user, uts)</span></span>
-<span id="cb2-24"><a href="#cb2-24"></a><span class="st">  -p, --show-pids     montrer les PID ; implique -c</span></span>
-<span id="cb2-25"><a href="#cb2-25"></a><span class="st">  -s, --show-parents  montrer les parents du processus sélectionné</span></span>
-<span id="cb2-26"><a href="#cb2-26"></a><span class="st">  -S, --ns-changes    montrer les transitions d&#39;</span>espaces de noms</span>
-<span id="cb2-27"><a href="#cb2-27"></a>  <span class="ex">-t</span>, --thread-names  montrer les noms complets des threads</span>
-<span id="cb2-28"><a href="#cb2-28"></a>  <span class="ex">-T</span>, --hide-threads  cacher les threads, montrer uniquement les processus</span>
-<span id="cb2-29"><a href="#cb2-29"></a>  <span class="ex">-u</span>, --uid-changes   montrer les transitions de UID</span>
-<span id="cb2-30"><a href="#cb2-30"></a>  <span class="ex">-U</span>, --unicode       utiliser les caractères UTF-8 (Unicode) <span class="ex">pour</span> dessiner les lignes</span>
-<span id="cb2-31"><a href="#cb2-31"></a>  <span class="ex">-V</span>, --version       afficher les informations de la version</span>
-<span id="cb2-32"><a href="#cb2-32"></a>  <span class="ex">-Z</span>, --security-context</span>
-<span id="cb2-33"><a href="#cb2-33"></a>                      <span class="ex">montre</span> les contextes de sécurité SELinux</span>
-<span id="cb2-34"><a href="#cb2-34"></a></span>
-<span id="cb2-35"><a href="#cb2-35"></a>  <span class="ex">PID</span>    commence à ce PID<span class="kw">;</span> <span class="ex">le</span> défaut est 1 (init)</span>
-<span id="cb2-36"><a href="#cb2-36"></a>  <span class="ex">USER</span>   montre seulement les arbres nichés aux processus de cet utilisateur</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1">$ <span class="fu">pstree</span> [options] [pid or username]</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">$ <span class="fu">pstree</span> --help</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">pstree</span> : l<span class="st">&#39;option « --help » n&#39;</span>a pas été reconnue</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="ex">Usage</span>: pstree [-acglpsStTuZ] [ -h <span class="kw">|</span> <span class="ex">-H</span> PID ] [ -n <span class="kw">|</span> <span class="ex">-N</span> type ]</a>
+<a class="sourceLine" id="cb2-4" title="4">              [ <span class="ex">-A</span> <span class="kw">|</span> <span class="ex">-G</span> <span class="kw">|</span> <span class="ex">-U</span> ] [ PID <span class="kw">|</span> <span class="ex">UTILISATEUR</span> ]</a>
+<a class="sourceLine" id="cb2-5" title="5">   <span class="ex">ou</span>: pstree -V</a>
+<a class="sourceLine" id="cb2-6" title="6"></a>
+<a class="sourceLine" id="cb2-7" title="7"><span class="ex">Affiche</span> un arbre des processus.</a>
+<a class="sourceLine" id="cb2-8" title="8"></a>
+<a class="sourceLine" id="cb2-9" title="9">  <span class="ex">-a</span>, --arguments     montrer les arguments de la ligne de commande</a>
+<a class="sourceLine" id="cb2-10" title="10">  <span class="ex">-A</span>, --ascii         utiliser les caractères de dessin de lignes ASCII</a>
+<a class="sourceLine" id="cb2-11" title="11">  <span class="ex">-c</span>, --compact-not   ne pas compacter des sous-arbres identiques</a>
+<a class="sourceLine" id="cb2-12" title="12">  <span class="ex">-C</span>, --color=TYPE    coloriser les processus par attribut</a>
+<a class="sourceLine" id="cb2-13" title="13">                      <span class="kw">(</span><span class="ex">age</span><span class="kw">)</span></a>
+<a class="sourceLine" id="cb2-14" title="14">  <span class="ex">-g</span>, --show-pgids    montrer les ids de groupes de processus <span class="kw">;</span> <span class="ex">implique</span> -c</a>
+<a class="sourceLine" id="cb2-15" title="15">  <span class="ex">-G</span>, --vt100         utiliser les caractères de dessin de lignes du VT100</a>
+<a class="sourceLine" id="cb2-16" title="16">  <span class="ex">-h</span>, --highlight-all mettre en évidence le processus courant et ses ancêtres</a>
+<a class="sourceLine" id="cb2-17" title="17">  <span class="ex">-H</span> PID, --highlight-pid=PID</a>
+<a class="sourceLine" id="cb2-18" title="18">                      <span class="ex">mettre</span> en évidence ce processus et ses ancêtres</a>
+<a class="sourceLine" id="cb2-19" title="19">  <span class="ex">-l</span>, --long          ne pas tronquer les longues lignes</a>
+<a class="sourceLine" id="cb2-20" title="20">  <span class="ex">-n</span>, --numeric-sort  trier la sortie par PID</a>
+<a class="sourceLine" id="cb2-21" title="21">  <span class="ex">-N</span> TYPE, --ns-sort=TYPE</a>
+<a class="sourceLine" id="cb2-22" title="22">                      <span class="ex">trier</span> la sortie par ce type d<span class="st">&#39;espace de noms</span></a>
+<a class="sourceLine" id="cb2-23" title="23"><span class="st">                              (cgroup, ipc, mnt, net, pid, user, uts)</span></a>
+<a class="sourceLine" id="cb2-24" title="24"><span class="st">  -p, --show-pids     montrer les PID ; implique -c</span></a>
+<a class="sourceLine" id="cb2-25" title="25"><span class="st">  -s, --show-parents  montrer les parents du processus sélectionné</span></a>
+<a class="sourceLine" id="cb2-26" title="26"><span class="st">  -S, --ns-changes    montrer les transitions d&#39;</span>espaces de noms</a>
+<a class="sourceLine" id="cb2-27" title="27">  <span class="ex">-t</span>, --thread-names  montrer les noms complets des threads</a>
+<a class="sourceLine" id="cb2-28" title="28">  <span class="ex">-T</span>, --hide-threads  cacher les threads, montrer uniquement les processus</a>
+<a class="sourceLine" id="cb2-29" title="29">  <span class="ex">-u</span>, --uid-changes   montrer les transitions de UID</a>
+<a class="sourceLine" id="cb2-30" title="30">  <span class="ex">-U</span>, --unicode       utiliser les caractères UTF-8 (Unicode) <span class="ex">pour</span> dessiner les lignes</a>
+<a class="sourceLine" id="cb2-31" title="31">  <span class="ex">-V</span>, --version       afficher les informations de la version</a>
+<a class="sourceLine" id="cb2-32" title="32">  <span class="ex">-Z</span>, --security-context</a>
+<a class="sourceLine" id="cb2-33" title="33">                      <span class="ex">montre</span> les contextes de sécurité SELinux</a>
+<a class="sourceLine" id="cb2-34" title="34"></a>
+<a class="sourceLine" id="cb2-35" title="35">  <span class="ex">PID</span>    commence à ce PID<span class="kw">;</span> <span class="ex">le</span> défaut est 1 (init)</a>
+<a class="sourceLine" id="cb2-36" title="36">  <span class="ex">USER</span>   montre seulement les arbres nichés aux processus de cet utilisateur</a></code></pre></div>
 <h2 id="i-iv.-explorer-le-répertoire-proc">I-IV. Explorer le répertoire <code>proc</code></h2>
 <p><img src="DevenirAdministrateurSystèmeLinux/proc.png" /></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># Informations sur le processeur</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">cat</span> cpuinfo</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Information sur la mémoire</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="fu">cat</span> meminfo</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Informations sur le processeur</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="fu">cat</span> cpuinfo</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># Information sur la mémoire</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="fu">cat</span> meminfo</a></code></pre></div>
 <h2 id="i-v.-observer-un-processus-dans-proc">I-V. Observer un processus dans <code>proc</code></h2>
 <p>Pour plus d’informations sur l’utilisation de <code>proc</code>, on peut consulter: <a href="https://linux.die.net/man/5/proc" class="uri">https://linux.die.net/man/5/proc</a></p>
 <h2 id="i-vi.-quizz">I-VI. Quizz 😬</h2>
@@ -235,29 +224,29 @@ fd
 <h1 id="ii.-gérer-lexecution-des-processus">II. Gérer l’execution des processus</h1>
 <h2 id="ii-i.-comprendre-et-agir-sur-le-swap">II-I. Comprendre et agir sur le <code>swap</code></h2>
 <p>Pour afficher les infos liées au <strong>swap</strong>, on utilise la commande <code>swapon</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">david@FORNI</span>:/$ swapon</span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">NAME</span>      TYPE SIZE USED PRIO</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="ex">/swapfile</span> file   2G   0B   -2</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">david@FORNI</span>:/$ swapon</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="ex">NAME</span>      TYPE SIZE USED PRIO</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="ex">/swapfile</span> file   2G   0B   -2</a></code></pre></div>
 <p>On peut aussi utiliser la commande <code>free</code>:</p>
 <p><img src="DevenirAdministrateurSystèmeLinux/swapon.png" /></p>
 <h3 id="ii-i-i.-modifier-le-comportement-du-swap">II-I-I. Modifier le comportement du swap</h3>
 <p>Concept de <strong><em>“swapiness”</em></strong>: <a href="https://www.howtogeek.com/449691/what-is-swapiness-on-linux-and-how-to-change-it/" class="uri">https://www.howtogeek.com/449691/what-is-swapiness-on-linux-and-how-to-change-it/</a></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Affiche la &quot;tendance&quot; à swapper</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">cat</span> /proc/sys/vm/swappiness</span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="ex">60</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># Pour changer cette valeur on utilise la commande:</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a><span class="fu">sudo</span> sysctl vm.swappiness=10</span>
-<span id="cb5-7"><a href="#cb5-7"></a></span>
-<span id="cb5-8"><a href="#cb5-8"></a><span class="co"># Pour le changer de façon persistente:</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a><span class="bu">cd</span> /etc/sysctl.d/</span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="bu">echo</span> <span class="st">&quot;vm.swappiness=10&quot;</span> <span class="op">&gt;</span> vm.swappiness.conf</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Affiche la &quot;tendance&quot; à swapper</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="fu">cat</span> /proc/sys/vm/swappiness</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="ex">60</span></a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="co"># Pour changer cette valeur on utilise la commande:</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="fu">sudo</span> sysctl vm.swappiness=10</a>
+<a class="sourceLine" id="cb5-7" title="7"></a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="co"># Pour le changer de façon persistente:</span></a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="bu">cd</span> /etc/sysctl.d/</a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="bu">echo</span> <span class="st">&quot;vm.swappiness=10&quot;</span> <span class="op">&gt;</span> vm.swappiness.conf</a></code></pre></div>
 <h2 id="ii-ii.-installer-sysstat">II-II. Installer <code>sysstat</code></h2>
 <p>Pour installer <strong>sysstat</strong>, on utilise:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">sudo</span> apt install sysstat -y</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="fu">sudo</span> apt install sysstat -y</a></code></pre></div>
 <h3 id="ii-ii-i.-activer-la-collecte-de-données">II-II-I. Activer la collecte de données</h3>
 <p>Pour activer la collecte de données systèmes par <strong>sysstat</strong>, il faut modifier le fichier de configuration.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">sudo</span> nano /etc/default/sysstat</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="fu">sudo</span> nano /etc/default/sysstat</a></code></pre></div>
 <p><img src="DevenirAdministrateurSystèmeLinux/sysstat.png" /></p>
 <p>On change en <code>ENABLED="true"</code>.</p>
 <h3 id="ii-ii-ii.-configurer-la-fréquence-de-collecte">II-II-II. Configurer la fréquence de collecte</h3>
@@ -275,35 +264,35 @@ fd
 Les processus système ont une <strong><em>“niceness”</em> négative</strong> et seront donc prioritaires. Les processus moins important auront une <strong><em>“niceness”</em> positive</strong> et ne seront pas prioritaires.
 </p>
 <h3 id="ii-iv-i.-manuel-dutilisation-de-nice">II-IV-I. Manuel d’utilisation de <code>nice</code></h3>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">nice</span> --help</span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">Utilisation</span> : nice [OPTION] [COMMANDE] [ARG]...</span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">Ex</span>écuter COMMANDE avec un niveau de priorité ajusté, ce qui modifie la priorité</span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="ex">d</span><span class="st">&#39;ordonnancement du processus.</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a><span class="st">Sans COMMANDE, afficher le niveau de priorité actuel. L&#39;</span>étendue des niveaux va</span>
-<span id="cb8-6"><a href="#cb8-6"></a><span class="ex">de</span> -20 (priorité la plus favorable au processus) à <span class="ex">19</span> (la moins favorable)<span class="ex">.</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a></span>
-<span id="cb8-8"><a href="#cb8-8"></a><span class="ex">Les</span> arguments obligatoires pour les options longues le sont aussi pour les</span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="ex">options</span> courtes.</span>
-<span id="cb8-10"><a href="#cb8-10"></a>  <span class="ex">-n</span>, --adjustment=N  ajouter la valeur entière N à la valeur de la priorité</span>
-<span id="cb8-11"><a href="#cb8-11"></a>                        <span class="kw">(</span><span class="ex">10</span> par défaut<span class="kw">)</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>      <span class="ex">--help</span>     afficher l<span class="st">&#39;aide et quitter</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="st">      --version  afficher des informations de version et quitter</span></span>
-<span id="cb8-14"><a href="#cb8-14"></a></span>
-<span id="cb8-15"><a href="#cb8-15"></a><span class="st">Remarque : l&#39;</span>interpréteur de commande peut avoir sa propre version de nice,</span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="ex">lequel</span> remplace habituellement la version décrite ici. Consultez la</span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="ex">documentation</span> de l<span class="st">&#39;interpréteur pour obtenir des précisions sur les options</span></span>
-<span id="cb8-18"><a href="#cb8-18"></a><span class="st">prises en charge.</span></span>
-<span id="cb8-19"><a href="#cb8-19"></a></span>
-<span id="cb8-20"><a href="#cb8-20"></a><span class="st">Aide en ligne de GNU coreutils : &lt;https://www.gnu.org/software/coreutils/&gt;</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a><span class="st">Signalez les problèmes de traduction de « nice » à : &lt;traduc@traduc.org&gt;</span></span>
-<span id="cb8-22"><a href="#cb8-22"></a><span class="st">Documentation complète à : &lt;https://www.gnu.org/software/coreutils/nice&gt;</span></span>
-<span id="cb8-23"><a href="#cb8-23"></a><span class="st">ou disponible localement via: info &#39;</span>(coreutils) <span class="fu">nice</span> invocation<span class="st">&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="fu">nice</span> --help</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="ex">Utilisation</span> : nice [OPTION] [COMMANDE] [ARG]...</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="ex">Ex</span>écuter COMMANDE avec un niveau de priorité ajusté, ce qui modifie la priorité</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="ex">d</span><span class="st">&#39;ordonnancement du processus.</span></a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="st">Sans COMMANDE, afficher le niveau de priorité actuel. L&#39;</span>étendue des niveaux va</a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="ex">de</span> -20 (priorité la plus favorable au processus) à <span class="ex">19</span> (la moins favorable)<span class="ex">.</span></a>
+<a class="sourceLine" id="cb8-7" title="7"></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="ex">Les</span> arguments obligatoires pour les options longues le sont aussi pour les</a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="ex">options</span> courtes.</a>
+<a class="sourceLine" id="cb8-10" title="10">  <span class="ex">-n</span>, --adjustment=N  ajouter la valeur entière N à la valeur de la priorité</a>
+<a class="sourceLine" id="cb8-11" title="11">                        <span class="kw">(</span><span class="ex">10</span> par défaut<span class="kw">)</span></a>
+<a class="sourceLine" id="cb8-12" title="12">      <span class="ex">--help</span>     afficher l<span class="st">&#39;aide et quitter</span></a>
+<a class="sourceLine" id="cb8-13" title="13"><span class="st">      --version  afficher des informations de version et quitter</span></a>
+<a class="sourceLine" id="cb8-14" title="14"></a>
+<a class="sourceLine" id="cb8-15" title="15"><span class="st">Remarque : l&#39;</span>interpréteur de commande peut avoir sa propre version de nice,</a>
+<a class="sourceLine" id="cb8-16" title="16"><span class="ex">lequel</span> remplace habituellement la version décrite ici. Consultez la</a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="ex">documentation</span> de l<span class="st">&#39;interpréteur pour obtenir des précisions sur les options</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="st">prises en charge.</span></a>
+<a class="sourceLine" id="cb8-19" title="19"></a>
+<a class="sourceLine" id="cb8-20" title="20"><span class="st">Aide en ligne de GNU coreutils : &lt;https://www.gnu.org/software/coreutils/&gt;</span></a>
+<a class="sourceLine" id="cb8-21" title="21"><span class="st">Signalez les problèmes de traduction de « nice » à : &lt;traduc@traduc.org&gt;</span></a>
+<a class="sourceLine" id="cb8-22" title="22"><span class="st">Documentation complète à : &lt;https://www.gnu.org/software/coreutils/nice&gt;</span></a>
+<a class="sourceLine" id="cb8-23" title="23"><span class="st">ou disponible localement via: info &#39;</span>(coreutils) <span class="fu">nice</span> invocation<span class="st">&#39;</span></a></code></pre></div>
 <h3 id="ii-iv-ii.-exemples-dutilisation">II-IV-II. Exemples d’utilisation</h3>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># Démarrer un processus avec une priorité (ici 10=faible)</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="fu">nice</span> -n 10 tar xvzf ma_grosse_archive.tar.gz</span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="co"># Modifier la priorité d&#39;un processus actif (2778=PID)</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="ex">renice</span> 0 2778 </span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Démarrer un processus avec une priorité (ici 10=faible)</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="fu">nice</span> -n 10 tar xvzf ma_grosse_archive.tar.gz</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4"><span class="co"># Modifier la priorité d&#39;un processus actif (2778=PID)</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="ex">renice</span> 0 2778 </a></code></pre></div>
 <h2 id="ii-v.-voir-lactivité-des-processeurs">II-V. Voir l’activité des processeurs</h2>
 <p>Quelques commandes pour visualiser les informations concernant le processeur:</p>
 <ul>
@@ -348,7 +337,7 @@ cpuinfo
 <h2 id="iii-i.-utiliser-vmstat">III-I. Utiliser <code>vmstat</code></h2>
 <h2 id="iii-ii.-analyser-lutilisation-de-la-mémoire">III-II. Analyser l’utilisation de la mémoire</h2>
 <p>Installation de <code>smem</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">sudo</span> apt install smem -y</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="fu">sudo</span> apt install smem -y</a></code></pre></div>
 <h2 id="iii-iii.-suivre-lexécution-dun-processus">III-III. Suivre l’exécution d’un processus</h2>
 <h2 id="iii-iv.-préparer-lanalyse-du-multithreading">III-IV. Préparer l’analyse du multithreading</h2>
 <h2 id="iii-v.-suivre-lexécution-des-threads">III-V. Suivre l’exécution des threads</h2>
@@ -373,6 +362,5 @@ cpuinfo
 <div class="footer" id="bottom">
   <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
 </div>
-
 </body>
 </html>

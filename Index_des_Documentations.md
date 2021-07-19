@@ -25,7 +25,6 @@ extensions: 'extra'
 - [Git *(14H)*](2021-06-17-POEI-Git.html)
 - [Docker: Initiation *(21H)*](2021-06-21-POEI-Docker.html)
 - [Ansible: Initiation *(21H)*](2021-06-24-POEI-Ansible.html)
-- [Kubernetes *(21H)*](2021-07-16-POEI-Kubernetes.html)
 
 - **Mise en Situation Docker/Ansible** - Cursus DevOps *(7H)* =>> Not implemented :(
 
@@ -35,6 +34,11 @@ extensions: 'extra'
 - [**Mise en situation n°2: VMWare / Ansible**](2021-07-08-POEI-MES-2.html)
 
 - [Amazon Web Services *(21H)*](2021-07-12-POEI-AWS.html)
+- [Kubernetes *(21H)*](2021-07-16-POEI-Kubernetes.html)
+- [Puppet *(21H)*]
+- [Python: Initiation & Approfondissement *(35H)*]
+
+- [**Atelier Libre**]
 
 
 ## **Linux Academy** 
