@@ -112,6 +112,8 @@ body {
 a {
   text-decoration: none;
   font-style: italic;
+  font-weight: normal;
+  transition: .4s;
 }
 
  /* unvisited link */
@@ -129,7 +131,7 @@ a:hover {
   color: #00A388;
   font-weight: bold;
   font-size: larger;
-  transition: .4s ease;
+  transition: .4s ;
 }
 
 /* selected link */
@@ -329,7 +331,8 @@ dl:hover dd:last-of-type {
     
     #content code {
         display: block;
-        padding: 0.5em 1em;
+        /*padding: 0.5em 1em;*/
+        padding: 15px 15px 15px 15px;
         border: 1px solid #bebab0;
     }
 

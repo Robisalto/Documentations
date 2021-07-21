@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Pierre SABLE" />
+  <meta name="dcterms.date" content="2021-07-21" />
+  <title>POEI DevOps - Puppet</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleDark.css" />
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Puppet</h1>
+<p class="author">Pierre SABLE</p>
+<p class="date">2021-07-21</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#doc-source">Doc Source</a><ul>
+<li><a href="#docs-officielles">Docs officielles</a></li>
+<li><a href="#puppet-vs-ansible">Puppet VS Ansible</a></li>
+<li><a href="#fichiers-de-configuration-puppet">Fichiers de configuration Puppet</a></li>
+</ul></li>
+<li><a href="#image-vagrant-pierre">Image Vagrant <em>(Pierre)</em></a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#vérification">Vérification</a></li>
+</ul></li>
+<li><a href="#tp">TP</a><ul>
+<li><a href="#ajout-dun-agent-puppet-dans-linfra-puppetserver">Ajout d’un agent puppet dans l’infra puppetserver</a></li>
+<li><a href="#certificats-puppet">Certificats Puppet</a></li>
+</ul></li>
+<li><a href="#vocabulaire-puppet">Vocabulaire Puppet</a></li>
+<li><a href="#resource">Resource</a></li>
+<li><a href="#tp-ressources">TP Ressources</a><ul>
+<li><a href="#exercice-1-découverte-des-ressources-puppet">Exercice 1: découverte des ressources puppet</a></li>
+<li><a href="#exercice-2-ecriture-dun-manifest">Exercice 2: Ecriture d’un manifest</a></li>
+</ul></li>
+<li><a href="#tips-tricks">Tips &amp; Tricks</a><ul>
+<li><a href="#describe"><em>describe</em></a></li>
+</ul></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="highlight/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<h4 id="introduction">Introduction</h4>
+<p><strong>Pierre SABLE</strong> Formateur</p>
+<p>Découvrez notre webTV : <a href="http://www.dawan.tv" class="uri">http://www.dawan.tv</a></p>
+<hr />
+<h1 id="doc-source">Doc Source</h1>
+<iframe src="2021-07-21-POEI-Puppet/Puppet.pdf" allowfullscreen="true">
+</iframe>
+<p>Document: <a href="2021-07-21-POEI-Puppet/Puppet.pdf">Puppet.pdf</a></p>
+<h2 id="docs-officielles">Docs officielles</h2>
+<ul>
+<li><a href="https://puppet.com/" class="uri">https://puppet.com/</a></li>
+<li><a href="https://puppet.com/docs/" class="uri">https://puppet.com/docs/</a> &amp; <a href="https://puppet.com/docs/puppet/latest" class="uri">https://puppet.com/docs/puppet/latest</a></li>
+</ul>
+<h2 id="puppet-vs-ansible">Puppet VS Ansible</h2>
+<div class="info">
+<p><strong>Ansible</strong> et <strong>Puppet</strong> peuvent être utlisés tous les deux dans un même SI.</p>
+<p>Il ont des fonctionnalitées, utilisations et résultats différents qui peuvent être <strong>complémentaires</strong>.</p>
+</div>
+<p><img src="https://i1.wp.com/foxutech.com/wp-content/uploads/2017/04/Differences-between-Ansible-and-Puppet.png?resize=696%2C290&amp;ssl=1" /></p>
+<p><a href="https://foxutech.com/differences-between-ansible-and-puppet/" class="uri">https://foxutech.com/differences-between-ansible-and-puppet/</a></p>
+<p><a href="https://digitalocean.com"><img src="https://assets.digitalocean.com/articles/alligator/boo.svg" alt="Alt text" /></a></p>
+<h2 id="fichiers-de-configuration-puppet">Fichiers de configuration Puppet</h2>
+<p>Les fichiers de configurations sont écrits en DSL Ruby: <a href="https://puppet.com/blog/ruby-dsl/" class="uri">https://puppet.com/blog/ruby-dsl/</a></p>
+<h1 id="image-vagrant-pierre">Image Vagrant <em>(Pierre)</em></h1>
+<h2 id="installation">Installation</h2>
+<h2 id="vérification">Vérification</h2>
+<p>On se connecte dans la VM: <code>vagrant ssh ppmaster.formation.lan</code></p>
+<p>Puis on vérifie l’installation de <strong>Puppet</strong>:</p>
+<h5 id="liste-des-paquets-puppet">Liste des Paquets <em>Puppet</em></h5>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">vagrant@ppmaster</span>:~$ apt list <span class="kw">|</span> <span class="fu">grep</span> puppet</a>
+<a class="sourceLine" id="cb1-2" title="2"></a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="ex">WARNING</span>: apt does not have a stable CLI interface. Use with caution in scripts.</a>
+<a class="sourceLine" id="cb1-4" title="4"></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="ex">elpa-puppet-mode/focal</span> 0.3+132.g7dee1b5-2 all</a>
+<a class="sourceLine" id="cb1-6" title="6"><span class="ex">etherpuppet/focal</span> 0.3-3.1 amd64</a>
+<a class="sourceLine" id="cb1-7" title="7"><span class="ex">fusiondirectory-plugin-puppet-schema/focal</span> 1.3-2 all</a>
+<a class="sourceLine" id="cb1-8" title="8"><span class="ex">fusiondirectory-plugin-puppet/focal</span> 1.3-2 all</a>
+<a class="sourceLine" id="cb1-9" title="9"><span class="ex">libpuppetlabs-http-client-clojure/focal</span> 0.9.0-1 all</a>
+<a class="sourceLine" id="cb1-10" title="10"><span class="ex">libpuppetlabs-i18n-clojure/focal</span> 0.8.0-1 all</a>
+<a class="sourceLine" id="cb1-11" title="11"><span class="ex">libpuppetlabs-ring-middleware-clojure/focal</span> 1.0.0-2 all</a>
+<a class="sourceLine" id="cb1-12" title="12"><span class="ex">librarian-puppet-simple/focal</span> 0.0.5-3 all</a>
+<a class="sourceLine" id="cb1-13" title="13"><span class="ex">librarian-puppet/focal</span> 3.0.0-1 all</a>
+<a class="sourceLine" id="cb1-14" title="14"><span class="ex">mcollective-plugins-puppetca/focal</span> 0.0.0~git20120507.df2fa81-0ubuntu2 all</a>
+<a class="sourceLine" id="cb1-15" title="15"><span class="ex">mcollective-plugins-puppetd/focal</span> 0.0.0~git20120507.df2fa81-0ubuntu2 all</a>
+<a class="sourceLine" id="cb1-16" title="16"><span class="ex">mcollective-plugins-puppetral/focal</span> 0.0.0~git20120507.df2fa81-0ubuntu2 all</a>
+<a class="sourceLine" id="cb1-17" title="17"><span class="ex">puppet-agent/focal</span> 7.9.0-1focal amd64 [upgradable from: 7.8.0-1focal]</a>
+<a class="sourceLine" id="cb1-18" title="18"><span class="ex">puppet-beaker/focal</span> 4.1.0-1 all</a></code></pre></div>
+<h5 id="configuration-docker">Configuration <em>Docker</em></h5>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"></a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="ex">vagrant@ppmaster</span>:~$ docker ps</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="ex">CONTAINER</span> ID   IMAGE               COMMAND               CREATED      STATUS        PORTS     NAMES</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="ex">2d380b379ea2</span>   puppet/centos:1.0   <span class="st">&quot;tail -f /dev/null&quot;</span>   7 days ago   Up 18 hours             cli02.formation.lan</a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="ex">e51491507dd1</span>   puppet/debian:1.0   <span class="st">&quot;tail -f /dev/null&quot;</span>   7 days ago   Up 18 hours             cli01.formation.lan</a>
+<a class="sourceLine" id="cb2-6" title="6"></a></code></pre></div>
+<h5 id="service-status">Service status</h5>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Status service puppetserver:</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">root@ppmaster</span>:~# systemctl status puppetserver.service </a>
+<a class="sourceLine" id="cb3-3" title="3">● <span class="ex">puppetserver.service</span> - puppetserver Service</a>
+<a class="sourceLine" id="cb3-4" title="4">     <span class="ex">Loaded</span>: loaded (/lib/systemd/system/puppetserver.service<span class="kw">;</span> <span class="ex">disabled</span><span class="kw">;</span> <span class="ex">vendor</span> preset: enabled)</a>
+<a class="sourceLine" id="cb3-5" title="5">     <span class="ex">Active</span>: inactive (dead)</a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="ex">root@ppmaster</span>:~# systemctl start puppetserver.service </a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="ex">root@ppmaster</span>:~# systemctl enable puppetserver.service</a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="ex">Synchronizing</span> state of puppetserver.service with SysV service script with /lib/systemd/systemd-sysv-install.</a>
+<a class="sourceLine" id="cb3-9" title="9"><span class="ex">Executing</span>: /lib/systemd/systemd-sysv-install enable puppetserver</a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="ex">Created</span> symlink /etc/systemd/system/multi-user.target.wants/puppetserver.service → /lib/systemd/system/puppetserver.service.</a></code></pre></div>
+<p>Plus d’infos sur <code>Systemctl</code>: <a href="https://opensharing.fr/commandes-linux-systemctl" class="uri">https://opensharing.fr/commandes-linux-systemctl</a></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># Liste de Containers</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="ex">root@ppmaster</span>:~# docker ps</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="ex">CONTAINER</span> ID   IMAGE               COMMAND               CREATED      STATUS        PORTS     NAMES</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="ex">2d380b379ea2</span>   puppet/centos:1.0   <span class="st">&quot;tail -f /dev/null&quot;</span>   7 days ago   Up 19 hours             cli02.formation.lan</a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="ex">e51491507dd1</span>   puppet/debian:1.0   <span class="st">&quot;tail -f /dev/null&quot;</span>   7 days ago   Up 19 hours             cli01.formation.lan</a>
+<a class="sourceLine" id="cb4-6" title="6"></a>
+<a class="sourceLine" id="cb4-7" title="7"><span class="co"># Connexion dans le Container</span></a>
+<a class="sourceLine" id="cb4-8" title="8"><span class="ex">root@ppmaster</span>:~# docker container exec -it cli01.formation.lan bash</a>
+<a class="sourceLine" id="cb4-9" title="9"><span class="co"># Liste des paquets &quot;puppet&quot;</span></a>
+<a class="sourceLine" id="cb4-10" title="10"><span class="ex">root@cli01</span>:/# apt list <span class="kw">|</span> <span class="fu">grep</span> puppet</a>
+<a class="sourceLine" id="cb4-11" title="11"><span class="ex">puppet-agent/now</span> 7.8.0-1buster amd64 [installed,local]</a>
+<a class="sourceLine" id="cb4-12" title="12"><span class="ex">puppet7-release/now</span> 7.0.0-2buster all [installed,local]</a></code></pre></div>
+<h1 id="tp">TP</h1>
+<h2 id="ajout-dun-agent-puppet-dans-linfra-puppetserver">Ajout d’un agent puppet dans l’infra puppetserver</h2>
+<h5 id="connexion-dans-la-vm">1. Connexion dans la VM</h5>
+<p>Connexion dans la VM ppmaster:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/FORMATION/Puppet</a>
+<a class="sourceLine" id="cb5-2" title="2">$ <span class="ex">vagrant</span> ssh</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="ex">Welcome</span> to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-73-generic x86_64)</a>
+<a class="sourceLine" id="cb5-4" title="4"></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="ex">...</span></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="ex">vagrant@ppmaster</span>:~$ </a></code></pre></div>
+<h5 id="connexion-dans-le-client">2. Connexion dans le client</h5>
+<p>Dans notre cas le client est: <em>cli02.formation.lan</em></p>
+<p>On se connecte dedans:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">vagrant@ppmaster</span>:~$ docker exec -it cli02.formation.lan bash</a>
+<a class="sourceLine" id="cb6-2" title="2">[<span class="ex">root@cli02</span> /]# </a></code></pre></div>
+<p>On vérifie la communication avec le <strong>puppetserver</strong>:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1">[<span class="ex">root@cli02</span> /]# ping puppet</a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="ex">PING</span> puppet (172.16.8.11) <span class="ex">56</span>(84) <span class="ex">bytes</span> of data.</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="ex">64</span> bytes from puppet (172.16.8.11)<span class="bu">:</span> icmp_seq=1 ttl=64 time=0.056 ms       </a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="ex">64</span> bytes from puppet (172.16.8.11)<span class="bu">:</span> icmp_seq=2 ttl=64 time=0.049 ms</a>
+<a class="sourceLine" id="cb7-5" title="5">^<span class="ex">C</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="ex">---</span> puppet ping statistics ---</a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="ex">2</span> packets transmitted, 2 received, 0% packet loss, time 4ms</a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="ex">rtt</span> min/avg/max/mdev = 0.049/0.052/0.056/0.008 ms</a></code></pre></div>
+<h5 id="déclencher-lagent-manuellement">3. Déclencher l’agent manuellement</h5>
+<p>Création du certificat de l’agent Puppet:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1">[<span class="ex">root@cli02</span> /]# /opt/puppetlabs/bin/puppet agent -t</a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="ex">Info</span>: Creating a new RSA SSL key for cli02.formation.lan</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="ex">Info</span>: csr_attributes file loading from /etc/puppetlabs/puppet/csr_attributes.yaml</a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="ex">Info</span>: Creating a new SSL certificate request for cli02.formation.lan</a>
+<a class="sourceLine" id="cb8-5" title="5"><span class="ex">Info</span>: Certificate Request fingerprint (SHA256)<span class="bu">:</span> DA:CC:92:21:3F:33:43:74:5D:E2:C0:FE:30:93:06:85:54:4D:E8:64:65:82:D1:9F:FA:61:35:61:E0:22:AB:FA</a>
+<a class="sourceLine" id="cb8-6" title="6"><span class="ex">Info</span>: Certificate for cli02.formation.lan has not been signed yet</a>
+<a class="sourceLine" id="cb8-7" title="7"><span class="ex">Couldn</span><span class="st">&#39;t fetch certificate from CA server; you might still need to sign this agent&#39;</span>s certificate (cli02.formation.lan)<span class="ex">.</span></a>
+<a class="sourceLine" id="cb8-8" title="8"><span class="ex">Exiting</span> now because the waitforcert setting is set to 0.</a></code></pre></div>
+<h5 id="vérification-signature">4. Vérification &amp; Signature</h5>
+<p>Vérifier et signer le requete de signature de certificat côté puppetserver:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">root@ppmaster</span>:~# puppetserver ca list</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="ex">Requested</span> Certificates:</a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="ex">ppmaster.home</span>             (SHA256)  <span class="ex">EF</span>:F4:48:8D:7D:7B:B6:86:FB:DD:CD:CE:07:E8:D7:FD:E0:B2:E7:4C:D4:18:FE:EC:E9:77:04:81:A9:9D:D8:B8</a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="ex">cli02.formation.lan</span>       (SHA256)  <span class="ex">DA</span>:CC:92:21:3F:33:43:74:5D:E2:C0:FE:30:93:06:85:54:4D:E8:64:65:82:D1:9F:FA:61:35:61:E0:22:AB:FA</a>
+<a class="sourceLine" id="cb9-5" title="5">    <span class="ex">cli01.formation.lan</span>       (SHA256)  <span class="ex">DD</span>:CE:16:9A:F1:B4:EF:4F:C9:C8:4E:34:F9:2E:B9:3E:76:E7:1C:5E:63:9E:0E:9A:4E:66:AB:B4:79:A9:B2:2D</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">root@ppmaster</span>:~# puppetserver ca sign --certname cli01.formation.lan</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="ex">Successfully</span> signed certificate request for cli02.formation.lan</a></code></pre></div>
+<h5 id="application-du-catalogue">5. Application du catalogue</h5>
+<p>Redéclencher l’agent pour appliquer le catalogue:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1">[<span class="ex">root@cli02</span> /]# /opt/puppetlabs/bin/puppet agent -t</a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="ex">Info</span>: csr_attributes file loading from /etc/puppetlabs/puppet/csr_attributes.yaml</a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="ex">Info</span>: Creating a new SSL certificate request for cli02.formation.lan</a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="ex">Info</span>: Certificate Request fingerprint (SHA256)<span class="bu">:</span> DA:CC:92:21:3F:33:43:74:5D:E2:C0:FE:30:93:06:85:54:4D:E8:64:65:82:D1:9F:FA:61:35:61:E0:22:AB:FA</a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="ex">Info</span>: Downloaded certificate for cli02.formation.lan from https://puppet:8140/puppet-ca/v1</a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="ex">Info</span>: Caching catalog for cli02.formation.lan</a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1626872380&#39;</span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="ex">Info</span>: Creating state file /opt/puppetlabs/puppet/cache/state/state.yaml</a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="ex">Notice</span>: Applied catalog in 0.02 seconds</a></code></pre></div>
+<h2 id="certificats-puppet">Certificats Puppet</h2>
+<div class="info">
+<p>Pour afficher les certificats <strong>en attente</strong> de signature:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">root@ppmaster</span>:~# ls /etc/puppetlabs/puppetserver/ca/requests/</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ex">cli01.formation.lan.pem</span>  cli02.formation.lan.pem  ppmaster.home.pem</a></code></pre></div>
+<p>Pour afficher les certificats <strong>signés</strong>:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">root@ppmaster</span>:~# ls /etc/puppetlabs/puppetserver/ca/signed/</a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="ex">ppmaster.formation.lan.pem</span></a></code></pre></div>
+</div>
+<h1 id="vocabulaire-puppet">Vocabulaire Puppet</h1>
+<ul>
+<li><p><strong>Node</strong> : serveur ou poste de travail administré par Puppet</p></li>
+<li><p><strong>Site</strong> : ensemble des noeuds gérés par le Puppet Master</p></li>
+<li><p><strong>Resource</strong> : objet que Puppet peut manipuler</p></li>
+<li><p><strong>Classe</strong> : moyen dans Puppet de séparer des morceaux de code</p></li>
+<li><p><strong>Module</strong> : unité de code Puppet qui est réutilisable et pouvant être partagé</p></li>
+<li><p><strong>Facter</strong> : librairie multi-plateforme qui fournit à Puppet sous forme de variables les informations propres au système (nom, adresse ip, système d’exploitation, etc.)</p></li>
+<li><p><strong>Manifest</strong> : regroupe un ensemble de ressource.</p></li>
+<li><p><strong>Catalog</strong> : ensemble des classes de configuration à appliquer à un nœud</p></li>
+</ul>
+<h1 id="resource">Resource</h1>
+<p>Traduction de configurations vers une syntaxe Puppet:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># user: root</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="ex">root@cli01</span>:/# /opt/puppetlabs/bin/puppet resource user root</a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="ex">user</span> { <span class="st">&#39;root&#39;</span>:</a>
+<a class="sourceLine" id="cb14-4" title="4">  <span class="ex">ensure</span>             =<span class="op">&gt;</span> <span class="st">&#39;present&#39;</span>,</a>
+<a class="sourceLine" id="cb14-5" title="5">  <span class="ex">comment</span>            =<span class="op">&gt;</span> <span class="st">&#39;root&#39;</span>,</a>
+<a class="sourceLine" id="cb14-6" title="6">  <span class="ex">gid</span>                =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb14-7" title="7">  <span class="ex">home</span>               =<span class="op">&gt;</span> <span class="st">&#39;/root&#39;</span>,</a>
+<a class="sourceLine" id="cb14-8" title="8">  <span class="ex">password</span>           =<span class="op">&gt;</span> <span class="st">&#39;*&#39;</span>,</a>
+<a class="sourceLine" id="cb14-9" title="9">  <span class="ex">password_max_age</span>   =<span class="op">&gt;</span> 99999,</a>
+<a class="sourceLine" id="cb14-10" title="10">  <span class="ex">password_min_age</span>   =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb14-11" title="11">  <span class="ex">password_warn_days</span> =<span class="op">&gt;</span> 7,</a>
+<a class="sourceLine" id="cb14-12" title="12">  <span class="ex">provider</span>           =<span class="op">&gt;</span> <span class="st">&#39;useradd&#39;</span>,</a>
+<a class="sourceLine" id="cb14-13" title="13">  <span class="ex">shell</span>              =<span class="op">&gt;</span> <span class="st">&#39;/bin/bash&#39;</span>,</a>
+<a class="sourceLine" id="cb14-14" title="14">  <span class="ex">uid</span>                =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb14-15" title="15">}</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Fichier /etc/profile</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="ex">root@cli01</span>:/# /opt/puppetlabs/bin/puppet resource file /etc/profile</a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="fu">file</span> { <span class="st">&#39;/etc/profile&#39;</span>:</a>
+<a class="sourceLine" id="cb15-4" title="4">  <span class="ex">ensure</span>   =<span class="op">&gt;</span> <span class="st">&#39;file&#39;</span>,</a>
+<a class="sourceLine" id="cb15-5" title="5">  <span class="ex">content</span>  =<span class="op">&gt;</span> <span class="st">&#39;{sha256}b8ffd2c97588047e1cea84b7dfdb68bfde167e2957f667ca2b6ab2929feb4f49&#39;</span>,</a>
+<a class="sourceLine" id="cb15-6" title="6">  <span class="ex">ctime</span>    =<span class="op">&gt;</span> <span class="st">&#39;2021-07-13 15:37:30 +0000&#39;</span>,</a>
+<a class="sourceLine" id="cb15-7" title="7">  <span class="ex">group</span>    =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb15-8" title="8">  <span class="ex">mode</span>     =<span class="op">&gt;</span> <span class="st">&#39;0644&#39;</span>,</a>
+<a class="sourceLine" id="cb15-9" title="9">  <span class="ex">mtime</span>    =<span class="op">&gt;</span> <span class="st">&#39;2016-03-04 11:00:00 +0000&#39;</span>,</a>
+<a class="sourceLine" id="cb15-10" title="10">  <span class="ex">owner</span>    =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb15-11" title="11">  <span class="ex">provider</span> =<span class="op">&gt;</span> <span class="st">&#39;posix&#39;</span>,</a>
+<a class="sourceLine" id="cb15-12" title="12">  <span class="bu">type</span>     =<span class="op">&gt;</span> <span class="st">&#39;file&#39;</span>,</a>
+<a class="sourceLine" id="cb15-13" title="13">}</a></code></pre></div>
+<p>On peut ainsi “puppetiser” des configurations 😜</p>
+<p><img src="https://emojipedia.org/skype/1.2/winking-face-with-tongue/" /></p>
+<h1 id="tp-ressources">TP Ressources</h1>
+<h4 id="contexte">Contexte</h4>
+<p>La ressource est le concept clé de puppet. Elle représente de manière abstraite tout objet concret géré sur la machine.</p>
+<h4 id="objectifs">Objectifs</h4>
+<p>Dans ce travail pratique nous allons:</p>
+<ul>
+<li>nous familiariser avec la commande puppet</li>
+<li>découvrir la sous-commande puppet resource</li>
+<li>mettre en pratique nos connaissances de base de la syntaxe puppet</li>
+<li>écrire notre premier manifest</li>
+<li>compiler et appliquer notre premier catalogue</li>
+</ul>
+<h4 id="prérequis">Prérequis</h4>
+<p>être connecté sur votre VM</p>
+<h2 id="exercice-1-découverte-des-ressources-puppet">Exercice 1: découverte des ressources puppet</h2>
+<p>Nous allons utiliser la commande puppet resource afin de comprendre la correspondance entre le code puppet et l’état de la machine.</p>
+<ol type="1">
+<li><p>Taper la commande puppet help et prendre connaissance de la sortie</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1">$ <span class="ex">puppet</span> help</a></code></pre></div></li>
+<li><p>Taper la commande puppet help resource</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1">$ <span class="ex">puppet</span> resource --help</a></code></pre></div></li>
+<li><p>Utiliser la commande adéquate pour lister les types de ressources disponibles</p></li>
+</ol>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="ex">root@cli01</span>:/# puppet describe --list</a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="ex">These</span> are the types known to puppet:</a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="ex">augeas</span>          - Apply a change or an array of changes to the  ...</a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="ex">cron</span>            - Installs and manages cron jobs</a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="bu">exec</span>            - Executes external commands</a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="fu">file</span>            - Manages files, including their content, owner ...</a>
+<a class="sourceLine" id="cb18-7" title="7"><span class="ex">filebucket</span>      - A repository for storing and retrieving file  ...</a>
+<a class="sourceLine" id="cb18-8" title="8"><span class="ex">group</span>           - Manage groups</a>
+<a class="sourceLine" id="cb18-9" title="9"><span class="ex">host</span>            - Installs and manages host entries</a>
+<a class="sourceLine" id="cb18-10" title="10"><span class="fu">mount</span>           - Manages mounted filesystems, including puttin ...</a>
+<a class="sourceLine" id="cb18-11" title="11"><span class="ex">notify</span>          - Sends an arbitrary message, specified as a st ...</a>
+<a class="sourceLine" id="cb18-12" title="12"><span class="ex">package</span>         - Manage packages</a>
+<a class="sourceLine" id="cb18-13" title="13"><span class="ex">resources</span>       - This is a metatype that can manage other reso ...</a>
+<a class="sourceLine" id="cb18-14" title="14"><span class="ex">schedule</span>        - Define schedules for Puppet</a>
+<a class="sourceLine" id="cb18-15" title="15"><span class="ex">scheduled_task</span>  - Installs and manages Windows Scheduled Tasks</a>
+<a class="sourceLine" id="cb18-16" title="16"><span class="ex">selboolean</span>      - Manages SELinux booleans on systems with SELi ...</a>
+<a class="sourceLine" id="cb18-17" title="17"><span class="ex">selmodule</span>       - Manages loading and unloading of SELinux poli ...</a>
+<a class="sourceLine" id="cb18-18" title="18"><span class="ex">service</span>         - Manage running services</a>
+<a class="sourceLine" id="cb18-19" title="19"><span class="ex">ssh_authorized_key</span> - Manages SSH authorized keys</a>
+<a class="sourceLine" id="cb18-20" title="20"><span class="ex">sshkey</span>          - Installs and manages ssh host keys</a>
+<a class="sourceLine" id="cb18-21" title="21"><span class="ex">stage</span>           - A resource type for creating new run stages</a>
+<a class="sourceLine" id="cb18-22" title="22"><span class="ex">tidy</span>            - Remove unwanted files based on specific crite ...</a>
+<a class="sourceLine" id="cb18-23" title="23"><span class="ex">user</span>            - Manage users</a>
+<a class="sourceLine" id="cb18-24" title="24"><span class="ex">whit</span>            - Whits are internal artifacts of Puppets curr ...</a>
+<a class="sourceLine" id="cb18-25" title="25"><span class="ex">yumrepo</span>         - The client-side description of a yum reposito ...</a>
+<a class="sourceLine" id="cb18-26" title="26"><span class="ex">zfs</span>             - Manage zfs</a>
+<a class="sourceLine" id="cb18-27" title="27"><span class="ex">zone</span>            - Manages Solaris zones</a>
+<a class="sourceLine" id="cb18-28" title="28"><span class="ex">zpool</span>           - Manage zpools</a></code></pre></div>
+<ol start="4" type="1">
+<li><p>Utiliser la commande puppet pour représenter la ressource de type user du user root présent su la machine</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="ex">root@cli01</span>:/# /opt/puppetlabs/bin/puppet resource user root</a>
+<a class="sourceLine" id="cb19-2" title="2"><span class="ex">user</span> { <span class="st">&#39;root&#39;</span>:</a>
+<a class="sourceLine" id="cb19-3" title="3">  <span class="ex">ensure</span>             =<span class="op">&gt;</span> <span class="st">&#39;present&#39;</span>,</a>
+<a class="sourceLine" id="cb19-4" title="4">  <span class="ex">comment</span>            =<span class="op">&gt;</span> <span class="st">&#39;root&#39;</span>,</a>
+<a class="sourceLine" id="cb19-5" title="5">  <span class="ex">gid</span>                =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb19-6" title="6">  <span class="ex">home</span>               =<span class="op">&gt;</span> <span class="st">&#39;/root&#39;</span>,</a>
+<a class="sourceLine" id="cb19-7" title="7">  <span class="ex">password</span>           =<span class="op">&gt;</span> <span class="st">&#39;*&#39;</span>,</a>
+<a class="sourceLine" id="cb19-8" title="8">  <span class="ex">password_max_age</span>   =<span class="op">&gt;</span> 99999,</a>
+<a class="sourceLine" id="cb19-9" title="9">  <span class="ex">password_min_age</span>   =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb19-10" title="10">  <span class="ex">password_warn_days</span> =<span class="op">&gt;</span> 7,</a>
+<a class="sourceLine" id="cb19-11" title="11">  <span class="ex">provider</span>           =<span class="op">&gt;</span> <span class="st">&#39;useradd&#39;</span>,</a>
+<a class="sourceLine" id="cb19-12" title="12">  <span class="ex">shell</span>              =<span class="op">&gt;</span> <span class="st">&#39;/bin/bash&#39;</span>,</a>
+<a class="sourceLine" id="cb19-13" title="13">  <span class="ex">uid</span>                =<span class="op">&gt;</span> 0,</a>
+<a class="sourceLine" id="cb19-14" title="14">}</a></code></pre></div></li>
+</ol>
+<hr />
+<h2 id="exercice-2-ecriture-dun-manifest">Exercice 2: Ecriture d’un manifest</h2>
+<ol type="1">
+<li><p>Ecrire la définition d’une resource user dans un fichier manifest : <code>manage_user.pp</code></p>
+<ul>
+<li>Name : test</li>
+<li>Shell : /bin/bash</li>
+<li>Gecos (commentaire) : “user de test manage par puppet”</li>
+</ul></li>
+<li><p>Appliquer le manifest localement (standalone)</p></li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" title="1"><span class="ex">root@cli01</span>:/# puppet apply manage_user.pp </a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="ex">Notice</span>: Compiled catalog for cli01.formation.lan in environment production in 0.02 seconds</a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="ex">Notice</span>: /Stage[main]/Main/User[test]/ensure: created</a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="ex">Notice</span>: Applied catalog in 0.11 seconds</a></code></pre></div>
+<ol start="3" type="1">
+<li>Modifier le manifest pour mettre l’utilisateur “test” dans le groupe “formation”</li>
+</ol>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" title="1"><span class="ex">user</span> { <span class="st">&#39;test&#39;</span>:</a>
+<a class="sourceLine" id="cb21-2" title="2">  <span class="ex">ensure</span>    =<span class="op">&gt;</span> <span class="st">&#39;present&#39;</span>,</a>
+<a class="sourceLine" id="cb21-3" title="3">  <span class="ex">comment</span>   =<span class="op">&gt;</span> <span class="st">&#39;test&#39;</span>,</a>
+<a class="sourceLine" id="cb21-4" title="4">  <span class="ex">home</span>      =<span class="op">&gt;</span> <span class="st">&#39;/home/test&#39;</span>,</a>
+<a class="sourceLine" id="cb21-5" title="5">  <span class="ex">password</span>  =<span class="op">&gt;</span> <span class="st">&#39;test 123&#39;</span>,</a>
+<a class="sourceLine" id="cb21-6" title="6">  <span class="ex">provider</span>  =<span class="op">&gt;</span> <span class="st">&#39;useradd&#39;</span>,</a>
+<a class="sourceLine" id="cb21-7" title="7">  <span class="ex">shell</span>     =<span class="op">&gt;</span> <span class="st">&#39;/bin/bash&#39;</span>,</a>
+<a class="sourceLine" id="cb21-8" title="8">  <span class="fu">groups</span>    =<span class="op">&gt;</span> <span class="st">&#39;formation&#39;</span>,</a>
+<a class="sourceLine" id="cb21-9" title="9">}</a></code></pre></div>
+<div class="alert">
+Le groupe <strong>formation</strong> n’existe pas !!!
+</div>
+<ol start="4" type="1">
+<li>Créer le groupe “formation”</li>
+</ol>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" title="1"><span class="ex">user</span> { <span class="st">&#39;test&#39;</span>:</a>
+<a class="sourceLine" id="cb22-2" title="2">  <span class="ex">ensure</span>    =<span class="op">&gt;</span> <span class="st">&#39;present&#39;</span>,</a>
+<a class="sourceLine" id="cb22-3" title="3">  <span class="ex">comment</span>   =<span class="op">&gt;</span> <span class="st">&#39;test&#39;</span>,</a>
+<a class="sourceLine" id="cb22-4" title="4">  <span class="ex">home</span>      =<span class="op">&gt;</span> <span class="st">&#39;/home/test&#39;</span>,</a>
+<a class="sourceLine" id="cb22-5" title="5">  <span class="ex">password</span>  =<span class="op">&gt;</span> <span class="st">&#39;test 123&#39;</span>,</a>
+<a class="sourceLine" id="cb22-6" title="6">  <span class="ex">provider</span>  =<span class="op">&gt;</span> <span class="st">&#39;useradd&#39;</span>,</a>
+<a class="sourceLine" id="cb22-7" title="7">  <span class="ex">shell</span>     =<span class="op">&gt;</span> <span class="st">&#39;/bin/bash&#39;</span>,</a>
+<a class="sourceLine" id="cb22-8" title="8">  <span class="fu">groups</span>    =<span class="op">&gt;</span> <span class="st">&#39;formation&#39;</span>,</a>
+<a class="sourceLine" id="cb22-9" title="9">}</a>
+<a class="sourceLine" id="cb22-10" title="10"></a>
+<a class="sourceLine" id="cb22-11" title="11"></a>
+<a class="sourceLine" id="cb22-12" title="12"><span class="ex">group</span> { <span class="st">&#39;formation&#39;</span>:</a>
+<a class="sourceLine" id="cb22-13" title="13">  <span class="ex">ensure</span>   =<span class="op">&gt;</span> <span class="st">&#39;present&#39;</span>,</a>
+<a class="sourceLine" id="cb22-14" title="14">  <span class="ex">provider</span> =<span class="op">&gt;</span> <span class="st">&#39;groupadd&#39;</span>,</a>
+<a class="sourceLine" id="cb22-15" title="15">}</a></code></pre></div>
+<div class="info">
+<p>Puppet ne fonctionne pas de manière séquentielle comme Ansible.</p>
+<p>Le manifest est <strong>compilé</strong> avant d’être lancé !</p>
+</div>
+<hr />
+<h1 id="tips-tricks">Tips &amp; Tricks</h1>
+<ul>
+<li><a href="#certificats-puppet">Certificats Puppet</a></li>
+</ul>
+<h2 id="describe"><em>describe</em></h2>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

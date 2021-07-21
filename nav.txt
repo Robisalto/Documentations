@@ -10,6 +10,7 @@
 2021-07-12-POEI-AWS
 2021-07-13-My-Python-Projects
 2021-07-16-POEI-Kubernetes
+2021-07-21-POEI-Puppet
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet

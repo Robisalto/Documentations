@@ -1048,7 +1048,57 @@ Accèder à l'appli depuis un navigateur : http://IP_INTERNAL:31500/index.php
 
 
 
+# TP 6
 
+## Stratégie Rolling Update et rollback
+
+Dans cet exercice, vous allez modifier les fichiers de spécification myphp_frontend.yaml et myphp_backend.yaml afin de configurer la stratégie de rolling update (0 downtime)
+
+Le but est de réaliser une mise à jour des images en 2.0 de l'appli PHP (et faire un rollback si nécessaire)
+
+
+### 1. Ajout de stratégie de rolling update
+
+Dans les fichiers de spécification `myphp_frontend.yaml` et `myphp_backend.yaml`, ajouter une stratégie de rolling update pour avoir 0 downtime et un max replicas supplémentaire à 1
+
+```yaml
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 0
+```
+
+### 2. Update des ressources deployment
+
+Appliquer les nouvelles spec : `kubectl apply`
+
+## 3. Vérification de l'application de la stratégie dans le dashboard
+
+![](2021-07-16-POEI-Kubernetes/2021-07-20_12h27_17.png)
+
+
+## 4. Faire un scale à 10 réplicas du déploiement frontend
+
+<div class=info> On peut utiliser le dashboard pour faire la mise à l'échelle (la commande kubectl est affichée) </div>
+
+
+
+## 5. Réaliser un rolling update du déploiement frontend :
+
+> Passage de l'image bilbloke en 2.0 en méthode impérative => test
+
+> Répérer le nom du déploiement (kubectl get), repérer le nom du conteneur (spec yaml)
+
+```bash
+$ kubectl set image {nom du déploiement frontend} {conteneur}=bilbloke/frontend:2.0 --record
+```
+
+
+
+Résultat:
+
+<iframe src="2021-07-16-POEI-Kubernetes/2021-07-20_12h20_33.mp4"> </iframe>
 
 
 --- 
@@ -1059,13 +1109,13 @@ Accèder à l'appli depuis un navigateur : http://IP_INTERNAL:31500/index.php
 
 - Info sur le cluster :
 
-```
+```bash
 $ kubectl cluster-info
 ```
 
 - Info sur les nodes :
 
-```
+```bash
 $ kubectl get nodes
 $ kubectl get nodes -o wide
 ```
@@ -1126,17 +1176,20 @@ $ kubectl explain pods.spec.containers
 
 ## LES PODS
 
-https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/
+- <https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/>
 
-https://kubernetes.io/fr/docs/concepts/workloads/pods/pod/
+- <https://kubernetes.io/fr/docs/concepts/workloads/pods/pod/>
 
-https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-lifecycle/
+- <https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-lifecycle/>
 
-https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/
+- <https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/>
 
-https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-pod-initialization/
+- <https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-pod-initialization/>
+
+### Approche impérative
 
 > Approche impérative : en ligne de commande pour déclarer des ressource
+
 
 1. Création d'une ressource de type pod :
 
@@ -1159,7 +1212,7 @@ $ kubectl describe pod nginx
 
 4. Utilisation du port-forwarding pour bind un port local vers le pod (test, debugging)
 
-> https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/
+- <https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/>
 
 ```bash
 $ kubectl port-forward nginx 8080:80
@@ -1179,6 +1232,8 @@ $ kubectl port-forward nginx 8080:80
 kubectl delete pod nginx
 ```
 
+### Approche déclarative
+
 > Approche déclarative : spec (spécification YAML)
 
 1. Utiliser la commande impérative pour générer un fichier de spec 
@@ -1196,14 +1251,55 @@ $ kubectl apply -f spec_pod.yml
 
 ## Mise en réseau - service
 
-https://kubernetes.io/fr/docs/concepts/services-networking/service/
-https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/
+- <https://kubernetes.io/fr/docs/concepts/services-networking/service/>
+
+- <https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/>
 
 
 ## ReplicatSet et Deployments
 
-https://kubernetes.io/fr/docs/concepts/workloads/controllers/replicaset/
+- <https://kubernetes.io/fr/docs/concepts/workloads/controllers/replicaset/>
 
-https://kubernetes.io/fr/docs/concepts/workloads/controllers/deployment/
+- <https://kubernetes.io/fr/docs/concepts/workloads/controllers/deployment/>
 
 
+
+## Scaling horizontal - Mise à l'échelle
+
+https://kubernetes.io/docs/tutorials/kubernetes-basics/scale/scale-intro/
+
+https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+
+
+- ***HPA*** : Horizontal Pod Autoscale
+
+> Prérequis : activation des **metrics** pour les Pods
+
+```bash
+$ kubectl.exe -n myphp scale deployment.apps/frontend-deploy --replicas=8
+deployment.apps/frontend-deploy scaled
+
+```
+
+Résultat sur le Dashboard *(minikube)*:
+
+![](2021-07-16-POEI-Kubernetes/2021-07-19_14h12_08.png)
+
+
+
+## ConfigMaps
+
+https://kubernetes.io/docs/concepts/configuration/configmap/
+
+- Lister les ressources configMaps : il faut les chercher explicitement
+
+```bash
+$ kubectl get cm
+$ kubectl get configmaps
+```
+
+- Lister pod et configMaps du namespace default
+
+```bash
+$ kubectl get configmaps,pod
+```

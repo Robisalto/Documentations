@@ -35,7 +35,7 @@ extensions: 'extra'
 
 - [Amazon Web Services *(21H)*](2021-07-12-POEI-AWS.html)
 - [Kubernetes *(21H)*](2021-07-16-POEI-Kubernetes.html)
-- [Puppet *(21H)*]
+- [Puppet *(21H)*](2021-07-21-POEI-Puppet.html)
 - [Python: Initiation & Approfondissement *(35H)*]
 
 - [**Atelier Libre**]

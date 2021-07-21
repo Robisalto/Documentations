@@ -173,6 +173,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#accès-au-service-depuis-le-cluster-1">2.4 Accès au Service depuis le cluster</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#tp-6">TP 6</a><ul>
+<li><a href="#stratégie-rolling-update-et-rollback">Stratégie Rolling Update et rollback</a><ul>
+<li><a href="#ajout-de-stratégie-de-rolling-update">1. Ajout de stratégie de rolling update</a></li>
+<li><a href="#update-des-ressources-deployment">2. Update des ressources deployment</a></li>
+</ul></li>
+<li><a href="#vérification-de-lapplication-de-la-stratégie-dans-le-dashboard">3. Vérification de l’application de la stratégie dans le dashboard</a></li>
+<li><a href="#faire-un-scale-à-10-réplicas-du-déploiement-frontend">4. Faire un scale à 10 réplicas du déploiement frontend</a></li>
+<li><a href="#réaliser-un-rolling-update-du-déploiement-frontend">5. Réaliser un rolling update du déploiement frontend :</a></li>
+</ul></li>
 <li><a href="#documentation">Documentation</a><ul>
 <li><a href="#client-kubectl">Client Kubectl</a></li>
 <li><a href="#configuration-du-client">Configuration du client :</a></li>
@@ -180,9 +189,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#lister-les-ressources-créées-dans-le-cluster">Lister les ressources créées dans le cluster</a></li>
 <li><a href="#récuperer-de-linfo-dans-le-cluster">Récuperer de l’info dans le cluster</a></li>
 <li><a href="#documentation---aide">Documentation - aide</a></li>
-<li><a href="#les-pods">LES PODS</a></li>
+<li><a href="#les-pods">LES PODS</a><ul>
+<li><a href="#approche-impérative">Approche impérative</a></li>
+<li><a href="#approche-déclarative">Approche déclarative</a></li>
+</ul></li>
 <li><a href="#mise-en-réseau---service">Mise en réseau - service</a></li>
 <li><a href="#replicatset-et-deployments">ReplicatSet et Deployments</a></li>
+<li><a href="#scaling-horizontal---mise-à-léchelle">Scaling horizontal - Mise à l’échelle</a></li>
+<li><a href="#configmaps">ConfigMaps</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -887,18 +901,48 @@ kubectl get service backend -o yaml</code></pre>
 <pre><code>$ kubectl apply -f myphp_frontend.yaml</code></pre>
 <h3 id="accès-au-service-depuis-le-cluster-1">2.4 Accès au Service depuis le cluster</h3>
 <p>Accèder à l’appli depuis un navigateur : http://IP_INTERNAL:31500/index.php</p>
+<h1 id="tp-6">TP 6</h1>
+<h2 id="stratégie-rolling-update-et-rollback">Stratégie Rolling Update et rollback</h2>
+<p>Dans cet exercice, vous allez modifier les fichiers de spécification myphp_frontend.yaml et myphp_backend.yaml afin de configurer la stratégie de rolling update (0 downtime)</p>
+<p>Le but est de réaliser une mise à jour des images en 2.0 de l’appli PHP (et faire un rollback si nécessaire)</p>
+<h3 id="ajout-de-stratégie-de-rolling-update">1. Ajout de stratégie de rolling update</h3>
+<p>Dans les fichiers de spécification <code>myphp_frontend.yaml</code> et <code>myphp_backend.yaml</code>, ajouter une stratégie de rolling update pour avoir 0 downtime et un max replicas supplémentaire à 1</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb42-1" title="1"><span class="fu">strategy:</span></a>
+<a class="sourceLine" id="cb42-2" title="2">  <span class="fu">type:</span><span class="at"> RollingUpdate</span></a>
+<a class="sourceLine" id="cb42-3" title="3">  <span class="fu">rollingUpdate:</span></a>
+<a class="sourceLine" id="cb42-4" title="4">    <span class="fu">maxSurge:</span><span class="at"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb42-5" title="5">    <span class="fu">maxUnavailable:</span><span class="at"> </span><span class="dv">0</span></a></code></pre></div>
+<h3 id="update-des-ressources-deployment">2. Update des ressources deployment</h3>
+<p>Appliquer les nouvelles spec : <code>kubectl apply</code></p>
+<h2 id="vérification-de-lapplication-de-la-stratégie-dans-le-dashboard">3. Vérification de l’application de la stratégie dans le dashboard</h2>
+<p><img src="2021-07-16-POEI-Kubernetes/2021-07-20_12h27_17.png" /></p>
+<h2 id="faire-un-scale-à-10-réplicas-du-déploiement-frontend">4. Faire un scale à 10 réplicas du déploiement frontend</h2>
+<div class="info">
+On peut utiliser le dashboard pour faire la mise à l’échelle (la commande kubectl est affichée)
+</div>
+<h2 id="réaliser-un-rolling-update-du-déploiement-frontend">5. Réaliser un rolling update du déploiement frontend :</h2>
+<blockquote>
+<p>Passage de l’image bilbloke en 2.0 en méthode impérative =&gt; test</p>
+</blockquote>
+<blockquote>
+<p>Répérer le nom du déploiement (kubectl get), repérer le nom du conteneur (spec yaml)</p>
+</blockquote>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" title="1">$ <span class="ex">kubectl</span> set image {nom du déploiement frontend} <span class="dt">{conteneur}</span>=<span class="ex">bilbloke</span>/frontend:<span class="ex">2.0</span> --record</a></code></pre></div>
+<p>Résultat:</p>
+<iframe src="2021-07-16-POEI-Kubernetes/2021-07-20_12h20_33.mp4">
+</iframe>
 <hr />
 <h1 id="documentation">Documentation</h1>
 <h2 id="client-kubectl">Client Kubectl</h2>
 <ul>
 <li>Info sur le cluster :</li>
 </ul>
-<pre><code>$ kubectl cluster-info</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" title="1">$ <span class="ex">kubectl</span> cluster-info</a></code></pre></div>
 <ul>
 <li>Info sur les nodes :</li>
 </ul>
-<pre><code>$ kubectl get nodes
-$ kubectl get nodes -o wide</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" title="1">$ <span class="ex">kubectl</span> get nodes</a>
+<a class="sourceLine" id="cb45-2" title="2">$ <span class="ex">kubectl</span> get nodes -o wide</a></code></pre></div>
 <h2 id="configuration-du-client">Configuration du client :</h2>
 <ul>
 <li>Configuration kubectl
@@ -916,60 +960,63 @@ $ kubectl get nodes -o wide</code></pre>
 </ul></li>
 </ul>
 <h2 id="lister-les-ressources-k8s">Lister les ressources k8s</h2>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" title="1">$ <span class="ex">kubectl</span> api-resources</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb46-1" title="1">$ <span class="ex">kubectl</span> api-resources</a></code></pre></div>
 <h2 id="lister-les-ressources-créées-dans-le-cluster">Lister les ressources créées dans le cluster</h2>
 <p>```bash $ kubectl get pod $ kubectl get pod -n multi</p>
 <h2 id="récuperer-de-linfo-dans-le-cluster">Récuperer de l’info dans le cluster</h2>
 <blockquote>
 <p>On interroge des ressources</p>
 </blockquote>
-<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" title="1">$ <span class="ex">kubectl</span> get pod</a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" title="1">$ <span class="ex">kubectl</span> get pod</a></code></pre></div>
 <blockquote>
 <p>Les ressources sont déclarée dans des namespace. Cela permet de ranger, dissocier des ressources par équipe, projets, fonctionnalités, environnement.</p>
 </blockquote>
 <ul>
 <li>Interroger la ressources de type pod dans le namespace systeme : kube-system</li>
 </ul>
-<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb46-1" title="1">$ <span class="ex">kubectl</span> get pod -n kube-system</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb48-1" title="1">$ <span class="ex">kubectl</span> get pod -n kube-system</a></code></pre></div>
 <h2 id="documentation---aide">Documentation - aide</h2>
 <ul>
 <li>Lister les ressources :</li>
 </ul>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" title="1">$ <span class="ex">kubectl</span> api-resources</a></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb49-1" title="1">$ <span class="ex">kubectl</span> api-resources</a></code></pre></div>
 <ul>
 <li>Description, information, syntaxe :</li>
 </ul>
-<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb48-1" title="1">$ <span class="ex">kubectl</span> explain pods</a>
-<a class="sourceLine" id="cb48-2" title="2">$ <span class="ex">kubectl</span> explain pods.spec</a>
-<a class="sourceLine" id="cb48-3" title="3">$ <span class="ex">kubectl</span> explain pods.spec.containers</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb50-1" title="1">$ <span class="ex">kubectl</span> explain pods</a>
+<a class="sourceLine" id="cb50-2" title="2">$ <span class="ex">kubectl</span> explain pods.spec</a>
+<a class="sourceLine" id="cb50-3" title="3">$ <span class="ex">kubectl</span> explain pods.spec.containers</a></code></pre></div>
 <h2 id="les-pods">LES PODS</h2>
-<p>https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/</p>
-<p>https://kubernetes.io/fr/docs/concepts/workloads/pods/pod/</p>
-<p>https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-lifecycle/</p>
-<p>https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/</p>
-<p>https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-pod-initialization/</p>
+<ul>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/</a></p></li>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/pods/pod/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/pods/pod/</a></p></li>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-lifecycle/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-lifecycle/</a></p></li>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/pods/init-containers/</a></p></li>
+<li><p><a href="https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-pod-initialization/" class="uri">https://kubernetes.io/fr/docs/tasks/configure-pod-container/configure-pod-initialization/</a></p></li>
+</ul>
+<h3 id="approche-impérative">Approche impérative</h3>
 <blockquote>
 <p>Approche impérative : en ligne de commande pour déclarer des ressource</p>
 </blockquote>
 <ol type="1">
 <li>Création d’une ressource de type pod :</li>
 </ol>
-<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb49-1" title="1">$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb51-1" title="1">$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine</a></code></pre></div>
 <ol start="2" type="1">
 <li>Lister le pod (namespace default)</li>
 </ol>
-<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb50-1" title="1">$ <span class="ex">kubectl</span> get pods</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb52-1" title="1">$ <span class="ex">kubectl</span> get pods</a></code></pre></div>
 <ol start="3" type="1">
 <li>Obtenir les infos sur la ressource pod + les events (logs)</li>
 </ol>
-<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb51-1" title="1">$ <span class="ex">kubectl</span> describe pod nginx</a></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb53-1" title="1">$ <span class="ex">kubectl</span> describe pod nginx</a></code></pre></div>
 <ol start="4" type="1">
 <li>Utilisation du port-forwarding pour bind un port local vers le pod (test, debugging)</li>
 </ol>
-<blockquote>
-<p>https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/</p>
-</blockquote>
-<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb52-1" title="1">$ <span class="ex">kubectl</span> port-forward nginx 8080:80</a></code></pre></div>
+<ul>
+<li><a href="https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/" class="uri">https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/</a></li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb54-1" title="1">$ <span class="ex">kubectl</span> port-forward nginx 8080:80</a></code></pre></div>
 <ol start="5" type="1">
 <li>Transposer les commande docker à kubernetes</li>
 </ol>
@@ -980,23 +1027,53 @@ $ kubectl get nodes -o wide</code></pre>
 <ol start="6" type="1">
 <li>Supprimer une ressource POD :</li>
 </ol>
-<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb53-1" title="1"><span class="ex">kubectl</span> delete pod nginx</a></code></pre></div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb55-1" title="1"><span class="ex">kubectl</span> delete pod nginx</a></code></pre></div>
+<h3 id="approche-déclarative">Approche déclarative</h3>
 <blockquote>
 <p>Approche déclarative : spec (spécification YAML)</p>
 </blockquote>
 <ol type="1">
 <li>Utiliser la commande impérative pour générer un fichier de spec</li>
 </ol>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb54-1" title="1">$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine --dry-run=client -o yaml <span class="op">&gt;</span> spec_pod.yml</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb56-1" title="1">$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine --dry-run=client -o yaml <span class="op">&gt;</span> spec_pod.yml</a></code></pre></div>
 <ol start="2" type="1">
 <li>Déclarer la ressource</li>
 </ol>
-<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb55-1" title="1">$ <span class="ex">kubectl</span> apply -f spec_pod.yml</a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb57-1" title="1">$ <span class="ex">kubectl</span> apply -f spec_pod.yml</a></code></pre></div>
 <h2 id="mise-en-réseau---service">Mise en réseau - service</h2>
-<p>https://kubernetes.io/fr/docs/concepts/services-networking/service/ https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/</p>
+<ul>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/services-networking/service/" class="uri">https://kubernetes.io/fr/docs/concepts/services-networking/service/</a></p></li>
+<li><p><a href="https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/" class="uri">https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/</a></p></li>
+</ul>
 <h2 id="replicatset-et-deployments">ReplicatSet et Deployments</h2>
-<p>https://kubernetes.io/fr/docs/concepts/workloads/controllers/replicaset/</p>
-<p>https://kubernetes.io/fr/docs/concepts/workloads/controllers/deployment/</p>
+<ul>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/controllers/replicaset/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/controllers/replicaset/</a></p></li>
+<li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/controllers/deployment/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/controllers/deployment/</a></p></li>
+</ul>
+<h2 id="scaling-horizontal---mise-à-léchelle">Scaling horizontal - Mise à l’échelle</h2>
+<p>https://kubernetes.io/docs/tutorials/kubernetes-basics/scale/scale-intro/</p>
+<p>https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/</p>
+<ul>
+<li><strong><em>HPA</em></strong> : Horizontal Pod Autoscale</li>
+</ul>
+<blockquote>
+<p>Prérequis : activation des <strong>metrics</strong> pour les Pods</p>
+</blockquote>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb58-1" title="1">$ <span class="ex">kubectl.exe</span> -n myphp scale deployment.apps/frontend-deploy --replicas=8</a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="ex">deployment.apps/frontend-deploy</span> scaled</a></code></pre></div>
+<p>Résultat sur le Dashboard <em>(minikube)</em>:</p>
+<p><img src="2021-07-16-POEI-Kubernetes/2021-07-19_14h12_08.png" /></p>
+<h2 id="configmaps">ConfigMaps</h2>
+<p>https://kubernetes.io/docs/concepts/configuration/configmap/</p>
+<ul>
+<li>Lister les ressources configMaps : il faut les chercher explicitement</li>
+</ul>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb59-1" title="1">$ <span class="ex">kubectl</span> get cm</a>
+<a class="sourceLine" id="cb59-2" title="2">$ <span class="ex">kubectl</span> get configmaps</a></code></pre></div>
+<ul>
+<li>Lister pod et configMaps du namespace default</li>
+</ul>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb60-1" title="1">$ <span class="ex">kubectl</span> get configmaps,pod</a></code></pre></div>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
