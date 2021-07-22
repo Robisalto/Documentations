@@ -89,6 +89,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li><a href="#doc-source">Doc Source</a><ul>
 <li><a href="#docs-officielles">Docs officielles</a></li>
+<li><a href="#code-source">Code source</a></li>
 <li><a href="#puppet-vs-ansible">Puppet VS Ansible</a></li>
 <li><a href="#fichiers-de-configuration-puppet">Fichiers de configuration Puppet</a></li>
 </ul></li>
@@ -106,15 +107,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#exercice-1-découverte-des-ressources-puppet">Exercice 1: découverte des ressources puppet</a></li>
 <li><a href="#exercice-2-ecriture-dun-manifest">Exercice 2: Ecriture d’un manifest</a></li>
 </ul></li>
-<li><a href="#tips-tricks">Tips &amp; Tricks</a><ul>
-<li><a href="#describe"><em>describe</em></a></li>
+<li><a href="#configuration-du-master-environement-de-production">Configuration du Master <em>(environement de production)</em></a><ul>
+<li><a href="#astuce-environnement-de-code">Astuce environnement de code</a></li>
 </ul></li>
+<li><a href="#puppet-agent-service-client-3">Puppet agent service <em>(Client 3)</em></a><ul>
+<li><a href="#création-de-la-vm">Création de la vm</a><ul>
+<li><a href="#vérification-1">Vérification</a></li>
+</ul></li>
+<li><a href="#ajout-de-la-vm-dans-puppet-server">Ajout de la vm dans Puppet Server</a><ul>
+<li><a href="#sur-cli03">Sur Cli03</a></li>
+<li><a href="#sur-le-puppet-server">Sur le Puppet Server</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#class-sites">Class &amp; Sites</a><ul>
+<li><a href="#configuration-sur-le-serveur">Configuration sur le Serveur</a></li>
+<li><a href="#sur-les-clients">Sur les Clients</a></li>
+</ul></li>
+<li><a href="#parser-validate">Parser Validate</a><ul>
+<li><a href="#création-derreurs">Création d’erreurs</a><ul>
+<li><a href="#erreur-syntaxe">Erreur syntaxe</a></li>
+<li><a href="#erreur-dupplicat-de-class">Erreur: dupplicat de Class</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#noop">noop</a></li>
+<li><a href="#facts-facters">Facts &amp; Facters</a><ul>
+<li><a href="#puppet-facts">Puppet Facts</a></li>
+</ul></li>
+<li><a href="#demo_vars">Demo_Vars</a><ul>
+<li><a href="#string-undef-int">String, undef, int</a><ul>
+<li><a href="#tableau">Tableau</a></li>
+<li><a href="#hash-dictionnaire">Hash <em>(dictionnaire)</em></a></li>
+<li><a href="#facts-osfamily-distro">Facts <em>(osfamily, distro)</em></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#conditionnals-loops">Conditionnals &amp; Loops</a></li>
+<li><a href="#tips-tricks">Tips &amp; Tricks</a></li>
 </ul>
 </nav>
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+<p><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/languages/css.min.js"> <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/atom-one-light.min.css"></p>
 <h4 id="introduction">Introduction</h4>
 <p><strong>Pierre SABLE</strong> Formateur</p>
 <p>Découvrez notre webTV : <a href="http://www.dawan.tv" class="uri">http://www.dawan.tv</a></p>
@@ -128,14 +161,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="https://puppet.com/" class="uri">https://puppet.com/</a></li>
 <li><a href="https://puppet.com/docs/" class="uri">https://puppet.com/docs/</a> &amp; <a href="https://puppet.com/docs/puppet/latest" class="uri">https://puppet.com/docs/puppet/latest</a></li>
 </ul>
+<h2 id="code-source">Code source</h2>
+<p><a href="2021-07-21-POEI-Puppet/poec_devops_puppet">poec_devops_puppet</a></p>
 <h2 id="puppet-vs-ansible">Puppet VS Ansible</h2>
 <div class="info">
 <p><strong>Ansible</strong> et <strong>Puppet</strong> peuvent être utlisés tous les deux dans un même SI.</p>
 <p>Il ont des fonctionnalitées, utilisations et résultats différents qui peuvent être <strong>complémentaires</strong>.</p>
 </div>
 <p><img src="https://i1.wp.com/foxutech.com/wp-content/uploads/2017/04/Differences-between-Ansible-and-Puppet.png?resize=696%2C290&amp;ssl=1" /></p>
-<p><a href="https://foxutech.com/differences-between-ansible-and-puppet/" class="uri">https://foxutech.com/differences-between-ansible-and-puppet/</a></p>
-<p><a href="https://digitalocean.com"><img src="https://assets.digitalocean.com/articles/alligator/boo.svg" alt="Alt text" /></a></p>
+<p>Line: <a href="https://foxutech.com/differences-between-ansible-and-puppet/" class="uri">https://foxutech.com/differences-between-ansible-and-puppet/</a></p>
+<iframe src="2021-07-21-POEI-Puppet/Puppet-officiel.pdf" allowfullscreen="yes">
+</iframe>
+<p>Lien: <a href="2021-07-21-POEI-Puppet/Puppet-officiel.pdf">Puppet-officiel.pdf</a></p>
 <h2 id="fichiers-de-configuration-puppet">Fichiers de configuration Puppet</h2>
 <p>Les fichiers de configurations sont écrits en DSL Ruby: <a href="https://puppet.com/blog/ruby-dsl/" class="uri">https://puppet.com/blog/ruby-dsl/</a></p>
 <h1 id="image-vagrant-pierre">Image Vagrant <em>(Pierre)</em></h1>
@@ -196,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 id="tp">TP</h1>
 <h2 id="ajout-dun-agent-puppet-dans-linfra-puppetserver">Ajout d’un agent puppet dans l’infra puppetserver</h2>
 <h5 id="connexion-dans-la-vm">1. Connexion dans la VM</h5>
-<p>Connexion dans la VM ppmaster:</p>
+<p>Connexion dans la VM <code>ppmaster</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/FORMATION/Puppet</a>
 <a class="sourceLine" id="cb5-2" title="2">$ <span class="ex">vagrant</span> ssh</a>
 <a class="sourceLine" id="cb5-3" title="3"><span class="ex">Welcome</span> to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-73-generic x86_64)</a>
@@ -422,12 +459,270 @@ Le groupe <strong>formation</strong> n’existe pas !!!
 <p>Puppet ne fonctionne pas de manière séquentielle comme Ansible.</p>
 <p>Le manifest est <strong>compilé</strong> avant d’être lancé !</p>
 </div>
+<h5 id="déclenchement-de-lagent-sur-le-client-2">Déclenchement de l’agent sur le client 2</h5>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" title="1">[<span class="ex">root@cli02</span> /]# puppet agent -t</a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="ex">Info</span>: Caching catalog for cli02.formation.lan</a>
+<a class="sourceLine" id="cb23-6" title="6"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1626879808&#39;</span></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="ex">Notice</span>: /Stage[main]/Main/Group[formation]/ensure: created</a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="ex">Notice</span>: /Stage[main]/Main/User[test]/ensure: created</a>
+<a class="sourceLine" id="cb23-9" title="9"><span class="ex">Notice</span>: Applied catalog in 0.15 seconds</a></code></pre></div>
+<h1 id="configuration-du-master-environement-de-production">Configuration du Master <em>(environement de production)</em></h1>
+<p>Architecture des fichiers de configuration:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" title="1"><span class="ex">vagrant@ppmaster</span>:~$ tree /etc/puppetlabs/code/</a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="ex">/etc/puppetlabs/code/</span></a>
+<a class="sourceLine" id="cb24-3" title="3">├── <span class="ex">environments</span></a>
+<a class="sourceLine" id="cb24-4" title="4">│   └── <span class="ex">production</span></a>
+<a class="sourceLine" id="cb24-5" title="5">│       ├── <span class="ex">data</span></a>
+<a class="sourceLine" id="cb24-6" title="6">│       ├── <span class="ex">environment.conf</span></a>
+<a class="sourceLine" id="cb24-7" title="7">│       ├── <span class="ex">hiera.yaml</span></a>
+<a class="sourceLine" id="cb24-8" title="8">│       ├── <span class="ex">manifests</span></a>
+<a class="sourceLine" id="cb24-9" title="9">│       └── <span class="ex">modules</span></a>
+<a class="sourceLine" id="cb24-10" title="10">└── <span class="ex">modules</span></a></code></pre></div>
+<h2 id="astuce-environnement-de-code">Astuce environnement de code</h2>
+<ul>
+<li>Copie du répertoire code d’origine dans notre partage (pour pouvoir l’éditer avec vscode)</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" title="1">$ <span class="fu">cp</span> -r /etc/puppetlabs/code /vagrant/</a></code></pre></div>
+<ul>
+<li>Suppression du répertoire d’origine pour créer le lien derrière</li>
+</ul>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" title="1">$ <span class="bu">cd</span> /etc/puppetlabs</a>
+<a class="sourceLine" id="cb26-2" title="2">$ <span class="fu">rm</span> -rf code</a>
+<a class="sourceLine" id="cb26-3" title="3">$ <span class="fu">ln</span> -s /vagrant/code code</a>
+<a class="sourceLine" id="cb26-4" title="4">$ <span class="fu">ls</span> -l</a></code></pre></div>
+<h1 id="puppet-agent-service-client-3">Puppet agent service <em>(Client 3)</em></h1>
+<h2 id="création-de-la-vm">Création de la vm</h2>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb27-1" title="1"><span class="ex">docker</span> run -d --name cli03.formation.lan --hostname cli03.formation.lan --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro --add-host=<span class="st">&quot;puppet:172.16.8.11&quot;</span> bilbloke/puppet-systemd:1.0</a></code></pre></div>
+<h3 id="vérification-1">Vérification</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb28-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs# docker ps</a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="ex">CONTAINER</span> ID   IMAGE                         COMMAND                  CREATED         STATUS         PORTS     NAMES</a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="ex">c3f83cf51e9c</span>   bilbloke/puppet-systemd:1.0   <span class="st">&quot;/lib/systemd/systemd&quot;</span>   4 minutes ago   Up 4 minutes             cli03.formation.lan</a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="ex">2d380b379ea2</span>   puppet/centos:1.0             <span class="st">&quot;tail -f /dev/null&quot;</span>      8 days ago      Up 40 hours              cli02.formation.lan</a>
+<a class="sourceLine" id="cb28-5" title="5"><span class="ex">e51491507dd1</span>   puppet/debian:1.0             <span class="st">&quot;tail -f /dev/null&quot;</span>      8 days ago      Up 40 hours              cli01.formation.lan</a></code></pre></div>
+<h2 id="ajout-de-la-vm-dans-puppet-server">Ajout de la vm dans Puppet Server</h2>
+<h3 id="sur-cli03">Sur Cli03</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" title="1"><span class="ex">root@cli03</span>:/# . /etc/profile</a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="ex">root@cli03</span>:/# puppet agent -t</a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="ex">Info</span>: csr_attributes file loading from /etc/puppetlabs/puppet/csr_attributes.yaml</a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="ex">Info</span>: Creating a new SSL certificate request for cli03.formation.lan</a>
+<a class="sourceLine" id="cb29-5" title="5"><span class="ex">Info</span>: Certificate Request fingerprint (SHA256)<span class="bu">:</span> 43:9B:01:ED:43:8E:91:9B:21:F7:2E:62:10:32:4D:5A:6F:CE:25:34:C1:F5:8D:45:37:2B:75:CA:9A:F7:7E:77</a>
+<a class="sourceLine" id="cb29-6" title="6"><span class="ex">Info</span>: Certificate for cli03.formation.lan has not been signed yet</a>
+<a class="sourceLine" id="cb29-7" title="7"><span class="ex">Couldn</span><span class="st">&#39;t fetch certificate from CA server; you might still need to sign this agent&#39;</span>s certificate (cli03.formation.lan)<span class="ex">.</span></a>
+<a class="sourceLine" id="cb29-8" title="8"><span class="ex">Exiting</span> now because the waitforcert setting is set to 0.</a></code></pre></div>
+<h3 id="sur-le-puppet-server">Sur le Puppet Server</h3>
+<h4 id="ca-requests">ca requests</h4>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb30-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs# ll puppetserver/ca/requests/</a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="ex">total</span> 16</a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="ex">drwxr-x---</span> 2 puppet puppet 4096 Jul 22 08:13 ./</a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="ex">drwxr-x---</span> 4 puppet puppet 4096 Jul 21 12:56 ../</a>
+<a class="sourceLine" id="cb30-5" title="5"><span class="ex">-rw-r--r--</span> 1 puppet puppet 1598 Jul 22 08:13 cli03.formation.lan.pem</a></code></pre></div>
+<h4 id="signature">Signature</h4>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs# puppetserver ca sign --certname cli03.formation.lan</a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="ex">Successfully</span> signed certificate request for cli03.formation.lan</a></code></pre></div>
+<h5 id="vérification-2">Vérification</h5>
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb32-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs# ll puppetserver/ca/signed/</a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="ex">total</span> 24</a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="ex">drwxr-x---</span> 2 puppet puppet 4096 Jul 22 08:21 ./</a>
+<a class="sourceLine" id="cb32-4" title="4"><span class="ex">drwxr-x---</span> 4 puppet puppet 4096 Jul 22 08:21 ../</a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="ex">-rw-r--r--</span> 1 puppet puppet 2004 Jul 21 12:56 cli01.formation.lan.pem</a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="ex">-rw-r--r--</span> 1 puppet puppet 2004 Jul 21 12:56 cli02.formation.lan.pem</a>
+<a class="sourceLine" id="cb32-7" title="7"><span class="ex">-rw-r--r--</span> 1 puppet puppet 2004 Jul 22 08:21 cli03.formation.lan.pem</a>
+<a class="sourceLine" id="cb32-8" title="8"><span class="ex">-rw-r--r--</span> 1 puppet puppet 2057 Jul 21 10:30 ppmaster.formation.lan.pem</a></code></pre></div>
+<h4 id="sur-client-3">Sur Client 3</h4>
+<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb33-1" title="1"><span class="ex">root@cli03</span>:/# puppet agent -t</a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="ex">Info</span>: Caching catalog for cli03.formation.lan</a>
+<a class="sourceLine" id="cb33-6" title="6"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1626942547&#39;</span></a>
+<a class="sourceLine" id="cb33-7" title="7"><span class="ex">Notice</span>: Applied catalog in 0.04 seconds</a></code></pre></div>
+<h1 id="class-sites">Class &amp; Sites</h1>
+<h2 id="configuration-sur-le-serveur">Configuration sur le Serveur</h2>
+<p>Architecture des fichiers:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb34-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs/code# tree environments/</a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="ex">environments/</span></a>
+<a class="sourceLine" id="cb34-3" title="3">└── <span class="ex">production</span></a>
+<a class="sourceLine" id="cb34-4" title="4">    ├── <span class="ex">data</span></a>
+<a class="sourceLine" id="cb34-5" title="5">    ├── <span class="ex">environment.conf</span></a>
+<a class="sourceLine" id="cb34-6" title="6">    ├── <span class="ex">hiera.yaml</span></a>
+<a class="sourceLine" id="cb34-7" title="7">    ├── <span class="ex">manifests</span></a>
+<a class="sourceLine" id="cb34-8" title="8">    │   ├── <span class="ex">manage_ssh.pp</span></a>
+<a class="sourceLine" id="cb34-9" title="9">    │   ├── <span class="ex">manage_user.pp</span></a>
+<a class="sourceLine" id="cb34-10" title="10">    │   └── <span class="ex">site.pp</span></a>
+<a class="sourceLine" id="cb34-11" title="11">    └── <span class="ex">modules</span></a></code></pre></div>
+<p>Dans le fichier <code>site.pp</code>:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb35-1" title="1"><span class="co"># Manifest applied to &#39;cli03.formation.lan&#39;</span></a>
+<a class="sourceLine" id="cb35-2" title="2">node <span class="st">&#39;cli03.formation.lan&#39;</span> {</a>
+<a class="sourceLine" id="cb35-3" title="3">  include ::manage_user</a>
+<a class="sourceLine" id="cb35-4" title="4">  include ::manage_ssh</a>
+<a class="sourceLine" id="cb35-5" title="5">}</a>
+<a class="sourceLine" id="cb35-6" title="6"></a>
+<a class="sourceLine" id="cb35-7" title="7"><span class="co"># Manifest applied by default for nodes not-declared above</span></a>
+<a class="sourceLine" id="cb35-8" title="8">node default {</a>
+<a class="sourceLine" id="cb35-9" title="9">  include ::manage_user</a>
+<a class="sourceLine" id="cb35-10" title="10">}</a></code></pre></div>
+<div class="warning">
+La class <em>default</em> sera appliquée aux <em>nodes</em> non déclarés avant.
+</div>
+<h2 id="sur-les-clients">Sur les Clients</h2>
+<p>On lance la commande: <code>puppet agent -t</code> :</p>
+<h5 id="client-1">Client 1:</h5>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb36-1" title="1"><span class="ex">root@cli01</span>:/# puppet agent -t</a>
+<a class="sourceLine" id="cb36-2" title="2"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="ex">Info</span>: Caching catalog for cli01.formation.lan</a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1626957021&#39;</span></a>
+<a class="sourceLine" id="cb36-7" title="7"><span class="ex">Notice</span>: class manage_user</a>
+<a class="sourceLine" id="cb36-8" title="8"><span class="ex">Notice</span>: /Stage[main]/Manage_user/Notify[Affichage de la classe user]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;class manage_user&#39;</span></a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="ex">Notice</span>: Applied catalog in 0.04 seconds</a></code></pre></div>
+<h5 id="client-2">Client 2:</h5>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb37-1" title="1">[<span class="ex">root@cli02</span> /]# puppet agent -t</a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="ex">Info</span>: Caching catalog for cli02.formation.lan</a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1626957025&#39;</span></a>
+<a class="sourceLine" id="cb37-7" title="7"><span class="ex">Notice</span>: class manage_user</a>
+<a class="sourceLine" id="cb37-8" title="8"><span class="ex">Notice</span>: /Stage[main]/Manage_user/Notify[Affichage de la classe user]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;class manage_user&#39;</span></a>
+<a class="sourceLine" id="cb37-9" title="9"><span class="ex">Notice</span>: Applied catalog in 0.05 seconds</a></code></pre></div>
+<h5 id="client-3">Client 3:</h5>
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" title="1"><span class="ex">root@cli03</span>:/# puppet agent -t</a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb38-4" title="4"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb38-5" title="5"><span class="ex">Info</span>: Caching catalog for cli03.formation.lan</a>
+<a class="sourceLine" id="cb38-6" title="6"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1626957016&#39;</span></a>
+<a class="sourceLine" id="cb38-7" title="7"><span class="ex">Notice</span>: class manage_user</a>
+<a class="sourceLine" id="cb38-8" title="8"><span class="ex">Notice</span>: /Stage[main]/Manage_user/Notify[Affichage de la classe user]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;class manage_user&#39;</span></a>
+<a class="sourceLine" id="cb38-9" title="9"><span class="ex">Notice</span>: class manage_ssh</a>
+<a class="sourceLine" id="cb38-10" title="10"><span class="ex">Notice</span>: /Stage[main]/Manage_ssh/Notify[Affichage de la classe ssh]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;class manage_ssh&#39;</span></a>
+<a class="sourceLine" id="cb38-11" title="11"><span class="ex">Notice</span>: Applied catalog in 1.25 seconds</a></code></pre></div>
+<div class="success">
+<p>Yep All Good !</p>
+Les 3 clients récupères bien les manifests qui leurs sont associées.
+</div>
+<h1 id="parser-validate">Parser Validate</h1>
+<p>Permet de vérifier l’intégrité du code:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb39-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs/code# puppet parser validate .</a></code></pre></div>
+<div class="info">
+Quand tout baigne, pas de retour.
+</div>
+<h2 id="création-derreurs">Création d’erreurs</h2>
+<h3 id="erreur-syntaxe">Erreur syntaxe</h3>
+<p>Dans le fichier <code>demo_vars_facts.pp</code> on modifie pour générer une erreur:</p>
+<p><img src="2021-07-21-POEI-Puppet/2021-07-22_16h07_13.png" /></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb40-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs/code# puppet parser validate .</a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="ex">Error</span>: Could not parse for environment production: Syntax error at <span class="st">&#39;=&#39;</span> (file: /vagrant/code/environments/production/manifests/demo_vars_facts.pp, line: 21, column: 13)</a></code></pre></div>
+<h3 id="erreur-dupplicat-de-class">Erreur: dupplicat de Class</h3>
+<p>On créer un fichier <code>test.pp</code> dans lequel on dupplique la class <code>demo_vars</code>:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb41-1" title="1"><span class="co"># test.pp</span></a>
+<a class="sourceLine" id="cb41-2" title="2"><span class="kw">class</span> demo_vars {</a>
+<a class="sourceLine" id="cb41-3" title="3">}</a></code></pre></div>
+<p>Résultat du <code>parser validate</code>:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb42-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs/code# puppet parser validate .</a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="ex">Error</span>: Class <span class="st">&#39;demo_vars&#39;</span> is already defined (file: /vagrant/code/environments/production/manifests/demo_vars_facts.pp, line: 2); <span class="ex">cannot</span> redefine (file: /vagrant/code/environments/production/manifests/test.pp, </a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="ex">line</span>: 1)</a></code></pre></div>
+<h1 id="noop">noop</h1>
+<p>L’option <code>--noop</code> correspond à un <strong>–dry-run</strong>. Cela permet de <strong>vérifier les actions qui seront réalisées</strong>, sans les appliquées.</p>
+<ul>
+<li><p>On change dans le fichier <code>manage_ssh.pp</code> le status de l’utilisateur en <code>absent</code></p></li>
+<li><p>On lance la commande: <code>puppet agent -t --noop</code> sur le client03:</p></li>
+</ul>
+<p><img src="2021-07-21-POEI-Puppet/2021-07-22_16h19_25.png" /></p>
+<h1 id="facts-facters">Facts &amp; Facters</h1>
+<h2 id="puppet-facts">Puppet Facts</h2>
+<p>Sur le client:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" title="1"><span class="ex">root@cli03</span>:/# puppet facts <span class="kw">|</span> <span class="fu">head</span> -10</a>
+<a class="sourceLine" id="cb43-2" title="2"><span class="kw">{</span></a>
+<a class="sourceLine" id="cb43-3" title="3">  <span class="st">&quot;os&quot;</span>: <span class="kw">{</span></a>
+<a class="sourceLine" id="cb43-4" title="4">    <span class="st">&quot;distro&quot;</span>: <span class="kw">{</span></a>
+<a class="sourceLine" id="cb43-5" title="5">      <span class="st">&quot;codename&quot;</span>: <span class="st">&quot;buster&quot;</span>,</a>
+<a class="sourceLine" id="cb43-6" title="6">      <span class="st">&quot;description&quot;</span>: <span class="st">&quot;Debian GNU/Linux 10 (buster)&quot;</span>,</a>
+<a class="sourceLine" id="cb43-7" title="7">      <span class="st">&quot;release&quot;</span>: <span class="kw">{</span></a>
+<a class="sourceLine" id="cb43-8" title="8">        <span class="st">&quot;full&quot;</span>: <span class="st">&quot;10.10&quot;</span>,</a>
+<a class="sourceLine" id="cb43-9" title="9">        <span class="st">&quot;major&quot;</span>: <span class="st">&quot;10&quot;</span>,</a>
+<a class="sourceLine" id="cb43-10" title="10">        <span class="st">&quot;minor&quot;</span>: <span class="st">&quot;10&quot;</span></a>
+<a class="sourceLine" id="cb43-11" title="11">      <span class="kw">}</span>,</a></code></pre></div>
+<ul>
+<li>Documentation officielle: <a href="https://puppet.com/docs/puppet/7/lang_facts_accessing.html" class="uri">https://puppet.com/docs/puppet/7/lang_facts_accessing.html</a></li>
+</ul>
+<h1 id="demo_vars">Demo_Vars</h1>
+<p>Dans le fichier <code>demo_vars_facts.pp</code> on créer la classe <code>demo_vars</code> et on teste les différents types de variables.</p>
+<h2 id="string-undef-int">String, undef, int</h2>
+<div class="sourceCode" id="cb44"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb44-1" title="1"><span class="co"># Variable de type &#39;String&#39;</span></a>
+<a class="sourceLine" id="cb44-2" title="2">  <span class="dt">$mavarstring</span> = <span class="st">&quot;exemple var string&quot;</span></a>
+<a class="sourceLine" id="cb44-3" title="3"></a>
+<a class="sourceLine" id="cb44-4" title="4">  <span class="co"># Variable déclarée mais vide</span></a>
+<a class="sourceLine" id="cb44-5" title="5">  <span class="dt">$futurevar</span> = <span class="kw">undef</span></a>
+<a class="sourceLine" id="cb44-6" title="6"></a>
+<a class="sourceLine" id="cb44-7" title="7">  <span class="co"># Variable type int</span></a>
+<a class="sourceLine" id="cb44-8" title="8">  <span class="dt">$int_var</span> = <span class="dv">2021</span></a>
+<a class="sourceLine" id="cb44-9" title="9"></a>
+<a class="sourceLine" id="cb44-10" title="10">  <span class="co"># Utilisation de variable</span></a>
+<a class="sourceLine" id="cb44-11" title="11">  notify {<span class="st">&#39;Contenu des variables&#39;</span>:</a>
+<a class="sourceLine" id="cb44-12" title="12">    message =&gt; <span class="st">&quot;Valeur de mavarstring: ${mavarstring} et Valeur de futurvar: ${futurevar} et Valeur de int_var: ${int_var}&quot;</span>,</a>
+<a class="sourceLine" id="cb44-13" title="13">  }  </a>
+<a class="sourceLine" id="cb44-14" title="14"></a>
+<a class="sourceLine" id="cb44-15" title="15">  notify {<span class="st">&#39;INT_VAR&#39;</span>:</a>
+<a class="sourceLine" id="cb44-16" title="16">    message =&gt; <span class="st">&quot;int_var = ${int_var} &quot;</span>,</a>
+<a class="sourceLine" id="cb44-17" title="17">  }</a></code></pre></div>
+<h5 id="résultat">Résultat:</h5>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" title="1"><span class="ex">Notice</span>: Valeur de mavarstring: exemple var string et Valeur de futurvar:  et Valeur de int_var: 2021</a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="ex">Notice</span>: /Stage[main]/Demo_vars/Notify[Contenu des variables]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;Valeur de mavarstring: exemple var string et Valeur de futurvar:  et Valeur de int_var: 2021&#39;</span></a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="ex">Notice</span>: int_var = 2021</a>
+<a class="sourceLine" id="cb45-4" title="4"><span class="ex">Notice</span>: /Stage[main]/Demo_vars/Notify[INT_VAR]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;int_var = 2021 &#39;</span></a></code></pre></div>
+<h3 id="tableau">Tableau</h3>
+<div class="sourceCode" id="cb46"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb46-1" title="1"><span class="co"># Création d&#39;un tableau</span></a>
+<a class="sourceLine" id="cb46-2" title="2">  <span class="dt">$tableau</span> = [<span class="st">&#39;puppet&#39;</span>, <span class="st">&#39;7.9.0&#39;</span>]</a>
+<a class="sourceLine" id="cb46-3" title="3"></a>
+<a class="sourceLine" id="cb46-4" title="4">  notify {<span class="st">&#39;Tableau&#39;</span>:</a>
+<a class="sourceLine" id="cb46-5" title="5">    message =&gt; <span class="st">&quot; Programme: ${tableau[0]} et Version: ${tableau[1]} \n&quot;</span>,</a>
+<a class="sourceLine" id="cb46-6" title="6">  }</a></code></pre></div>
+<h5 id="résultat-1">Résultat:</h5>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" title="1"><span class="ex">Notice</span>: /Stage[main]/Demo_vars/Notify[Tableau]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&quot; Programme: puppet et Version: 7.9.0 \n&quot;</span></a></code></pre></div>
+<h3 id="hash-dictionnaire">Hash <em>(dictionnaire)</em></h3>
+<div class="sourceCode" id="cb48"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb48-1" title="1"><span class="co"># Creation d&#39;un hash (dictionnaire)</span></a>
+<a class="sourceLine" id="cb48-2" title="2">  <span class="dt">$hash</span> = [</a>
+<a class="sourceLine" id="cb48-3" title="3">    {</a>
+<a class="sourceLine" id="cb48-4" title="4">      <span class="st">&#39;name&#39;</span> =&gt; <span class="st">&#39;user1&#39;</span>,</a>
+<a class="sourceLine" id="cb48-5" title="5">      <span class="st">&#39;home&#39;</span> =&gt; <span class="st">&#39;/prd/user1&#39;</span></a>
+<a class="sourceLine" id="cb48-6" title="6">    },</a>
+<a class="sourceLine" id="cb48-7" title="7">    {</a>
+<a class="sourceLine" id="cb48-8" title="8">      <span class="st">&#39;name&#39;</span> =&gt; <span class="st">&#39;user2&#39;</span>,</a>
+<a class="sourceLine" id="cb48-9" title="9">      <span class="st">&#39;home&#39;</span> =&gt; <span class="st">&#39;/dev/user2&#39;</span></a>
+<a class="sourceLine" id="cb48-10" title="10">    }</a>
+<a class="sourceLine" id="cb48-11" title="11">  ]</a>
+<a class="sourceLine" id="cb48-12" title="12"></a>
+<a class="sourceLine" id="cb48-13" title="13">  notify {<span class="st">&#39;Hash&#39;</span>:</a>
+<a class="sourceLine" id="cb48-14" title="14">    message =&gt; <span class="st">&quot;${hash[0][&#39;home&#39;]}&quot;</span>,</a>
+<a class="sourceLine" id="cb48-15" title="15">  }</a></code></pre></div>
+<h5 id="résultat-2">Résultat:</h5>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb49-1" title="1"><span class="ex">Notice</span>: /prd/user1</a>
+<a class="sourceLine" id="cb49-2" title="2"><span class="ex">Notice</span>: /Stage[main]/Demo_vars/Notify[Hash]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;/prd/user1&#39;</span></a></code></pre></div>
+<h3 id="facts-osfamily-distro">Facts <em>(osfamily, distro)</em></h3>
+<div class="sourceCode" id="cb50"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb50-1" title="1"> <span class="co"># Afficher l&#39;OS family et la Distribution</span></a>
+<a class="sourceLine" id="cb50-2" title="2">  notify {<span class="st">&#39;Utilisation de FACTS&#39;</span>:</a>
+<a class="sourceLine" id="cb50-3" title="3">    message =&gt; <span class="st">&quot;Famille: ${facts[&#39;os&#39;][&#39;family&#39;]} et Distribution: ${facts[&#39;os&#39;][&#39;distro&#39;][&#39;codename&#39;]} &quot;</span>,</a>
+<a class="sourceLine" id="cb50-4" title="4">  }</a></code></pre></div>
+<h5 id="résultat-3">Résultat:</h5>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb51-1" title="1"><span class="ex">Notice</span>: Famille: Debian et Distribution: buster</a>
+<a class="sourceLine" id="cb51-2" title="2"><span class="ex">Notice</span>: /Stage[main]/Demo_vars/Notify[Utilisation de FACTS]/message: defined <span class="st">&#39;message&#39;</span> as <span class="st">&#39;Famille: Debian et Distribution: buster &#39;</span></a></code></pre></div>
+<h1 id="conditionnals-loops">Conditionnals &amp; Loops</h1>
+<ul>
+<li><p><a href="https://puppet.com/docs/puppet/7/lang_conditional.html" class="uri">https://puppet.com/docs/puppet/7/lang_conditional.html</a></p></li>
+<li><p><a href="https://puppet.com/docs/puppet/7/lang_iteration.html" class="uri">https://puppet.com/docs/puppet/7/lang_iteration.html</a></p></li>
+</ul>
 <hr />
 <h1 id="tips-tricks">Tips &amp; Tricks</h1>
 <ul>
 <li><a href="#certificats-puppet">Certificats Puppet</a></li>
+<li><a href="#astuce-environnement-de-code">Astuce Environnement de Code sur Vusial Studio</a></li>
+<li><a href="#noop">Option noop</a></li>
 </ul>
-<h2 id="describe"><em>describe</em></h2>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 

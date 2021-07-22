@@ -13,8 +13,9 @@ extensions: 'extra'
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<script src="highlight/highlight.pack.js"></script>
-<script>hljs.initHighlightingOnLoad();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/languages/css.min.js">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/atom-one-light.min.css">
 
 
 
@@ -38,6 +39,11 @@ Document: [Puppet.pdf](2021-07-21-POEI-Puppet/Puppet.pdf)
 - <https://puppet.com/docs/> & <https://puppet.com/docs/puppet/latest>
 
 
+## Code source
+
+[poec_devops_puppet](2021-07-21-POEI-Puppet/poec_devops_puppet)
+
+
 ## Puppet VS Ansible
 
 <div class=info> **Ansible** et **Puppet** peuvent être utlisés tous les deux dans un même SI.
@@ -48,10 +54,12 @@ Il ont des fonctionnalitées, utilisations et résultats différents qui peuvent
 
 ![](https://i1.wp.com/foxutech.com/wp-content/uploads/2017/04/Differences-between-Ansible-and-Puppet.png?resize=696%2C290&ssl=1)
 
-<https://foxutech.com/differences-between-ansible-and-puppet/>
+Line: <https://foxutech.com/differences-between-ansible-and-puppet/>
 
 
-[![Alt text](https://assets.digitalocean.com/articles/alligator/boo.svg)](https://digitalocean.com)
+<iframe src="2021-07-21-POEI-Puppet/Puppet-officiel.pdf" allowfullscreen=yes> </iframe>
+
+Lien: [Puppet-officiel.pdf](2021-07-21-POEI-Puppet/Puppet-officiel.pdf)
 
 
 ## Fichiers de configuration Puppet
@@ -148,7 +156,7 @@ puppet7-release/now 7.0.0-2buster all [installed,local]
 
 ##### 1. Connexion dans la VM
 
-Connexion dans la VM ppmaster:
+Connexion dans la VM `ppmaster`:
 
 ```bash
 Admin stagiaire@BBG58Y2 MINGW64 ~/FORMATION/Puppet
@@ -479,24 +487,6 @@ Le manifest est **compilé** avant d'être lancé !
 </div>
 
 
-# Configuration du Master 
-
-```bash
-vagrant@ppmaster:~$ tree /etc/puppetlabs/code/
-/etc/puppetlabs/code/
-├── environments
-│   └── production
-│       ├── data
-│       ├── environment.conf
-│       ├── hiera.yaml
-│       ├── manifests
-│       └── modules
-└── modules
-
-```
-
-
-
 ##### Déclenchement de l'agent sur le client 2
 
 ```bash
@@ -513,6 +503,411 @@ Notice: Applied catalog in 0.15 seconds
 ```
 
 
+# Configuration du Master *(environement de production)*
+
+Architecture des fichiers de configuration:
+
+```bash
+vagrant@ppmaster:~$ tree /etc/puppetlabs/code/
+/etc/puppetlabs/code/
+├── environments
+│   └── production
+│       ├── data
+│       ├── environment.conf
+│       ├── hiera.yaml
+│       ├── manifests
+│       └── modules
+└── modules
+
+```
+
+## Astuce environnement de code 
+
+- Copie du répertoire code d'origine dans notre partage (pour pouvoir l'éditer avec vscode)
+
+```bash
+$ cp -r /etc/puppetlabs/code /vagrant/
+```
+
+- Suppression du répertoire d'origine pour créer le lien derrière
+
+```bash
+$ cd /etc/puppetlabs
+$ rm -rf code
+$ ln -s /vagrant/code code
+$ ls -l
+```
+
+# Puppet agent service *(Client 3)*
+
+## Création de la vm
+
+```bash
+docker run -d --name cli03.formation.lan --hostname cli03.formation.lan --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro --add-host="puppet:172.16.8.11" bilbloke/puppet-systemd:1.0
+```
+
+### Vérification
+
+```bash
+root@ppmaster:/etc/puppetlabs# docker ps
+CONTAINER ID   IMAGE                         COMMAND                  CREATED         STATUS         PORTS     NAMES
+c3f83cf51e9c   bilbloke/puppet-systemd:1.0   "/lib/systemd/systemd"   4 minutes ago   Up 4 minutes             cli03.formation.lan
+2d380b379ea2   puppet/centos:1.0             "tail -f /dev/null"      8 days ago      Up 40 hours              cli02.formation.lan
+e51491507dd1   puppet/debian:1.0             "tail -f /dev/null"      8 days ago      Up 40 hours              cli01.formation.lan
+
+```
+
+## Ajout de la vm dans Puppet Server
+
+### Sur Cli03
+
+```bash
+root@cli03:/# . /etc/profile
+root@cli03:/# puppet agent -t
+Info: csr_attributes file loading from /etc/puppetlabs/puppet/csr_attributes.yaml
+Info: Creating a new SSL certificate request for cli03.formation.lan
+Info: Certificate Request fingerprint (SHA256): 43:9B:01:ED:43:8E:91:9B:21:F7:2E:62:10:32:4D:5A:6F:CE:25:34:C1:F5:8D:45:37:2B:75:CA:9A:F7:7E:77
+Info: Certificate for cli03.formation.lan has not been signed yet
+Couldn't fetch certificate from CA server; you might still need to sign this agent's certificate (cli03.formation.lan).
+Exiting now because the waitforcert setting is set to 0.
+```
+
+### Sur le Puppet Server
+
+#### ca requests
+
+```bash
+root@ppmaster:/etc/puppetlabs# ll puppetserver/ca/requests/
+total 16
+drwxr-x--- 2 puppet puppet 4096 Jul 22 08:13 ./
+drwxr-x--- 4 puppet puppet 4096 Jul 21 12:56 ../
+-rw-r--r-- 1 puppet puppet 1598 Jul 22 08:13 cli03.formation.lan.pem
+
+```
+
+#### Signature
+
+```bash
+root@ppmaster:/etc/puppetlabs# puppetserver ca sign --certname cli03.formation.lan
+Successfully signed certificate request for cli03.formation.lan
+
+```
+
+##### Vérification
+
+```bash
+root@ppmaster:/etc/puppetlabs# ll puppetserver/ca/signed/
+total 24
+drwxr-x--- 2 puppet puppet 4096 Jul 22 08:21 ./
+drwxr-x--- 4 puppet puppet 4096 Jul 22 08:21 ../
+-rw-r--r-- 1 puppet puppet 2004 Jul 21 12:56 cli01.formation.lan.pem
+-rw-r--r-- 1 puppet puppet 2004 Jul 21 12:56 cli02.formation.lan.pem
+-rw-r--r-- 1 puppet puppet 2004 Jul 22 08:21 cli03.formation.lan.pem
+-rw-r--r-- 1 puppet puppet 2057 Jul 21 10:30 ppmaster.formation.lan.pem
+
+```
+
+#### Sur Client 3
+
+```bash
+root@cli03:/# puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for cli03.formation.lan
+Info: Applying configuration version '1626942547'
+Notice: Applied catalog in 0.04 seconds
+
+```
+
+
+# Class & Sites
+
+## Configuration sur le Serveur
+
+Architecture des fichiers:
+
+```bash
+root@ppmaster:/etc/puppetlabs/code# tree environments/
+environments/
+└── production
+    ├── data
+    ├── environment.conf
+    ├── hiera.yaml
+    ├── manifests
+    │   ├── manage_ssh.pp
+    │   ├── manage_user.pp
+    │   └── site.pp
+    └── modules
+```
+
+Dans le fichier `site.pp`:
+
+```ruby
+# Manifest applied to 'cli03.formation.lan'
+node 'cli03.formation.lan' {
+  include ::manage_user
+  include ::manage_ssh
+}
+
+# Manifest applied by default for nodes not-declared above
+node default {
+  include ::manage_user
+}
+```
+
+<div class=warning> La class *default* sera appliquée aux *nodes* non déclarés avant. </div>
+
+## Sur les Clients
+
+On lance la commande: `puppet agent -t` :
+
+##### Client 1:
+
+```bash
+root@cli01:/# puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for cli01.formation.lan
+Info: Applying configuration version '1626957021'
+Notice: class manage_user
+Notice: /Stage[main]/Manage_user/Notify[Affichage de la classe user]/message: defined 'message' as 'class manage_user'
+Notice: Applied catalog in 0.04 seconds
+```
+
+##### Client 2:
+
+```bash
+[root@cli02 /]# puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for cli02.formation.lan
+Info: Applying configuration version '1626957025'
+Notice: class manage_user
+Notice: /Stage[main]/Manage_user/Notify[Affichage de la classe user]/message: defined 'message' as 'class manage_user'
+Notice: Applied catalog in 0.05 seconds
+```
+
+##### Client 3:
+
+```bash
+root@cli03:/# puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for cli03.formation.lan
+Info: Applying configuration version '1626957016'
+Notice: class manage_user
+Notice: /Stage[main]/Manage_user/Notify[Affichage de la classe user]/message: defined 'message' as 'class manage_user'
+Notice: class manage_ssh
+Notice: /Stage[main]/Manage_ssh/Notify[Affichage de la classe ssh]/message: defined 'message' as 'class manage_ssh'
+Notice: Applied catalog in 1.25 seconds
+```
+
+<div class=success>Yep All Good !
+
+Les 3 clients récupères bien les manifests qui leurs sont associées. </div>
+
+
+# Parser Validate
+
+Permet de vérifier l'intégrité du code:
+
+```bash
+root@ppmaster:/etc/puppetlabs/code# puppet parser validate .
+
+```
+
+<div class=info> Quand tout baigne, pas de retour. </div>
+
+
+
+## Création d'erreurs
+
+### Erreur syntaxe
+
+Dans le fichier `demo_vars_facts.pp` on modifie pour générer une erreur:
+
+![](2021-07-21-POEI-Puppet/2021-07-22_16h07_13.png)
+
+```bash
+root@ppmaster:/etc/puppetlabs/code# puppet parser validate .
+Error: Could not parse for environment production: Syntax error at '=' (file: /vagrant/code/environments/production/manifests/demo_vars_facts.pp, line: 21, column: 13)
+
+```
+
+
+### Erreur: dupplicat de Class
+
+On créer un fichier `test.pp` dans lequel on dupplique la class `demo_vars`:
+
+```ruby
+# test.pp
+class demo_vars {
+}
+```
+
+
+Résultat du `parser validate`:
+
+```bash
+root@ppmaster:/etc/puppetlabs/code# puppet parser validate .
+Error: Class 'demo_vars' is already defined (file: /vagrant/code/environments/production/manifests/demo_vars_facts.pp, line: 2); cannot redefine (file: /vagrant/code/environments/production/manifests/test.pp, 
+line: 1)
+
+```
+
+# noop
+
+L'option `--noop`  correspond à un **--dry-run**. Cela permet de **vérifier les actions qui seront réalisées**, sans les appliquées.
+
+- On change dans le fichier `manage_ssh.pp` le status de l'utilisateur en `absent`
+
+- On lance la commande: `puppet agent -t --noop` sur le client03:
+
+
+![](2021-07-21-POEI-Puppet/2021-07-22_16h19_25.png)
+
+
+
+# Facts & Facters
+
+## Puppet Facts
+
+Sur le client:
+
+```bash
+root@cli03:/# puppet facts | head -10
+{
+  "os": {
+    "distro": {
+      "codename": "buster",
+      "description": "Debian GNU/Linux 10 (buster)",
+      "release": {
+        "full": "10.10",
+        "major": "10",
+        "minor": "10"
+      },
+```
+
+- Documentation officielle: <https://puppet.com/docs/puppet/7/lang_facts_accessing.html>
+
+
+# Demo_Vars
+
+Dans le fichier `demo_vars_facts.pp` on créer la classe `demo_vars` et on teste les différents types de variables.
+
+
+## String, undef, int
+
+```ruby
+# Variable de type 'String'
+  $mavarstring = "exemple var string"
+
+  # Variable déclarée mais vide
+  $futurevar = undef
+
+  # Variable type int
+  $int_var = 2021
+
+  # Utilisation de variable
+  notify {'Contenu des variables':
+    message => "Valeur de mavarstring: ${mavarstring} et Valeur de futurvar: ${futurevar} et Valeur de int_var: ${int_var}",
+  }  
+
+  notify {'INT_VAR':
+    message => "int_var = ${int_var} ",
+  }
+
+```
+
+##### Résultat:
+
+```bash
+Notice: Valeur de mavarstring: exemple var string et Valeur de futurvar:  et Valeur de int_var: 2021
+Notice: /Stage[main]/Demo_vars/Notify[Contenu des variables]/message: defined 'message' as 'Valeur de mavarstring: exemple var string et Valeur de futurvar:  et Valeur de int_var: 2021'
+Notice: int_var = 2021
+Notice: /Stage[main]/Demo_vars/Notify[INT_VAR]/message: defined 'message' as 'int_var = 2021 '
+
+```
+
+### Tableau
+
+```ruby
+# Création d'un tableau
+  $tableau = ['puppet', '7.9.0']
+
+  notify {'Tableau':
+    message => " Programme: ${tableau[0]} et Version: ${tableau[1]} \n",
+  }
+```
+
+##### Résultat:
+
+```bash
+Notice: /Stage[main]/Demo_vars/Notify[Tableau]/message: defined 'message' as " Programme: puppet et Version: 7.9.0 \n"
+```
+
+### Hash *(dictionnaire)*
+
+```ruby
+# Creation d'un hash (dictionnaire)
+  $hash = [
+    {
+      'name' => 'user1',
+      'home' => '/prd/user1'
+    },
+    {
+      'name' => 'user2',
+      'home' => '/dev/user2'
+    }
+  ]
+
+  notify {'Hash':
+    message => "${hash[0]['home']}",
+  }
+
+```
+
+##### Résultat:
+
+```bash
+Notice: /prd/user1
+Notice: /Stage[main]/Demo_vars/Notify[Hash]/message: defined 'message' as '/prd/user1'
+```
+
+### Facts *(osfamily, distro)*
+
+```ruby
+ # Afficher l'OS family et la Distribution
+  notify {'Utilisation de FACTS':
+    message => "Famille: ${facts['os']['family']} et Distribution: ${facts['os']['distro']['codename']} ",
+  }
+```
+
+##### Résultat:
+
+```bash
+Notice: Famille: Debian et Distribution: buster
+Notice: /Stage[main]/Demo_vars/Notify[Utilisation de FACTS]/message: defined 'message' as 'Famille: Debian et Distribution: buster '
+```
+
+# Conditionnals & Loops
+
+- <https://puppet.com/docs/puppet/7/lang_conditional.html>
+
+- <https://puppet.com/docs/puppet/7/lang_iteration.html>
+
+
+
+
+
+
+
+
+
 
 
 ---
@@ -520,6 +915,7 @@ Notice: Applied catalog in 0.15 seconds
 # Tips & Tricks
 
 - [Certificats Puppet](#certificats-puppet)
+- [Astuce Environnement de Code sur Vusial Studio](#astuce-environnement-de-code)
+- [Option noop](#noop)
 
-## *describe*
 
