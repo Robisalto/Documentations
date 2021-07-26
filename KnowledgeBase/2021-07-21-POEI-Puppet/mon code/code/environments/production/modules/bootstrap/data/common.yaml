@@ -1,0 +1,3 @@
+--- {}
+
+bootstrap::manage_tz::timezone: 'Europe/Paris'

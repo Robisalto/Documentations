@@ -1,0 +1,16 @@
+# ------------------------------------------------- #
+
+Machine manage par PUPPET
+
+
+        Bienvenue sur <%= $facts[hostname] %> 
+
+  OS:     <%= $facts['os']['name'] %>
+  Distro: <%= $facts['os']['distro']['codename'] %>
+
+
+<% if $facts['puppetversion'] == '7.9.0' { %>
+Version puppet à jour
+<% } -%>
+
+# ------------------------------------------------- #

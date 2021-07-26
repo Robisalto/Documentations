@@ -11,6 +11,7 @@
 2021-07-13-My-Python-Projects
 2021-07-16-POEI-Kubernetes
 2021-07-21-POEI-Puppet
+2021-07-26-POEI-Python
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet
@@ -61,6 +62,17 @@ Vali_QNAP_Config
 YGGTorrent
 template
 README
+README
+CHANGELOG
+README
+README
+TP_Classe_parametrable
+TP_Integration_agent
+TP_Module_gestion_fichiers
+TP_Relationships
+TP_Vars_facts_conditions
+TP_ressources
+CHANGELOG
 README
 DIGESTS
 README

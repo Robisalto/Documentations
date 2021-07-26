@@ -141,6 +141,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li><a href="#conditionnals-loops">Conditionnals &amp; Loops</a></li>
+<li><a href="#tp-vars-facts-conditionnals">TP Vars + Facts + conditionnals</a><ul>
+<li><a href="#exercice-1">Exercice 1:</a><ul>
+<li><a href="#réalisation">Réalisation</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#tp-classe-paramétrable">TP Classe paramétrable</a><ul>
+<li><a href="#exercice-1-créer-le-manifest-manage_tz.pp-dans-codeenvironmentsproductionmanifests">Exercice 1 : Créer le manifest <code>manage_tz.pp</code> dans <em>code/environments/production/manifests</em></a></li>
+<li><a href="#exercice-2-un-nouveau-projet-demande-lintégration-dun-node-anglophone">Exercice 2 : Un nouveau projet demande l’intégration d’un node anglophone</a></li>
+<li><a href="#soluces">Soluces</a></li>
+</ul></li>
+<li><a href="#modules-puppet">Modules Puppet</a><ul>
+<li><a href="#création-du-module-en-ligne-de-commande">Création du module en ligne de commande :</a><ul>
+<li><a href="#arborescence-du-module">Arborescence du module</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#tips-tricks">Tips &amp; Tricks</a></li>
 </ul>
 </nav>
@@ -716,6 +731,242 @@ Quand tout baigne, pas de retour.
 <li><p><a href="https://puppet.com/docs/puppet/7/lang_conditional.html" class="uri">https://puppet.com/docs/puppet/7/lang_conditional.html</a></p></li>
 <li><p><a href="https://puppet.com/docs/puppet/7/lang_iteration.html" class="uri">https://puppet.com/docs/puppet/7/lang_iteration.html</a></p></li>
 </ul>
+<h1 id="tp-vars-facts-conditionnals">TP Vars + Facts + conditionnals</h1>
+<h4 id="objectifs-1">Objectifs</h4>
+<p>Dans ce travail pratique nous allons:</p>
+<ul>
+<li>écrire un nouveau manifest</li>
+<li>Définir une classe</li>
+<li>se familiariser avec les variables, les facts et les conditions (instruction de controle)</li>
+<li>Utiliser la ressource package pour installer une liste de packages</li>
+</ul>
+<h4 id="prérequis-1">Prérequis</h4>
+<ul>
+<li><p>Doc :</p>
+<ul>
+<li><p><strong>Variables</strong> : https://puppet.com/docs/puppet/7/lang_variables.html</p></li>
+<li><p><strong>Facts</strong> : https://puppet.com/docs/puppet/7/lang_facts_accessing.html</p></li>
+<li><p><strong>conditions</strong> : https://puppet.com/docs/puppet/7/lang_conditional.html</p></li>
+<li><p><strong>relationships</strong> : https://puppet.com/docs/puppet/7/lang_relationships.html</p></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="exercice-1">Exercice 1:</h2>
+<div class="question">
+Sujet: Créer le manifest <code>manage_package.pp</code> dans <em>code/environments/production/manifests</em>
+</div>
+<ol type="1">
+<li><p>Définir une classe</p></li>
+<li><p>Déclarer une variable lst_package qui s’adapte en fonction de l’os</p></li>
+</ol>
+<ul>
+<li>Debian: ntp, apache2</li>
+<li>RedHat: chrony, httpd</li>
+</ul>
+<ol start="3" type="1">
+<li>Utiliser cette variable dans une ressource <strong>package</strong> pour faire installer le produit sur les agent</li>
+</ol>
+<ul>
+<li>https://puppet.com/docs/puppet/7/types/package.html</li>
+</ul>
+<ol start="4" type="1">
+<li>Déclarer la classe dans le manifest principal site.pp</li>
+</ol>
+<h3 id="réalisation">Réalisation</h3>
+<h4 id="fichier-manage_packages.pp">Fichier <code>manage_packages.pp</code></h4>
+<div class="sourceCode" id="cb52"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb52-1" title="1"><span class="co"># manage_packages.pp</span></a>
+<a class="sourceLine" id="cb52-2" title="2"></a>
+<a class="sourceLine" id="cb52-3" title="3"><span class="kw">class</span> manage_packages {</a>
+<a class="sourceLine" id="cb52-4" title="4">  </a>
+<a class="sourceLine" id="cb52-5" title="5">  <span class="co"># 1. Déclarer une variable lst_package qui s&#39;adapte en fonction de l&#39;os</span></a>
+<a class="sourceLine" id="cb52-6" title="6">  <span class="dt">$lst_package</span> = <span class="dt">$facts</span>[<span class="st">&#39;os&#39;</span>][<span class="st">&#39;family&#39;</span>] ? {</a>
+<a class="sourceLine" id="cb52-7" title="7">    <span class="st">&#39;Debian&#39;</span> =&gt; [<span class="st">&#39;apache2&#39;</span>, <span class="st">&#39;ntp&#39;</span>],</a>
+<a class="sourceLine" id="cb52-8" title="8">    <span class="st">&#39;RedHat&#39;</span> =&gt; [<span class="st">&#39;httpd&#39;</span>, <span class="st">&#39;chrony&#39;</span>],</a>
+<a class="sourceLine" id="cb52-9" title="9">  }</a>
+<a class="sourceLine" id="cb52-10" title="10">  </a>
+<a class="sourceLine" id="cb52-11" title="11">  <span class="co"># 2. Utiliser cette variable dans une ressource **package** pour faire installer le produit sur les agent</span></a>
+<a class="sourceLine" id="cb52-12" title="12">  package {<span class="dt">$lst_package</span>:</a>
+<a class="sourceLine" id="cb52-13" title="13">    <span class="kw">ensure</span>  =&gt;  installed,</a>
+<a class="sourceLine" id="cb52-14" title="14">  }</a>
+<a class="sourceLine" id="cb52-15" title="15"></a>
+<a class="sourceLine" id="cb52-16" title="16"></a>
+<a class="sourceLine" id="cb52-17" title="17">} <span class="co"># End of Class</span></a></code></pre></div>
+<h4 id="fichier-site.pp">Fichier <code>site.pp</code></h4>
+<div class="sourceCode" id="cb53"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb53-1" title="1"><span class="co"># site.pp</span></a>
+<a class="sourceLine" id="cb53-2" title="2"></a>
+<a class="sourceLine" id="cb53-3" title="3"><span class="co"># Manifest applied to &#39;cli03.formation.lan&#39;</span></a>
+<a class="sourceLine" id="cb53-4" title="4">node <span class="st">&#39;cli03.formation.lan&#39;</span> {</a>
+<a class="sourceLine" id="cb53-5" title="5">  include ::manage_user</a>
+<a class="sourceLine" id="cb53-6" title="6">  include ::manage_ssh</a>
+<a class="sourceLine" id="cb53-7" title="7">  include ::demo_vars</a>
+<a class="sourceLine" id="cb53-8" title="8">  include ::demo_condition</a>
+<a class="sourceLine" id="cb53-9" title="9">  include ::manage_packages</a>
+<a class="sourceLine" id="cb53-10" title="10">}</a>
+<a class="sourceLine" id="cb53-11" title="11"></a>
+<a class="sourceLine" id="cb53-12" title="12"><span class="co"># Manifest applied by default for nodes not-declared above</span></a>
+<a class="sourceLine" id="cb53-13" title="13">node default {</a>
+<a class="sourceLine" id="cb53-14" title="14">  include ::manage_user</a>
+<a class="sourceLine" id="cb53-15" title="15">  include ::manage_packages</a>
+<a class="sourceLine" id="cb53-16" title="16">}</a></code></pre></div>
+<h4 id="résultat-4">Résultat</h4>
+<p><img src="2021-07-21-POEI-Puppet/2021-07-23_10h28_28.png" /></p>
+<h1 id="tp-classe-paramétrable">TP Classe paramétrable</h1>
+<h4 id="objectifs-2">Objectifs</h4>
+<p>Dans ce travail pratique nous allons:</p>
+<ul>
+<li>écrire un nouveau manifest</li>
+<li>Définir une classe paramétrable</li>
+<li>se familiariser avec les variables</li>
+<li>Utiliser de nouvelles ressources : exec</li>
+<li>Gérer l’idempotence</li>
+</ul>
+<h4 id="prérequis-2">Prérequis</h4>
+<ul>
+<li><p>Doc :</p>
+<ul>
+<li><p><strong>Variables</strong> : https://puppet.com/docs/puppet/7/lang_variables.html</p></li>
+<li><p><strong>exec</strong> : https://puppet.com/docs/puppet/7/types/exec.html</p></li>
+</ul></li>
+</ul>
+<hr />
+<h2 id="exercice-1-créer-le-manifest-manage_tz.pp-dans-codeenvironmentsproductionmanifests">Exercice 1 : Créer le manifest <code>manage_tz.pp</code> dans <em>code/environments/production/manifests</em></h2>
+<ol type="1">
+<li>Définir une classe manage_tz paramétrable :</li>
+</ol>
+<ul>
+<li>variable type string $timezone avec valeur par défaut : ‘Europe/Paris’</li>
+</ul>
+<ol start="2" type="1">
+<li>Déclarer une ressource exec qui met à jour la timezone et utilise la variable $timezone</li>
+</ol>
+<ul>
+<li>commande : timedatectl set-timezone ${timezone}</li>
+</ul>
+<ol start="3" type="1">
+<li><p>Déclarer la classe dans le fichier manifest site.pp (uniquement pour cli03 - systemd)</p></li>
+<li><p>Analyse le comportement (idempotence) lors du redéclenchement de l’agent</p></li>
+<li><p>Essayer de mieux gérer l’idempotence dans la ressource exec</p></li>
+</ol>
+<h2 id="exercice-2-un-nouveau-projet-demande-lintégration-dun-node-anglophone">Exercice 2 : Un nouveau projet demande l’intégration d’un node anglophone</h2>
+<ol start="7" type="1">
+<li>Créer un nouveau cli04.formation.lan depuis la vm puppetmaster et l’ingétrer en tant qu’agent</li>
+</ol>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb54-1" title="1">$ <span class="ex">docker</span> run -d --name cli04.formation.lan --hostname cli04.formation.lan --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro --add-host=<span class="st">&quot;puppet:172.16.8.11&quot;</span> bilbloke/puppet-systemd:1.0</a></code></pre></div>
+<ol start="8" type="1">
+<li>Dans site.pp, déclare la classe manage_tz avec une valeur de parametre différent pour le node cli04</li>
+</ol>
+<ul>
+<li>$timezone = ‘Europe/London’</li>
+</ul>
+<ol start="9" type="1">
+<li>Tester</li>
+</ol>
+<h2 id="soluces">Soluces</h2>
+<h4 id="manage_tz.pp">manage_tz.pp</h4>
+<p>Dans le fichier <code>manage_tz.pp</code></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb55-1" title="1"><span class="co"># Fichier: manage_tz.pp</span></a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="co"># ---------------------</span></a>
+<a class="sourceLine" id="cb55-3" title="3"></a>
+<a class="sourceLine" id="cb55-4" title="4"><span class="co"># classe de management de la timezone</span></a>
+<a class="sourceLine" id="cb55-5" title="5"><span class="kw">class</span> manage_tz ( <span class="dt">String</span> <span class="dt">$timezone</span> = <span class="st">&#39;Europe/Paris&#39;</span> ) {</a>
+<a class="sourceLine" id="cb55-6" title="6"></a>
+<a class="sourceLine" id="cb55-7" title="7">  exec { <span class="st">&#39;Mise à jour timezone&#39;</span>:</a>
+<a class="sourceLine" id="cb55-8" title="8">    path    =&gt; [ <span class="st">&#39;/usr/bin&#39;</span>, <span class="st">&#39;/usr/sbin&#39;</span>, <span class="st">&#39;/bin&#39;</span>],              <span class="co"># le path du binaire pour être sûr qu&#39;il se déclenche</span></a>
+<a class="sourceLine" id="cb55-9" title="9">    command =&gt; <span class="st">&quot;timedatectl set-timezone ${timezone}&quot;</span>,</a>
+<a class="sourceLine" id="cb55-10" title="10">    onlyif  =&gt; <span class="st">&quot;timedatectl | grep Time | grep -v ${timezone}&quot;</span>  <span class="co"># idempotence</span></a>
+<a class="sourceLine" id="cb55-11" title="11">  }</a>
+<a class="sourceLine" id="cb55-12" title="12"></a>
+<a class="sourceLine" id="cb55-13" title="13">}</a></code></pre></div>
+<div class="warning">
+<p>Attention à l’<strong>idempotence</strong> !!!</p>
+Autrement la commande <strong>exec</strong> se relancera à chaque fois même si cela ne produit pas de changements.
+</div>
+<h4 id="site.pp">site.pp</h4>
+<p>Dans le fichier <code>site.pp</code> :</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode ruby"><code class="sourceCode ruby"><a class="sourceLine" id="cb56-1" title="1"><span class="co"># Manifest applied to &#39;cli03.formation.lan&#39;</span></a>
+<a class="sourceLine" id="cb56-2" title="2">node <span class="st">&#39;cli03.formation.lan&#39;</span> {</a>
+<a class="sourceLine" id="cb56-3" title="3">  include ::manage_tz</a>
+<a class="sourceLine" id="cb56-4" title="4">}</a>
+<a class="sourceLine" id="cb56-5" title="5"></a>
+<a class="sourceLine" id="cb56-6" title="6">node cli04.formation.lan {</a>
+<a class="sourceLine" id="cb56-7" title="7">  <span class="kw">class</span> { <span class="st">&#39;::manage_tz&#39;</span>:</a>
+<a class="sourceLine" id="cb56-8" title="8">    timezone =&gt; <span class="st">&#39;Europe/London&#39;</span>, <span class="co"># Force la variable timezone pour le client 04</span></a>
+<a class="sourceLine" id="cb56-9" title="9">  }</a>
+<a class="sourceLine" id="cb56-10" title="10">}</a>
+<a class="sourceLine" id="cb56-11" title="11"></a>
+<a class="sourceLine" id="cb56-12" title="12"><span class="co"># Manifest applied by default for nodes not-declared above</span></a>
+<a class="sourceLine" id="cb56-13" title="13">node default {</a>
+<a class="sourceLine" id="cb56-14" title="14">  include ::manage_user</a>
+<a class="sourceLine" id="cb56-15" title="15">  include ::manage_packages</a>
+<a class="sourceLine" id="cb56-16" title="16">}</a></code></pre></div>
+<h4 id="résultat-5">Résultat</h4>
+<h5 id="application-du-manifest">Application du <em>manifest</em></h5>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># Application du manifest</span></a>
+<a class="sourceLine" id="cb57-2" title="2"><span class="ex">root@cli04</span>:/# puppet agent -t</a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb57-4" title="4"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb57-5" title="5"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb57-6" title="6"><span class="ex">Info</span>: Caching catalog for cli04.formation.lan</a>
+<a class="sourceLine" id="cb57-7" title="7"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1627034859&#39;</span></a>
+<a class="sourceLine" id="cb57-8" title="8"><span class="ex">Notice</span>: /Stage[main]/Manage_tz/Exec[Mise à jour timezone]/returns: executed successfully <span class="co"># Changement OK</span></a>
+<a class="sourceLine" id="cb57-9" title="9"><span class="ex">Notice</span>: Applied catalog in 0.17 seconds</a></code></pre></div>
+<h5 id="vérification-de-lidempotence">Vérification de l’<strong>idempotence</strong></h5>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb58-1" title="1"><span class="co"># Vérification de l&#39;idempotence</span></a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="ex">root@cli04</span>:/# puppet agent -t</a>
+<a class="sourceLine" id="cb58-3" title="3"><span class="ex">Info</span>: Using configured environment <span class="st">&#39;production&#39;</span></a>
+<a class="sourceLine" id="cb58-4" title="4"><span class="ex">Info</span>: Retrieving pluginfacts</a>
+<a class="sourceLine" id="cb58-5" title="5"><span class="ex">Info</span>: Retrieving plugin</a>
+<a class="sourceLine" id="cb58-6" title="6"><span class="ex">Info</span>: Caching catalog for cli04.formation.lan</a>
+<a class="sourceLine" id="cb58-7" title="7"><span class="ex">Info</span>: Applying configuration version <span class="st">&#39;1627035620&#39;</span></a>
+<a class="sourceLine" id="cb58-8" title="8"><span class="ex">Notice</span>: Applied catalog in 0.09 seconds</a></code></pre></div>
+<h5 id="vérification-de-la-timezone">Vérification de la Timezone</h5>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb59-1" title="1"><span class="ex">root@cli04</span>:/# timedatectl</a>
+<a class="sourceLine" id="cb59-2" title="2">               <span class="ex">Local</span> time: Fri 2021-07-23 11:22:48 BST</a>
+<a class="sourceLine" id="cb59-3" title="3">           <span class="ex">Universal</span> time: Fri 2021-07-23 10:22:48 UTC</a>
+<a class="sourceLine" id="cb59-4" title="4">                 <span class="ex">RTC</span> time: n/a</a>
+<a class="sourceLine" id="cb59-5" title="5">                <span class="ex">Time</span> zone: Europe/London (BST, +0100)</a>
+<a class="sourceLine" id="cb59-6" title="6"><span class="ex">System</span> clock synchronized: yes</a>
+<a class="sourceLine" id="cb59-7" title="7">              <span class="ex">NTP</span> service: inactive</a>
+<a class="sourceLine" id="cb59-8" title="8">          <span class="ex">RTC</span> in local TZ: no</a></code></pre></div>
+<h1 id="modules-puppet">Modules Puppet</h1>
+<ul>
+<li>classe bien rangées</li>
+<li>Serveur de fichiers (classer les fichiers statics, templates)</li>
+<li>Arborescence à respecter</li>
+<li>Outil fourni par puppet : PDK
+<ul>
+<li><a href="https://puppet.com/try-puppet/puppet-development-kit/" class="uri">https://puppet.com/try-puppet/puppet-development-kit/</a></li>
+<li><a href="https://puppet.com/docs/pdk/2.x/pdk_creating_modules.html" class="uri">https://puppet.com/docs/pdk/2.x/pdk_creating_modules.html</a></li>
+</ul></li>
+<li>Forge puppet : catalogue de module déjà codé et donc téléchargeables et utilisables
+<ul>
+<li><a href="https://forge.puppet.com/" class="uri">https://forge.puppet.com/</a></li>
+</ul></li>
+</ul>
+<h2 id="création-du-module-en-ligne-de-commande">Création du module en ligne de commande :</h2>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb60-1" title="1">$ <span class="ex">pdk</span> new module bootstrap /etc/puppetlabs/code/environments/production/modules/bootstrap</a></code></pre></div>
+<h3 id="arborescence-du-module">Arborescence du module</h3>
+<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb61-1" title="1"><span class="ex">root@ppmaster</span>:/etc/puppetlabs/code/environments/production# tree modules/</a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="ex">modules/</span></a>
+<a class="sourceLine" id="cb61-3" title="3">└── <span class="ex">bootstrap</span></a>
+<a class="sourceLine" id="cb61-4" title="4">    ├── <span class="ex">CHANGELOG.md</span></a>
+<a class="sourceLine" id="cb61-5" title="5">    ├── <span class="ex">Gemfile</span></a>
+<a class="sourceLine" id="cb61-6" title="6">    ├── <span class="ex">Gemfile.lock</span></a>
+<a class="sourceLine" id="cb61-7" title="7">    ├── <span class="ex">README.md</span></a>
+<a class="sourceLine" id="cb61-8" title="8">    ├── <span class="ex">Rakefile</span></a>
+<a class="sourceLine" id="cb61-9" title="9">    ├── <span class="ex">appveyor.yml</span></a>
+<a class="sourceLine" id="cb61-10" title="10">    ├── <span class="ex">data</span></a>
+<a class="sourceLine" id="cb61-11" title="11">    │   └── <span class="ex">common.yaml</span></a>
+<a class="sourceLine" id="cb61-12" title="12">    ├── <span class="ex">examples</span></a>
+<a class="sourceLine" id="cb61-13" title="13">    ├── <span class="ex">files</span></a>
+<a class="sourceLine" id="cb61-14" title="14">    ├── <span class="ex">hiera.yaml</span></a>
+<a class="sourceLine" id="cb61-15" title="15">    ├── <span class="ex">manifests</span></a>
+<a class="sourceLine" id="cb61-16" title="16">    ├── <span class="ex">metadata.json</span></a>
+<a class="sourceLine" id="cb61-17" title="17">    ├── <span class="ex">spec</span></a>
+<a class="sourceLine" id="cb61-18" title="18">    │   ├── <span class="ex">default_facts.yml</span></a>
+<a class="sourceLine" id="cb61-19" title="19">    │   └── <span class="ex">spec_helper.rb</span></a>
+<a class="sourceLine" id="cb61-20" title="20">    ├── <span class="ex">tasks</span></a>
+<a class="sourceLine" id="cb61-21" title="21">    └── <span class="ex">templates</span></a></code></pre></div>
 <hr />
 <h1 id="tips-tricks">Tips &amp; Tricks</h1>
 <ul>

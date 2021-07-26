@@ -1,0 +1,9 @@
+Machine manage par PUPPET
+
+HOST : <%= $facts[hostname] %>
+
+OS : <%= $facts['os']['name'] %>
+
+<% if $facts['puppetversion'] == '7.9.0' { %>
+Version puppet à jour
+<% } -%>

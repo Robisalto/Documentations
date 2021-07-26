@@ -1,0 +1,5 @@
+Fichier statique
+
+Pas de variables
+
+Aura le même contenu sur les nodes où il est déployé

@@ -902,6 +902,315 @@ Notice: /Stage[main]/Demo_vars/Notify[Utilisation de FACTS]/message: defined 'me
 
 
 
+# TP Vars + Facts + conditionnals
+
+
+#### Objectifs
+
+Dans ce travail pratique nous allons:
+
+- écrire un nouveau manifest
+- Définir une classe
+- se familiariser avec les variables, les facts et les conditions (instruction de controle)
+- Utiliser la ressource package pour installer une liste de packages
+
+#### Prérequis
+
+- Doc :
+
+  - **Variables** : https://puppet.com/docs/puppet/7/lang_variables.html
+
+  - **Facts** : https://puppet.com/docs/puppet/7/lang_facts_accessing.html
+
+  - **conditions** : https://puppet.com/docs/puppet/7/lang_conditional.html
+
+  - **relationships** : https://puppet.com/docs/puppet/7/lang_relationships.html
+
+---
+
+## Exercice 1: 
+
+<div class=question> Sujet: Créer le manifest `manage_package.pp` dans *code/environments/production/manifests* </div>
+
+
+1. Définir une classe
+
+2. Déclarer une variable lst_package qui s'adapte en fonction de l'os
+
+  - Debian: ntp, apache2
+  - RedHat: chrony, httpd
+
+3. Utiliser cette variable dans une ressource **package** pour faire installer le produit sur les agent
+
+  - https://puppet.com/docs/puppet/7/types/package.html
+
+4. Déclarer la classe dans le manifest principal site.pp
+
+### Réalisation
+
+#### Fichier `manage_packages.pp`
+
+```ruby
+# manage_packages.pp
+
+class manage_packages {
+  
+  # 1. Déclarer une variable lst_package qui s'adapte en fonction de l'os
+  $lst_package = $facts['os']['family'] ? {
+    'Debian' => ['apache2', 'ntp'],
+    'RedHat' => ['httpd', 'chrony'],
+  }
+  
+  # 2. Utiliser cette variable dans une ressource **package** pour faire installer le produit sur les agent
+  package {$lst_package:
+    ensure  =>  installed,
+  }
+
+
+} # End of Class
+
+```
+
+#### Fichier `site.pp`
+
+```ruby
+# site.pp
+
+# Manifest applied to 'cli03.formation.lan'
+node 'cli03.formation.lan' {
+  include ::manage_user
+  include ::manage_ssh
+  include ::demo_vars
+  include ::demo_condition
+  include ::manage_packages
+}
+
+# Manifest applied by default for nodes not-declared above
+node default {
+  include ::manage_user
+  include ::manage_packages
+}
+
+```
+
+#### Résultat
+
+![](2021-07-21-POEI-Puppet/2021-07-23_10h28_28.png)
+
+
+
+
+# TP Classe paramétrable
+
+#### Objectifs
+
+Dans ce travail pratique nous allons:
+
+- écrire un nouveau manifest
+- Définir une classe paramétrable
+- se familiariser avec les variables
+- Utiliser de nouvelles ressources : exec
+- Gérer l'idempotence
+
+#### Prérequis
+
+- Doc :
+
+  - **Variables** : https://puppet.com/docs/puppet/7/lang_variables.html
+
+  - **exec** : https://puppet.com/docs/puppet/7/types/exec.html
+
+---
+
+## Exercice 1 : Créer le manifest `manage_tz.pp` dans *code/environments/production/manifests*
+
+
+1. Définir une classe manage_tz paramétrable :
+
+  - variable type string $timezone avec valeur par défaut : 'Europe/Paris'
+
+2. Déclarer une ressource exec qui met à jour la timezone et utilise la variable $timezone
+
+  - commande : timedatectl set-timezone ${timezone}
+
+3. Déclarer la classe dans le fichier manifest site.pp (uniquement pour cli03 - systemd)
+
+
+5. Analyse le comportement (idempotence) lors du redéclenchement de l'agent
+
+6. Essayer de mieux gérer l'idempotence dans la ressource exec
+
+## Exercice 2 : Un nouveau projet demande l'intégration d'un node anglophone
+
+7. Créer un nouveau cli04.formation.lan depuis la vm puppetmaster et l'ingétrer en tant qu'agent 
+
+  ```bash
+  $ docker run -d --name cli04.formation.lan --hostname cli04.formation.lan --tmpfs /tmp --tmpfs /run --tmpfs /run/lock -v /sys/fs/cgroup:/sys/fs/cgroup:ro --add-host="puppet:172.16.8.11" bilbloke/puppet-systemd:1.0
+  ``` 
+
+8. Dans site.pp, déclare la classe manage_tz avec une valeur de parametre différent pour le node cli04
+
+  - $timezone = 'Europe/London'
+
+9. Tester
+
+
+## Soluces
+
+#### manage_tz.pp
+
+Dans le fichier `manage_tz.pp`
+
+```ruby
+# Fichier: manage_tz.pp
+# ---------------------
+
+# classe de management de la timezone
+class manage_tz ( String $timezone = 'Europe/Paris' ) {
+
+  exec { 'Mise à jour timezone':
+    path    => [ '/usr/bin', '/usr/sbin', '/bin'],              # le path du binaire pour être sûr qu'il se déclenche
+    command => "timedatectl set-timezone ${timezone}",
+    onlyif  => "timedatectl | grep Time | grep -v ${timezone}"  # idempotence
+  }
+
+}
+```
+
+<div class=warning> Attention à l'**idempotence** !!!
+
+Autrement la commande **exec** se relancera à chaque fois même si cela ne produit pas de changements. </div>
+
+#### site.pp
+
+Dans le fichier `site.pp` :
+
+```ruby
+# Manifest applied to 'cli03.formation.lan'
+node 'cli03.formation.lan' {
+  include ::manage_tz
+}
+
+node cli04.formation.lan {
+  class { '::manage_tz':
+    timezone => 'Europe/London', # Force la variable timezone pour le client 04
+  }
+}
+
+# Manifest applied by default for nodes not-declared above
+node default {
+  include ::manage_user
+  include ::manage_packages
+}
+
+```
+
+
+#### Résultat 
+##### Application du *manifest*
+```bash
+# Application du manifest
+root@cli04:/# puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for cli04.formation.lan
+Info: Applying configuration version '1627034859'
+Notice: /Stage[main]/Manage_tz/Exec[Mise à jour timezone]/returns: executed successfully # Changement OK
+Notice: Applied catalog in 0.17 seconds
+```
+
+##### Vérification de l'**idempotence**
+```bash
+# Vérification de l'idempotence
+root@cli04:/# puppet agent -t
+Info: Using configured environment 'production'
+Info: Retrieving pluginfacts
+Info: Retrieving plugin
+Info: Caching catalog for cli04.formation.lan
+Info: Applying configuration version '1627035620'
+Notice: Applied catalog in 0.09 seconds
+
+```
+
+##### Vérification de la Timezone
+
+```bash
+root@cli04:/# timedatectl
+               Local time: Fri 2021-07-23 11:22:48 BST
+           Universal time: Fri 2021-07-23 10:22:48 UTC
+                 RTC time: n/a
+                Time zone: Europe/London (BST, +0100)
+System clock synchronized: yes
+              NTP service: inactive
+          RTC in local TZ: no
+```
+
+# Modules Puppet
+
+ - classe bien rangées
+ - Serveur de fichiers (classer les fichiers statics, templates)
+ - Arborescence à respecter
+ - Outil fourni par puppet : PDK
+    - <https://puppet.com/try-puppet/puppet-development-kit/>
+    - <https://puppet.com/docs/pdk/2.x/pdk_creating_modules.html>
+ - Forge puppet : catalogue de module déjà codé et donc téléchargeables et utilisables
+    - <https://forge.puppet.com/>
+
+
+## Création du module en ligne de commande : 
+   
+```bash
+$ pdk new module bootstrap /etc/puppetlabs/code/environments/production/modules/bootstrap
+```
+
+
+### Arborescence du module
+
+```bash
+root@ppmaster:/etc/puppetlabs/code/environments/production# tree modules/
+modules/
+└── bootstrap
+    ├── CHANGELOG.md
+    ├── Gemfile
+    ├── Gemfile.lock
+    ├── README.md
+    ├── Rakefile
+    ├── appveyor.yml
+    ├── data
+    │   └── common.yaml
+    ├── examples
+    ├── files
+    ├── hiera.yaml
+    ├── manifests
+    ├── metadata.json
+    ├── spec
+    │   ├── default_facts.yml
+    │   └── spec_helper.rb
+    ├── tasks
+    └── templates
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
