@@ -93,15 +93,6 @@ pip install pylint
 ```
 
 
-
-
-
-
-
-
-
-
-
 ---
 
 # Maîtriser la syntaxe de base
@@ -646,12 +637,13 @@ else:
 **Sujet:** 
 
 - En partant d'une heure et de minutes données
+
 - ex: heure = 2 et minutes = 45
+
 - Si on ajoute 30 minutes, au minutes, on obtient 3h15
 
 ```python
 print(" TP: Bonus")
-
 
 heures = int(input ("Saisissez un nombre d'heures (entier): " ))
 minutes = int(input("Saississez un nombre de minutes (entier): "))
@@ -676,36 +668,546 @@ else:
 
 ```
 
-<iframe src=2021-07-26-POEI-Python/2021-07-26_17h39_25.mp4> </iframe>
+![](2021-07-26-POEI-Python/2021-07-26_17h39_25.gif)
+
+
+## Formatage
+
+On peut formater les données directement dans le programme:
+
+```python
+age = 64
+prenom = "Maude"
+
+print("Age: " + str(age) + ", prenom: " + prenom)
+# print("Age =", age) 
+
+# fstring (Format String): à partir python 3.6
+print(f"Age: {age}, prenom: {prenom}")
+
+# A partir de python 3
+print("Age: {}, prenom: {}".format(age, prenom))
+
+# Avant python 3
+print("Age: %d, prenom: %s" % (age, prenom))
+
+
+rue = "1 rue bidon"
+code_postal = 75015
+
+adresse = rue + ',' + str(code_postal)
+print(adresse)
+
+adresse = f"{rue},{code_postal}"
+print(adresse)
+
+```
+
+
+## Boucles
+
+Utiliser les boucles et tests pour réaliser des algorithmes.
+
+### While
+
+#### Compteur
+
+Exemple avec un compteur:
+
+```python
+compteur = 1
+while compteur <=10:
+    print (f"Ligne {compteur}: Je ne dois pas recopier sans comprendre")
+    compteur = compteur + 1
+
+```
+
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-27_09h43_37.gif)
+
+
+#### Parcourir une chaîne de caractères
+
+
+```python
+print("____ Parcourir une chaine ______")
+
+prenom = "David"
+
+# On commence toujours à 0
+print("Lettre: " + prenom[0] )
+print("Lettre: " + prenom[1] )
+
+
+compteur = 0
+while compteur < 5:
+    print("Lettre: " + prenom[compteur] )
+    compteur += 1
+
+```
+
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-27_10h14_23.gif)
+
+
+### For
+
+```python
+print("____ Parcourir une chaine avec un for ______")
+
+# La boulce for est plutôt utilisée pour parcourir les séquences.
+# Elle permet de parcourir automatiquement la chaine de caracteres
+# du début jusqu'à la fin. Pour chaque tour de boucle si la variable
+# 'lettre' n'existe pas elle sera créée, sinon on ecrase la valeur
+# précédente par la nouvelle valeur 
+
+# for ma_variable in prenom:
+    # print(ma_variable)
+
+for lettre in prenom:
+    print("Lettre: " + lettre)
+    
+    
+print("--- Pour aller plus loin ----")
+
+for lettre in prenom:
+    print("Lettre: " + lettre)
+    if lettre == 'qwqw':
+        break # <- quitte la boucle même si elle n'est pas finie.
+    if lettre == " ":
+        continue # passe au prochain tour de boucle sans executer ce qu'il y a en dessous
+else:
+    print("à la fin de la boucle.")
+    del lettre # supprime la variable lettre
+
+# for nombre in range(10):
+for nombre in range(1, 11): # suite de nombre de 1 jusqu'à 11 non inclus
+    print(f"Ligne {nombre}: Je ne dois pas recopier sans comprendre")
+
+```
+
+
+## TP: ex2.py
+
+
+Exercice:
+
+- reprendre le convertisseur Heure -> minutes de 02-Operateurs
+- Faire une boucle: tant que l'utilisateur ne tape pas 2, on continue la boucle
+- Dans cette boulce on met:
+    - Afficher un message à l'utilisateur pour savoir s'il souhaite
+        - 1- Convertir
+        - 2- Quitter
+- Si l'utilisateur saisit 1:
+      * demander à l'utilisateur de saisir des heures
+      * demander à l'utilisateur de saisir des minutes
+      * convertir les heures en minutes
+      * afficher le resultat
+- Sinon si l'utilisateur saisit 2:
+        * afficher au revoir
+- Sinon:
+        * afficher au je n'ai pas compris
+
+
+```python
+choix = 0
+while choix != 2:
+    print ("""
+    
+    Que voulez-vous faire ?
+                1. Convertir
+                2. Quitter
+
+    """)
+    choix = input("Votre choix: ")
+    if choix == "1":
+        heures = input("Saisir des heures: ")
+        minutes = input("Saisir des minutes: ")
+        heures = int(heures)
+        minutes = int(minutes)
+        resultat = heures * 60 + minutes
+        print(f"{heures}h{minutes} = {resultat} minutes")
+        # choix = 0
+    elif choix >= "3":
+        print ("Je n'ai pas compris")
+    else:
+        print ("Au revoir")
+        break
+```
 
 
 
 
-
-
-
-
-
-
-Utiliser les boucles et tests pour réaliser des algorithmes
 Se servir des tableaux, algorithmes divers de traitement de données massives
 Types de données et opérations avancées (ensembles, dictionnaires,ordonnancement...)
 Gestion des exceptions
-
-## Atelier : Multiples algorithmes pour maitriser la syntaxe de base.
+<!-- 
+## Atelier : Multiples algorithmes pour maitriser la syntaxe de base. -->
 
  
-# Structurer le code avec des fonctions
+# Les Fonctions
 
-Intérêt des structurations du code dans le projet et pour le groupe de projets
-Créer et organiser les fonctions
-Retour des fonctions, absence de retour, multiples retours et intérêt dans un algorithme complexe
-Espaces de noms, manipulation
-Créations de bibliothèques de fonctions, documentation
-Opérations les chaînes de caractères
-Calculer avec Python
-Gestion des dates, heures, intervalles de temps avec Python
-Fonctions diverses nécessaires
+- Intérêt des structurations du code dans le projet et pour le groupe de projets
+- Créer et organiser les fonctions
+- Retour des fonctions, absence de retour, multiples retours et intérêt dans un algorithme complexe
+- Espaces de noms, manipulation
+- Créations de bibliothèques de fonctions, documentation
+- Opérations les chaînes de caractères
+- Calculer avec Python
+- Gestion des dates, heures, intervalles de temps avec Python
+- Fonctions diverses nécessaires
+
+## Fonctions Simples
+
+Les fonctions permettent de factoriser du code
+Les variables stockent une valeur
+Les fonctions stockent des instructions
+ 
+<div class=info> DRY: Don't Repeat Yourself </div>
+
+Un exemple:
+
+```python
+# Création/Définition de la fonction
+def hello():
+    # bloc d'instructions
+    print("Hello")
+    print("Tout")
+    print("Le")
+    print("Monde")
+
+
+# Il faut appeller la fonction pour qu'elle s'execute.
+hello()
+# ... 
+hello()
+
+```
+
+Un autre exemple: 
+
+```python
+# Pour un élève trop souvent puni, on serait obligé de copier/coller les boucles.
+def faire_punition_simple():
+    compteur = 1
+    while compteur <= 10:
+        print(f"Ligne {compteur}: Je ne dois pas recopier sans comprendre")
+        # compteur += 1
+        compteur = compteur + 1 # CTRL + C: pour arrêter une boucle infinie
+
+faire_punition_simple()
+print("On continue")
+faire_punition_simple()
+
+```
+
+## Fonctions avec Paramètres
+
+Exemple:
+
+```python
+def faire_punition(combien_de_fois):
+    print (f"Combien de fois: " {combien_de_fois})
+    compteur = 1
+    while compteur <= combien_de_fois:
+        print(f"Ligne {compteur}: Je ne dois pas recopier sans comprendre.")
+        compteur += 1
+
+# Faire punition 10 fois
+faire_punition(10)
+# Faire punition 15 fois
+faire_punition(15)
+# Faire punition 20 fois
+faire_punition(20)
+
+```
+
+### Plusieurs Paramètres
+
+On peut définir plusieurs paramètres:
+
+```python
+def faire_punition_multi_params(combien_de_fois, message):
+    print(f"Combien de fois: {combien_de_fois}")
+    print(f"{message=}")
+    compteur = 1
+    while compteur <= combien_de_fois:
+        print(f"Ligne {compteur}: {message}")
+        compteur += 1
+        
+faire_punition_multi_params(15, "Je ne dois pas faire ça")
+faire_punition_multi_params(3, "Je ne dois pas faire ci")
+
+```
+
+### Avec input
+
+Exemple avec `input`:
+
+```python
+# Définition fonction paramètre avec input
+def faire_punition_input():
+    combien_de_fois = int(input(f"Combien de fois:   "))
+    # print (f"Combien de fois:  {combien_de_fois}")
+    compteur = 1
+    while compteur <= combien_de_fois:
+        print(f"Ligne {compteur}: Je ne dois pas recopier sans comprendre.")
+        compteur += 1
+
+# Appel fonction paramètre avec input
+faire_punition_input()
+
+```
+
+
+## Fonction avec valeur(s) de retour
+
+### EX3.PY
+
+```python
+# Faire une fonction qui affiche 'Hello World !'
+def say_hello():
+    print('Hello World !')
+
+# Faire une fonction qui prend un paramètre 'prenom' et affiche Bonjour suivi du prénom
+def say_hello_you(prenom):
+    print(f"Bonjour {prenom} !")
+
+
+# Faire une fonction qui affiche la multiplication de 2 nombres passés en paramètres
+def multiplication(nombre, nombre2):
+    # resultat = nombre * nombre2
+    print(f"{nombre} x {nombre2} = {nombre * nombre2}")
+
+multiplication(5, 7)
+
+# Faire une fonction qui renvoie la soustraction de 2 nombres passés en paramètre
+def soustraction(nombre, nombre2):
+    # resultat = nombre - nombre2
+    return (nombre - nombre2)
+
+resultat = soustraction(7, 5)
+print(f"{resultat=}")
+
+
+# Faire une fonction qui affiche la table de multiplication d'un nombre passé en paramètre
+def afficher_table(nombre, max=10):
+    compteur = 0
+    while compteur <= max:
+        resultat = nombre * compteur
+        print(f"{nombre} x {compteur} = {resultat}")
+        compteur += 1    
+    # for multiplicateur in range(11):
+    #     print(f"{nombre} x {multiplicateur} = {multiplicateur * nombre}")
+
+afficher_table(5)
+afficher_table(5, 20)
+
+# Faire une fonction qui convertit des heures en minutes, elle prend 2 arguments: heures et minutes.
+# exemple: how_many_minutes(heure, minutes): #...
+# exemple d'appel: how_many_minutes(1,30)  <- renvoie 90
+def how_many_minutes(heures, minutes):
+    return heures * 60 + minutes
+
+resultat = how_many_minutes(1, 30)
+print(f"{resultat=} minutes")
+
+
+# Faire une fonction qui cherche une lettre dans une chaine de caractères et qui retourne "trouvée" si la lettre a été trouvée
+# et 'aucun résultat' dans le cas contraire.
+# find_char(chaine, lettre) : #...
+# exemple d'appel: find_char("Salut tout le monde", 'u') <- cherche la lettre 'u' dans la chaine
+# etape 1: faire la fonction find_char(chaine,letter)
+# indice: une boucle et un if sont necessaires
+
+def find_char(chaine, lettre_recherche):
+    compteur = 0
+    taille_chaine = len(chaine)
+    while compteur < taille_chaine:
+        lettre_actuelle = chaine[compteur]
+        if lettre_actuelle == lettre_recherche:
+            print("Trouvée")
+            break
+        compteur += 1
+    else:
+        print("Aucun résultat")
+
+find_char("Salut tout le monde", 'u')
+find_char("Salut tout le monde", 'w')
+
+
+
+def find_char_for(chaine, lettre_recherche):
+    for lettre_actuelle in chaine:
+        if lettre_actuelle == lettre_recherche:
+            return "Trouvée" # on quitte la fonction
+    return "Aucun résultat"
+
+
+print( find_char_for("Salut tout le monde", 'u') )
+print( find_char_for("Salut tout le monde", 'w') )
+
+resultat = 'u' in "Salut tout le monde"
+print(resultat)
+
+if "u" in "Salut tout le monde":
+    print("Il y a un u")
+    
+
+# Exercice bonus:
+# faire un rot 11
+# Un rot est un algorithme qui décale les lettres pour chiffrer un message.
+# "Le texte chiffré s'obtient en remplaçant chaque lettre du texte clair original par une lettre à distance fixe, toujours du même côté, dans l'ordre de l'alphabet.
+# Pour les dernières lettres (dans le cas d'un décalage à droite), on reprend au début."" Wikipedia
+# A + 11 = L
+# Z + 11 = K
+# "Salut"  devient "Dlwfe"
+#  indice: ord(letter) pour convertir un caractère en nombre (table ASCII)
+#  indice: chr(ascii) pour convertir du code ASCII en caractère
+#  indice: il faut parcourir la chaine caractère par caractère et la transformer
+# verifier : https://rot13.com/
+# table ascii https://fr.wikibooks.org/wiki/Les_ASCII_de_0_%C3%A0_127/La_table_ASCII#Descriptif3
+# chiffrement par decalage: https://fr.wikipedia.org/wiki/Chiffrement_par_d%C3%A9calage
+
+
+def rot11(message):
+    ROT = 11
+    MIN_CHAR_UPPER = 65 # A
+    MAX_CHAR_UPPER = 90 # Z
+    MIN_CHAR_LOWER = 97 # a
+    MAX_CHAR_LOWER = 122 # z
+    hidden_msg = ""
+    for letter in message:
+        char = ord(letter) # 83
+        if (char >= MIN_CHAR_LOWER and char <= MAX_CHAR_LOWER):
+            hidden_msg += chr((((char - MIN_CHAR_LOWER) + ROT) %
+                              26) + MIN_CHAR_LOWER)
+        elif (char >= MIN_CHAR_UPPER and char <= MAX_CHAR_UPPER):
+            # 83 - 65 = 18 
+            # 18 + 11 = 29 
+            # 29 % 26 = 1 et il reste 3
+            # 3 + 65 = 68 = D
+            hidden_msg += chr((((char - MIN_CHAR_UPPER) + ROT) %
+                              26) + MIN_CHAR_UPPER)
+    return hidden_msg
+
+
+print(rot11("Salut"))
+print(rot11("AazZYyBb"))
+
+
+def rot(chaine): 
+    chaine = chaine.lower()
+    phrase_codee = ""
+    for lettre in chaine :
+        nombre = ord(lettre)
+        #print(nombre)
+        clef = 11
+        nombre2 = nombre + clef
+        if nombre2 > 123 :
+            nombre2 = (nombre2 - 122) + 96
+        #print(nombre2)
+        code = chr(nombre2)
+        #print(code)
+        phrase_codee = str(phrase_codee)+str(code)
+    print(f"Phrase chiffrée : {phrase_codee}")
+
+
+rot("Salut")
+
+```
+
+
+# Listes
+
+Les listes permettent de regrouper un ensemble de données cohérentes.
+
+Initialisation d'une liste:
+
+```python
+notes = [] # Liste vides
+print(notes)
+
+```
+
+Avec des valeurs:
+
+```python
+notes[2, 6, 7, 9]
+print(notes)
+```
+
+## liste.py
+
+```python
+# Les listes permettent de regrouper un ensemble de données cohérents
+# Liste de prenoms, liste de notes, liste de courses
+
+# note1 = 1
+# note2 = 3
+
+# liste vide
+notes = []
+print(notes)
+
+notes = [2,6,7,9]
+print(notes)
+
+liste = [2,6,7,9, True, "Salut !", [0, 2]]
+
+# On commence toujours à 0
+print(f"Première note: { notes[0] }")
+print(f"Deuxième note: { notes[1] }")
+
+# notes[4] # il y a 4 notes mais la dernieres est à l'index 3 -> IndexError: list index out of range
+
+taille_notes = len(notes)
+print(f"Il y a {taille_notes} notes")
+
+
+# print(f"Dernière note: { notes[4 - 1] }")
+# print(f"Dernière note: { notes[3] }")
+print(f"Dernière note: { notes[taille_notes - 1] }")
+# Python autorise les index négatifs, on part de la fin de la liste
+print(f"Dernière note: { notes[-1] }")
+print(f"L'avant dernière note: { notes[-2] }")
+
+# notes[-5] <- il n'y a pas 5 notes
+
+notes[0] = 7
+print(notes)
+
+# On ne peut pas faire ca avec les chaine de caractères
+# Car les chaine de caractères ne sont pas des sequences modifiables.
+
+prenom = "Anne"
+# prenom[2] = 'o' <- TypeError: 'str' object does not support item assignment
+
+liste = [prenom, 'Salut']
+print(liste)
+
+
+print("----- Parcourir une liste -----")
+
+index = 0 # ou i
+taille_notes = len(notes)
+while index < taille_notes:
+    note = notes[index]
+    print(f"Note: {note}")
+    index += 1
+
+print("Avec un for ")
+
+for note in notes:
+    print(f"Note: {note}")
+
+```
+
+
+
+
 
 ## Atelier : Construction d'une bibliothèque de fonctions
 
@@ -747,3 +1249,19 @@ Gestion des fenêtres
 Gestion des évènements
 
 ## Atelier : Implémentation d'une interface graphique complète d'une application
+
+
+
+
+
+
+--- 
+
+
+# *Tips & Tricks*
+
+## Raccourcis Visual Studio
+
+- `Ctrl+/`: commente/décommente une ou plusieurs lignes
+
+- Ctrl+
