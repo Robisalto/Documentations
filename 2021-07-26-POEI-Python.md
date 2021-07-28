@@ -1119,8 +1119,9 @@ rot("Salut")
 
 ```
 
+# Séquences
 
-# Listes
+## Listes
 
 Les listes permettent de regrouper un ensemble de données cohérentes.
 
@@ -1139,7 +1140,7 @@ notes[2, 6, 7, 9]
 print(notes)
 ```
 
-## liste.py
+### liste.py
 
 ```python
 # Les listes permettent de regrouper un ensemble de données cohérents
@@ -1202,14 +1203,604 @@ print("Avec un for ")
 
 for note in notes:
     print(f"Note: {note}")
+    
+    
+print("----- Manipulation d'une liste -----")
+
+# Les listes sont des objets en python.
+# Les variables stockent valeur
+# Les fonctions stockent un ensemble d'instructions
+# Les objets stockent des variables et/ou des fonctions
+# Par exemple: une voiture
+# Une voiture peut avoir une couleur, une vitesse etc.. (<- variables)
+# et des actions (fonctions) : accelerer, freiner, changer de vitesse etc...
+
+prenoms = ["Valentin", "David", "Anne", "Alicia"]
+print(prenoms)
+
+# Ajoute "Akim" à la fin de la liste
+prenoms.append("Akim")
+print(prenoms)
+
+# Inserer à l'index 1, la valeur
+prenoms.insert(1, "Loubna")
+print(prenoms)
+
+# Supprime le dernier élément de la liste
+prenoms.pop()
+print(prenoms)
+
+prenoms.pop(2) # Si l'index n'existe pas python souleve une erreur et s'arrete
+print(prenoms)
+
+prenoms.remove('Alicia') # Si la valeur n'existe pas python souleve une erreur et s'arrete
+# Attention aux maj/min (casse)
+print(prenoms)
+
+prenoms.reverse() # Inverse par position
+print(prenoms)
+
+prenoms.sort() # Tri par ordre alpha
+print(prenoms)
+
+if "John" in prenoms:
+    prenoms.remove("John")
+else:
+    print("John n'est pas dans la liste")
+    
+
+if "Valentin" in prenoms:
+    index = prenoms.index("Valentin")
+    prenoms.pop(index)
+else:
+    print("Valentin")
+
+if 7 <= len(prenoms):
+    prenoms.pop(7)
+```
+
+### Slicing
+
+```python
+print("---------- Slicing ---------")
+
+prenoms = ["Erwan", "Margaux", "Chafea", "Anne"]
+
+
+liste = prenoms[1:3] # Copier les elements de l'index 1 à l'index 3 non inclus
+print(liste)
+
+liste = prenoms[0:3] # Copier les elements de l'index 0 à l'index 3 non inclus.
+print(liste)
+
+liste = prenoms[:3] # Copier les elements du début à l'index 3 non inclus.
+print(liste)
+
+liste = prenoms[:4] # Copier les elements du début à l'index 4 non inclus.
+print(liste)
+
+liste = prenoms[:] # Copier les elements du début jusqu'à la fin
+print(liste)
+
+liste = prenoms[0:4:2] # Copier les elements du début à l'index 4 non inclusavec un pas (step) 2.
+print(liste)
+
+liste = prenoms[::2] # Copier les elements du début jusqu'à la fin avec un pas (step) 2
+print(liste)
+
+liste = prenoms[::-1] # Copier les elements du début jusqu'à la fin avec un pas (step) 2
+print(liste)
 
 ```
 
 
+### EX4.PY
+
+**Sujet:**
+
+Exercice: Faire un programme qui permet d'ajouter ou retirer des produits d'une liste de courses
+     Lorsque le programme demarre, l'utilisateur a le choix entre:
+          1- Afficher la liste de courses.
+          2- Ajouter un produit a la liste de courses (chaine de caracteres ex: pomme)
+          3- Retirer un produit de la liste de course 
+          4- Supprimer toute la liste de courses
+          5- Quitter le programme
+ 
+ - tant que l'utilisateur ne saisit pas "quitter", on continue la boucle
+ - Si l'utilisateur tape 1 : on affiche la liste des produits 
+ - Si l'utilisateur tape 2 : on lui demande le nom du produit à ajouter et on l'ajoute à la liste de courses
+ - Si l'utilisateur tape 3 : on lui demande le nom du produit à retirer et on le retire de la liste de courses
+ - Si l'utilisateur tape 4 : on vide la liste
+ - Si l'utilisateur tape 5: on affiche "Au revoir" et on quitte le programme
+
+
+#### Programme 
+
+```python
+courses = ["pommes", "poires", "bananes"]
+choice = "0"
+
+while choice != "5":
+    if choice == "0":
+        print ("""
+        # --------------------- Liste de courses --------------------- #
+            1. Afficher la liste de courses
+            2. Ajouter un produit
+            3. Retirer un produit
+            4. Supprimer la liste
+            5. Quitter le programme
+        
+        """)
+        choice = input("Que voulez-vous faire ?  ")
+
+    if choice == "1":
+        print(courses)
+        choice = "0"
+        
+    elif choice == "2":
+        new_item = input("Saisissez le nom du nouveau produit:  ")
+        new_item = new_item.lower()
+        courses.append(new_item)
+        choice = "0"
+
+    elif choice == "3":
+        print(f"""
+        Liste des courses:
+        ------------------
+        {courses}
+
+        """)
+        remove_item = input("Quel produit voulez-vous retirer ? (Nom du produit)    ")
+        courses.remove(remove_item)
+        choice = "0"
+
+    elif choice == "4":
+        print("Supression de la liste de courses")
+        courses.clear()
+        choice = "0"
+        
+    else:
+        print("Fermeture du programme.")
+        break
+
+```
+
+
+##### Méthode avancée *(Sylvain Janet)*
+
+```python
+def get_input_integer(input_message,min, max):
+  while(True):
+    print(input_message)
+    user_input = input()
+    try:
+      result = int(user_input)
+    except Exception:
+      print("Merci d'entrer un nombre")
+      continue
+    if (result < min or result > max):
+      print("Merci d'entrer un nombre valide")
+      continue
+    return result
+
+def say_goodbye():
+  print("Au revoir")
+
+def print_list_products(list_products):
+  if len(list_products) == 0:
+    print("La liste est vide")
+  else:
+    print(f"Produits : {', '.join(list_products)}")
+
+def add_product(list_products):
+  while True:
+    product_to_add = input("Que voulez-vous ajouter à votre liste de courses ?").lower()
+    if product_to_add.isspace() or product_to_add == "":
+      print("Merci d'entrer un produit")
+      continue
+    if (list_products.count(product_to_add.strip())) > 0:
+      print(f"Le produit '{product_to_add}' est déja dans votre liste de courses")
+    else:
+      list_products.append(product_to_add.strip())
+      print(f"Le produit '{product_to_add}' a été ajouté à votre liste de courses")
+    break
+
+def delete_product(list_products):
+  while True:
+    product_to_delete = input("Quel produit voulez-vous supprimer ?").lower()
+    if product_to_delete.isspace() or product_to_delete == "":
+      print("Merci d'entrer un produit")
+      continue
+    try:
+      list_products.remove(product_to_delete.strip())
+      print(f"Le produit '{product_to_delete.strip()}' a été supprimé de votre liste de courses")
+    except ValueError:
+      print(f"Le produit '{product_to_delete.strip()}' n'a pas été trouvé dans votre liste de courses")
+    break
+
+def delete_all_products(list_products):
+  for product in list_products.copy():
+    list_products.remove(product)
+  print("Votre liste de course est désormais vide")
+
+list_products = []
+while True:
+  user_input = get_input_integer("""__________ Menu __________
+1- Afficher la liste de courses.
+2- Ajouter un produit a la liste de courses
+3- Retirer un produit de la liste de course 
+4- Supprimer toute la liste de courses
+5- Quitter le programme
+Votre choix ?""", 1, 5)
+  if user_input == 5:
+    say_goodbye()
+    break
+  if user_input == 1:
+    print_list_products(list_products)
+  if user_input == 2:
+    add_product(list_products)
+  if user_input == 3:
+    delete_product(list_products)
+  if user_input == 4:
+    delete_all_products(list_products)
+  input("Faites Entrée")
+
+
+```
+
+### EX4.2.PY *(Bonus)*
+
+***Comprehension lists***: 
+
+#### Docs
+
+- <https://sametmarx.com/python-love-les-listes-en-intention-partie/>
+
+- <https://www.w3schools.com/python/python_lists_comprehension.asp>
+
+![](https://www.w3schools.com/python/python_lists_comprehension.asp)
+
+- <https://pythonguides.com/python-list-comprehension-using-if-else/>
+
+
+### Code
+
+```python
+# Les liste en intention (Comphrension List)
+# https://sametmarx.com/python-love-les-listes-en-intention-partie/
+
+#
+# Exercice: réduire ces liste a l'aide, des listes en compréhension #
+#
+nombres = [1, 21, 45, 12, 32, 65, 1002, 109, 83]
+nombres_pairs = []
+# for i in nombres:
+#     if i % 2 == 0:
+#         nombres_pairs.append(i)
+# print(nombres_pairs)
+
+nombres_pairs = [ i for i in nombres if (i % 2 == 0) ]
+print(f"nombres_pairs:  {nombres_pairs}")
+
+# ________________________________________________
+# 2 extraire les nombres positifs l'aide, des listes en compréhension #
+nombres = range(-10, 10)
+nombres_positifs = []
+# for i in nombres:
+#     if i >= 0:
+#         nombres_positifs.append(i)
+
+nombres_positifs = [ i for i in nombres if (i >= 0) ]
+print(f"nombres_positifs:   {nombres_positifs}")
+
+# ________________________________________________
+# 3
+nombres = range(5)
+nombres_doubles = []
+# for i in nombres:
+#     nombres_doubles.append(i * 2)
+
+nombres_doubles = [ (i * 2) for i in nombres ]
+print(f"nombres_doubles:    {nombres_doubles}")
+
+# ________________________________________________
+# 4. Si nombre est pair il reste tel quel, si il est impair il devient impair
+# 1 devient -1 , 2 devient 2, -5 devient 5
+nombres = range(10)
+nombres_inverses = []
+# for i in nombres:
+#     if i % 2 == 0:
+#         nombres_inverses.append(i)
+#     else:
+#         nombres_inverses.append(-i)
+
+nombres_inverses = [ -i if (i % 2 != 0 ) else i for i in nombres ]
+print(f"nombres_inverses:   {nombres_inverses}")
+
+
+```
+
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-28_12h20_44.png)
+
+
+## Les Tuples
+
+<div class=info> Les **tuples** sont des listes qui ne sont pas modifiables *(lecture seule)*
+
+Sur de très grandes quantités de données les tuples sont plus performantes à condition bien sûr que ces données n'est pas besoin d'être modifiées.
+. </div>
+
+### Création de tuple
+
+```python
+prenoms = ("Vincent", "David", "Valentin", "Valentin", "Valentin")
+print(prenoms)
+
+print( prenoms[0] )
+print( prenoms[2] )
+
+for prenom in prenoms:
+    print(prenom)
+    
+index = prenoms.index("David")
+print(f"Index: {index}")
+
+nombre = prenoms.count("Valentin")
+print(f'il y a {nombre} fois le prénom "Valentin" dans la liste')
+
+```
+
+### Déballage de tuple "unpacking"
+
+```python
+# prenom = prenoms[0]
+# prenom2 = prenoms[1]
+# prenom3 = prenoms[2]
+
+prenom, prenom2, prenom3 = prenoms
+print(f"{prenom} est de type {type(prenom)} ")
+
+prenom, prenom2 = "toto", "tata"
+
+
+prenoms = ("Vincent", "David", "Valentin", "Valentin", "Valentin")
+
+prenom, prenom2, prenom3, *reste = prenoms # rest est de type list
+print(reste)
+
+t = tuple(reste) # Transformation de list en tuple
+liste_prenoms = list(prenoms) # Transformation de tuple en liste
+print(t, liste_prenoms)
+
+
+```
+
+## Les Dictionnaires
+
+<div class=info> Un Dictionnaire est une séquence non-ordonnée.
+
+Avec une association clé/valeur, où la clé est unique. </div>
+
+
+### Déclaration d'un dictionnaire
+
+```python
+# dictionnnaire = {clef: "valeur", clef2: 'valeur'}
+dictionnaire = {
+    "Ornithorynque": "Animal semi-aquatique très étrange",
+    "herbe": "pelouse verte",
+    # "herbe": 'Salut' <- si on fait ca, on écrase la valeur précédente, car la clef existe deja
+}
+
+print( dictionnaire["Ornithorynque"] )
+print( dictionnaire["herbe"] )
+
+# regroupe un ensemble de caractèristiques
+
+utilisateur = {
+    "nom": "Doe",
+    "prenom": "John",
+    "age": 15
+}
+
+print( utilisateur['nom'] )
+
+```
+
+#### Exemple perso
+
+```python
+tuple_firstnames = ("David", "Hubert", "Denis", "Marc")
+list_ages = [33, 32, 27, 23]
+family = {"name":"Debray", "firstname":tuple_firstnames, "age":list_ages}
+
+print(family)
+
+print(family["firstname"][0])
+
+```
+
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-28_14h44_07.gif)
+
+
+### Recherche dans un Dictionnaire
+
+```python
+# Recherche dans un dictionnaire
+mot = input("De quel mot voulez-vous a définition ?     ")
+definition = dictionnaire.get(mot)
+if definition:
+    print (f"Définition de {mot}: {definition}")
+else:
+    print(f"Le mot {mot} n'est pas défini dans ce dictionnaire")
+
+```
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-28_14h54_29.png)
+
+
+### Parcourir un dictionnaire
+
+```python
+print("----- Parcourir un dictionnaire ------")
+
+for clef in utilisateur:
+    print(f"Clef: {clef}")
+    print(f"Valeur: { utilisateur.get(clef) }")
+    
+
+print(" =>Uniquement les valeurs ")
+# dictionnaire.values() ressemble a une liste mais ce n'est pas une liste
+# par contre, on peut facilement convertir en liste.
+# Et la boucle for c'est le lire les dict_values
+ 
+valeurs = list(utilisateur.values())
+print(valeurs)
+
+
+for valeur in utilisateur.values():
+    print(f"valeur: {valeur}")    
+
+```
+
+### Utilisation de `items()`
+
+`dictionnaire.items()` ressemble a une liste mais ce n'est pas une liste par contre, on peut facilement convertir en liste.
+
+Et la boucle for c'est le "lire" les dict_items.
+
+```python
+
+items = list(utilisateur.items())
+print(items)
+
+# Fonctionnement basique
+print(" => Clef + valeurs ")
+for item in utilisateur.items():
+    # print(item)
+    clef = item[0]
+    valeur = item[1]
+    print(f"Clef: {clef}, valeur: {valeur}")
+
+# Déballage de tuple
+for item in utilisateur.items():
+    # print(item)
+    clef, valeur = item
+    print(f"Clef: {clef}, valeur: {valeur}")
+
+```
+
+#### Utilisation avancée *(recommandée)*
+
+```python
+
+for clef, valeur in utilisateur.items():
+    print(f"Clef: {clef}, valeur: {valeur}")
+
+
+```
+
+Ici on déballe le tuple directement dans l'instruction "for".
+
+
+# Programmation Orientée Objet
+
+POO *(fr)*: 
+    Programmation Orientée Objet.
+
+OPP *(english)*:
+    Object Oriented Programmation
+
+
+## Rappel: Les Chaînes de caractères *(str)*
+
+- <https://www.w3schools.com/python/python_ref_string.asp>
+
+```python
+# Exemples de gestion de chaînes de caractères
+
+prenom = "David"
+
+print(prenom.lower())
+print(prenom.upper())
+
+print( prenom.replace('i', 'iii') )
+print( prenom.startswith('D') ) # => bool (True/False)
+
+print( prenom.endswith('.com') ) # => Site web ? (bool)
+
+print( prenom.istitle() ) # Si Tous Les Mots Sont Capitalisés => True (bool)
+
+```
+
+
+## Les Classes
+
+Une **classe** est un modèle *(moule)* qui permet de fabriquer nos propres objets.
+
+Une classe se déclare en utilisant le *"PascalCase"*, la première lettre de chaque mot est une majuscule, tout est attaché.
+
+### Exemple Pratique
+
+Dans cet exemple on créer un petit jeu avec des personnages. Pour créer nos personnages on utilise une classe `ClassPersonnage`.
+
+```python
+class ClassPersonnage:
+    id_character = 0
+    def __init__(self, name, weapon, health=100, xp=0, rank="noob", warcry="Rrrrrrr!", ouchie=10):
+        self.name = name
+        self.weapon = weapon
+        self.health = health
+        self.xp = xp
+        self.rank = rank
+        self.warcry = warcry
+        self.ouchie = ouchie
+        ClassPersonnage.id_character +=1
+    
+    def fight(self, target):
+        print("______________________________________________________________________")
+        print(f"{self.name} attaque {target.name}:")
+        print(f" - {self.name}:  {self.warcry}")
+        target.health -= self.ouchie
+        print(f" - {target.name}: Aïe !  ")
+        print(f"""\t ==> {target.name} a morflé grave !! Il lui reste {target.health} points de vie. Mouhahaha !!! 
+        """)
+
+# Création des personnages
+player_1 = ClassPersonnage("Odin", "Gungnir", 1000000, 100, rank="BOSS")
+player_2 = ClassPersonnage("Thor", "Mijolnir", 1000000, 100, "BadASS", ouchie=999999)
+player_3 = ClassPersonnage("Perceval", "petits cailloux", xp=-8, rank="Chevalier", warcry="C'est pas faux !" )
+## Affichage des personnages 
+tuple_players = (player_1, player_2, player_3)
+for player in tuple_players:
+    print(f"""
+    ------- Personnage: {player.name},  -------
+    Arme: {player.weapon}      Points de vie: {player.health}     Expérience: {player.xp}    Niveau: {player.rank}  
+    """)
+
+# Print IDs
+print(f"""
+Il y a {ClassPersonnage.id_character} personnages prêts à se battre ! 
+""")
+
+# C'est ici que ça bastonne ^^
+player_3.fight(player_2)
+player_2.fight(player_3)
+
+```
+
+##### Résultat:
+
+![](2021-07-26-POEI-Python/2021-07-28_17h16_13.png)
 
 
 
-## Atelier : Construction d'une bibliothèque de fonctions
+<!-- ## Atelier : Construction d'une bibliothèque de fonctions
 
  
 # Maîtriser l'Objet et modéliser une implémentation
@@ -1249,7 +1840,7 @@ Gestion des fenêtres
 Gestion des évènements
 
 ## Atelier : Implémentation d'une interface graphique complète d'une application
-
+ -->
 
 
 

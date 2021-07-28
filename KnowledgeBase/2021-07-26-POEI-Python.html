@@ -129,16 +129,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#ex3.py">EX3.PY</a></li>
 </ul></li>
 </ul></li>
+<li><a href="#séquences">Séquences</a><ul>
 <li><a href="#listes">Listes</a><ul>
 <li><a href="#liste.py">liste.py</a></li>
-<li><a href="#atelier-construction-dune-bibliothèque-de-fonctions">Atelier : Construction d’une bibliothèque de fonctions</a></li>
+<li><a href="#slicing">Slicing</a></li>
+<li><a href="#ex4.py">EX4.PY</a></li>
+<li><a href="#ex4.2.py-bonus">EX4.2.PY <em>(Bonus)</em></a></li>
+<li><a href="#code">Code</a></li>
 </ul></li>
-<li><a href="#maîtriser-lobjet-et-modéliser-une-implémentation">Maîtriser l’Objet et modéliser une implémentation</a></li>
-<li><a href="#manipuler-des-données">Manipuler des données</a><ul>
-<li><a href="#atelier-manipulation-de-fichiers-et-opérations-liées-à-une-base-de-données-sqlite.">Atelier : Manipulation de fichiers et opérations liées à une base de données SQLite.</a></li>
+<li><a href="#les-tuples">Les Tuples</a><ul>
+<li><a href="#création-de-tuple">Création de tuple</a></li>
+<li><a href="#déballage-de-tuple-unpacking">Déballage de tuple “unpacking”</a></li>
 </ul></li>
-<li><a href="#construire-une-interface-graphique">Construire une interface graphique</a><ul>
-<li><a href="#atelier-implémentation-dune-interface-graphique-complète-dune-application">Atelier : Implémentation d’une interface graphique complète d’une application</a></li>
+<li><a href="#les-dictionnaires">Les Dictionnaires</a><ul>
+<li><a href="#déclaration-dun-dictionnaire">Déclaration d’un dictionnaire</a></li>
+<li><a href="#recherche-dans-un-dictionnaire">Recherche dans un Dictionnaire</a></li>
+<li><a href="#parcourir-un-dictionnaire">Parcourir un dictionnaire</a></li>
+<li><a href="#utilisation-de-items">Utilisation de <code>items()</code></a></li>
+</ul></li>
+</ul></li>
+<li><a href="#programmation-orientée-objet">Programmation Orientée Objet</a><ul>
+<li><a href="#rappel-les-chaînes-de-caractères-str">Rappel: Les Chaînes de caractères <em>(str)</em></a></li>
+<li><a href="#les-classes">Les Classes</a><ul>
+<li><a href="#exemple-pratique">Exemple Pratique</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
 <li><a href="#raccourcis-visual-studio">Raccourcis Visual Studio</a></li>
@@ -982,7 +996,8 @@ DRY: Don’t Repeat Yourself
 <a class="sourceLine" id="cb35-147" title="147"></a>
 <a class="sourceLine" id="cb35-148" title="148"></a>
 <a class="sourceLine" id="cb35-149" title="149">rot(<span class="st">&quot;Salut&quot;</span>)</a></code></pre></div>
-<h1 id="listes">Listes</h1>
+<h1 id="séquences">Séquences</h1>
+<h2 id="listes">Listes</h2>
 <p>Les listes permettent de regrouper un ensemble de données cohérentes.</p>
 <p>Initialisation d’une liste:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb36-1" title="1">notes <span class="op">=</span> [] <span class="co"># Liste vides</span></a>
@@ -990,7 +1005,7 @@ DRY: Don’t Repeat Yourself
 <p>Avec des valeurs:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb37-1" title="1">notes[<span class="dv">2</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">9</span>]</a>
 <a class="sourceLine" id="cb37-2" title="2"><span class="bu">print</span>(notes)</a></code></pre></div>
-<h2 id="liste.py">liste.py</h2>
+<h3 id="liste.py">liste.py</h3>
 <div class="sourceCode" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb38-1" title="1"><span class="co"># Les listes permettent de regrouper un ensemble de données cohérents</span></a>
 <a class="sourceLine" id="cb38-2" title="2"><span class="co"># Liste de prenoms, liste de notes, liste de courses</span></a>
 <a class="sourceLine" id="cb38-3" title="3"></a>
@@ -1050,16 +1065,528 @@ DRY: Don’t Repeat Yourself
 <a class="sourceLine" id="cb38-57" title="57"><span class="bu">print</span>(<span class="st">&quot;Avec un for &quot;</span>)</a>
 <a class="sourceLine" id="cb38-58" title="58"></a>
 <a class="sourceLine" id="cb38-59" title="59"><span class="cf">for</span> note <span class="kw">in</span> notes:</a>
-<a class="sourceLine" id="cb38-60" title="60">    <span class="bu">print</span>(<span class="ss">f&quot;Note: </span><span class="sc">{</span>note<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
-<h2 id="atelier-construction-dune-bibliothèque-de-fonctions">Atelier : Construction d’une bibliothèque de fonctions</h2>
-<h1 id="maîtriser-lobjet-et-modéliser-une-implémentation">Maîtriser l’Objet et modéliser une implémentation</h1>
-<p>Différents styles de programmation, apports de l’objet Objet et classes Gestion des attributs et méthodes Instanciation, destruction Encapsuler les données et utiliser des propriétés Agrégation d’objets Héritage simple et multiples Polymorphisme Introspection Utilisation d’interfaces</p>
-<h1 id="manipuler-des-données">Manipuler des données</h1>
-<p>Manipulation de fichiers Parsing Xml, JSON Gestion des logs avec Python Documentation du code et génération de rendu HTML Utiliser des bases de données avec Python, DBAPI</p>
-<h2 id="atelier-manipulation-de-fichiers-et-opérations-liées-à-une-base-de-données-sqlite.">Atelier : Manipulation de fichiers et opérations liées à une base de données SQLite.</h2>
-<h1 id="construire-une-interface-graphique">Construire une interface graphique</h1>
-<p>Bibliothèques graphiques en Python Tkinter vs PyQT ou autre Widgets graphiques Menus Positionnement des composants Gestion des fenêtres Gestion des évènements</p>
-<h2 id="atelier-implémentation-dune-interface-graphique-complète-dune-application">Atelier : Implémentation d’une interface graphique complète d’une application</h2>
+<a class="sourceLine" id="cb38-60" title="60">    <span class="bu">print</span>(<span class="ss">f&quot;Note: </span><span class="sc">{</span>note<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb38-61" title="61">    </a>
+<a class="sourceLine" id="cb38-62" title="62">    </a>
+<a class="sourceLine" id="cb38-63" title="63"><span class="bu">print</span>(<span class="st">&quot;----- Manipulation d&#39;une liste -----&quot;</span>)</a>
+<a class="sourceLine" id="cb38-64" title="64"></a>
+<a class="sourceLine" id="cb38-65" title="65"><span class="co"># Les listes sont des objets en python.</span></a>
+<a class="sourceLine" id="cb38-66" title="66"><span class="co"># Les variables stockent valeur</span></a>
+<a class="sourceLine" id="cb38-67" title="67"><span class="co"># Les fonctions stockent un ensemble d&#39;instructions</span></a>
+<a class="sourceLine" id="cb38-68" title="68"><span class="co"># Les objets stockent des variables et/ou des fonctions</span></a>
+<a class="sourceLine" id="cb38-69" title="69"><span class="co"># Par exemple: une voiture</span></a>
+<a class="sourceLine" id="cb38-70" title="70"><span class="co"># Une voiture peut avoir une couleur, une vitesse etc.. (&lt;- variables)</span></a>
+<a class="sourceLine" id="cb38-71" title="71"><span class="co"># et des actions (fonctions) : accelerer, freiner, changer de vitesse etc...</span></a>
+<a class="sourceLine" id="cb38-72" title="72"></a>
+<a class="sourceLine" id="cb38-73" title="73">prenoms <span class="op">=</span> [<span class="st">&quot;Valentin&quot;</span>, <span class="st">&quot;David&quot;</span>, <span class="st">&quot;Anne&quot;</span>, <span class="st">&quot;Alicia&quot;</span>]</a>
+<a class="sourceLine" id="cb38-74" title="74"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-75" title="75"></a>
+<a class="sourceLine" id="cb38-76" title="76"><span class="co"># Ajoute &quot;Akim&quot; à la fin de la liste</span></a>
+<a class="sourceLine" id="cb38-77" title="77">prenoms.append(<span class="st">&quot;Akim&quot;</span>)</a>
+<a class="sourceLine" id="cb38-78" title="78"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-79" title="79"></a>
+<a class="sourceLine" id="cb38-80" title="80"><span class="co"># Inserer à l&#39;index 1, la valeur</span></a>
+<a class="sourceLine" id="cb38-81" title="81">prenoms.insert(<span class="dv">1</span>, <span class="st">&quot;Loubna&quot;</span>)</a>
+<a class="sourceLine" id="cb38-82" title="82"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-83" title="83"></a>
+<a class="sourceLine" id="cb38-84" title="84"><span class="co"># Supprime le dernier élément de la liste</span></a>
+<a class="sourceLine" id="cb38-85" title="85">prenoms.pop()</a>
+<a class="sourceLine" id="cb38-86" title="86"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-87" title="87"></a>
+<a class="sourceLine" id="cb38-88" title="88">prenoms.pop(<span class="dv">2</span>) <span class="co"># Si l&#39;index n&#39;existe pas python souleve une erreur et s&#39;arrete</span></a>
+<a class="sourceLine" id="cb38-89" title="89"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-90" title="90"></a>
+<a class="sourceLine" id="cb38-91" title="91">prenoms.remove(<span class="st">&#39;Alicia&#39;</span>) <span class="co"># Si la valeur n&#39;existe pas python souleve une erreur et s&#39;arrete</span></a>
+<a class="sourceLine" id="cb38-92" title="92"><span class="co"># Attention aux maj/min (casse)</span></a>
+<a class="sourceLine" id="cb38-93" title="93"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-94" title="94"></a>
+<a class="sourceLine" id="cb38-95" title="95">prenoms.reverse() <span class="co"># Inverse par position</span></a>
+<a class="sourceLine" id="cb38-96" title="96"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-97" title="97"></a>
+<a class="sourceLine" id="cb38-98" title="98">prenoms.sort() <span class="co"># Tri par ordre alpha</span></a>
+<a class="sourceLine" id="cb38-99" title="99"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb38-100" title="100"></a>
+<a class="sourceLine" id="cb38-101" title="101"><span class="cf">if</span> <span class="st">&quot;John&quot;</span> <span class="kw">in</span> prenoms:</a>
+<a class="sourceLine" id="cb38-102" title="102">    prenoms.remove(<span class="st">&quot;John&quot;</span>)</a>
+<a class="sourceLine" id="cb38-103" title="103"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb38-104" title="104">    <span class="bu">print</span>(<span class="st">&quot;John n&#39;est pas dans la liste&quot;</span>)</a>
+<a class="sourceLine" id="cb38-105" title="105">    </a>
+<a class="sourceLine" id="cb38-106" title="106"></a>
+<a class="sourceLine" id="cb38-107" title="107"><span class="cf">if</span> <span class="st">&quot;Valentin&quot;</span> <span class="kw">in</span> prenoms:</a>
+<a class="sourceLine" id="cb38-108" title="108">    index <span class="op">=</span> prenoms.index(<span class="st">&quot;Valentin&quot;</span>)</a>
+<a class="sourceLine" id="cb38-109" title="109">    prenoms.pop(index)</a>
+<a class="sourceLine" id="cb38-110" title="110"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb38-111" title="111">    <span class="bu">print</span>(<span class="st">&quot;Valentin&quot;</span>)</a>
+<a class="sourceLine" id="cb38-112" title="112"></a>
+<a class="sourceLine" id="cb38-113" title="113"><span class="cf">if</span> <span class="dv">7</span> <span class="op">&lt;=</span> <span class="bu">len</span>(prenoms):</a>
+<a class="sourceLine" id="cb38-114" title="114">    prenoms.pop(<span class="dv">7</span>)</a></code></pre></div>
+<h3 id="slicing">Slicing</h3>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb39-1" title="1"><span class="bu">print</span>(<span class="st">&quot;---------- Slicing ---------&quot;</span>)</a>
+<a class="sourceLine" id="cb39-2" title="2"></a>
+<a class="sourceLine" id="cb39-3" title="3">prenoms <span class="op">=</span> [<span class="st">&quot;Erwan&quot;</span>, <span class="st">&quot;Margaux&quot;</span>, <span class="st">&quot;Chafea&quot;</span>, <span class="st">&quot;Anne&quot;</span>]</a>
+<a class="sourceLine" id="cb39-4" title="4"></a>
+<a class="sourceLine" id="cb39-5" title="5"></a>
+<a class="sourceLine" id="cb39-6" title="6">liste <span class="op">=</span> prenoms[<span class="dv">1</span>:<span class="dv">3</span>] <span class="co"># Copier les elements de l&#39;index 1 à l&#39;index 3 non inclus</span></a>
+<a class="sourceLine" id="cb39-7" title="7"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-8" title="8"></a>
+<a class="sourceLine" id="cb39-9" title="9">liste <span class="op">=</span> prenoms[<span class="dv">0</span>:<span class="dv">3</span>] <span class="co"># Copier les elements de l&#39;index 0 à l&#39;index 3 non inclus.</span></a>
+<a class="sourceLine" id="cb39-10" title="10"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-11" title="11"></a>
+<a class="sourceLine" id="cb39-12" title="12">liste <span class="op">=</span> prenoms[:<span class="dv">3</span>] <span class="co"># Copier les elements du début à l&#39;index 3 non inclus.</span></a>
+<a class="sourceLine" id="cb39-13" title="13"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-14" title="14"></a>
+<a class="sourceLine" id="cb39-15" title="15">liste <span class="op">=</span> prenoms[:<span class="dv">4</span>] <span class="co"># Copier les elements du début à l&#39;index 4 non inclus.</span></a>
+<a class="sourceLine" id="cb39-16" title="16"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-17" title="17"></a>
+<a class="sourceLine" id="cb39-18" title="18">liste <span class="op">=</span> prenoms[:] <span class="co"># Copier les elements du début jusqu&#39;à la fin</span></a>
+<a class="sourceLine" id="cb39-19" title="19"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-20" title="20"></a>
+<a class="sourceLine" id="cb39-21" title="21">liste <span class="op">=</span> prenoms[<span class="dv">0</span>:<span class="dv">4</span>:<span class="dv">2</span>] <span class="co"># Copier les elements du début à l&#39;index 4 non inclusavec un pas (step) 2.</span></a>
+<a class="sourceLine" id="cb39-22" title="22"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-23" title="23"></a>
+<a class="sourceLine" id="cb39-24" title="24">liste <span class="op">=</span> prenoms[::<span class="dv">2</span>] <span class="co"># Copier les elements du début jusqu&#39;à la fin avec un pas (step) 2</span></a>
+<a class="sourceLine" id="cb39-25" title="25"><span class="bu">print</span>(liste)</a>
+<a class="sourceLine" id="cb39-26" title="26"></a>
+<a class="sourceLine" id="cb39-27" title="27">liste <span class="op">=</span> prenoms[::<span class="op">-</span><span class="dv">1</span>] <span class="co"># Copier les elements du début jusqu&#39;à la fin avec un pas (step) 2</span></a>
+<a class="sourceLine" id="cb39-28" title="28"><span class="bu">print</span>(liste)</a></code></pre></div>
+<h3 id="ex4.py">EX4.PY</h3>
+<p><strong>Sujet:</strong></p>
+<p>Exercice: Faire un programme qui permet d’ajouter ou retirer des produits d’une liste de courses Lorsque le programme demarre, l’utilisateur a le choix entre: 1- Afficher la liste de courses. 2- Ajouter un produit a la liste de courses (chaine de caracteres ex: pomme) 3- Retirer un produit de la liste de course 4- Supprimer toute la liste de courses 5- Quitter le programme</p>
+<ul>
+<li>tant que l’utilisateur ne saisit pas “quitter”, on continue la boucle</li>
+<li>Si l’utilisateur tape 1 : on affiche la liste des produits</li>
+<li>Si l’utilisateur tape 2 : on lui demande le nom du produit à ajouter et on l’ajoute à la liste de courses</li>
+<li>Si l’utilisateur tape 3 : on lui demande le nom du produit à retirer et on le retire de la liste de courses</li>
+<li>Si l’utilisateur tape 4 : on vide la liste</li>
+<li>Si l’utilisateur tape 5: on affiche “Au revoir” et on quitte le programme</li>
+</ul>
+<h4 id="programme">Programme</h4>
+<div class="sourceCode" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb40-1" title="1">courses <span class="op">=</span> [<span class="st">&quot;pommes&quot;</span>, <span class="st">&quot;poires&quot;</span>, <span class="st">&quot;bananes&quot;</span>]</a>
+<a class="sourceLine" id="cb40-2" title="2">choice <span class="op">=</span> <span class="st">&quot;0&quot;</span></a>
+<a class="sourceLine" id="cb40-3" title="3"></a>
+<a class="sourceLine" id="cb40-4" title="4"><span class="cf">while</span> choice <span class="op">!=</span> <span class="st">&quot;5&quot;</span>:</a>
+<a class="sourceLine" id="cb40-5" title="5">    <span class="cf">if</span> choice <span class="op">==</span> <span class="st">&quot;0&quot;</span>:</a>
+<a class="sourceLine" id="cb40-6" title="6">        <span class="bu">print</span> (<span class="st">&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb40-7" title="7"><span class="st">        # --------------------- Liste de courses --------------------- #</span></a>
+<a class="sourceLine" id="cb40-8" title="8"><span class="st">            1. Afficher la liste de courses</span></a>
+<a class="sourceLine" id="cb40-9" title="9"><span class="st">            2. Ajouter un produit</span></a>
+<a class="sourceLine" id="cb40-10" title="10"><span class="st">            3. Retirer un produit</span></a>
+<a class="sourceLine" id="cb40-11" title="11"><span class="st">            4. Supprimer la liste</span></a>
+<a class="sourceLine" id="cb40-12" title="12"><span class="st">            5. Quitter le programme</span></a>
+<a class="sourceLine" id="cb40-13" title="13"><span class="st">        </span></a>
+<a class="sourceLine" id="cb40-14" title="14"><span class="st">        &quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb40-15" title="15">        choice <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Que voulez-vous faire ?  &quot;</span>)</a>
+<a class="sourceLine" id="cb40-16" title="16"></a>
+<a class="sourceLine" id="cb40-17" title="17">    <span class="cf">if</span> choice <span class="op">==</span> <span class="st">&quot;1&quot;</span>:</a>
+<a class="sourceLine" id="cb40-18" title="18">        <span class="bu">print</span>(courses)</a>
+<a class="sourceLine" id="cb40-19" title="19">        choice <span class="op">=</span> <span class="st">&quot;0&quot;</span></a>
+<a class="sourceLine" id="cb40-20" title="20">        </a>
+<a class="sourceLine" id="cb40-21" title="21">    <span class="cf">elif</span> choice <span class="op">==</span> <span class="st">&quot;2&quot;</span>:</a>
+<a class="sourceLine" id="cb40-22" title="22">        new_item <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Saisissez le nom du nouveau produit:  &quot;</span>)</a>
+<a class="sourceLine" id="cb40-23" title="23">        new_item <span class="op">=</span> new_item.lower()</a>
+<a class="sourceLine" id="cb40-24" title="24">        courses.append(new_item)</a>
+<a class="sourceLine" id="cb40-25" title="25">        choice <span class="op">=</span> <span class="st">&quot;0&quot;</span></a>
+<a class="sourceLine" id="cb40-26" title="26"></a>
+<a class="sourceLine" id="cb40-27" title="27">    <span class="cf">elif</span> choice <span class="op">==</span> <span class="st">&quot;3&quot;</span>:</a>
+<a class="sourceLine" id="cb40-28" title="28">        <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb40-29" title="29"><span class="ss">        Liste des courses:</span></a>
+<a class="sourceLine" id="cb40-30" title="30"><span class="ss">        ------------------</span></a>
+<a class="sourceLine" id="cb40-31" title="31"><span class="ss">        </span><span class="sc">{</span>courses<span class="sc">}</span></a>
+<a class="sourceLine" id="cb40-32" title="32"></a>
+<a class="sourceLine" id="cb40-33" title="33"><span class="ss">        &quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb40-34" title="34">        remove_item <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Quel produit voulez-vous retirer ? (Nom du produit)    &quot;</span>)</a>
+<a class="sourceLine" id="cb40-35" title="35">        courses.remove(remove_item)</a>
+<a class="sourceLine" id="cb40-36" title="36">        choice <span class="op">=</span> <span class="st">&quot;0&quot;</span></a>
+<a class="sourceLine" id="cb40-37" title="37"></a>
+<a class="sourceLine" id="cb40-38" title="38">    <span class="cf">elif</span> choice <span class="op">==</span> <span class="st">&quot;4&quot;</span>:</a>
+<a class="sourceLine" id="cb40-39" title="39">        <span class="bu">print</span>(<span class="st">&quot;Supression de la liste de courses&quot;</span>)</a>
+<a class="sourceLine" id="cb40-40" title="40">        courses.clear()</a>
+<a class="sourceLine" id="cb40-41" title="41">        choice <span class="op">=</span> <span class="st">&quot;0&quot;</span></a>
+<a class="sourceLine" id="cb40-42" title="42">        </a>
+<a class="sourceLine" id="cb40-43" title="43">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb40-44" title="44">        <span class="bu">print</span>(<span class="st">&quot;Fermeture du programme.&quot;</span>)</a>
+<a class="sourceLine" id="cb40-45" title="45">        <span class="cf">break</span></a></code></pre></div>
+<h5 id="méthode-avancée-sylvain-janet">Méthode avancée <em>(Sylvain Janet)</em></h5>
+<div class="sourceCode" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">def</span> get_input_integer(input_message,<span class="bu">min</span>, <span class="bu">max</span>):</a>
+<a class="sourceLine" id="cb41-2" title="2">  <span class="cf">while</span>(<span class="va">True</span>):</a>
+<a class="sourceLine" id="cb41-3" title="3">    <span class="bu">print</span>(input_message)</a>
+<a class="sourceLine" id="cb41-4" title="4">    user_input <span class="op">=</span> <span class="bu">input</span>()</a>
+<a class="sourceLine" id="cb41-5" title="5">    <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb41-6" title="6">      result <span class="op">=</span> <span class="bu">int</span>(user_input)</a>
+<a class="sourceLine" id="cb41-7" title="7">    <span class="cf">except</span> <span class="pp">Exception</span>:</a>
+<a class="sourceLine" id="cb41-8" title="8">      <span class="bu">print</span>(<span class="st">&quot;Merci d&#39;entrer un nombre&quot;</span>)</a>
+<a class="sourceLine" id="cb41-9" title="9">      <span class="cf">continue</span></a>
+<a class="sourceLine" id="cb41-10" title="10">    <span class="cf">if</span> (result <span class="op">&lt;</span> <span class="bu">min</span> <span class="kw">or</span> result <span class="op">&gt;</span> <span class="bu">max</span>):</a>
+<a class="sourceLine" id="cb41-11" title="11">      <span class="bu">print</span>(<span class="st">&quot;Merci d&#39;entrer un nombre valide&quot;</span>)</a>
+<a class="sourceLine" id="cb41-12" title="12">      <span class="cf">continue</span></a>
+<a class="sourceLine" id="cb41-13" title="13">    <span class="cf">return</span> result</a>
+<a class="sourceLine" id="cb41-14" title="14"></a>
+<a class="sourceLine" id="cb41-15" title="15"><span class="kw">def</span> say_goodbye():</a>
+<a class="sourceLine" id="cb41-16" title="16">  <span class="bu">print</span>(<span class="st">&quot;Au revoir&quot;</span>)</a>
+<a class="sourceLine" id="cb41-17" title="17"></a>
+<a class="sourceLine" id="cb41-18" title="18"><span class="kw">def</span> print_list_products(list_products):</a>
+<a class="sourceLine" id="cb41-19" title="19">  <span class="cf">if</span> <span class="bu">len</span>(list_products) <span class="op">==</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb41-20" title="20">    <span class="bu">print</span>(<span class="st">&quot;La liste est vide&quot;</span>)</a>
+<a class="sourceLine" id="cb41-21" title="21">  <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb41-22" title="22">    <span class="bu">print</span>(<span class="ss">f&quot;Produits : </span><span class="sc">{</span><span class="st">&#39;, &#39;</span><span class="sc">.</span>join(list_products)<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb41-23" title="23"></a>
+<a class="sourceLine" id="cb41-24" title="24"><span class="kw">def</span> add_product(list_products):</a>
+<a class="sourceLine" id="cb41-25" title="25">  <span class="cf">while</span> <span class="va">True</span>:</a>
+<a class="sourceLine" id="cb41-26" title="26">    product_to_add <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Que voulez-vous ajouter à votre liste de courses ?&quot;</span>).lower()</a>
+<a class="sourceLine" id="cb41-27" title="27">    <span class="cf">if</span> product_to_add.isspace() <span class="kw">or</span> product_to_add <span class="op">==</span> <span class="st">&quot;&quot;</span>:</a>
+<a class="sourceLine" id="cb41-28" title="28">      <span class="bu">print</span>(<span class="st">&quot;Merci d&#39;entrer un produit&quot;</span>)</a>
+<a class="sourceLine" id="cb41-29" title="29">      <span class="cf">continue</span></a>
+<a class="sourceLine" id="cb41-30" title="30">    <span class="cf">if</span> (list_products.count(product_to_add.strip())) <span class="op">&gt;</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb41-31" title="31">      <span class="bu">print</span>(<span class="ss">f&quot;Le produit &#39;</span><span class="sc">{</span>product_to_add<span class="sc">}</span><span class="ss">&#39; est déja dans votre liste de courses&quot;</span>)</a>
+<a class="sourceLine" id="cb41-32" title="32">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb41-33" title="33">      list_products.append(product_to_add.strip())</a>
+<a class="sourceLine" id="cb41-34" title="34">      <span class="bu">print</span>(<span class="ss">f&quot;Le produit &#39;</span><span class="sc">{</span>product_to_add<span class="sc">}</span><span class="ss">&#39; a été ajouté à votre liste de courses&quot;</span>)</a>
+<a class="sourceLine" id="cb41-35" title="35">    <span class="cf">break</span></a>
+<a class="sourceLine" id="cb41-36" title="36"></a>
+<a class="sourceLine" id="cb41-37" title="37"><span class="kw">def</span> delete_product(list_products):</a>
+<a class="sourceLine" id="cb41-38" title="38">  <span class="cf">while</span> <span class="va">True</span>:</a>
+<a class="sourceLine" id="cb41-39" title="39">    product_to_delete <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Quel produit voulez-vous supprimer ?&quot;</span>).lower()</a>
+<a class="sourceLine" id="cb41-40" title="40">    <span class="cf">if</span> product_to_delete.isspace() <span class="kw">or</span> product_to_delete <span class="op">==</span> <span class="st">&quot;&quot;</span>:</a>
+<a class="sourceLine" id="cb41-41" title="41">      <span class="bu">print</span>(<span class="st">&quot;Merci d&#39;entrer un produit&quot;</span>)</a>
+<a class="sourceLine" id="cb41-42" title="42">      <span class="cf">continue</span></a>
+<a class="sourceLine" id="cb41-43" title="43">    <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb41-44" title="44">      list_products.remove(product_to_delete.strip())</a>
+<a class="sourceLine" id="cb41-45" title="45">      <span class="bu">print</span>(<span class="ss">f&quot;Le produit &#39;</span><span class="sc">{</span>product_to_delete<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">&#39; a été supprimé de votre liste de courses&quot;</span>)</a>
+<a class="sourceLine" id="cb41-46" title="46">    <span class="cf">except</span> <span class="pp">ValueError</span>:</a>
+<a class="sourceLine" id="cb41-47" title="47">      <span class="bu">print</span>(<span class="ss">f&quot;Le produit &#39;</span><span class="sc">{</span>product_to_delete<span class="sc">.</span>strip()<span class="sc">}</span><span class="ss">&#39; n&#39;a pas été trouvé dans votre liste de courses&quot;</span>)</a>
+<a class="sourceLine" id="cb41-48" title="48">    <span class="cf">break</span></a>
+<a class="sourceLine" id="cb41-49" title="49"></a>
+<a class="sourceLine" id="cb41-50" title="50"><span class="kw">def</span> delete_all_products(list_products):</a>
+<a class="sourceLine" id="cb41-51" title="51">  <span class="cf">for</span> product <span class="kw">in</span> list_products.copy():</a>
+<a class="sourceLine" id="cb41-52" title="52">    list_products.remove(product)</a>
+<a class="sourceLine" id="cb41-53" title="53">  <span class="bu">print</span>(<span class="st">&quot;Votre liste de course est désormais vide&quot;</span>)</a>
+<a class="sourceLine" id="cb41-54" title="54"></a>
+<a class="sourceLine" id="cb41-55" title="55">list_products <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb41-56" title="56"><span class="cf">while</span> <span class="va">True</span>:</a>
+<a class="sourceLine" id="cb41-57" title="57">  user_input <span class="op">=</span> get_input_integer(<span class="st">&quot;&quot;&quot;__________ Menu __________</span></a>
+<a class="sourceLine" id="cb41-58" title="58"><span class="st">1- Afficher la liste de courses.</span></a>
+<a class="sourceLine" id="cb41-59" title="59"><span class="st">2- Ajouter un produit a la liste de courses</span></a>
+<a class="sourceLine" id="cb41-60" title="60"><span class="st">3- Retirer un produit de la liste de course </span></a>
+<a class="sourceLine" id="cb41-61" title="61"><span class="st">4- Supprimer toute la liste de courses</span></a>
+<a class="sourceLine" id="cb41-62" title="62"><span class="st">5- Quitter le programme</span></a>
+<a class="sourceLine" id="cb41-63" title="63"><span class="st">Votre choix ?&quot;&quot;&quot;</span>, <span class="dv">1</span>, <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb41-64" title="64">  <span class="cf">if</span> user_input <span class="op">==</span> <span class="dv">5</span>:</a>
+<a class="sourceLine" id="cb41-65" title="65">    say_goodbye()</a>
+<a class="sourceLine" id="cb41-66" title="66">    <span class="cf">break</span></a>
+<a class="sourceLine" id="cb41-67" title="67">  <span class="cf">if</span> user_input <span class="op">==</span> <span class="dv">1</span>:</a>
+<a class="sourceLine" id="cb41-68" title="68">    print_list_products(list_products)</a>
+<a class="sourceLine" id="cb41-69" title="69">  <span class="cf">if</span> user_input <span class="op">==</span> <span class="dv">2</span>:</a>
+<a class="sourceLine" id="cb41-70" title="70">    add_product(list_products)</a>
+<a class="sourceLine" id="cb41-71" title="71">  <span class="cf">if</span> user_input <span class="op">==</span> <span class="dv">3</span>:</a>
+<a class="sourceLine" id="cb41-72" title="72">    delete_product(list_products)</a>
+<a class="sourceLine" id="cb41-73" title="73">  <span class="cf">if</span> user_input <span class="op">==</span> <span class="dv">4</span>:</a>
+<a class="sourceLine" id="cb41-74" title="74">    delete_all_products(list_products)</a>
+<a class="sourceLine" id="cb41-75" title="75">  <span class="bu">input</span>(<span class="st">&quot;Faites Entrée&quot;</span>)</a>
+<a class="sourceLine" id="cb41-76" title="76"></a></code></pre></div>
+<h3 id="ex4.2.py-bonus">EX4.2.PY <em>(Bonus)</em></h3>
+<p><strong><em>Comprehension lists</em></strong>:</p>
+<h4 id="docs">Docs</h4>
+<ul>
+<li><p><a href="https://sametmarx.com/python-love-les-listes-en-intention-partie/" class="uri">https://sametmarx.com/python-love-les-listes-en-intention-partie/</a></p></li>
+<li><p><a href="https://www.w3schools.com/python/python_lists_comprehension.asp" class="uri">https://www.w3schools.com/python/python_lists_comprehension.asp</a></p></li>
+</ul>
+<p><embed src="https://www.w3schools.com/python/python_lists_comprehension.asp" /></p>
+<ul>
+<li><a href="https://pythonguides.com/python-list-comprehension-using-if-else/" class="uri">https://pythonguides.com/python-list-comprehension-using-if-else/</a></li>
+</ul>
+<h3 id="code">Code</h3>
+<div class="sourceCode" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb42-1" title="1"><span class="co"># Les liste en intention (Comphrension List)</span></a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="co"># https://sametmarx.com/python-love-les-listes-en-intention-partie/</span></a>
+<a class="sourceLine" id="cb42-3" title="3"></a>
+<a class="sourceLine" id="cb42-4" title="4"><span class="co">#</span></a>
+<a class="sourceLine" id="cb42-5" title="5"><span class="co"># Exercice: réduire ces liste a l&#39;aide, des listes en compréhension #</span></a>
+<a class="sourceLine" id="cb42-6" title="6"><span class="co">#</span></a>
+<a class="sourceLine" id="cb42-7" title="7">nombres <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">21</span>, <span class="dv">45</span>, <span class="dv">12</span>, <span class="dv">32</span>, <span class="dv">65</span>, <span class="dv">1002</span>, <span class="dv">109</span>, <span class="dv">83</span>]</a>
+<a class="sourceLine" id="cb42-8" title="8">nombres_pairs <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb42-9" title="9"><span class="co"># for i in nombres:</span></a>
+<a class="sourceLine" id="cb42-10" title="10"><span class="co">#     if i % 2 == 0:</span></a>
+<a class="sourceLine" id="cb42-11" title="11"><span class="co">#         nombres_pairs.append(i)</span></a>
+<a class="sourceLine" id="cb42-12" title="12"><span class="co"># print(nombres_pairs)</span></a>
+<a class="sourceLine" id="cb42-13" title="13"></a>
+<a class="sourceLine" id="cb42-14" title="14">nombres_pairs <span class="op">=</span> [ i <span class="cf">for</span> i <span class="kw">in</span> nombres <span class="cf">if</span> (i <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>) ]</a>
+<a class="sourceLine" id="cb42-15" title="15"><span class="bu">print</span>(<span class="ss">f&quot;nombres_pairs:  </span><span class="sc">{</span>nombres_pairs<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb42-16" title="16"></a>
+<a class="sourceLine" id="cb42-17" title="17"><span class="co"># ________________________________________________</span></a>
+<a class="sourceLine" id="cb42-18" title="18"><span class="co"># 2 extraire les nombres positifs l&#39;aide, des listes en compréhension #</span></a>
+<a class="sourceLine" id="cb42-19" title="19">nombres <span class="op">=</span> <span class="bu">range</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb42-20" title="20">nombres_positifs <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb42-21" title="21"><span class="co"># for i in nombres:</span></a>
+<a class="sourceLine" id="cb42-22" title="22"><span class="co">#     if i &gt;= 0:</span></a>
+<a class="sourceLine" id="cb42-23" title="23"><span class="co">#         nombres_positifs.append(i)</span></a>
+<a class="sourceLine" id="cb42-24" title="24"></a>
+<a class="sourceLine" id="cb42-25" title="25">nombres_positifs <span class="op">=</span> [ i <span class="cf">for</span> i <span class="kw">in</span> nombres <span class="cf">if</span> (i <span class="op">&gt;=</span> <span class="dv">0</span>) ]</a>
+<a class="sourceLine" id="cb42-26" title="26"><span class="bu">print</span>(<span class="ss">f&quot;nombres_positifs:   </span><span class="sc">{</span>nombres_positifs<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb42-27" title="27"></a>
+<a class="sourceLine" id="cb42-28" title="28"><span class="co"># ________________________________________________</span></a>
+<a class="sourceLine" id="cb42-29" title="29"><span class="co"># 3</span></a>
+<a class="sourceLine" id="cb42-30" title="30">nombres <span class="op">=</span> <span class="bu">range</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb42-31" title="31">nombres_doubles <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb42-32" title="32"><span class="co"># for i in nombres:</span></a>
+<a class="sourceLine" id="cb42-33" title="33"><span class="co">#     nombres_doubles.append(i * 2)</span></a>
+<a class="sourceLine" id="cb42-34" title="34"></a>
+<a class="sourceLine" id="cb42-35" title="35">nombres_doubles <span class="op">=</span> [ (i <span class="op">*</span> <span class="dv">2</span>) <span class="cf">for</span> i <span class="kw">in</span> nombres ]</a>
+<a class="sourceLine" id="cb42-36" title="36"><span class="bu">print</span>(<span class="ss">f&quot;nombres_doubles:    </span><span class="sc">{</span>nombres_doubles<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb42-37" title="37"></a>
+<a class="sourceLine" id="cb42-38" title="38"><span class="co"># ________________________________________________</span></a>
+<a class="sourceLine" id="cb42-39" title="39"><span class="co"># 4. Si nombre est pair il reste tel quel, si il est impair il devient impair</span></a>
+<a class="sourceLine" id="cb42-40" title="40"><span class="co"># 1 devient -1 , 2 devient 2, -5 devient 5</span></a>
+<a class="sourceLine" id="cb42-41" title="41">nombres <span class="op">=</span> <span class="bu">range</span>(<span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb42-42" title="42">nombres_inverses <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb42-43" title="43"><span class="co"># for i in nombres:</span></a>
+<a class="sourceLine" id="cb42-44" title="44"><span class="co">#     if i % 2 == 0:</span></a>
+<a class="sourceLine" id="cb42-45" title="45"><span class="co">#         nombres_inverses.append(i)</span></a>
+<a class="sourceLine" id="cb42-46" title="46"><span class="co">#     else:</span></a>
+<a class="sourceLine" id="cb42-47" title="47"><span class="co">#         nombres_inverses.append(-i)</span></a>
+<a class="sourceLine" id="cb42-48" title="48"></a>
+<a class="sourceLine" id="cb42-49" title="49">nombres_inverses <span class="op">=</span> [ <span class="op">-</span>i <span class="cf">if</span> (i <span class="op">%</span> <span class="dv">2</span> <span class="op">!=</span> <span class="dv">0</span> ) <span class="cf">else</span> i <span class="cf">for</span> i <span class="kw">in</span> nombres ]</a>
+<a class="sourceLine" id="cb42-50" title="50"><span class="bu">print</span>(<span class="ss">f&quot;nombres_inverses:   </span><span class="sc">{</span>nombres_inverses<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb42-51" title="51"></a></code></pre></div>
+<h5 id="résultat-2">Résultat</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-28_12h20_44.png" /></p>
+<h2 id="les-tuples">Les Tuples</h2>
+<div class="info">
+<p>Les <strong>tuples</strong> sont des listes qui ne sont pas modifiables <em>(lecture seule)</em></p>
+Sur de très grandes quantités de données les tuples sont plus performantes à condition bien sûr que ces données n’est pas besoin d’être modifiées. .
+</div>
+<h3 id="création-de-tuple">Création de tuple</h3>
+<div class="sourceCode" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb43-1" title="1">prenoms <span class="op">=</span> (<span class="st">&quot;Vincent&quot;</span>, <span class="st">&quot;David&quot;</span>, <span class="st">&quot;Valentin&quot;</span>, <span class="st">&quot;Valentin&quot;</span>, <span class="st">&quot;Valentin&quot;</span>)</a>
+<a class="sourceLine" id="cb43-2" title="2"><span class="bu">print</span>(prenoms)</a>
+<a class="sourceLine" id="cb43-3" title="3"></a>
+<a class="sourceLine" id="cb43-4" title="4"><span class="bu">print</span>( prenoms[<span class="dv">0</span>] )</a>
+<a class="sourceLine" id="cb43-5" title="5"><span class="bu">print</span>( prenoms[<span class="dv">2</span>] )</a>
+<a class="sourceLine" id="cb43-6" title="6"></a>
+<a class="sourceLine" id="cb43-7" title="7"><span class="cf">for</span> prenom <span class="kw">in</span> prenoms:</a>
+<a class="sourceLine" id="cb43-8" title="8">    <span class="bu">print</span>(prenom)</a>
+<a class="sourceLine" id="cb43-9" title="9">    </a>
+<a class="sourceLine" id="cb43-10" title="10">index <span class="op">=</span> prenoms.index(<span class="st">&quot;David&quot;</span>)</a>
+<a class="sourceLine" id="cb43-11" title="11"><span class="bu">print</span>(<span class="ss">f&quot;Index: </span><span class="sc">{</span>index<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb43-12" title="12"></a>
+<a class="sourceLine" id="cb43-13" title="13">nombre <span class="op">=</span> prenoms.count(<span class="st">&quot;Valentin&quot;</span>)</a>
+<a class="sourceLine" id="cb43-14" title="14"><span class="bu">print</span>(<span class="ss">f&#39;il y a </span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss"> fois le prénom &quot;Valentin&quot; dans la liste&#39;</span>)</a></code></pre></div>
+<h3 id="déballage-de-tuple-unpacking">Déballage de tuple “unpacking”</h3>
+<div class="sourceCode" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb44-1" title="1"><span class="co"># prenom = prenoms[0]</span></a>
+<a class="sourceLine" id="cb44-2" title="2"><span class="co"># prenom2 = prenoms[1]</span></a>
+<a class="sourceLine" id="cb44-3" title="3"><span class="co"># prenom3 = prenoms[2]</span></a>
+<a class="sourceLine" id="cb44-4" title="4"></a>
+<a class="sourceLine" id="cb44-5" title="5">prenom, prenom2, prenom3 <span class="op">=</span> prenoms</a>
+<a class="sourceLine" id="cb44-6" title="6"><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>prenom<span class="sc">}</span><span class="ss"> est de type </span><span class="sc">{</span><span class="bu">type</span>(prenom)<span class="sc">}</span><span class="ss"> &quot;</span>)</a>
+<a class="sourceLine" id="cb44-7" title="7"></a>
+<a class="sourceLine" id="cb44-8" title="8">prenom, prenom2 <span class="op">=</span> <span class="st">&quot;toto&quot;</span>, <span class="st">&quot;tata&quot;</span></a>
+<a class="sourceLine" id="cb44-9" title="9"></a>
+<a class="sourceLine" id="cb44-10" title="10"></a>
+<a class="sourceLine" id="cb44-11" title="11">prenoms <span class="op">=</span> (<span class="st">&quot;Vincent&quot;</span>, <span class="st">&quot;David&quot;</span>, <span class="st">&quot;Valentin&quot;</span>, <span class="st">&quot;Valentin&quot;</span>, <span class="st">&quot;Valentin&quot;</span>)</a>
+<a class="sourceLine" id="cb44-12" title="12"></a>
+<a class="sourceLine" id="cb44-13" title="13">prenom, prenom2, prenom3, <span class="op">*</span>reste <span class="op">=</span> prenoms <span class="co"># rest est de type list</span></a>
+<a class="sourceLine" id="cb44-14" title="14"><span class="bu">print</span>(reste)</a>
+<a class="sourceLine" id="cb44-15" title="15"></a>
+<a class="sourceLine" id="cb44-16" title="16">t <span class="op">=</span> <span class="bu">tuple</span>(reste) <span class="co"># Transformation de list en tuple</span></a>
+<a class="sourceLine" id="cb44-17" title="17">liste_prenoms <span class="op">=</span> <span class="bu">list</span>(prenoms) <span class="co"># Transformation de tuple en liste</span></a>
+<a class="sourceLine" id="cb44-18" title="18"><span class="bu">print</span>(t, liste_prenoms)</a>
+<a class="sourceLine" id="cb44-19" title="19"></a></code></pre></div>
+<h2 id="les-dictionnaires">Les Dictionnaires</h2>
+<div class="info">
+<p>Un Dictionnaire est une séquence non-ordonnée.</p>
+Avec une association clé/valeur, où la clé est unique.
+</div>
+<h3 id="déclaration-dun-dictionnaire">Déclaration d’un dictionnaire</h3>
+<div class="sourceCode" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># dictionnnaire = {clef: &quot;valeur&quot;, clef2: &#39;valeur&#39;}</span></a>
+<a class="sourceLine" id="cb45-2" title="2">dictionnaire <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb45-3" title="3">    <span class="st">&quot;Ornithorynque&quot;</span>: <span class="st">&quot;Animal semi-aquatique très étrange&quot;</span>,</a>
+<a class="sourceLine" id="cb45-4" title="4">    <span class="st">&quot;herbe&quot;</span>: <span class="st">&quot;pelouse verte&quot;</span>,</a>
+<a class="sourceLine" id="cb45-5" title="5">    <span class="co"># &quot;herbe&quot;: &#39;Salut&#39; &lt;- si on fait ca, on écrase la valeur précédente, car la clef existe deja</span></a>
+<a class="sourceLine" id="cb45-6" title="6">}</a>
+<a class="sourceLine" id="cb45-7" title="7"></a>
+<a class="sourceLine" id="cb45-8" title="8"><span class="bu">print</span>( dictionnaire[<span class="st">&quot;Ornithorynque&quot;</span>] )</a>
+<a class="sourceLine" id="cb45-9" title="9"><span class="bu">print</span>( dictionnaire[<span class="st">&quot;herbe&quot;</span>] )</a>
+<a class="sourceLine" id="cb45-10" title="10"></a>
+<a class="sourceLine" id="cb45-11" title="11"><span class="co"># regroupe un ensemble de caractèristiques</span></a>
+<a class="sourceLine" id="cb45-12" title="12"></a>
+<a class="sourceLine" id="cb45-13" title="13">utilisateur <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb45-14" title="14">    <span class="st">&quot;nom&quot;</span>: <span class="st">&quot;Doe&quot;</span>,</a>
+<a class="sourceLine" id="cb45-15" title="15">    <span class="st">&quot;prenom&quot;</span>: <span class="st">&quot;John&quot;</span>,</a>
+<a class="sourceLine" id="cb45-16" title="16">    <span class="st">&quot;age&quot;</span>: <span class="dv">15</span></a>
+<a class="sourceLine" id="cb45-17" title="17">}</a>
+<a class="sourceLine" id="cb45-18" title="18"></a>
+<a class="sourceLine" id="cb45-19" title="19"><span class="bu">print</span>( utilisateur[<span class="st">&#39;nom&#39;</span>] )</a></code></pre></div>
+<h4 id="exemple-perso">Exemple perso</h4>
+<div class="sourceCode" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb46-1" title="1">tuple_firstnames <span class="op">=</span> (<span class="st">&quot;David&quot;</span>, <span class="st">&quot;Hubert&quot;</span>, <span class="st">&quot;Denis&quot;</span>, <span class="st">&quot;Marc&quot;</span>)</a>
+<a class="sourceLine" id="cb46-2" title="2">list_ages <span class="op">=</span> [<span class="dv">33</span>, <span class="dv">32</span>, <span class="dv">27</span>, <span class="dv">23</span>]</a>
+<a class="sourceLine" id="cb46-3" title="3">family <span class="op">=</span> {<span class="st">&quot;name&quot;</span>:<span class="st">&quot;Debray&quot;</span>, <span class="st">&quot;firstname&quot;</span>:tuple_firstnames, <span class="st">&quot;age&quot;</span>:list_ages}</a>
+<a class="sourceLine" id="cb46-4" title="4"></a>
+<a class="sourceLine" id="cb46-5" title="5"><span class="bu">print</span>(family)</a>
+<a class="sourceLine" id="cb46-6" title="6"></a>
+<a class="sourceLine" id="cb46-7" title="7"><span class="bu">print</span>(family[<span class="st">&quot;firstname&quot;</span>][<span class="dv">0</span>])</a></code></pre></div>
+<h5 id="résultat-3">Résultat</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-28_14h44_07.gif" /></p>
+<h3 id="recherche-dans-un-dictionnaire">Recherche dans un Dictionnaire</h3>
+<div class="sourceCode" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb47-1" title="1"><span class="co"># Recherche dans un dictionnaire</span></a>
+<a class="sourceLine" id="cb47-2" title="2">mot <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;De quel mot voulez-vous a définition ?     &quot;</span>)</a>
+<a class="sourceLine" id="cb47-3" title="3">definition <span class="op">=</span> dictionnaire.get(mot)</a>
+<a class="sourceLine" id="cb47-4" title="4"><span class="cf">if</span> definition:</a>
+<a class="sourceLine" id="cb47-5" title="5">    <span class="bu">print</span> (<span class="ss">f&quot;Définition de </span><span class="sc">{</span>mot<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>definition<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb47-6" title="6"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb47-7" title="7">    <span class="bu">print</span>(<span class="ss">f&quot;Le mot </span><span class="sc">{</span>mot<span class="sc">}</span><span class="ss"> n&#39;est pas défini dans ce dictionnaire&quot;</span>)</a></code></pre></div>
+<h5 id="résultat-4">Résultat</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-28_14h54_29.png" /></p>
+<h3 id="parcourir-un-dictionnaire">Parcourir un dictionnaire</h3>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb48-1" title="1"><span class="bu">print</span>(<span class="st">&quot;----- Parcourir un dictionnaire ------&quot;</span>)</a>
+<a class="sourceLine" id="cb48-2" title="2"></a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="cf">for</span> clef <span class="kw">in</span> utilisateur:</a>
+<a class="sourceLine" id="cb48-4" title="4">    <span class="bu">print</span>(<span class="ss">f&quot;Clef: </span><span class="sc">{</span>clef<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb48-5" title="5">    <span class="bu">print</span>(<span class="ss">f&quot;Valeur: </span><span class="sc">{</span> utilisateur<span class="sc">.</span>get(clef) <span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb48-6" title="6">    </a>
+<a class="sourceLine" id="cb48-7" title="7"></a>
+<a class="sourceLine" id="cb48-8" title="8"><span class="bu">print</span>(<span class="st">&quot; =&gt;Uniquement les valeurs &quot;</span>)</a>
+<a class="sourceLine" id="cb48-9" title="9"><span class="co"># dictionnaire.values() ressemble a une liste mais ce n&#39;est pas une liste</span></a>
+<a class="sourceLine" id="cb48-10" title="10"><span class="co"># par contre, on peut facilement convertir en liste.</span></a>
+<a class="sourceLine" id="cb48-11" title="11"><span class="co"># Et la boucle for c&#39;est le lire les dict_values</span></a>
+<a class="sourceLine" id="cb48-12" title="12"> </a>
+<a class="sourceLine" id="cb48-13" title="13">valeurs <span class="op">=</span> <span class="bu">list</span>(utilisateur.values())</a>
+<a class="sourceLine" id="cb48-14" title="14"><span class="bu">print</span>(valeurs)</a>
+<a class="sourceLine" id="cb48-15" title="15"></a>
+<a class="sourceLine" id="cb48-16" title="16"></a>
+<a class="sourceLine" id="cb48-17" title="17"><span class="cf">for</span> valeur <span class="kw">in</span> utilisateur.values():</a>
+<a class="sourceLine" id="cb48-18" title="18">    <span class="bu">print</span>(<span class="ss">f&quot;valeur: </span><span class="sc">{</span>valeur<span class="sc">}</span><span class="ss">&quot;</span>)    </a></code></pre></div>
+<h3 id="utilisation-de-items">Utilisation de <code>items()</code></h3>
+<p><code>dictionnaire.items()</code> ressemble a une liste mais ce n’est pas une liste par contre, on peut facilement convertir en liste.</p>
+<p>Et la boucle for c’est le “lire” les dict_items.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb49-1" title="1"></a>
+<a class="sourceLine" id="cb49-2" title="2">items <span class="op">=</span> <span class="bu">list</span>(utilisateur.items())</a>
+<a class="sourceLine" id="cb49-3" title="3"><span class="bu">print</span>(items)</a>
+<a class="sourceLine" id="cb49-4" title="4"></a>
+<a class="sourceLine" id="cb49-5" title="5"><span class="co"># Fonctionnement basique</span></a>
+<a class="sourceLine" id="cb49-6" title="6"><span class="bu">print</span>(<span class="st">&quot; =&gt; Clef + valeurs &quot;</span>)</a>
+<a class="sourceLine" id="cb49-7" title="7"><span class="cf">for</span> item <span class="kw">in</span> utilisateur.items():</a>
+<a class="sourceLine" id="cb49-8" title="8">    <span class="co"># print(item)</span></a>
+<a class="sourceLine" id="cb49-9" title="9">    clef <span class="op">=</span> item[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb49-10" title="10">    valeur <span class="op">=</span> item[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb49-11" title="11">    <span class="bu">print</span>(<span class="ss">f&quot;Clef: </span><span class="sc">{</span>clef<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>valeur<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb49-12" title="12"></a>
+<a class="sourceLine" id="cb49-13" title="13"><span class="co"># Déballage de tuple</span></a>
+<a class="sourceLine" id="cb49-14" title="14"><span class="cf">for</span> item <span class="kw">in</span> utilisateur.items():</a>
+<a class="sourceLine" id="cb49-15" title="15">    <span class="co"># print(item)</span></a>
+<a class="sourceLine" id="cb49-16" title="16">    clef, valeur <span class="op">=</span> item</a>
+<a class="sourceLine" id="cb49-17" title="17">    <span class="bu">print</span>(<span class="ss">f&quot;Clef: </span><span class="sc">{</span>clef<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>valeur<span class="sc">}</span><span class="ss">&quot;</span>)</a></code></pre></div>
+<h4 id="utilisation-avancée-recommandée">Utilisation avancée <em>(recommandée)</em></h4>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb50-1" title="1"></a>
+<a class="sourceLine" id="cb50-2" title="2"><span class="cf">for</span> clef, valeur <span class="kw">in</span> utilisateur.items():</a>
+<a class="sourceLine" id="cb50-3" title="3">    <span class="bu">print</span>(<span class="ss">f&quot;Clef: </span><span class="sc">{</span>clef<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>valeur<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb50-4" title="4"></a></code></pre></div>
+<p>Ici on déballe le tuple directement dans l’instruction “for”.</p>
+<h1 id="programmation-orientée-objet">Programmation Orientée Objet</h1>
+<p>POO <em>(fr)</em>: Programmation Orientée Objet.</p>
+<p>OPP <em>(english)</em>: Object Oriented Programmation</p>
+<h2 id="rappel-les-chaînes-de-caractères-str">Rappel: Les Chaînes de caractères <em>(str)</em></h2>
+<ul>
+<li><a href="https://www.w3schools.com/python/python_ref_string.asp" class="uri">https://www.w3schools.com/python/python_ref_string.asp</a></li>
+</ul>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" title="1"><span class="co"># Exemples de gestion de chaînes de caractères</span></a>
+<a class="sourceLine" id="cb51-2" title="2"></a>
+<a class="sourceLine" id="cb51-3" title="3">prenom <span class="op">=</span> <span class="st">&quot;David&quot;</span></a>
+<a class="sourceLine" id="cb51-4" title="4"></a>
+<a class="sourceLine" id="cb51-5" title="5"><span class="bu">print</span>(prenom.lower())</a>
+<a class="sourceLine" id="cb51-6" title="6"><span class="bu">print</span>(prenom.upper())</a>
+<a class="sourceLine" id="cb51-7" title="7"></a>
+<a class="sourceLine" id="cb51-8" title="8"><span class="bu">print</span>( prenom.replace(<span class="st">&#39;i&#39;</span>, <span class="st">&#39;iii&#39;</span>) )</a>
+<a class="sourceLine" id="cb51-9" title="9"><span class="bu">print</span>( prenom.startswith(<span class="st">&#39;D&#39;</span>) ) <span class="co"># =&gt; bool (True/False)</span></a>
+<a class="sourceLine" id="cb51-10" title="10"></a>
+<a class="sourceLine" id="cb51-11" title="11"><span class="bu">print</span>( prenom.endswith(<span class="st">&#39;.com&#39;</span>) ) <span class="co"># =&gt; Site web ? (bool)</span></a>
+<a class="sourceLine" id="cb51-12" title="12"></a>
+<a class="sourceLine" id="cb51-13" title="13"><span class="bu">print</span>( prenom.istitle() ) <span class="co"># Si Tous Les Mots Sont Capitalisés =&gt; True (bool)</span></a></code></pre></div>
+<h2 id="les-classes">Les Classes</h2>
+<p>Une <strong>classe</strong> est un modèle <em>(moule)</em> qui permet de fabriquer nos propres objets.</p>
+<p>Une classe se déclare en utilisant le <em>“PascalCase”</em>, la première lettre de chaque mot est une majuscule, tout est attaché.</p>
+<h3 id="exemple-pratique">Exemple Pratique</h3>
+<p>Dans cet exemple on créer un petit jeu avec des personnages. Pour créer nos personnages on utilise une classe <code>ClassPersonnage</code>.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">class</span> ClassPersonnage:</a>
+<a class="sourceLine" id="cb52-2" title="2">    id_character <span class="op">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb52-3" title="3">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, weapon, health<span class="op">=</span><span class="dv">100</span>, xp<span class="op">=</span><span class="dv">0</span>, rank<span class="op">=</span><span class="st">&quot;noob&quot;</span>, warcry<span class="op">=</span><span class="st">&quot;Rrrrrrr!&quot;</span>, ouchie<span class="op">=</span><span class="dv">10</span>):</a>
+<a class="sourceLine" id="cb52-4" title="4">        <span class="va">self</span>.name <span class="op">=</span> name</a>
+<a class="sourceLine" id="cb52-5" title="5">        <span class="va">self</span>.weapon <span class="op">=</span> weapon</a>
+<a class="sourceLine" id="cb52-6" title="6">        <span class="va">self</span>.health <span class="op">=</span> health</a>
+<a class="sourceLine" id="cb52-7" title="7">        <span class="va">self</span>.xp <span class="op">=</span> xp</a>
+<a class="sourceLine" id="cb52-8" title="8">        <span class="va">self</span>.rank <span class="op">=</span> rank</a>
+<a class="sourceLine" id="cb52-9" title="9">        <span class="va">self</span>.warcry <span class="op">=</span> warcry</a>
+<a class="sourceLine" id="cb52-10" title="10">        <span class="va">self</span>.ouchie <span class="op">=</span> ouchie</a>
+<a class="sourceLine" id="cb52-11" title="11">        ClassPersonnage.id_character <span class="op">+=</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb52-12" title="12">    </a>
+<a class="sourceLine" id="cb52-13" title="13">    <span class="kw">def</span> fight(<span class="va">self</span>, target):</a>
+<a class="sourceLine" id="cb52-14" title="14">        <span class="bu">print</span>(<span class="st">&quot;______________________________________________________________________&quot;</span>)</a>
+<a class="sourceLine" id="cb52-15" title="15">        <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> attaque </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss">:&quot;</span>)</a>
+<a class="sourceLine" id="cb52-16" title="16">        <span class="bu">print</span>(<span class="ss">f&quot; - </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">:  </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>warcry<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb52-17" title="17">        target.health <span class="op">-=</span> <span class="va">self</span>.ouchie</a>
+<a class="sourceLine" id="cb52-18" title="18">        <span class="bu">print</span>(<span class="ss">f&quot; - </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss">: Aïe !  &quot;</span>)</a>
+<a class="sourceLine" id="cb52-19" title="19">        <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span><span class="ch">\t</span><span class="ss"> ==&gt; </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> a morflé grave !! Il lui reste </span><span class="sc">{</span>target<span class="sc">.</span>health<span class="sc">}</span><span class="ss"> points de vie. Mouhahaha !!! </span></a>
+<a class="sourceLine" id="cb52-20" title="20"><span class="ss">        &quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb52-21" title="21"></a>
+<a class="sourceLine" id="cb52-22" title="22"><span class="co"># Création des personnages</span></a>
+<a class="sourceLine" id="cb52-23" title="23">player_1 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Odin&quot;</span>, <span class="st">&quot;Gungnir&quot;</span>, <span class="dv">1000000</span>, <span class="dv">100</span>, rank<span class="op">=</span><span class="st">&quot;BOSS&quot;</span>)</a>
+<a class="sourceLine" id="cb52-24" title="24">player_2 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Thor&quot;</span>, <span class="st">&quot;Mijolnir&quot;</span>, <span class="dv">1000000</span>, <span class="dv">100</span>, <span class="st">&quot;BadASS&quot;</span>, ouchie<span class="op">=</span><span class="dv">999999</span>)</a>
+<a class="sourceLine" id="cb52-25" title="25">player_3 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Perceval&quot;</span>, <span class="st">&quot;petits cailloux&quot;</span>, xp<span class="op">=-</span><span class="dv">8</span>, rank<span class="op">=</span><span class="st">&quot;Chevalier&quot;</span>, warcry<span class="op">=</span><span class="st">&quot;C&#39;est pas faux !&quot;</span> )</a>
+<a class="sourceLine" id="cb52-26" title="26"><span class="co">## Affichage des personnages </span></a>
+<a class="sourceLine" id="cb52-27" title="27">tuple_players <span class="op">=</span> (player_1, player_2, player_3)</a>
+<a class="sourceLine" id="cb52-28" title="28"><span class="cf">for</span> player <span class="kw">in</span> tuple_players:</a>
+<a class="sourceLine" id="cb52-29" title="29">    <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb52-30" title="30"><span class="ss">    ------- Personnage: </span><span class="sc">{</span>player<span class="sc">.</span>name<span class="sc">}</span><span class="ss">,  -------</span></a>
+<a class="sourceLine" id="cb52-31" title="31"><span class="ss">    Arme: </span><span class="sc">{</span>player<span class="sc">.</span>weapon<span class="sc">}</span><span class="ss">      Points de vie: </span><span class="sc">{</span>player<span class="sc">.</span>health<span class="sc">}</span><span class="ss">     Expérience: </span><span class="sc">{</span>player<span class="sc">.xp}</span><span class="ss">    Niveau: </span><span class="sc">{</span>player<span class="sc">.</span>rank<span class="sc">}</span><span class="ss">  </span></a>
+<a class="sourceLine" id="cb52-32" title="32"><span class="ss">    &quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb52-33" title="33"></a>
+<a class="sourceLine" id="cb52-34" title="34"><span class="co"># Print IDs</span></a>
+<a class="sourceLine" id="cb52-35" title="35"><span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb52-36" title="36"><span class="ss">Il y a </span><span class="sc">{</span>ClassPersonnage<span class="sc">.</span>id_character<span class="sc">}</span><span class="ss"> personnages prêts à se battre ! </span></a>
+<a class="sourceLine" id="cb52-37" title="37"><span class="ss">&quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb52-38" title="38"></a>
+<a class="sourceLine" id="cb52-39" title="39"><span class="co"># C&#39;est ici que ça bastonne ^^</span></a>
+<a class="sourceLine" id="cb52-40" title="40">player_3.fight(player_2)</a>
+<a class="sourceLine" id="cb52-41" title="41">player_2.fight(player_3)</a></code></pre></div>
+<h5 id="résultat-5">Résultat:</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-28_17h16_13.png" /></p>
+<!-- ## Atelier : Construction d'une bibliothèque de fonctions
+
+ 
+# Maîtriser l'Objet et modéliser une implémentation
+
+Différents styles de programmation, apports de l'objet
+Objet et classes
+Gestion des attributs et méthodes
+Instanciation, destruction
+Encapsuler les données et utiliser des propriétés
+Agrégation d'objets
+Héritage simple et multiples
+Polymorphisme
+Introspection
+Utilisation d'interfaces
+
+ 
+# Manipuler des données
+
+Manipulation de fichiers
+Parsing Xml, JSON
+Gestion des logs avec Python
+Documentation du code et génération de rendu HTML
+Utiliser des bases de données avec Python, DBAPI
+
+## Atelier : Manipulation de fichiers et opérations liées à une base de données SQLite.
+
+
+
+# Construire une interface graphique
+
+Bibliothèques graphiques en Python
+Tkinter vs PyQT ou autre
+Widgets graphiques
+Menus
+Positionnement des composants
+Gestion des fenêtres
+Gestion des évènements
+
+## Atelier : Implémentation d'une interface graphique complète d'une application
+ -->
 <hr />
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h2 id="raccourcis-visual-studio">Raccourcis Visual Studio</h2>
