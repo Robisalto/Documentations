@@ -51,7 +51,7 @@ Document: [Formation_Python_init_appro_V3.pdf](2021-07-26-POEI-Python/Formation_
 - Mise en oeuvre de Python : accès au terminal
 - Environnements de développement assistés ; association à des outils connus et éditeurs pratiques
 
-## Atelier : Mise en place d'un environnement de développement
+## Environnement de Dev
 
 ### Installation d'un environnement Virtuel:
 
@@ -99,7 +99,9 @@ pip install pylint
 
 Syntaxe de base, en interprétation directe et en script
 
-## Déclarer des variables en Python, types internes et leur utilisation
+## Déclaration de Variables
+
+**Déclarer des variables en Python, types internes et leur utilisation**
 
 Une variable c'est une zone mémoire dans laquelle on peut stocker des informations.
 Par exemple: le nom de l'utilisateur, l'age etc...
@@ -113,10 +115,10 @@ Il y a plusieurs types de variables en python:
 - Booléen (bool)
 
 
-### Python est un langage dynamiquement typé: 
+#### Python est un langage dynamiquement typé: 
 Les types sont implicites et une variable peut changer à n'importe quel moment. 
 
-### Python est un langage fortement typé: 
+#### Python est un langage fortement typé: 
 On ne peut pas faire d’opération entre les types différents types.
 
 Il y a des règles à respecter dans le nommage des variables:
@@ -1707,6 +1709,73 @@ for clef, valeur in utilisateur.items():
 
 Ici on déballe le tuple directement dans l'instruction "for".
 
+### TP: ex5.py
+
+```python
+###########################################################################################################
+# Transformer la liste de courses:
+#   La liste de courses reste une liste mais on y mettra des dictionnaires dedans.
+#       un dictionnaire contient: un nom de produit (str) et une quantité (int)
+
+# soit vous transformez la liste de courses en dictionnaire
+# soit vous ajouter des dictionnaires dans votre liste
+###########################################################################################################
+
+print("""
+    1- Afficher la liste de courses.
+    2- Ajouter un produit a la liste de courses
+    3- Retirer un produit de la liste de course 
+    4- Supprimer toute la liste de courses
+    5- Quitter le programme
+""")
+
+courses = {
+    "pommes": 10,
+    "poires": 2
+}
+continuer = True
+# while continuer == True:
+while continuer:
+    choix = input("Que voulez-vous faire ? ")
+    if choix == "1":
+        # if courses == []
+        if not courses:
+            print("La liste de course est vide")
+        else:
+            for produit, quantite in courses.items():
+                print(f"- { produit.capitalize() } : {quantite} ")
+
+    
+    elif choix == "2":
+        nom_produit = input("Quel est le nom du produit à ajouter ? ").lower()
+        quantite_produit = input("Combien en voulez-vous ? ")
+        int(quantite_produit)
+        courses.update({nom_produit:quantite_produit})
+        print(f" {quantite_produit} {nom_produit} ont bien été ajouté(es)")
+
+    elif choix == "3":
+        nom_produit = input("Quel est le nom du produit à supprimer ? ").lower()
+        if nom_produit in courses:
+            print(f" {courses.get(nom_produit)} {nom_produit} ont bien été supprimé(es)")
+            courses.pop(nom_produit)
+        else:
+            print(f"{nom_produit} n'est pas dans la liste")
+    elif choix == "4":
+        courses.clear()
+        print(f"La liste de courses à bien été vidée.")
+    elif choix == "5":
+        print("Au revoir")
+        continuer = False
+    else:
+        print("Je n'ai compris")
+```
+
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-29_15h55_55.gif)
+
+
+
 
 # Programmation Orientée Objet
 
@@ -1799,6 +1868,420 @@ player_2.fight(player_3)
 ![](2021-07-26-POEI-Python/2021-07-28_17h16_13.png)
 
 
+
+# Les Modules
+
+Un module: c'est un fichier qui contient du code (classes, fonctions, etc..)
+
+Par défaut, python ne charge pas toutes les fonctions directement pour éviter
+de ralentir le programme au demarrage
+
+On a plein d'autre fonctions qui se trouve dans des modules. Il suffit d'importe le module
+pour utiliser les fonctions qu'il contient.
+
+***Documentation:*** <https://realpython.com/python-import/#absolute-and-relative-imports>
+
+
+## Importation de module(s)
+
+
+Dans le fichier `mymodule.py` on renseigne nos fonctions:
+```python
+# File: mymodule.py
+def afficher_table(nombre, max=10):
+    compteur = 0
+    while compteur <= max:
+        resultat = nombre * compteur
+        print(f"{nombre} x {compteur} = {resultat}")
+        compteur += 1  
+
+
+
+def rot11(message):
+    ROT = 11
+    MIN_CHAR_UPPER = 65 # A
+    MAX_CHAR_UPPER = 90 # Z
+    MIN_CHAR_LOWER = 97 # a
+    MAX_CHAR_LOWER = 122 # z
+    hidden_msg = ""
+    for letter in message:
+        char = ord(letter) # 83
+        if (char >= MIN_CHAR_LOWER and char <= MAX_CHAR_LOWER):
+            hidden_msg += chr((((char - MIN_CHAR_LOWER) + ROT) %
+                              26) + MIN_CHAR_LOWER)
+        elif (char >= MIN_CHAR_UPPER and char <= MAX_CHAR_UPPER):
+            # 83 - 65 = 18 
+            # 18 + 11 = 29 
+            # 29 % 26 = 1 et il reste 3
+            # 3 + 65 = 68 = D
+            hidden_msg += chr((((char - MIN_CHAR_UPPER) + ROT) %
+                              26) + MIN_CHAR_UPPER)
+    return hidden_msg
+
+```
+
+Puis dans le fichier `app.py`, on importe puis on appelle nos fonctions:
+
+```python
+# File: app.py
+
+from mymodule import afficher_table,rot11
+
+afficher_table(28)
+print(rot11("This works !"))
+
+```
+
+##### Résultat:
+
+![](2021-07-26-POEI-Python/2021-07-29_11h25_04.png)
+
+## Installation de modules
+
+Avec Python on peut installer d'autres modules très puissant, par exemple `pandas`.
+
+
+```python
+# File: install.py
+# _________________
+
+# https://pypi.org/
+
+# pip install monpackage  
+# pip install -r requirements.txt
+
+# pip list: pour voir tous ce qui est installé
+
+import pandas
+import os
+
+os.system('pip install -r requirements.txt')
+
+```
+
+Avec dans le fichier *requirements.txt*:
+
+```python
+# File: requirements.txt
+
+pandas
+pdoc3
+colorama
+pylint
+pyinstaller
+
+```
+
+
+# Gestion des erreurs
+
+Lorsque python rencontre une erreur, on dit que python leve une exception
+Si on ne traite pas cette exceptions, le programme quitte sur une erreur.
+
+1/0
+print("On continue")
+
+pour capturer une erreur, on commence par faire un bloc `try`.
+
+On essaye de faire une instruction qui peut generer une erreur
+
+Et on met le bloc except: s'il y a une erreur, on explicite le traitement.
+
+`try/except`:
+
+
+```python
+try:
+    1 / 0
+except:
+    print("La division par 0 n'est pas possible")
+    
+print("On continue")
+
+
+nombre = input("Saisir un nombre: ")
+try:
+    nombre = int(nombre)
+    resultat = 5 / nombre
+except ZeroDivisionError:
+    print("La division par 0 n'est pas possible")
+except ValueError:
+    print("Vous devez saisir un nombre")
+# python créer automatiquement une instance de la class Exception.
+# on peut recuperer cette instance grace au mot clef 'as' et lui donner le nom que l'on veut
+except Exception as erreur:
+    print("Autre erreur: ", erreur)
+    print("Trace: ", erreur.with_traceback())
+else:
+    print("Super ! tout s'est bien passé")
+finally:
+    print("Peu ce qu'il arrive, on passe ici ! ")
+
+
+
+nombre = "0"
+while ((not nombre.isnumeric()) or nombre == "0"):
+    nombre = input("Saisir un nombre: ")
+else:
+    nombre = int(nombre)
+
+```
+
+# Gestion de fichiers
+
+## Lire / écrire dans des fichiers
+
+### Open un fichier
+
+```python
+# File: ecriture.py
+# _________________
+
+# Ouvrir un fichier
+fichier = open('/chemin/message.txt', 'w', encoding="utf-8")
+print(fichier)
+fichier.write('Salut tout le monde !')
+
+fichier.close() # Fermeture du fichier
+
+```
+
+La fonction `open` peut prendre plusieurs paramètres:
+
+1. Le **chemin** vers le fichier
+2. Le mode: `w`: write ou `r`: read
+3. Encodage: `encoding="utf-8"`
+
+<div class=info> En mode `write`, si le fichier n'existe pas, il sera créé. </div>
+
+### Gestion de répertoires
+
+Récupérer le répertoire courant:
+
+```python
+# Get Current Working Directory
+os.getcwd()
+
+```
+
+Gérer le nom du fichier:
+
+```python
+import os
+
+chemin_fichier = os.path.join(
+    os.getcwd(),
+    "10-fichiers",
+    "01-text",
+    "message.txt"
+    )
+
+```
+
+
+#### ecriture.py
+
+```python
+import os
+import sys
+print( sys.getsizeof(os) )
+
+# Pour ouvrir un fichier on utilise la fonction open()
+# Cette fonction prend plusieurs paramètres dont:
+#   - le chemin vers le fichier
+#   - le mode de lecture 'w' : write, 'r': read, append/ajout 'a'
+#   - encodage
+# En mode ecriture: si le fichier n'existe pas il sera créé
+# /!\ en mode 'w' le fichier est effacé à l'ouverture 
+
+fichier = open('message.txt', 'w', encoding="utf-8")
+fichier.write('Salut tout le monde ! é !')
+fichier.close()
+
+
+# GET Current Work Directory
+print("GET Current Work Directory: " + os.getcwd() )
+
+# chemin_fichier = os.getcwd() + "/10-fichiers/01-text/message.txt"
+
+# os.path.join() : concatène le chemin avec les bons separateurs
+chemin_fichier = os.path.join(
+    os.getcwd(), 
+    "10-fichiers",
+    "01-text",
+    "message.txt"
+)
+print(f"{chemin_fichier=}")
+fichier = open(chemin_fichier, 'a', encoding="utf-8")
+fichier.write('Salut tout le monde ! é !\n') # \n : retour a la ligne 
+fichier.close()
+
+chemin_dossier = os.path.join(
+    os.getcwd(), 
+    "10-fichiers",
+    "01-text",
+    "messages"
+)
+
+if not os.path.exists(chemin_dossier):
+    os.mkdir(chemin_dossier) # creation du dossier
+else:
+    print("Le dossier existe déjà")
+    
+    
+chemin_dossier = os.path.join(
+    os.getcwd(), 
+    "10-fichiers",
+    "01-text",
+    "messages",
+    "john",
+    "29-07-2021"
+)
+
+if not os.path.exists(chemin_dossier):
+    os.makedirs(chemin_dossier) # creation des intermediaires s'ils n;existent pas
+else:
+    print("Le dossier existe déjà")
+
+# exist_ok=True : Si les dossiers existent, on ignore la création 
+# os.makedirs(chemin_dossier, exist_ok=True)
+
+# Chemin du fichier actuelle
+print("File: " + __file__)
+
+# dirname() : recupere le dernier dossier du chemin indiqué
+chemin_dossier = os.path.dirname(__file__)
+chemin_fichier = os.path.join(chemin_dossier, 'extrait.txt')
+
+fichier = open(chemin_fichier, 'a', encoding="utf-8")
+fichier.write('Salut tout le monde ! é !\n') # \n : retour a la ligne 
+fichier.close()
+
+```
+
+
+#### lecture.py
+
+```python
+import os
+
+# /home/user/Bureau/python-26-07-2021/10-fichiers/01-text
+chemin_dossier = os.path.dirname(__file__)
+# /home/user/Bureau/python-26-07-2021/10-fichiers/01-text/extrait.txt
+chemin_fichier = os.path.join(chemin_dossier, 'extrait.txt')
+
+try:
+    fichier = open(chemin_fichier, 'r', encoding="utf-8")
+    contenu = fichier.read()
+except OSError as erreur:
+    print(erreur.with_traceback())
+except Exception as erreur:
+    print(erreur.with_traceback())
+else:
+    print(contenu)
+    
+
+# Context Manager: a la fin du bloc d'instructions, le context manager s'occupe
+# de liberer les ressources allouées à l'ouverture du fichier.
+try:
+   with open(chemin_fichier, 'r', encoding="utf-8") as fichier:
+    contenu = fichier.read()
+except OSError as erreur:
+    print(erreur.with_traceback())
+except Exception as erreur:
+    print(erreur.with_traceback())
+else:
+    print(contenu)
+
+```
+
+### Fichier JSON
+
+Dans un fichier *.json* on défini les informations à importer:
+
+```json
+[
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "username": "Bret",
+    "email": "Sincere@april.biz",
+    "address": {
+      "street": "Kulas Light",
+      "suite": "Apt. 556",
+      "city": "Gwenborough",
+      "zipcode": "92998-3874",
+      "geo": {
+        "lat": "-37.3159",
+        "lng": "81.1496"
+      }
+    },
+    "phone": "1-770-736-8031 x56442",
+    "website": "hildegard.org",
+    "company": {
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net",
+      "bs": "harness real-time e-markets"
+    }
+  }
+
+```
+
+#### Lecture de JSON
+Puis dans notre code on importe les informations:
+
+```python
+import json
+import os
+
+chemin_dossier = os.path.dirname(__file__)
+chemin_fichier = os.path.join(chemin_dossier, 'users.json')
+
+try:
+    with open(chemin_fichier, 'r', encoding='utf-8') as fichier:
+        content = json.load(fichier)
+        print(f"{content=}, type: { type(content) }")
+except json.decoder.JSONDecodeError as jerreur:
+    print(jerreur)
+    
+for utilisateur in content:
+    # print(utilisateur) #dict
+    # print( type(utilisateur) )
+    print("Nom utilisateur: " + utilisateur.get("name") )
+    print("Rue: " + utilisateur.get("address").get('street') )
+
+```
+
+#### Ecriture vers JSON
+
+Pour écrire dans un fichier *.json* on fera:
+
+```python
+import json
+import os
+
+chemin_dossier = os.path.dirname(__file__)
+chemin_fichier = os.path.join(chemin_dossier, 'sortie.json')
+
+
+fichier = open(chemin_fichier, 'w', encoding='utf-8')
+donnee = {
+    "Ornithorynque": "Animal semi-aquatique très étrange",
+    "herbe": "pelouse verte",
+}
+json.dump(donnee, fichier, indent=2)
+fichier.close()
+
+```
+
+Contenu du fichier `sortie.json`:
+
+```json
+{
+  "Ornithorynque": "Animal semi-aquatique tr\u00e8s \u00e9trange",
+  "herbe": "pelouse verte"
+}
+```
 
 <!-- ## Atelier : Construction d'une bibliothèque de fonctions
 

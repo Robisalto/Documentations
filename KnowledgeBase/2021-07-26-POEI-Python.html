@@ -91,15 +91,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#docs-en-ligne">Docs en ligne</a></li>
 </ul></li>
 <li><a href="#découvrir-le-langage">Découvrir le langage</a><ul>
-<li><a href="#atelier-mise-en-place-dun-environnement-de-développement">Atelier : Mise en place d’un environnement de développement</a><ul>
+<li><a href="#environnement-de-dev">Environnement de Dev</a><ul>
 <li><a href="#installation-dun-environnement-virtuel">Installation d’un environnement Virtuel:</a></li>
 <li><a href="#pylint">Pylint</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#maîtriser-la-syntaxe-de-base">Maîtriser la syntaxe de base</a><ul>
-<li><a href="#déclarer-des-variables-en-python-types-internes-et-leur-utilisation">Déclarer des variables en Python, types internes et leur utilisation</a><ul>
-<li><a href="#python-est-un-langage-dynamiquement-typé">Python est un langage dynamiquement typé:</a></li>
-<li><a href="#python-est-un-langage-fortement-typé">Python est un langage fortement typé:</a></li>
+<li><a href="#déclaration-de-variables">Déclaration de Variables</a><ul>
 <li><a href="#conventions-de-nommages">Conventions de nommages:</a></li>
 </ul></li>
 <li><a href="#exemples-de-variables-code">Exemples de variables <em>(code)</em></a></li>
@@ -146,12 +144,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#recherche-dans-un-dictionnaire">Recherche dans un Dictionnaire</a></li>
 <li><a href="#parcourir-un-dictionnaire">Parcourir un dictionnaire</a></li>
 <li><a href="#utilisation-de-items">Utilisation de <code>items()</code></a></li>
+<li><a href="#tp-ex5.py">TP: ex5.py</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#programmation-orientée-objet">Programmation Orientée Objet</a><ul>
 <li><a href="#rappel-les-chaînes-de-caractères-str">Rappel: Les Chaînes de caractères <em>(str)</em></a></li>
 <li><a href="#les-classes">Les Classes</a><ul>
 <li><a href="#exemple-pratique">Exemple Pratique</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#les-modules">Les Modules</a><ul>
+<li><a href="#importation-de-modules">Importation de module(s)</a></li>
+<li><a href="#installation-de-modules">Installation de modules</a></li>
+</ul></li>
+<li><a href="#gestion-des-erreurs">Gestion des erreurs</a></li>
+<li><a href="#gestion-de-fichiers">Gestion de fichiers</a><ul>
+<li><a href="#lire-écrire-dans-des-fichiers">Lire / écrire dans des fichiers</a><ul>
+<li><a href="#open-un-fichier">Open un fichier</a></li>
+<li><a href="#gestion-de-répertoires">Gestion de répertoires</a></li>
+<li><a href="#fichier-json">Fichier JSON</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
@@ -184,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Mise en oeuvre de Python : accès au terminal</li>
 <li>Environnements de développement assistés ; association à des outils connus et éditeurs pratiques</li>
 </ul>
-<h2 id="atelier-mise-en-place-dun-environnement-de-développement">Atelier : Mise en place d’un environnement de développement</h2>
+<h2 id="environnement-de-dev">Environnement de Dev</h2>
 <h3 id="installation-dun-environnement-virtuel">Installation d’un environnement Virtuel:</h3>
 <p>Un environnement virtuel est un environnement isolé de votre système. On va créer un environnement virtuel pour chaque projet python. Ainsi chaque projet python aura sa propre version de python et ses propres modules.</p>
 <h4 id="création-de-venv">Création de <em>venv</em></h4>
@@ -205,7 +216,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr />
 <h1 id="maîtriser-la-syntaxe-de-base">Maîtriser la syntaxe de base</h1>
 <p>Syntaxe de base, en interprétation directe et en script</p>
-<h2 id="déclarer-des-variables-en-python-types-internes-et-leur-utilisation">Déclarer des variables en Python, types internes et leur utilisation</h2>
+<h2 id="déclaration-de-variables">Déclaration de Variables</h2>
+<p><strong>Déclarer des variables en Python, types internes et leur utilisation</strong></p>
 <p>Une variable c’est une zone mémoire dans laquelle on peut stocker des informations. Par exemple: le nom de l’utilisateur, l’age etc…</p>
 <p>Il y a plusieurs types de variables en python:</p>
 <ul>
@@ -213,9 +225,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Numeriques (int, float, complex)</p></li>
 <li><p>Booléen (bool)</p></li>
 </ul>
-<h3 id="python-est-un-langage-dynamiquement-typé">Python est un langage dynamiquement typé:</h3>
+<h4 id="python-est-un-langage-dynamiquement-typé">Python est un langage dynamiquement typé:</h4>
 <p>Les types sont implicites et une variable peut changer à n’importe quel moment.</p>
-<h3 id="python-est-un-langage-fortement-typé">Python est un langage fortement typé:</h3>
+<h4 id="python-est-un-langage-fortement-typé">Python est un langage fortement typé:</h4>
 <p>On ne peut pas faire d’opération entre les types différents types.</p>
 <p>Il y a des règles à respecter dans le nommage des variables:</p>
 <ul>
@@ -515,7 +527,7 @@ L’opération <code>int(a)</code> permet de transformer une chaîne de caractè
 <a class="sourceLine" id="cb17-32" title="32"><span class="cf">if</span> <span class="kw">not</span> error:</a>
 <a class="sourceLine" id="cb17-33" title="33">    <span class="bu">print</span>(<span class="st">&quot;Il n&#39;y a pas d&#39;erreur, on peut continuer&quot;</span>)</a></code></pre></div>
 <h2 id="tps">TPs:</h2>
-<h5 id="déclaration-de-variables">Déclaration de variables</h5>
+<h5 id="déclaration-de-variables-1">Déclaration de variables</h5>
 <div class="sourceCode" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb18-1" title="1"><span class="bu">print</span>(<span class="st">&quot; Déclaration de variables &quot;</span>)</a>
 <a class="sourceLine" id="cb18-2" title="2"></a>
 <a class="sourceLine" id="cb18-3" title="3"><span class="co"># Déclarer une variable qui s&#39;appellera &#39;nb&#39; et contiendra le nombre entier 13.</span></a>
@@ -1478,6 +1490,65 @@ Avec une association clé/valeur, où la clé est unique.
 <a class="sourceLine" id="cb50-3" title="3">    <span class="bu">print</span>(<span class="ss">f&quot;Clef: </span><span class="sc">{</span>clef<span class="sc">}</span><span class="ss">, valeur: </span><span class="sc">{</span>valeur<span class="sc">}</span><span class="ss">&quot;</span>)</a>
 <a class="sourceLine" id="cb50-4" title="4"></a></code></pre></div>
 <p>Ici on déballe le tuple directement dans l’instruction “for”.</p>
+<h3 id="tp-ex5.py">TP: ex5.py</h3>
+<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" title="1"><span class="co">###########################################################################################################</span></a>
+<a class="sourceLine" id="cb51-2" title="2"><span class="co"># Transformer la liste de courses:</span></a>
+<a class="sourceLine" id="cb51-3" title="3"><span class="co">#   La liste de courses reste une liste mais on y mettra des dictionnaires dedans.</span></a>
+<a class="sourceLine" id="cb51-4" title="4"><span class="co">#       un dictionnaire contient: un nom de produit (str) et une quantité (int)</span></a>
+<a class="sourceLine" id="cb51-5" title="5"></a>
+<a class="sourceLine" id="cb51-6" title="6"><span class="co"># soit vous transformez la liste de courses en dictionnaire</span></a>
+<a class="sourceLine" id="cb51-7" title="7"><span class="co"># soit vous ajouter des dictionnaires dans votre liste</span></a>
+<a class="sourceLine" id="cb51-8" title="8"><span class="co">###########################################################################################################</span></a>
+<a class="sourceLine" id="cb51-9" title="9"></a>
+<a class="sourceLine" id="cb51-10" title="10"><span class="bu">print</span>(<span class="st">&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb51-11" title="11"><span class="st">    1- Afficher la liste de courses.</span></a>
+<a class="sourceLine" id="cb51-12" title="12"><span class="st">    2- Ajouter un produit a la liste de courses</span></a>
+<a class="sourceLine" id="cb51-13" title="13"><span class="st">    3- Retirer un produit de la liste de course </span></a>
+<a class="sourceLine" id="cb51-14" title="14"><span class="st">    4- Supprimer toute la liste de courses</span></a>
+<a class="sourceLine" id="cb51-15" title="15"><span class="st">    5- Quitter le programme</span></a>
+<a class="sourceLine" id="cb51-16" title="16"><span class="st">&quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb51-17" title="17"></a>
+<a class="sourceLine" id="cb51-18" title="18">courses <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb51-19" title="19">    <span class="st">&quot;pommes&quot;</span>: <span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb51-20" title="20">    <span class="st">&quot;poires&quot;</span>: <span class="dv">2</span></a>
+<a class="sourceLine" id="cb51-21" title="21">}</a>
+<a class="sourceLine" id="cb51-22" title="22">continuer <span class="op">=</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb51-23" title="23"><span class="co"># while continuer == True:</span></a>
+<a class="sourceLine" id="cb51-24" title="24"><span class="cf">while</span> continuer:</a>
+<a class="sourceLine" id="cb51-25" title="25">    choix <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Que voulez-vous faire ? &quot;</span>)</a>
+<a class="sourceLine" id="cb51-26" title="26">    <span class="cf">if</span> choix <span class="op">==</span> <span class="st">&quot;1&quot;</span>:</a>
+<a class="sourceLine" id="cb51-27" title="27">        <span class="co"># if courses == []</span></a>
+<a class="sourceLine" id="cb51-28" title="28">        <span class="cf">if</span> <span class="kw">not</span> courses:</a>
+<a class="sourceLine" id="cb51-29" title="29">            <span class="bu">print</span>(<span class="st">&quot;La liste de course est vide&quot;</span>)</a>
+<a class="sourceLine" id="cb51-30" title="30">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb51-31" title="31">            <span class="cf">for</span> produit, quantite <span class="kw">in</span> courses.items():</a>
+<a class="sourceLine" id="cb51-32" title="32">                <span class="bu">print</span>(<span class="ss">f&quot;- </span><span class="sc">{</span> produit<span class="sc">.</span>capitalize() <span class="sc">}</span><span class="ss"> : </span><span class="sc">{</span>quantite<span class="sc">}</span><span class="ss"> &quot;</span>)</a>
+<a class="sourceLine" id="cb51-33" title="33"></a>
+<a class="sourceLine" id="cb51-34" title="34">    </a>
+<a class="sourceLine" id="cb51-35" title="35">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;2&quot;</span>:</a>
+<a class="sourceLine" id="cb51-36" title="36">        nom_produit <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Quel est le nom du produit à ajouter ? &quot;</span>).lower()</a>
+<a class="sourceLine" id="cb51-37" title="37">        quantite_produit <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Combien en voulez-vous ? &quot;</span>)</a>
+<a class="sourceLine" id="cb51-38" title="38">        <span class="bu">int</span>(quantite_produit)</a>
+<a class="sourceLine" id="cb51-39" title="39">        courses.update({nom_produit:quantite_produit})</a>
+<a class="sourceLine" id="cb51-40" title="40">        <span class="bu">print</span>(<span class="ss">f&quot; </span><span class="sc">{</span>quantite_produit<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>nom_produit<span class="sc">}</span><span class="ss"> ont bien été ajouté(es)&quot;</span>)</a>
+<a class="sourceLine" id="cb51-41" title="41"></a>
+<a class="sourceLine" id="cb51-42" title="42">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;3&quot;</span>:</a>
+<a class="sourceLine" id="cb51-43" title="43">        nom_produit <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Quel est le nom du produit à supprimer ? &quot;</span>).lower()</a>
+<a class="sourceLine" id="cb51-44" title="44">        <span class="cf">if</span> nom_produit <span class="kw">in</span> courses:</a>
+<a class="sourceLine" id="cb51-45" title="45">            <span class="bu">print</span>(<span class="ss">f&quot; </span><span class="sc">{</span>courses<span class="sc">.</span>get(nom_produit)<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>nom_produit<span class="sc">}</span><span class="ss"> ont bien été supprimé(es)&quot;</span>)</a>
+<a class="sourceLine" id="cb51-46" title="46">            courses.pop(nom_produit)</a>
+<a class="sourceLine" id="cb51-47" title="47">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb51-48" title="48">            <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>nom_produit<span class="sc">}</span><span class="ss"> n&#39;est pas dans la liste&quot;</span>)</a>
+<a class="sourceLine" id="cb51-49" title="49">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;4&quot;</span>:</a>
+<a class="sourceLine" id="cb51-50" title="50">        courses.clear()</a>
+<a class="sourceLine" id="cb51-51" title="51">        <span class="bu">print</span>(<span class="ss">f&quot;La liste de courses à bien été vidée.&quot;</span>)</a>
+<a class="sourceLine" id="cb51-52" title="52">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;5&quot;</span>:</a>
+<a class="sourceLine" id="cb51-53" title="53">        <span class="bu">print</span>(<span class="st">&quot;Au revoir&quot;</span>)</a>
+<a class="sourceLine" id="cb51-54" title="54">        continuer <span class="op">=</span> <span class="va">False</span></a>
+<a class="sourceLine" id="cb51-55" title="55">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb51-56" title="56">        <span class="bu">print</span>(<span class="st">&quot;Je n&#39;ai compris&quot;</span>)</a></code></pre></div>
+<h5 id="résultat-5">Résultat</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-29_15h55_55.gif" /></p>
 <h1 id="programmation-orientée-objet">Programmation Orientée Objet</h1>
 <p>POO <em>(fr)</em>: Programmation Orientée Objet.</p>
 <p>OPP <em>(english)</em>: Object Oriented Programmation</p>
@@ -1485,67 +1556,383 @@ Avec une association clé/valeur, où la clé est unique.
 <ul>
 <li><a href="https://www.w3schools.com/python/python_ref_string.asp" class="uri">https://www.w3schools.com/python/python_ref_string.asp</a></li>
 </ul>
-<div class="sourceCode" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb51-1" title="1"><span class="co"># Exemples de gestion de chaînes de caractères</span></a>
-<a class="sourceLine" id="cb51-2" title="2"></a>
-<a class="sourceLine" id="cb51-3" title="3">prenom <span class="op">=</span> <span class="st">&quot;David&quot;</span></a>
-<a class="sourceLine" id="cb51-4" title="4"></a>
-<a class="sourceLine" id="cb51-5" title="5"><span class="bu">print</span>(prenom.lower())</a>
-<a class="sourceLine" id="cb51-6" title="6"><span class="bu">print</span>(prenom.upper())</a>
-<a class="sourceLine" id="cb51-7" title="7"></a>
-<a class="sourceLine" id="cb51-8" title="8"><span class="bu">print</span>( prenom.replace(<span class="st">&#39;i&#39;</span>, <span class="st">&#39;iii&#39;</span>) )</a>
-<a class="sourceLine" id="cb51-9" title="9"><span class="bu">print</span>( prenom.startswith(<span class="st">&#39;D&#39;</span>) ) <span class="co"># =&gt; bool (True/False)</span></a>
-<a class="sourceLine" id="cb51-10" title="10"></a>
-<a class="sourceLine" id="cb51-11" title="11"><span class="bu">print</span>( prenom.endswith(<span class="st">&#39;.com&#39;</span>) ) <span class="co"># =&gt; Site web ? (bool)</span></a>
-<a class="sourceLine" id="cb51-12" title="12"></a>
-<a class="sourceLine" id="cb51-13" title="13"><span class="bu">print</span>( prenom.istitle() ) <span class="co"># Si Tous Les Mots Sont Capitalisés =&gt; True (bool)</span></a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb52-1" title="1"><span class="co"># Exemples de gestion de chaînes de caractères</span></a>
+<a class="sourceLine" id="cb52-2" title="2"></a>
+<a class="sourceLine" id="cb52-3" title="3">prenom <span class="op">=</span> <span class="st">&quot;David&quot;</span></a>
+<a class="sourceLine" id="cb52-4" title="4"></a>
+<a class="sourceLine" id="cb52-5" title="5"><span class="bu">print</span>(prenom.lower())</a>
+<a class="sourceLine" id="cb52-6" title="6"><span class="bu">print</span>(prenom.upper())</a>
+<a class="sourceLine" id="cb52-7" title="7"></a>
+<a class="sourceLine" id="cb52-8" title="8"><span class="bu">print</span>( prenom.replace(<span class="st">&#39;i&#39;</span>, <span class="st">&#39;iii&#39;</span>) )</a>
+<a class="sourceLine" id="cb52-9" title="9"><span class="bu">print</span>( prenom.startswith(<span class="st">&#39;D&#39;</span>) ) <span class="co"># =&gt; bool (True/False)</span></a>
+<a class="sourceLine" id="cb52-10" title="10"></a>
+<a class="sourceLine" id="cb52-11" title="11"><span class="bu">print</span>( prenom.endswith(<span class="st">&#39;.com&#39;</span>) ) <span class="co"># =&gt; Site web ? (bool)</span></a>
+<a class="sourceLine" id="cb52-12" title="12"></a>
+<a class="sourceLine" id="cb52-13" title="13"><span class="bu">print</span>( prenom.istitle() ) <span class="co"># Si Tous Les Mots Sont Capitalisés =&gt; True (bool)</span></a></code></pre></div>
 <h2 id="les-classes">Les Classes</h2>
 <p>Une <strong>classe</strong> est un modèle <em>(moule)</em> qui permet de fabriquer nos propres objets.</p>
 <p>Une classe se déclare en utilisant le <em>“PascalCase”</em>, la première lettre de chaque mot est une majuscule, tout est attaché.</p>
 <h3 id="exemple-pratique">Exemple Pratique</h3>
 <p>Dans cet exemple on créer un petit jeu avec des personnages. Pour créer nos personnages on utilise une classe <code>ClassPersonnage</code>.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">class</span> ClassPersonnage:</a>
-<a class="sourceLine" id="cb52-2" title="2">    id_character <span class="op">=</span> <span class="dv">0</span></a>
-<a class="sourceLine" id="cb52-3" title="3">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, weapon, health<span class="op">=</span><span class="dv">100</span>, xp<span class="op">=</span><span class="dv">0</span>, rank<span class="op">=</span><span class="st">&quot;noob&quot;</span>, warcry<span class="op">=</span><span class="st">&quot;Rrrrrrr!&quot;</span>, ouchie<span class="op">=</span><span class="dv">10</span>):</a>
-<a class="sourceLine" id="cb52-4" title="4">        <span class="va">self</span>.name <span class="op">=</span> name</a>
-<a class="sourceLine" id="cb52-5" title="5">        <span class="va">self</span>.weapon <span class="op">=</span> weapon</a>
-<a class="sourceLine" id="cb52-6" title="6">        <span class="va">self</span>.health <span class="op">=</span> health</a>
-<a class="sourceLine" id="cb52-7" title="7">        <span class="va">self</span>.xp <span class="op">=</span> xp</a>
-<a class="sourceLine" id="cb52-8" title="8">        <span class="va">self</span>.rank <span class="op">=</span> rank</a>
-<a class="sourceLine" id="cb52-9" title="9">        <span class="va">self</span>.warcry <span class="op">=</span> warcry</a>
-<a class="sourceLine" id="cb52-10" title="10">        <span class="va">self</span>.ouchie <span class="op">=</span> ouchie</a>
-<a class="sourceLine" id="cb52-11" title="11">        ClassPersonnage.id_character <span class="op">+=</span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb52-12" title="12">    </a>
-<a class="sourceLine" id="cb52-13" title="13">    <span class="kw">def</span> fight(<span class="va">self</span>, target):</a>
-<a class="sourceLine" id="cb52-14" title="14">        <span class="bu">print</span>(<span class="st">&quot;______________________________________________________________________&quot;</span>)</a>
-<a class="sourceLine" id="cb52-15" title="15">        <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> attaque </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss">:&quot;</span>)</a>
-<a class="sourceLine" id="cb52-16" title="16">        <span class="bu">print</span>(<span class="ss">f&quot; - </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">:  </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>warcry<span class="sc">}</span><span class="ss">&quot;</span>)</a>
-<a class="sourceLine" id="cb52-17" title="17">        target.health <span class="op">-=</span> <span class="va">self</span>.ouchie</a>
-<a class="sourceLine" id="cb52-18" title="18">        <span class="bu">print</span>(<span class="ss">f&quot; - </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss">: Aïe !  &quot;</span>)</a>
-<a class="sourceLine" id="cb52-19" title="19">        <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span><span class="ch">\t</span><span class="ss"> ==&gt; </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> a morflé grave !! Il lui reste </span><span class="sc">{</span>target<span class="sc">.</span>health<span class="sc">}</span><span class="ss"> points de vie. Mouhahaha !!! </span></a>
-<a class="sourceLine" id="cb52-20" title="20"><span class="ss">        &quot;&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb52-21" title="21"></a>
-<a class="sourceLine" id="cb52-22" title="22"><span class="co"># Création des personnages</span></a>
-<a class="sourceLine" id="cb52-23" title="23">player_1 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Odin&quot;</span>, <span class="st">&quot;Gungnir&quot;</span>, <span class="dv">1000000</span>, <span class="dv">100</span>, rank<span class="op">=</span><span class="st">&quot;BOSS&quot;</span>)</a>
-<a class="sourceLine" id="cb52-24" title="24">player_2 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Thor&quot;</span>, <span class="st">&quot;Mijolnir&quot;</span>, <span class="dv">1000000</span>, <span class="dv">100</span>, <span class="st">&quot;BadASS&quot;</span>, ouchie<span class="op">=</span><span class="dv">999999</span>)</a>
-<a class="sourceLine" id="cb52-25" title="25">player_3 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Perceval&quot;</span>, <span class="st">&quot;petits cailloux&quot;</span>, xp<span class="op">=-</span><span class="dv">8</span>, rank<span class="op">=</span><span class="st">&quot;Chevalier&quot;</span>, warcry<span class="op">=</span><span class="st">&quot;C&#39;est pas faux !&quot;</span> )</a>
-<a class="sourceLine" id="cb52-26" title="26"><span class="co">## Affichage des personnages </span></a>
-<a class="sourceLine" id="cb52-27" title="27">tuple_players <span class="op">=</span> (player_1, player_2, player_3)</a>
-<a class="sourceLine" id="cb52-28" title="28"><span class="cf">for</span> player <span class="kw">in</span> tuple_players:</a>
-<a class="sourceLine" id="cb52-29" title="29">    <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
-<a class="sourceLine" id="cb52-30" title="30"><span class="ss">    ------- Personnage: </span><span class="sc">{</span>player<span class="sc">.</span>name<span class="sc">}</span><span class="ss">,  -------</span></a>
-<a class="sourceLine" id="cb52-31" title="31"><span class="ss">    Arme: </span><span class="sc">{</span>player<span class="sc">.</span>weapon<span class="sc">}</span><span class="ss">      Points de vie: </span><span class="sc">{</span>player<span class="sc">.</span>health<span class="sc">}</span><span class="ss">     Expérience: </span><span class="sc">{</span>player<span class="sc">.xp}</span><span class="ss">    Niveau: </span><span class="sc">{</span>player<span class="sc">.</span>rank<span class="sc">}</span><span class="ss">  </span></a>
-<a class="sourceLine" id="cb52-32" title="32"><span class="ss">    &quot;&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb52-33" title="33"></a>
-<a class="sourceLine" id="cb52-34" title="34"><span class="co"># Print IDs</span></a>
-<a class="sourceLine" id="cb52-35" title="35"><span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
-<a class="sourceLine" id="cb52-36" title="36"><span class="ss">Il y a </span><span class="sc">{</span>ClassPersonnage<span class="sc">.</span>id_character<span class="sc">}</span><span class="ss"> personnages prêts à se battre ! </span></a>
-<a class="sourceLine" id="cb52-37" title="37"><span class="ss">&quot;&quot;&quot;</span>)</a>
-<a class="sourceLine" id="cb52-38" title="38"></a>
-<a class="sourceLine" id="cb52-39" title="39"><span class="co"># C&#39;est ici que ça bastonne ^^</span></a>
-<a class="sourceLine" id="cb52-40" title="40">player_3.fight(player_2)</a>
-<a class="sourceLine" id="cb52-41" title="41">player_2.fight(player_3)</a></code></pre></div>
-<h5 id="résultat-5">Résultat:</h5>
+<div class="sourceCode" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb53-1" title="1"><span class="kw">class</span> ClassPersonnage:</a>
+<a class="sourceLine" id="cb53-2" title="2">    id_character <span class="op">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb53-3" title="3">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name, weapon, health<span class="op">=</span><span class="dv">100</span>, xp<span class="op">=</span><span class="dv">0</span>, rank<span class="op">=</span><span class="st">&quot;noob&quot;</span>, warcry<span class="op">=</span><span class="st">&quot;Rrrrrrr!&quot;</span>, ouchie<span class="op">=</span><span class="dv">10</span>):</a>
+<a class="sourceLine" id="cb53-4" title="4">        <span class="va">self</span>.name <span class="op">=</span> name</a>
+<a class="sourceLine" id="cb53-5" title="5">        <span class="va">self</span>.weapon <span class="op">=</span> weapon</a>
+<a class="sourceLine" id="cb53-6" title="6">        <span class="va">self</span>.health <span class="op">=</span> health</a>
+<a class="sourceLine" id="cb53-7" title="7">        <span class="va">self</span>.xp <span class="op">=</span> xp</a>
+<a class="sourceLine" id="cb53-8" title="8">        <span class="va">self</span>.rank <span class="op">=</span> rank</a>
+<a class="sourceLine" id="cb53-9" title="9">        <span class="va">self</span>.warcry <span class="op">=</span> warcry</a>
+<a class="sourceLine" id="cb53-10" title="10">        <span class="va">self</span>.ouchie <span class="op">=</span> ouchie</a>
+<a class="sourceLine" id="cb53-11" title="11">        ClassPersonnage.id_character <span class="op">+=</span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb53-12" title="12">    </a>
+<a class="sourceLine" id="cb53-13" title="13">    <span class="kw">def</span> fight(<span class="va">self</span>, target):</a>
+<a class="sourceLine" id="cb53-14" title="14">        <span class="bu">print</span>(<span class="st">&quot;______________________________________________________________________&quot;</span>)</a>
+<a class="sourceLine" id="cb53-15" title="15">        <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> attaque </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss">:&quot;</span>)</a>
+<a class="sourceLine" id="cb53-16" title="16">        <span class="bu">print</span>(<span class="ss">f&quot; - </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">:  </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>warcry<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb53-17" title="17">        target.health <span class="op">-=</span> <span class="va">self</span>.ouchie</a>
+<a class="sourceLine" id="cb53-18" title="18">        <span class="bu">print</span>(<span class="ss">f&quot; - </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss">: Aïe !  &quot;</span>)</a>
+<a class="sourceLine" id="cb53-19" title="19">        <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span><span class="ch">\t</span><span class="ss"> ==&gt; </span><span class="sc">{</span>target<span class="sc">.</span>name<span class="sc">}</span><span class="ss"> a morflé grave !! Il lui reste </span><span class="sc">{</span>target<span class="sc">.</span>health<span class="sc">}</span><span class="ss"> points de vie. Mouhahaha !!! </span></a>
+<a class="sourceLine" id="cb53-20" title="20"><span class="ss">        &quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb53-21" title="21"></a>
+<a class="sourceLine" id="cb53-22" title="22"><span class="co"># Création des personnages</span></a>
+<a class="sourceLine" id="cb53-23" title="23">player_1 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Odin&quot;</span>, <span class="st">&quot;Gungnir&quot;</span>, <span class="dv">1000000</span>, <span class="dv">100</span>, rank<span class="op">=</span><span class="st">&quot;BOSS&quot;</span>)</a>
+<a class="sourceLine" id="cb53-24" title="24">player_2 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Thor&quot;</span>, <span class="st">&quot;Mijolnir&quot;</span>, <span class="dv">1000000</span>, <span class="dv">100</span>, <span class="st">&quot;BadASS&quot;</span>, ouchie<span class="op">=</span><span class="dv">999999</span>)</a>
+<a class="sourceLine" id="cb53-25" title="25">player_3 <span class="op">=</span> ClassPersonnage(<span class="st">&quot;Perceval&quot;</span>, <span class="st">&quot;petits cailloux&quot;</span>, xp<span class="op">=-</span><span class="dv">8</span>, rank<span class="op">=</span><span class="st">&quot;Chevalier&quot;</span>, warcry<span class="op">=</span><span class="st">&quot;C&#39;est pas faux !&quot;</span> )</a>
+<a class="sourceLine" id="cb53-26" title="26"><span class="co">## Affichage des personnages </span></a>
+<a class="sourceLine" id="cb53-27" title="27">tuple_players <span class="op">=</span> (player_1, player_2, player_3)</a>
+<a class="sourceLine" id="cb53-28" title="28"><span class="cf">for</span> player <span class="kw">in</span> tuple_players:</a>
+<a class="sourceLine" id="cb53-29" title="29">    <span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb53-30" title="30"><span class="ss">    ------- Personnage: </span><span class="sc">{</span>player<span class="sc">.</span>name<span class="sc">}</span><span class="ss">,  -------</span></a>
+<a class="sourceLine" id="cb53-31" title="31"><span class="ss">    Arme: </span><span class="sc">{</span>player<span class="sc">.</span>weapon<span class="sc">}</span><span class="ss">      Points de vie: </span><span class="sc">{</span>player<span class="sc">.</span>health<span class="sc">}</span><span class="ss">     Expérience: </span><span class="sc">{</span>player<span class="sc">.xp}</span><span class="ss">    Niveau: </span><span class="sc">{</span>player<span class="sc">.</span>rank<span class="sc">}</span><span class="ss">  </span></a>
+<a class="sourceLine" id="cb53-32" title="32"><span class="ss">    &quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb53-33" title="33"></a>
+<a class="sourceLine" id="cb53-34" title="34"><span class="co"># Print IDs</span></a>
+<a class="sourceLine" id="cb53-35" title="35"><span class="bu">print</span>(<span class="ss">f&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb53-36" title="36"><span class="ss">Il y a </span><span class="sc">{</span>ClassPersonnage<span class="sc">.</span>id_character<span class="sc">}</span><span class="ss"> personnages prêts à se battre ! </span></a>
+<a class="sourceLine" id="cb53-37" title="37"><span class="ss">&quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb53-38" title="38"></a>
+<a class="sourceLine" id="cb53-39" title="39"><span class="co"># C&#39;est ici que ça bastonne ^^</span></a>
+<a class="sourceLine" id="cb53-40" title="40">player_3.fight(player_2)</a>
+<a class="sourceLine" id="cb53-41" title="41">player_2.fight(player_3)</a></code></pre></div>
+<h5 id="résultat-6">Résultat:</h5>
 <p><img src="2021-07-26-POEI-Python/2021-07-28_17h16_13.png" /></p>
+<h1 id="les-modules">Les Modules</h1>
+<p>Un module: c’est un fichier qui contient du code (classes, fonctions, etc..)</p>
+<p>Par défaut, python ne charge pas toutes les fonctions directement pour éviter de ralentir le programme au demarrage</p>
+<p>On a plein d’autre fonctions qui se trouve dans des modules. Il suffit d’importe le module pour utiliser les fonctions qu’il contient.</p>
+<p><strong><em>Documentation:</em></strong> <a href="https://realpython.com/python-import/#absolute-and-relative-imports" class="uri">https://realpython.com/python-import/#absolute-and-relative-imports</a></p>
+<h2 id="importation-de-modules">Importation de module(s)</h2>
+<p>Dans le fichier <code>mymodule.py</code> on renseigne nos fonctions:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb54-1" title="1"><span class="co"># File: mymodule.py</span></a>
+<a class="sourceLine" id="cb54-2" title="2"><span class="kw">def</span> afficher_table(nombre, <span class="bu">max</span><span class="op">=</span><span class="dv">10</span>):</a>
+<a class="sourceLine" id="cb54-3" title="3">    compteur <span class="op">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb54-4" title="4">    <span class="cf">while</span> compteur <span class="op">&lt;=</span> <span class="bu">max</span>:</a>
+<a class="sourceLine" id="cb54-5" title="5">        resultat <span class="op">=</span> nombre <span class="op">*</span> compteur</a>
+<a class="sourceLine" id="cb54-6" title="6">        <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss"> x </span><span class="sc">{</span>compteur<span class="sc">}</span><span class="ss"> = </span><span class="sc">{</span>resultat<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb54-7" title="7">        compteur <span class="op">+=</span> <span class="dv">1</span>  </a>
+<a class="sourceLine" id="cb54-8" title="8"></a>
+<a class="sourceLine" id="cb54-9" title="9"></a>
+<a class="sourceLine" id="cb54-10" title="10"></a>
+<a class="sourceLine" id="cb54-11" title="11"><span class="kw">def</span> rot11(message):</a>
+<a class="sourceLine" id="cb54-12" title="12">    ROT <span class="op">=</span> <span class="dv">11</span></a>
+<a class="sourceLine" id="cb54-13" title="13">    MIN_CHAR_UPPER <span class="op">=</span> <span class="dv">65</span> <span class="co"># A</span></a>
+<a class="sourceLine" id="cb54-14" title="14">    MAX_CHAR_UPPER <span class="op">=</span> <span class="dv">90</span> <span class="co"># Z</span></a>
+<a class="sourceLine" id="cb54-15" title="15">    MIN_CHAR_LOWER <span class="op">=</span> <span class="dv">97</span> <span class="co"># a</span></a>
+<a class="sourceLine" id="cb54-16" title="16">    MAX_CHAR_LOWER <span class="op">=</span> <span class="dv">122</span> <span class="co"># z</span></a>
+<a class="sourceLine" id="cb54-17" title="17">    hidden_msg <span class="op">=</span> <span class="st">&quot;&quot;</span></a>
+<a class="sourceLine" id="cb54-18" title="18">    <span class="cf">for</span> letter <span class="kw">in</span> message:</a>
+<a class="sourceLine" id="cb54-19" title="19">        char <span class="op">=</span> <span class="bu">ord</span>(letter) <span class="co"># 83</span></a>
+<a class="sourceLine" id="cb54-20" title="20">        <span class="cf">if</span> (char <span class="op">&gt;=</span> MIN_CHAR_LOWER <span class="kw">and</span> char <span class="op">&lt;=</span> MAX_CHAR_LOWER):</a>
+<a class="sourceLine" id="cb54-21" title="21">            hidden_msg <span class="op">+=</span> <span class="bu">chr</span>((((char <span class="op">-</span> MIN_CHAR_LOWER) <span class="op">+</span> ROT) <span class="op">%</span></a>
+<a class="sourceLine" id="cb54-22" title="22">                              <span class="dv">26</span>) <span class="op">+</span> MIN_CHAR_LOWER)</a>
+<a class="sourceLine" id="cb54-23" title="23">        <span class="cf">elif</span> (char <span class="op">&gt;=</span> MIN_CHAR_UPPER <span class="kw">and</span> char <span class="op">&lt;=</span> MAX_CHAR_UPPER):</a>
+<a class="sourceLine" id="cb54-24" title="24">            <span class="co"># 83 - 65 = 18 </span></a>
+<a class="sourceLine" id="cb54-25" title="25">            <span class="co"># 18 + 11 = 29 </span></a>
+<a class="sourceLine" id="cb54-26" title="26">            <span class="co"># 29 % 26 = 1 et il reste 3</span></a>
+<a class="sourceLine" id="cb54-27" title="27">            <span class="co"># 3 + 65 = 68 = D</span></a>
+<a class="sourceLine" id="cb54-28" title="28">            hidden_msg <span class="op">+=</span> <span class="bu">chr</span>((((char <span class="op">-</span> MIN_CHAR_UPPER) <span class="op">+</span> ROT) <span class="op">%</span></a>
+<a class="sourceLine" id="cb54-29" title="29">                              <span class="dv">26</span>) <span class="op">+</span> MIN_CHAR_UPPER)</a>
+<a class="sourceLine" id="cb54-30" title="30">    <span class="cf">return</span> hidden_msg</a></code></pre></div>
+<p>Puis dans le fichier <code>app.py</code>, on importe puis on appelle nos fonctions:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb55-1" title="1"><span class="co"># File: app.py</span></a>
+<a class="sourceLine" id="cb55-2" title="2"></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="im">from</span> mymodule <span class="im">import</span> afficher_table,rot11</a>
+<a class="sourceLine" id="cb55-4" title="4"></a>
+<a class="sourceLine" id="cb55-5" title="5">afficher_table(<span class="dv">28</span>)</a>
+<a class="sourceLine" id="cb55-6" title="6"><span class="bu">print</span>(rot11(<span class="st">&quot;This works !&quot;</span>))</a></code></pre></div>
+<h5 id="résultat-7">Résultat:</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-29_11h25_04.png" /></p>
+<h2 id="installation-de-modules">Installation de modules</h2>
+<p>Avec Python on peut installer d’autres modules très puissant, par exemple <code>pandas</code>.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb56-1" title="1"><span class="co"># File: install.py</span></a>
+<a class="sourceLine" id="cb56-2" title="2"><span class="co"># _________________</span></a>
+<a class="sourceLine" id="cb56-3" title="3"></a>
+<a class="sourceLine" id="cb56-4" title="4"><span class="co"># https://pypi.org/</span></a>
+<a class="sourceLine" id="cb56-5" title="5"></a>
+<a class="sourceLine" id="cb56-6" title="6"><span class="co"># pip install monpackage  </span></a>
+<a class="sourceLine" id="cb56-7" title="7"><span class="co"># pip install -r requirements.txt</span></a>
+<a class="sourceLine" id="cb56-8" title="8"></a>
+<a class="sourceLine" id="cb56-9" title="9"><span class="co"># pip list: pour voir tous ce qui est installé</span></a>
+<a class="sourceLine" id="cb56-10" title="10"></a>
+<a class="sourceLine" id="cb56-11" title="11"><span class="im">import</span> pandas</a>
+<a class="sourceLine" id="cb56-12" title="12"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb56-13" title="13"></a>
+<a class="sourceLine" id="cb56-14" title="14">os.system(<span class="st">&#39;pip install -r requirements.txt&#39;</span>)</a></code></pre></div>
+<p>Avec dans le fichier <em>requirements.txt</em>:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># File: requirements.txt</span></a>
+<a class="sourceLine" id="cb57-2" title="2"></a>
+<a class="sourceLine" id="cb57-3" title="3">pandas</a>
+<a class="sourceLine" id="cb57-4" title="4">pdoc3</a>
+<a class="sourceLine" id="cb57-5" title="5">colorama</a>
+<a class="sourceLine" id="cb57-6" title="6">pylint</a>
+<a class="sourceLine" id="cb57-7" title="7">pyinstaller</a></code></pre></div>
+<h1 id="gestion-des-erreurs">Gestion des erreurs</h1>
+<p>Lorsque python rencontre une erreur, on dit que python leve une exception Si on ne traite pas cette exceptions, le programme quitte sur une erreur.</p>
+<p>1/0 print(“On continue”)</p>
+<p>pour capturer une erreur, on commence par faire un bloc <code>try</code>.</p>
+<p>On essaye de faire une instruction qui peut generer une erreur</p>
+<p>Et on met le bloc except: s’il y a une erreur, on explicite le traitement.</p>
+<p><code>try/except</code>:</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb58-1" title="1"><span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb58-2" title="2">    <span class="dv">1</span> <span class="op">/</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb58-3" title="3"><span class="cf">except</span>:</a>
+<a class="sourceLine" id="cb58-4" title="4">    <span class="bu">print</span>(<span class="st">&quot;La division par 0 n&#39;est pas possible&quot;</span>)</a>
+<a class="sourceLine" id="cb58-5" title="5">    </a>
+<a class="sourceLine" id="cb58-6" title="6"><span class="bu">print</span>(<span class="st">&quot;On continue&quot;</span>)</a>
+<a class="sourceLine" id="cb58-7" title="7"></a>
+<a class="sourceLine" id="cb58-8" title="8"></a>
+<a class="sourceLine" id="cb58-9" title="9">nombre <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Saisir un nombre: &quot;</span>)</a>
+<a class="sourceLine" id="cb58-10" title="10"><span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb58-11" title="11">    nombre <span class="op">=</span> <span class="bu">int</span>(nombre)</a>
+<a class="sourceLine" id="cb58-12" title="12">    resultat <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> nombre</a>
+<a class="sourceLine" id="cb58-13" title="13"><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</a>
+<a class="sourceLine" id="cb58-14" title="14">    <span class="bu">print</span>(<span class="st">&quot;La division par 0 n&#39;est pas possible&quot;</span>)</a>
+<a class="sourceLine" id="cb58-15" title="15"><span class="cf">except</span> <span class="pp">ValueError</span>:</a>
+<a class="sourceLine" id="cb58-16" title="16">    <span class="bu">print</span>(<span class="st">&quot;Vous devez saisir un nombre&quot;</span>)</a>
+<a class="sourceLine" id="cb58-17" title="17"><span class="co"># python créer automatiquement une instance de la class Exception.</span></a>
+<a class="sourceLine" id="cb58-18" title="18"><span class="co"># on peut recuperer cette instance grace au mot clef &#39;as&#39; et lui donner le nom que l&#39;on veut</span></a>
+<a class="sourceLine" id="cb58-19" title="19"><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> erreur:</a>
+<a class="sourceLine" id="cb58-20" title="20">    <span class="bu">print</span>(<span class="st">&quot;Autre erreur: &quot;</span>, erreur)</a>
+<a class="sourceLine" id="cb58-21" title="21">    <span class="bu">print</span>(<span class="st">&quot;Trace: &quot;</span>, erreur.with_traceback())</a>
+<a class="sourceLine" id="cb58-22" title="22"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb58-23" title="23">    <span class="bu">print</span>(<span class="st">&quot;Super ! tout s&#39;est bien passé&quot;</span>)</a>
+<a class="sourceLine" id="cb58-24" title="24"><span class="cf">finally</span>:</a>
+<a class="sourceLine" id="cb58-25" title="25">    <span class="bu">print</span>(<span class="st">&quot;Peu ce qu&#39;il arrive, on passe ici ! &quot;</span>)</a>
+<a class="sourceLine" id="cb58-26" title="26"></a>
+<a class="sourceLine" id="cb58-27" title="27"></a>
+<a class="sourceLine" id="cb58-28" title="28"></a>
+<a class="sourceLine" id="cb58-29" title="29">nombre <span class="op">=</span> <span class="st">&quot;0&quot;</span></a>
+<a class="sourceLine" id="cb58-30" title="30"><span class="cf">while</span> ((<span class="kw">not</span> nombre.isnumeric()) <span class="kw">or</span> nombre <span class="op">==</span> <span class="st">&quot;0&quot;</span>):</a>
+<a class="sourceLine" id="cb58-31" title="31">    nombre <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Saisir un nombre: &quot;</span>)</a>
+<a class="sourceLine" id="cb58-32" title="32"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb58-33" title="33">    nombre <span class="op">=</span> <span class="bu">int</span>(nombre)</a></code></pre></div>
+<h1 id="gestion-de-fichiers">Gestion de fichiers</h1>
+<h2 id="lire-écrire-dans-des-fichiers">Lire / écrire dans des fichiers</h2>
+<h3 id="open-un-fichier">Open un fichier</h3>
+<div class="sourceCode" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># File: ecriture.py</span></a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="co"># _________________</span></a>
+<a class="sourceLine" id="cb59-3" title="3"></a>
+<a class="sourceLine" id="cb59-4" title="4"><span class="co"># Ouvrir un fichier</span></a>
+<a class="sourceLine" id="cb59-5" title="5">fichier <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;/chemin/message.txt&#39;</span>, <span class="st">&#39;w&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>)</a>
+<a class="sourceLine" id="cb59-6" title="6"><span class="bu">print</span>(fichier)</a>
+<a class="sourceLine" id="cb59-7" title="7">fichier.write(<span class="st">&#39;Salut tout le monde !&#39;</span>)</a>
+<a class="sourceLine" id="cb59-8" title="8"></a>
+<a class="sourceLine" id="cb59-9" title="9">fichier.close() <span class="co"># Fermeture du fichier</span></a></code></pre></div>
+<p>La fonction <code>open</code> peut prendre plusieurs paramètres:</p>
+<ol type="1">
+<li>Le <strong>chemin</strong> vers le fichier</li>
+<li>Le mode: <code>w</code>: write ou <code>r</code>: read</li>
+<li>Encodage: <code>encoding="utf-8"</code></li>
+</ol>
+<div class="info">
+En mode <code>write</code>, si le fichier n’existe pas, il sera créé.
+</div>
+<h3 id="gestion-de-répertoires">Gestion de répertoires</h3>
+<p>Récupérer le répertoire courant:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb60-1" title="1"><span class="co"># Get Current Working Directory</span></a>
+<a class="sourceLine" id="cb60-2" title="2">os.getcwd()</a></code></pre></div>
+<p>Gérer le nom du fichier:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb61-1" title="1"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb61-2" title="2"></a>
+<a class="sourceLine" id="cb61-3" title="3">chemin_fichier <span class="op">=</span> os.path.join(</a>
+<a class="sourceLine" id="cb61-4" title="4">    os.getcwd(),</a>
+<a class="sourceLine" id="cb61-5" title="5">    <span class="st">&quot;10-fichiers&quot;</span>,</a>
+<a class="sourceLine" id="cb61-6" title="6">    <span class="st">&quot;01-text&quot;</span>,</a>
+<a class="sourceLine" id="cb61-7" title="7">    <span class="st">&quot;message.txt&quot;</span></a>
+<a class="sourceLine" id="cb61-8" title="8">    )</a></code></pre></div>
+<h4 id="ecriture.py">ecriture.py</h4>
+<div class="sourceCode" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb62-1" title="1"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb62-2" title="2"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb62-3" title="3"><span class="bu">print</span>( sys.getsizeof(os) )</a>
+<a class="sourceLine" id="cb62-4" title="4"></a>
+<a class="sourceLine" id="cb62-5" title="5"><span class="co"># Pour ouvrir un fichier on utilise la fonction open()</span></a>
+<a class="sourceLine" id="cb62-6" title="6"><span class="co"># Cette fonction prend plusieurs paramètres dont:</span></a>
+<a class="sourceLine" id="cb62-7" title="7"><span class="co">#   - le chemin vers le fichier</span></a>
+<a class="sourceLine" id="cb62-8" title="8"><span class="co">#   - le mode de lecture &#39;w&#39; : write, &#39;r&#39;: read, append/ajout &#39;a&#39;</span></a>
+<a class="sourceLine" id="cb62-9" title="9"><span class="co">#   - encodage</span></a>
+<a class="sourceLine" id="cb62-10" title="10"><span class="co"># En mode ecriture: si le fichier n&#39;existe pas il sera créé</span></a>
+<a class="sourceLine" id="cb62-11" title="11"><span class="co"># /!\ en mode &#39;w&#39; le fichier est effacé à l&#39;ouverture </span></a>
+<a class="sourceLine" id="cb62-12" title="12"></a>
+<a class="sourceLine" id="cb62-13" title="13">fichier <span class="op">=</span> <span class="bu">open</span>(<span class="st">&#39;message.txt&#39;</span>, <span class="st">&#39;w&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>)</a>
+<a class="sourceLine" id="cb62-14" title="14">fichier.write(<span class="st">&#39;Salut tout le monde ! é !&#39;</span>)</a>
+<a class="sourceLine" id="cb62-15" title="15">fichier.close()</a>
+<a class="sourceLine" id="cb62-16" title="16"></a>
+<a class="sourceLine" id="cb62-17" title="17"></a>
+<a class="sourceLine" id="cb62-18" title="18"><span class="co"># GET Current Work Directory</span></a>
+<a class="sourceLine" id="cb62-19" title="19"><span class="bu">print</span>(<span class="st">&quot;GET Current Work Directory: &quot;</span> <span class="op">+</span> os.getcwd() )</a>
+<a class="sourceLine" id="cb62-20" title="20"></a>
+<a class="sourceLine" id="cb62-21" title="21"><span class="co"># chemin_fichier = os.getcwd() + &quot;/10-fichiers/01-text/message.txt&quot;</span></a>
+<a class="sourceLine" id="cb62-22" title="22"></a>
+<a class="sourceLine" id="cb62-23" title="23"><span class="co"># os.path.join() : concatène le chemin avec les bons separateurs</span></a>
+<a class="sourceLine" id="cb62-24" title="24">chemin_fichier <span class="op">=</span> os.path.join(</a>
+<a class="sourceLine" id="cb62-25" title="25">    os.getcwd(), </a>
+<a class="sourceLine" id="cb62-26" title="26">    <span class="st">&quot;10-fichiers&quot;</span>,</a>
+<a class="sourceLine" id="cb62-27" title="27">    <span class="st">&quot;01-text&quot;</span>,</a>
+<a class="sourceLine" id="cb62-28" title="28">    <span class="st">&quot;message.txt&quot;</span></a>
+<a class="sourceLine" id="cb62-29" title="29">)</a>
+<a class="sourceLine" id="cb62-30" title="30"><span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>chemin_fichier<span class="op">=</span><span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb62-31" title="31">fichier <span class="op">=</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;a&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>)</a>
+<a class="sourceLine" id="cb62-32" title="32">fichier.write(<span class="st">&#39;Salut tout le monde ! é !</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="co"># \n : retour a la ligne </span></a>
+<a class="sourceLine" id="cb62-33" title="33">fichier.close()</a>
+<a class="sourceLine" id="cb62-34" title="34"></a>
+<a class="sourceLine" id="cb62-35" title="35">chemin_dossier <span class="op">=</span> os.path.join(</a>
+<a class="sourceLine" id="cb62-36" title="36">    os.getcwd(), </a>
+<a class="sourceLine" id="cb62-37" title="37">    <span class="st">&quot;10-fichiers&quot;</span>,</a>
+<a class="sourceLine" id="cb62-38" title="38">    <span class="st">&quot;01-text&quot;</span>,</a>
+<a class="sourceLine" id="cb62-39" title="39">    <span class="st">&quot;messages&quot;</span></a>
+<a class="sourceLine" id="cb62-40" title="40">)</a>
+<a class="sourceLine" id="cb62-41" title="41"></a>
+<a class="sourceLine" id="cb62-42" title="42"><span class="cf">if</span> <span class="kw">not</span> os.path.exists(chemin_dossier):</a>
+<a class="sourceLine" id="cb62-43" title="43">    os.mkdir(chemin_dossier) <span class="co"># creation du dossier</span></a>
+<a class="sourceLine" id="cb62-44" title="44"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb62-45" title="45">    <span class="bu">print</span>(<span class="st">&quot;Le dossier existe déjà&quot;</span>)</a>
+<a class="sourceLine" id="cb62-46" title="46">    </a>
+<a class="sourceLine" id="cb62-47" title="47">    </a>
+<a class="sourceLine" id="cb62-48" title="48">chemin_dossier <span class="op">=</span> os.path.join(</a>
+<a class="sourceLine" id="cb62-49" title="49">    os.getcwd(), </a>
+<a class="sourceLine" id="cb62-50" title="50">    <span class="st">&quot;10-fichiers&quot;</span>,</a>
+<a class="sourceLine" id="cb62-51" title="51">    <span class="st">&quot;01-text&quot;</span>,</a>
+<a class="sourceLine" id="cb62-52" title="52">    <span class="st">&quot;messages&quot;</span>,</a>
+<a class="sourceLine" id="cb62-53" title="53">    <span class="st">&quot;john&quot;</span>,</a>
+<a class="sourceLine" id="cb62-54" title="54">    <span class="st">&quot;29-07-2021&quot;</span></a>
+<a class="sourceLine" id="cb62-55" title="55">)</a>
+<a class="sourceLine" id="cb62-56" title="56"></a>
+<a class="sourceLine" id="cb62-57" title="57"><span class="cf">if</span> <span class="kw">not</span> os.path.exists(chemin_dossier):</a>
+<a class="sourceLine" id="cb62-58" title="58">    os.makedirs(chemin_dossier) <span class="co"># creation des intermediaires s&#39;ils n;existent pas</span></a>
+<a class="sourceLine" id="cb62-59" title="59"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb62-60" title="60">    <span class="bu">print</span>(<span class="st">&quot;Le dossier existe déjà&quot;</span>)</a>
+<a class="sourceLine" id="cb62-61" title="61"></a>
+<a class="sourceLine" id="cb62-62" title="62"><span class="co"># exist_ok=True : Si les dossiers existent, on ignore la création </span></a>
+<a class="sourceLine" id="cb62-63" title="63"><span class="co"># os.makedirs(chemin_dossier, exist_ok=True)</span></a>
+<a class="sourceLine" id="cb62-64" title="64"></a>
+<a class="sourceLine" id="cb62-65" title="65"><span class="co"># Chemin du fichier actuelle</span></a>
+<a class="sourceLine" id="cb62-66" title="66"><span class="bu">print</span>(<span class="st">&quot;File: &quot;</span> <span class="op">+</span> <span class="va">__file__</span>)</a>
+<a class="sourceLine" id="cb62-67" title="67"></a>
+<a class="sourceLine" id="cb62-68" title="68"><span class="co"># dirname() : recupere le dernier dossier du chemin indiqué</span></a>
+<a class="sourceLine" id="cb62-69" title="69">chemin_dossier <span class="op">=</span> os.path.dirname(<span class="va">__file__</span>)</a>
+<a class="sourceLine" id="cb62-70" title="70">chemin_fichier <span class="op">=</span> os.path.join(chemin_dossier, <span class="st">&#39;extrait.txt&#39;</span>)</a>
+<a class="sourceLine" id="cb62-71" title="71"></a>
+<a class="sourceLine" id="cb62-72" title="72">fichier <span class="op">=</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;a&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>)</a>
+<a class="sourceLine" id="cb62-73" title="73">fichier.write(<span class="st">&#39;Salut tout le monde ! é !</span><span class="ch">\n</span><span class="st">&#39;</span>) <span class="co"># \n : retour a la ligne </span></a>
+<a class="sourceLine" id="cb62-74" title="74">fichier.close()</a></code></pre></div>
+<h4 id="lecture.py">lecture.py</h4>
+<div class="sourceCode" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb63-1" title="1"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb63-2" title="2"></a>
+<a class="sourceLine" id="cb63-3" title="3"><span class="co"># /home/user/Bureau/python-26-07-2021/10-fichiers/01-text</span></a>
+<a class="sourceLine" id="cb63-4" title="4">chemin_dossier <span class="op">=</span> os.path.dirname(<span class="va">__file__</span>)</a>
+<a class="sourceLine" id="cb63-5" title="5"><span class="co"># /home/user/Bureau/python-26-07-2021/10-fichiers/01-text/extrait.txt</span></a>
+<a class="sourceLine" id="cb63-6" title="6">chemin_fichier <span class="op">=</span> os.path.join(chemin_dossier, <span class="st">&#39;extrait.txt&#39;</span>)</a>
+<a class="sourceLine" id="cb63-7" title="7"></a>
+<a class="sourceLine" id="cb63-8" title="8"><span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb63-9" title="9">    fichier <span class="op">=</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>)</a>
+<a class="sourceLine" id="cb63-10" title="10">    contenu <span class="op">=</span> fichier.read()</a>
+<a class="sourceLine" id="cb63-11" title="11"><span class="cf">except</span> <span class="pp">OSError</span> <span class="im">as</span> erreur:</a>
+<a class="sourceLine" id="cb63-12" title="12">    <span class="bu">print</span>(erreur.with_traceback())</a>
+<a class="sourceLine" id="cb63-13" title="13"><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> erreur:</a>
+<a class="sourceLine" id="cb63-14" title="14">    <span class="bu">print</span>(erreur.with_traceback())</a>
+<a class="sourceLine" id="cb63-15" title="15"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb63-16" title="16">    <span class="bu">print</span>(contenu)</a>
+<a class="sourceLine" id="cb63-17" title="17">    </a>
+<a class="sourceLine" id="cb63-18" title="18"></a>
+<a class="sourceLine" id="cb63-19" title="19"><span class="co"># Context Manager: a la fin du bloc d&#39;instructions, le context manager s&#39;occupe</span></a>
+<a class="sourceLine" id="cb63-20" title="20"><span class="co"># de liberer les ressources allouées à l&#39;ouverture du fichier.</span></a>
+<a class="sourceLine" id="cb63-21" title="21"><span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb63-22" title="22">   <span class="cf">with</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>) <span class="im">as</span> fichier:</a>
+<a class="sourceLine" id="cb63-23" title="23">    contenu <span class="op">=</span> fichier.read()</a>
+<a class="sourceLine" id="cb63-24" title="24"><span class="cf">except</span> <span class="pp">OSError</span> <span class="im">as</span> erreur:</a>
+<a class="sourceLine" id="cb63-25" title="25">    <span class="bu">print</span>(erreur.with_traceback())</a>
+<a class="sourceLine" id="cb63-26" title="26"><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> erreur:</a>
+<a class="sourceLine" id="cb63-27" title="27">    <span class="bu">print</span>(erreur.with_traceback())</a>
+<a class="sourceLine" id="cb63-28" title="28"><span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb63-29" title="29">    <span class="bu">print</span>(contenu)</a></code></pre></div>
+<h3 id="fichier-json">Fichier JSON</h3>
+<p>Dans un fichier <em>.json</em> on défini les informations à importer:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb64-1" title="1"><span class="ot">[</span></a>
+<a class="sourceLine" id="cb64-2" title="2">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb64-3" title="3">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-4" title="4">    <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Leanne Graham&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-5" title="5">    <span class="dt">&quot;username&quot;</span><span class="fu">:</span> <span class="st">&quot;Bret&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-6" title="6">    <span class="dt">&quot;email&quot;</span><span class="fu">:</span> <span class="st">&quot;Sincere@april.biz&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-7" title="7">    <span class="dt">&quot;address&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb64-8" title="8">      <span class="dt">&quot;street&quot;</span><span class="fu">:</span> <span class="st">&quot;Kulas Light&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-9" title="9">      <span class="dt">&quot;suite&quot;</span><span class="fu">:</span> <span class="st">&quot;Apt. 556&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-10" title="10">      <span class="dt">&quot;city&quot;</span><span class="fu">:</span> <span class="st">&quot;Gwenborough&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-11" title="11">      <span class="dt">&quot;zipcode&quot;</span><span class="fu">:</span> <span class="st">&quot;92998-3874&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-12" title="12">      <span class="dt">&quot;geo&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb64-13" title="13">        <span class="dt">&quot;lat&quot;</span><span class="fu">:</span> <span class="st">&quot;-37.3159&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-14" title="14">        <span class="dt">&quot;lng&quot;</span><span class="fu">:</span> <span class="st">&quot;81.1496&quot;</span></a>
+<a class="sourceLine" id="cb64-15" title="15">      <span class="fu">}</span></a>
+<a class="sourceLine" id="cb64-16" title="16">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb64-17" title="17">    <span class="dt">&quot;phone&quot;</span><span class="fu">:</span> <span class="st">&quot;1-770-736-8031 x56442&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-18" title="18">    <span class="dt">&quot;website&quot;</span><span class="fu">:</span> <span class="st">&quot;hildegard.org&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-19" title="19">    <span class="dt">&quot;company&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb64-20" title="20">      <span class="dt">&quot;name&quot;</span><span class="fu">:</span> <span class="st">&quot;Romaguera-Crona&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-21" title="21">      <span class="dt">&quot;catchPhrase&quot;</span><span class="fu">:</span> <span class="st">&quot;Multi-layered client-server neural-net&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb64-22" title="22">      <span class="dt">&quot;bs&quot;</span><span class="fu">:</span> <span class="st">&quot;harness real-time e-markets&quot;</span></a>
+<a class="sourceLine" id="cb64-23" title="23">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb64-24" title="24">  <span class="fu">}</span></a></code></pre></div>
+<h4 id="lecture-de-json">Lecture de JSON</h4>
+<p>Puis dans notre code on importe les informations:</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb65-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb65-2" title="2"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb65-3" title="3"></a>
+<a class="sourceLine" id="cb65-4" title="4">chemin_dossier <span class="op">=</span> os.path.dirname(<span class="va">__file__</span>)</a>
+<a class="sourceLine" id="cb65-5" title="5">chemin_fichier <span class="op">=</span> os.path.join(chemin_dossier, <span class="st">&#39;users.json&#39;</span>)</a>
+<a class="sourceLine" id="cb65-6" title="6"></a>
+<a class="sourceLine" id="cb65-7" title="7"><span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb65-8" title="8">    <span class="cf">with</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>) <span class="im">as</span> fichier:</a>
+<a class="sourceLine" id="cb65-9" title="9">        content <span class="op">=</span> json.load(fichier)</a>
+<a class="sourceLine" id="cb65-10" title="10">        <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>content<span class="op">=</span><span class="sc">}</span><span class="ss">, type: </span><span class="sc">{</span> <span class="bu">type</span>(content) <span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb65-11" title="11"><span class="cf">except</span> json.decoder.JSONDecodeError <span class="im">as</span> jerreur:</a>
+<a class="sourceLine" id="cb65-12" title="12">    <span class="bu">print</span>(jerreur)</a>
+<a class="sourceLine" id="cb65-13" title="13">    </a>
+<a class="sourceLine" id="cb65-14" title="14"><span class="cf">for</span> utilisateur <span class="kw">in</span> content:</a>
+<a class="sourceLine" id="cb65-15" title="15">    <span class="co"># print(utilisateur) #dict</span></a>
+<a class="sourceLine" id="cb65-16" title="16">    <span class="co"># print( type(utilisateur) )</span></a>
+<a class="sourceLine" id="cb65-17" title="17">    <span class="bu">print</span>(<span class="st">&quot;Nom utilisateur: &quot;</span> <span class="op">+</span> utilisateur.get(<span class="st">&quot;name&quot;</span>) )</a>
+<a class="sourceLine" id="cb65-18" title="18">    <span class="bu">print</span>(<span class="st">&quot;Rue: &quot;</span> <span class="op">+</span> utilisateur.get(<span class="st">&quot;address&quot;</span>).get(<span class="st">&#39;street&#39;</span>) )</a></code></pre></div>
+<h4 id="ecriture-vers-json">Ecriture vers JSON</h4>
+<p>Pour écrire dans un fichier <em>.json</em> on fera:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb66-1" title="1"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb66-2" title="2"><span class="im">import</span> os</a>
+<a class="sourceLine" id="cb66-3" title="3"></a>
+<a class="sourceLine" id="cb66-4" title="4">chemin_dossier <span class="op">=</span> os.path.dirname(<span class="va">__file__</span>)</a>
+<a class="sourceLine" id="cb66-5" title="5">chemin_fichier <span class="op">=</span> os.path.join(chemin_dossier, <span class="st">&#39;sortie.json&#39;</span>)</a>
+<a class="sourceLine" id="cb66-6" title="6"></a>
+<a class="sourceLine" id="cb66-7" title="7"></a>
+<a class="sourceLine" id="cb66-8" title="8">fichier <span class="op">=</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;w&#39;</span>, encoding<span class="op">=</span><span class="st">&#39;utf-8&#39;</span>)</a>
+<a class="sourceLine" id="cb66-9" title="9">donnee <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb66-10" title="10">    <span class="st">&quot;Ornithorynque&quot;</span>: <span class="st">&quot;Animal semi-aquatique très étrange&quot;</span>,</a>
+<a class="sourceLine" id="cb66-11" title="11">    <span class="st">&quot;herbe&quot;</span>: <span class="st">&quot;pelouse verte&quot;</span>,</a>
+<a class="sourceLine" id="cb66-12" title="12">}</a>
+<a class="sourceLine" id="cb66-13" title="13">json.dump(donnee, fichier, indent<span class="op">=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb66-14" title="14">fichier.close()</a></code></pre></div>
+<p>Contenu du fichier <code>sortie.json</code>:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb67-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb67-2" title="2">  <span class="dt">&quot;Ornithorynque&quot;</span><span class="fu">:</span> <span class="st">&quot;Animal semi-aquatique tr</span><span class="ch">\u00e8</span><span class="st">s </span><span class="ch">\u00e9</span><span class="st">trange&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb67-3" title="3">  <span class="dt">&quot;herbe&quot;</span><span class="fu">:</span> <span class="st">&quot;pelouse verte&quot;</span></a>
+<a class="sourceLine" id="cb67-4" title="4"><span class="fu">}</span></a></code></pre></div>
 <!-- ## Atelier : Construction d'une bibliothèque de fonctions
 
  
@@ -1596,10 +1983,12 @@ Gestion des évènements
 </ul>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
+<hr />
+<h5 id="the-end" align="center">The End</h5>
+<hr />
 
 <div class="footer" id="bottom">
-  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#bottom">Bottom / Fin</a> *** </p>
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#the-end">Bottom / Fin</a> *** </p>
 </div>
 </body>
 </html>

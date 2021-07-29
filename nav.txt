@@ -12,6 +12,7 @@
 2021-07-16-POEI-Kubernetes
 2021-07-21-POEI-Puppet
 2021-07-26-POEI-Python
+2021-08-02-POEI-ProjetCapG
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet

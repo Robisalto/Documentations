@@ -41,6 +41,10 @@ extensions: 'extra'
 - [**Atelier Libre**]
 
 
+### Présentation Finale CapG
+- [Présentation Finale CapG](2021-08-02-POEI-ProjetCapG.html)
+
+
 ## **Linux Academy** 
 
 [**Linux Academy** *(https://app.linuxacademy.com)* ](https://app.linuxacademy.com/)

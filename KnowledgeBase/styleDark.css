@@ -1,75 +1,82 @@
 @import "compass/css3";
 
 
+@media only screen and (min-width: 851px) {
 
-/* nav li li li {display: inline-block; } */
-
-nav {
-	display: inline-block;
-  text-align:center;
-	margin: 0px auto;
+#navbar{
+position: fixed;
+min-width: 290px;
+top: 30px;
+left: 0px;
+width: 300px;
+height: 100%;
+border-right: solid;
+border-color: rgba(0, 22, 22, 0.4);
+font-family: timesnewroman;
+font-size: 20px;
 }
+
 
 nav ul {
-	padding: 0;
-	margin: 0 auto;
-  box-sizing: content-box;
+  counter-reset: item;
+  list-style-type: none;
 }
-
-nav a {
-	padding: 10px;
-	background: #000000;
-	border-radius: 5px;
-  text-decoration: none;
-}
-
-nav li {
-	list-style: none;
-	position: relative;
-	float: left;
-
-}
-
-nav a {
-	display: block;
-	width: 175px;
-  align-items: center;
+ul li {color: #DC3522;}
+ul li::before {
+  content: counter(item) ".  ";
+  counter-increment: item;
+  color:  #DC3522;
 }
 
 nav ul ul {
-	padding: 0px;
-	margin: 0px;
-	position: absolute;
-	z-index: +1;
-  display: none;
-  font-size: 90%;
+  counter-reset: item_2;
+  list-style-type: none;
+}
+ul ul li:before {
+  content: counter(item_2) ".  ";
+  counter-increment: item_2;
+  color:  #00A388;
 }
 
-nav li:hover ul {
-	display: block;
-
+nav ul ul ul {
+  counter-reset: item_3;
+  list-style-type: none;
 }
+ul ul ul li:before {
+  content: counter(item_3) ".  ";
+  counter-increment: item_3;
+  color:  #0395DE;
+}
+
+nav ul ul ul ul {
+  counter-reset: item_4;
+  list-style-type: none;
+}
+ul ul ul ul li:before {
+  content: counter(item_4) ".  ";
+  counter-increment: item_4;
+  color:  #FF6138;
+}
+
+
+
 
 nav li:hover a {
-  background-color: #000000;
+  background-color: #5f08ff;
   font-size: large;
-}
-
-nav li:hover a:hover {
-	background-color: #5f08ff;
+  transition: .4s all ease;
   color: #ccc;
 }
 
-
-nav ul ul ul {
-  padding: 0px;
-	margin: 0px;
-	position: absolute;
-	z-index: +1;
-  display: none;
-  font-size: small;
-  
+nav li:hover a:hover {
+  color: #ccc;
+  font-size: larger;
+  transition: .4 all ease;
 }
+
+
+
+
 
 header::after {
   display: block;
@@ -744,7 +751,7 @@ img {
   text-align: center;
 }
 
-/* 
+ 
 % Color definitions
 % Awesome colors
 \definecolor{awesome-emerald}{HTML}{00A388}
@@ -754,4 +761,4 @@ img {
 \definecolor{awesome-orange}{HTML}{FF6138}
 \definecolor{awesome-nephritis}{HTML}{27AE60}
 \definecolor{awesome-concrete}{HTML}{95A5A6}
-\definecolor{awesome-darknight}{HTML}{131A28} */
+\definecolor{awesome-darknight}{HTML}{131A28} 
