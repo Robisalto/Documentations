@@ -21,8 +21,8 @@ nav ul {
   counter-reset: item;
   list-style-type: none;
 }
-ul li {color: #DC3522;}
-ul li::before {
+nav ul li {color: #DC3522;}
+nav ul li::before {
   content: counter(item) ".  ";
   counter-increment: item;
   color:  #DC3522;
@@ -32,7 +32,7 @@ nav ul ul {
   counter-reset: item_2;
   list-style-type: none;
 }
-ul ul li:before {
+nav ul ul li:before {
   content: counter(item_2) ".  ";
   counter-increment: item_2;
   color:  #00A388;
@@ -42,7 +42,7 @@ nav ul ul ul {
   counter-reset: item_3;
   list-style-type: none;
 }
-ul ul ul li:before {
+nav ul ul ul li:before {
   content: counter(item_3) ".  ";
   counter-increment: item_3;
   color:  #0395DE;
@@ -52,7 +52,7 @@ nav ul ul ul ul {
   counter-reset: item_4;
   list-style-type: none;
 }
-ul ul ul ul li:before {
+nav ul ul ul ul li:before {
   content: counter(item_4) ".  ";
   counter-increment: item_4;
   color:  #FF6138;

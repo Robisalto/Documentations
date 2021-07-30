@@ -17,12 +17,98 @@ extensions: 'extra'
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/languages/css.min.js">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/atom-one-light.min.css">
 
+---
+
 #### Introduction
 
 Formateur: 
 
 Mail: <ylesueur@dawan.fr>
 
+
+---
+
+# Programme de la Formation
+
+ 
+- Découvrir le langage
+
+    - Historique, alternatives
+    - A propos de Python 2 et Python 3
+    - Présentation et installation de Python dans un environnement Windows ou Linux
+    - Mise en oeuvre de Python : accès au terminal
+    - Environnements de développement assistés ; association à des outils connus et éditeurs pratiques
+
+**Atelier** : Mise en place d'un environnement de développement
+
+
+ - Maîtriser la syntaxe de base
+
+     - Syntaxe de base, en interprétation directe et en script
+     - Déclarer des variables en Python, types internes et leur utilisation
+     - Utiliser les opérateurs et expressions
+     - Présentation et détail des structures de contrôle : les tests, les boucles
+     - Utiliser les boucles et tests pour réaliser des algorithmes
+     - Se servir des tableaux, algorithmes divers de traitement de données massives
+     - Types de données et opérations avancées (ensembles, dictionnaires,ordonnancement...)
+     - Gestion des exceptions
+
+**Atelier** : Multiples algorithmes pour maitriser la syntaxe de base.
+
+ 
+ - Structurer le code avec des fonctions
+
+     - Intérêt des structurations du code dans le projet et pour le groupe de projets
+     - Créer et organiser les fonctions
+     - Retour des fonctions, absence de retour, multiples retours et intérêt dans un algorithme complexe
+     - Espaces de noms, manipulation
+     - Créations de bibliothèques de fonctions, documentation
+     - Opérations les chaînes de caractères
+     - Calculer avec Python
+     - Gestion des dates, heures, intervalles de temps avec Python
+     - Fonctions diverses nécessaires
+
+**Atelier** : Construction d'une bibliothèque de fonctions
+
+ 
+ - Maîtriser l'Objet et modéliser une implémentation
+
+     - Différents styles de programmation, apports de l'objet
+     - Objet et classes
+     - Gestion des attributs et méthodes
+     - Instanciation, destruction
+     - Encapsuler les données et utiliser des propriétés
+     - Agrégation d'objets
+     - Héritage simple et multiples
+     - Polymorphisme
+     - Introspection
+     - Utilisation d'interfaces
+
+ 
+ - Manipuler des données
+
+     - Manipulation de fichiers
+     - Parsing Xml, JSON
+     - Gestion des logs avec Python
+     - Documentation du code et génération de rendu HTML
+     - Utiliser des bases de données avec Python, DBAPI
+
+**Atelier** : *Manipulation de fichiers et opérations liées à une base de données SQLite.*
+
+ - Construire une interface graphique
+ 
+     - Bibliothèques graphiques en Python
+     - Tkinter vs PyQT ou autre
+     - Widgets graphiques
+     - Menus
+     - Positionnement des composants
+     - Gestion des fenêtres
+     - Gestion des évènements
+
+ *Atelier* : *Implémentation d'une interface graphique complète d'une application*
+
+
+---
 
 
 
@@ -41,6 +127,11 @@ Document: [Formation_Python_init_appro_V3.pdf](2021-07-26-POEI-Python/Formation_
 
 - W3School: <https://www.w3schools.com/python/>
 
+
+## Code Source module
+
+- GitHub: <https://github.com/ylesueur-dawan/python-26-07-2021>
+- Code Source: [python-26-07-2021](2021-07-26-POEI-Python/python-26-07-2021)
 
 
 # Découvrir le langage
@@ -2283,50 +2374,514 @@ Contenu du fichier `sortie.json`:
 }
 ```
 
-<!-- ## Atelier : Construction d'une bibliothèque de fonctions
 
- 
-# Maîtriser l'Objet et modéliser une implémentation
+#### TP: ex6.py
 
-Différents styles de programmation, apports de l'objet
-Objet et classes
-Gestion des attributs et méthodes
-Instanciation, destruction
-Encapsuler les données et utiliser des propriétés
-Agrégation d'objets
-Héritage simple et multiples
-Polymorphisme
-Introspection
-Utilisation d'interfaces
+```python
+###########################################################################################################
+# 
+# Ajouter l'option 5 et 6
+#
+###########################################################################################################
+import os 
+import json
 
- 
-# Manipuler des données
+print("""
+    1- Afficher la liste de courses.
+    2- Ajouter un produit a la liste de courses
+    3- Retirer un produit de la liste de course 
+    4- Supprimer toute la liste de courses
+    5- Exporter la liste (JSON)
+    6- Importer une liste (JSON)
+    7- Quitter le programme
+""")
 
-Manipulation de fichiers
-Parsing Xml, JSON
-Gestion des logs avec Python
-Documentation du code et génération de rendu HTML
-Utiliser des bases de données avec Python, DBAPI
+chemin_dossier = os.path.dirname(__file__)
+chemin_fichier = os.path.join(chemin_dossier, "courses.json")
 
-## Atelier : Manipulation de fichiers et opérations liées à une base de données SQLite.
+courses = []
+continuer = True
+# while continuer == True:
+while continuer:
+    choix = input("Que voulez-vous faire ? ")
+    if choix == "1":
+        # if courses == []
+        if not courses:
+            print("La liste de course est vide")
+        else:
+            for produit in courses:
+                # produit -> dict
+                print(f"- { produit.get('nom').capitalize() } x{produit.get('quantite')}")
+    elif choix == "2":
+        nom_produit = input("Quel est le nom du produit à ajouter ? ").lower()
+        quantite_produit = input("Combien en voulez-vous ? ")
+        if quantite_produit.isnumeric():
+            quantite_produit = int(quantite_produit)
+            produit = {
+                'nom': nom_produit,
+                'quantite': quantite_produit
+            }
+            courses.append(produit)
+            print(f"{nom_produit} à bien été ajouté(e)")
+        else:
+            print("Vous devez saisir un nombre")
+    elif choix == "3":
+        nom_produit = input("Quel est le nom du produit à supprimer ? ").lower()
+        for produit in courses:
+            if nom_produit in produit.values():
+                courses.remove(produit)
+                print(f"{nom_produit} à bien été supprimé(e)")
+            else:
+                print(f"{nom_produit} n'est pas dans la liste")
+    elif choix == "4":
+        courses.clear()
+        print(f"La liste à bien été vidée.")
+    elif choix == "5":
+        # chemin_fichier = input("Quel fichier voulez-vous importer: ")
+        fichier = None
+        try:
+            fichier = open(chemin_fichier, 'w', encoding="utf-8")
+            json.dump(courses, fichier, indent=2)
+        except OSError as e:
+            print(f"Erreur: {e}, merci de réesayer avec un autre fichier")
+        else:
+            print("La liste a bien été exportée vers " + chemin_fichier)
+    elif choix == "6":
+        try:
+            with open(chemin_fichier, 'r', encoding="utf-8") as fichier:
+                content = json.load(fichier)
+                if not content:
+                    print("La liste est vide.")
+                else:
+                    courses += content
+                    print("La liste a bien été importée")
+        except OSError as e:
+            print(e)
+    elif choix == "7":
+        print("Au revoir")
+        continuer = False
+    else:
+        print("Je n'ai compris")
+
+```
+
+
+### YAML
+
+Contenu du fichier:
+```python
+# pip install pyyaml
+import yaml
+import sys
+
+
+def python2Yaml(filename):
+    utilisateur = {
+        "first": "Rick",
+        "last": "Hochet",
+        "email": "r.hochet@dawan.fr",
+        "phone": "0102030405",
+    }
+    msg = yaml.dump(utilisateur)
+    fichier = open(filename, "w")
+    fichier.write(msg)
+    fichier.close()
+
+
+def yaml2Python(filename):
+    fichier = open(filename, "r")
+    msg = fichier.read()
+    fichier.close()
+    result = yaml.load(msg)
+    print(result)
+
+
+if __name__ == "__main__":
+    try:
+        filename = sys.argv[1]
+        print(sys.argv)
+        yaml2Python(filename)
+        python2Yaml('sortie.yaml')
+    except IndexError as ie:
+        print("vous avez oublié le fichier: ")
+        print("USAGE: python app_main.py <input_file>")
+
+
+```
+
+##### Résulat en sortie
+
+```yaml
+version: "3.7"
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ./start.sh
+    volumes:
+      - .:/app
+    ports:
+      - "8082:8080"
+    restart: always
+    networks:
+      - main
+
+networks:
+  main:
+    driver: bridge
+
+```
+
+# Bases de Données
+
+## Création de BDD
+
+Exemple avec le fichier `create.py`:
+
+```python
+# BDD: Base de donnée, on peut se representer une base de donnée comme un ensemble de tableaux
+
+# DB: Data Base
+
+# mariaDb, postgresql etc... 
+import sqlite3
+
+# Si la base de donnée n'existe pas elle va etre crée
+# Sinon, on se connecte.
+# connect(chemin_bdd)
+connexion = sqlite3.connect("formation.db")
+curseur = connexion.cursor()
+
+# Le curseur nous permet d'executer des requetes SQL.
+# utilisateurs -> id, nom, prenom,  
+curseur.execute("""
+    CREATE TABLE IF NOT EXISTS utilisateurs (id INTEGER PRIMARY KEY, nom TEXT, prenom TEXT)
+""")
+
+# INSERT INTO monTableau (col1, col2 etc...) VALUES ()
+curseur.execute("INSERT INTO utilisateurs (nom, prenom) VALUES ('John', 'Doe')")
+
+# On ne fait jamais ça
+# curseur.execute(f"INSERT INTO utilisateurs (nom, prenom) VALUES ('{}', '{}')") # '; DROP TABLE;  <- injection SQL
+
+my_utilisateur = {
+    'last_name': 'Zarella',
+    'first_name': 'Maude'
+}
+# :last_name <- my_utilisateur.get('last_name')
+curseur.execute(
+    "INSERT INTO utilisateurs (nom, prenom) VALUES (:last_name, :first_name)",
+    my_utilisateur
+)
+
+my_utilisateur = ('Hochet', 'Rick')
+curseur.execute(
+    "INSERT INTO utilisateurs (nom, prenom) VALUES (?, ?)",
+    my_utilisateur
+)
+
+
+# On doit enregistrer les changements effectués sur les tableaux
+connexion.commit()
+connexion.close()
+
+```
+
+### Lecture de BDD
+
+Dans le fichier `read.py`:
+
+```python
+import sqlite3
+
+connexion =  sqlite3.connect("formation.db")
+curseur = connexion.cursor()
+
+# SELECTIONNE toutes les colonnes DEPUIS LE TABLEAU utilisateurs
+sql = "SELECT * FROM utilisateurs"
+# sql = "SELECT nom, prenom FROM utilisateurs"
+curseur.execute(sql)
+# print(curseur.fetchall()) # <- le curseur se vide
+my_utilisateurs = curseur.fetchall() # <- c'est toujours une liste
+print(my_utilisateurs)
+
+for utilisateur in my_utilisateurs:
+    print(utilisateur)
+    
+for id, nom, prenom in my_utilisateurs:
+    print(f"id: {id}")
+    print("nom: " + nom)
+    print("prenom: " + prenom)
+
+
+sql = "SELECT nom, prenom FROM utilisateurs"
+curseur.execute(sql)
+
+utilisateur = curseur.fetchone() # <- un tuple
+print(utilisateur)
+utilisateur = curseur.fetchone() # <- un tuple
+print(utilisateur)
+
+
+sql = "SELECT * FROM utilisateurs WHERE nom='Hochet'"
+curseur.execute(sql)
+utilisateur = curseur.fetchone()
+print(utilisateur)
+
+data = (2,)
+sql = "SELECT * FROM utilisateurs WHERE id=?"
+curseur.execute(sql, data)
+utilisateur = curseur.fetchone()
+print(utilisateur)
+
+
+# connexion.commit() # pas necessaire, puisqu'on ne fait aucune modifications sur le tableaux
+connexion.close()
+```
+
+#### Update BDD
+
+Mise à jour d'une base de données:
+
+```python
+import sqlite3
+
+connexion = sqlite3.connect("formationdb")
+curseur = connexion.cursor()
+
+my_utilisateur = {
+    "id":1,
+    "last_name": "Doe",
+    "first_name": "John"
+    
+}
+
+curseur.execute(
+    "UPDATE utilisateurs SET nom=:last_name, prenom=:first_name WHERE id=:id",
+)
+
+connexion.commit()
+connexion.close()
+
+```
+
+#### Delete d'une BDD
+
+```python
+import sqlite3
+
+connexion = sqlite3.connect("formation.db")
+curseur = connexion.cursor()
+
+utilisateur_id = int(input("Quel est l'id de l'utilisateur a supprimer ? "))
+
+curseur.execute(
+    "DELETE FROM utilisateurs WHERE id=?",
+    [utilisateur_id]
+)
+
+connexion.commit()
+connexion.close()
+
+```
+
+
+Voir aussi: [*Tips & Tricks*: SQLLITE](#sqllite)
 
 
 
-# Construire une interface graphique
+# Logs
 
-Bibliothèques graphiques en Python
-Tkinter vs PyQT ou autre
-Widgets graphiques
-Menus
-Positionnement des composants
-Gestion des fenêtres
-Gestion des évènements
+Gestion de logs avec Python.
 
-## Atelier : Implémentation d'une interface graphique complète d'une application
- -->
+***Official Python Doc***: <https://docs.python.org/3/library/logging.html>
+
+## Configuration du logger
+
+### Options par défaut
+
+```python
+import logging
+
+logging.debug('Mode debug pour suivre')
+logging.info("Pour indiquer les infos, actions, appel fonction, etc.")
+logging.warning("Pour indiquer un problème mineur")
+logging.error("Indique un problème important")
+logging.critical("Erreur critique, crash du programme")
+
+```
+
+### Configuration basique d'un Logger
+
+```python
+logging.basicConfig(
+    level=logging.INFO,
+    filename='app.log',
+    filemode='a',
+    format="[%(levelname)s] - %(asctime)s, in %(filename)s l.%(lineno)s %(message)s",
+    datefmt="%d/%m/%Y %H:%M:%S"
+)
+
+logging.warning("Pour indiquer, un problème mineur")
+
+```
+
+#### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-30_14h46_37.gif)
 
 
 
+
+
+# GUI *(Interfaces graphiques)*
+
+***Official Python Doc:*** <https://docs.python.org/fr/3/library/tkinter.html>
+
+## Exemple basique
+
+```python
+import tkinter
+
+fenetre_principal = tkinter.Tk()
+fenetre_principal.title("Hello World")
+fenetre_principal.geometry("600x480") # "Largeur x hauteur"
+
+# Text
+message_label = tkinter.Label(fenetre_principal, text="Hello !")
+message_label["fg"] = "red"
+message_label["background"] = "#34b7eb"
+message_label.pack() # positionne l'élément dans la fenetre
+# message_label.place(x=50, y=300)
+
+fenetre_principal.mainloop()
+
+```
+
+##### Résultat
+
+![](2021-07-26-POEI-Python/2021-07-30_15h06_22.gif)
+
+
+## Autres exemples:
+
+### Jeu de dés:
+
+```python
+import tkinter
+import random
+
+
+def lancer_de():
+    nombre = random.randint(1, 6)
+    resultat.set(f"Résultat: {nombre}")
+    # resultat_label["text"] = f"Résultat: {nombre}"
+    # resultat_label2["text"] = f"Résultat: {nombre}"
+
+fenetre_principal = tkinter.Tk()
+fenetre_principal.title("Lancer de dé")
+fenetre_principal.geometry("600x480") # "Largeur x hauteur"
+
+resultat = tkinter.StringVar(value="Aucun résultat")
+
+# resultat_label = tkinter.Label(fenetre_principal, text="Aucun résultat")
+resultat_label = tkinter.Label(fenetre_principal, textvariable=resultat)
+resultat_label.pack()
+
+# resultat_label2 = tkinter.Label(fenetre_principal, text="Aucun résultat")
+resultat_label2 = tkinter.Label(fenetre_principal, textvariable=resultat)
+resultat_label2.pack(side=tkinter.BOTTOM)
+
+lancer_btn = tkinter.Button(fenetre_principal, command=lancer_de)
+lancer_btn["text"] = "Lancer le dé"
+lancer_btn.pack()
+
+
+fenetre_principal.mainloop()
+
+def command(une_fonction):
+    # traitement ....
+    une_fonction()
+    
+command(une_fonction=lancer_de)
+# command(lancer_de)
+
+```
+
+### Dialogue
+
+```python
+import tkinter
+import tkinter.messagebox
+
+def connexion():
+    mot_de_passe = password_entry.get()
+    print(f"{mot_de_passe=}")
+    if mot_de_passe == "root":
+        tkinter.messagebox.showinfo("Bienvenue", "Connexion Réussie")
+    else:
+        tkinter.messagebox.showerror("Attention", "Identifiants incorrect")
+
+
+fenetre_principal = tkinter.Tk()
+fenetre_principal.title("Dialogues")
+fenetre_principal.geometry("600x480") # "Largeur x hauteur"
+
+# Text
+password_label = tkinter.Label(fenetre_principal, text="Mot de passe")
+password_label.pack()
+
+# Permet à l'utilisateur de saisir des informations 
+password_entry = tkinter.Entry(fenetre_principal, show="*")
+password_entry.pack()
+
+cnx_btn = tkinter.Button(fenetre_principal, text="Se Connecter", command=connexion)
+cnx_btn.pack()
+
+fenetre_principal.mainloop()
+
+```
+
+### Calculette graphique
+
+<https://www.geeksforgeeks.org/python-simple-gui-calculator-using-tkinter/>
+
+
+### Menu.py
+
+```python
+import tkinter
+
+fenetre_principal = tkinter.Tk()
+fenetre_principal.title("Menu")
+fenetre_principal.geometry("600x480") # "Largeur x hauteur"
+
+menu_bar = tkinter.Menu(fenetre_principal)
+sous_menu_fichier = tkinter.Menu(menu_bar, tearoff=0)
+sous_menu_fichier_preference = tkinter.Menu(sous_menu_fichier, tearoff=0)
+
+sous_menu_fichier_preference.add_command(label="extensions")
+
+# Configuration du sous menu fichier
+sous_menu_fichier.add_command(label="Importer un fichier JSON")
+sous_menu_fichier.add_command(label="Exporter un fichier JSON")
+sous_menu_fichier.add_cascade(label="Préferences", menu=sous_menu_fichier_preference)
+
+# add_cascade(): pour l'ajout de sous menu
+menu_bar.add_cascade(label="Fichier", menu=sous_menu_fichier)
+menu_bar.add_cascade(label="Editer")
+
+# On configure notre fenetre pour integrer notre menu
+fenetre_principal.config(menu=menu_bar)
+fenetre_principal.mainloop()
+
+```
+
+## TP: Courses
+
+Voir Doc : [Code Source](#code-source-module)
 
 
 --- 
@@ -2336,6 +2891,38 @@ Gestion des évènements
 
 ## Raccourcis Visual Studio
 
-- `Ctrl+/`: commente/décommente une ou plusieurs lignes
+- `Ctrl+/` : commente/décommente une ou plusieurs lignes
 
-- Ctrl+
+- `SHIFT+ ALT + flèche du bas` : duplique une ou plusieurs ligne(s)
+
+- `ALT + Flèche` : déplace une ou plusieurs ligne(s)
+
+
+
+<https://stackoverflow.com/questions/40993895/how-to-see-a-sqlite-database-content-with-visual-studio-code>
+
+## SQLLITE
+
+<https://www.sqlite.org/doclist.html>
+
+
+
+#### BDD SQL dans VS Code
+
+Ouvrir une bdd avec l'extension SQlite de vscode:
+
+F1 -> Sqlite: open database -> ouvrir l'explorateur -> onglet sqlite explorer -> maTable -> show table
+
+#### Liens utiles
+
+SQlite browser: 
+<https://sqlitebrowser.org/>
+
+
+    
+Row_factory: 
+<https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.row_factory>
+    
+
+Mysql connector: 
+<https://dev.mysql.com/doc/connector-python/en/connector-python-installation-binary.html>

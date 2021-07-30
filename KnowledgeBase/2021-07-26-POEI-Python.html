@@ -87,8 +87,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 <nav id="TOC">
 <ul>
+<li><a href="#programme-de-la-formation">Programme de la Formation</a></li>
 <li><a href="#doc-source">Doc Source</a><ul>
 <li><a href="#docs-en-ligne">Docs en ligne</a></li>
+<li><a href="#code-source-module">Code Source module</a></li>
 </ul></li>
 <li><a href="#découvrir-le-langage">Découvrir le langage</a><ul>
 <li><a href="#environnement-de-dev">Environnement de Dev</a><ul>
@@ -163,10 +165,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#open-un-fichier">Open un fichier</a></li>
 <li><a href="#gestion-de-répertoires">Gestion de répertoires</a></li>
 <li><a href="#fichier-json">Fichier JSON</a></li>
+<li><a href="#yaml">YAML</a></li>
 </ul></li>
+</ul></li>
+<li><a href="#bases-de-données">Bases de Données</a><ul>
+<li><a href="#création-de-bdd">Création de BDD</a><ul>
+<li><a href="#lecture-de-bdd">Lecture de BDD</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#logs">Logs</a><ul>
+<li><a href="#configuration-du-logger">Configuration du logger</a><ul>
+<li><a href="#options-par-défaut">Options par défaut</a></li>
+<li><a href="#configuration-basique-dun-logger">Configuration basique d’un Logger</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#gui-interfaces-graphiques">GUI <em>(Interfaces graphiques)</em></a><ul>
+<li><a href="#exemple-basique">Exemple basique</a></li>
+<li><a href="#autres-exemples">Autres exemples:</a><ul>
+<li><a href="#jeu-de-dés">Jeu de dés:</a></li>
+<li><a href="#dialogue">Dialogue</a></li>
+<li><a href="#calculette-graphique">Calculette graphique</a></li>
+<li><a href="#menu.py">Menu.py</a></li>
+</ul></li>
+<li><a href="#tp-courses">TP: Courses</a></li>
 </ul></li>
 <li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
 <li><a href="#raccourcis-visual-studio">Raccourcis Visual Studio</a></li>
+<li><a href="#sqllite">SQLLITE</a></li>
 </ul></li>
 </ul>
 </nav>
@@ -174,9 +199,90 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/highlight.min.js"></script>
 <p><link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/languages/css.min.js"> <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.9/styles/atom-one-light.min.css"></p>
+<hr />
 <h4 id="introduction">Introduction</h4>
 <p>Formateur:</p>
 <p>Mail: <a href="mailto:ylesueur@dawan.fr" class="email">ylesueur@dawan.fr</a></p>
+<hr />
+<h1 id="programme-de-la-formation">Programme de la Formation</h1>
+<ul>
+<li><p>Découvrir le langage</p>
+<ul>
+<li>Historique, alternatives</li>
+<li>A propos de Python 2 et Python 3</li>
+<li>Présentation et installation de Python dans un environnement Windows ou Linux</li>
+<li>Mise en oeuvre de Python : accès au terminal</li>
+<li>Environnements de développement assistés ; association à des outils connus et éditeurs pratiques</li>
+</ul></li>
+</ul>
+<p><strong>Atelier</strong> : Mise en place d’un environnement de développement</p>
+<ul>
+<li><p>Maîtriser la syntaxe de base</p>
+<ul>
+<li>Syntaxe de base, en interprétation directe et en script</li>
+<li>Déclarer des variables en Python, types internes et leur utilisation</li>
+<li>Utiliser les opérateurs et expressions</li>
+<li>Présentation et détail des structures de contrôle : les tests, les boucles</li>
+<li>Utiliser les boucles et tests pour réaliser des algorithmes</li>
+<li>Se servir des tableaux, algorithmes divers de traitement de données massives</li>
+<li>Types de données et opérations avancées (ensembles, dictionnaires,ordonnancement…)</li>
+<li>Gestion des exceptions</li>
+</ul></li>
+</ul>
+<p><strong>Atelier</strong> : Multiples algorithmes pour maitriser la syntaxe de base.</p>
+<ul>
+<li><p>Structurer le code avec des fonctions</p>
+<ul>
+<li>Intérêt des structurations du code dans le projet et pour le groupe de projets</li>
+<li>Créer et organiser les fonctions</li>
+<li>Retour des fonctions, absence de retour, multiples retours et intérêt dans un algorithme complexe</li>
+<li>Espaces de noms, manipulation</li>
+<li>Créations de bibliothèques de fonctions, documentation</li>
+<li>Opérations les chaînes de caractères</li>
+<li>Calculer avec Python</li>
+<li>Gestion des dates, heures, intervalles de temps avec Python</li>
+<li>Fonctions diverses nécessaires</li>
+</ul></li>
+</ul>
+<p><strong>Atelier</strong> : Construction d’une bibliothèque de fonctions</p>
+<ul>
+<li><p>Maîtriser l’Objet et modéliser une implémentation</p>
+<ul>
+<li>Différents styles de programmation, apports de l’objet</li>
+<li>Objet et classes</li>
+<li>Gestion des attributs et méthodes</li>
+<li>Instanciation, destruction</li>
+<li>Encapsuler les données et utiliser des propriétés</li>
+<li>Agrégation d’objets</li>
+<li>Héritage simple et multiples</li>
+<li>Polymorphisme</li>
+<li>Introspection</li>
+<li>Utilisation d’interfaces</li>
+</ul></li>
+<li><p>Manipuler des données</p>
+<ul>
+<li>Manipulation de fichiers</li>
+<li>Parsing Xml, JSON</li>
+<li>Gestion des logs avec Python</li>
+<li>Documentation du code et génération de rendu HTML</li>
+<li>Utiliser des bases de données avec Python, DBAPI</li>
+</ul></li>
+</ul>
+<p><strong>Atelier</strong> : <em>Manipulation de fichiers et opérations liées à une base de données SQLite.</em></p>
+<ul>
+<li><p>Construire une interface graphique</p>
+<ul>
+<li>Bibliothèques graphiques en Python</li>
+<li>Tkinter vs PyQT ou autre</li>
+<li>Widgets graphiques</li>
+<li>Menus</li>
+<li>Positionnement des composants</li>
+<li>Gestion des fenêtres</li>
+<li>Gestion des évènements</li>
+</ul></li>
+</ul>
+<p><em>Atelier</em> : <em>Implémentation d’une interface graphique complète d’une application</em></p>
+<hr />
 <h1 id="doc-source">Doc Source</h1>
 <iframe src="2021-07-26-POEI-Python/Formation_Python_init_appro_V3.pdf" allowfullscreen="true">
 </iframe>
@@ -186,6 +292,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Framapad: <a href="https://mensuel.framapad.org/p/python-26" class="uri">https://mensuel.framapad.org/p/python-26</a></p></li>
 <li><p>Git: <a href="https://github.com/ylesueur-dawan/python-26-07-2021" class="uri">https://github.com/ylesueur-dawan/python-26-07-2021</a></p></li>
 <li><p>W3School: <a href="https://www.w3schools.com/python/" class="uri">https://www.w3schools.com/python/</a></p></li>
+</ul>
+<h2 id="code-source-module">Code Source module</h2>
+<ul>
+<li>GitHub: <a href="https://github.com/ylesueur-dawan/python-26-07-2021" class="uri">https://github.com/ylesueur-dawan/python-26-07-2021</a></li>
+<li>Code Source: <a href="2021-07-26-POEI-Python/python-26-07-2021">python-26-07-2021</a></li>
 </ul>
 <h1 id="découvrir-le-langage">Découvrir le langage</h1>
 <ul>
@@ -1933,54 +2044,438 @@ En mode <code>write</code>, si le fichier n’existe pas, il sera créé.
 <a class="sourceLine" id="cb67-2" title="2">  <span class="dt">&quot;Ornithorynque&quot;</span><span class="fu">:</span> <span class="st">&quot;Animal semi-aquatique tr</span><span class="ch">\u00e8</span><span class="st">s </span><span class="ch">\u00e9</span><span class="st">trange&quot;</span><span class="fu">,</span></a>
 <a class="sourceLine" id="cb67-3" title="3">  <span class="dt">&quot;herbe&quot;</span><span class="fu">:</span> <span class="st">&quot;pelouse verte&quot;</span></a>
 <a class="sourceLine" id="cb67-4" title="4"><span class="fu">}</span></a></code></pre></div>
-<!-- ## Atelier : Construction d'une bibliothèque de fonctions
-
- 
-# Maîtriser l'Objet et modéliser une implémentation
-
-Différents styles de programmation, apports de l'objet
-Objet et classes
-Gestion des attributs et méthodes
-Instanciation, destruction
-Encapsuler les données et utiliser des propriétés
-Agrégation d'objets
-Héritage simple et multiples
-Polymorphisme
-Introspection
-Utilisation d'interfaces
-
- 
-# Manipuler des données
-
-Manipulation de fichiers
-Parsing Xml, JSON
-Gestion des logs avec Python
-Documentation du code et génération de rendu HTML
-Utiliser des bases de données avec Python, DBAPI
-
-## Atelier : Manipulation de fichiers et opérations liées à une base de données SQLite.
-
-
-
-# Construire une interface graphique
-
-Bibliothèques graphiques en Python
-Tkinter vs PyQT ou autre
-Widgets graphiques
-Menus
-Positionnement des composants
-Gestion des fenêtres
-Gestion des évènements
-
-## Atelier : Implémentation d'une interface graphique complète d'une application
- -->
+<h4 id="tp-ex6.py">TP: ex6.py</h4>
+<div class="sourceCode" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb68-1" title="1"><span class="co">###########################################################################################################</span></a>
+<a class="sourceLine" id="cb68-2" title="2"><span class="co"># </span></a>
+<a class="sourceLine" id="cb68-3" title="3"><span class="co"># Ajouter l&#39;option 5 et 6</span></a>
+<a class="sourceLine" id="cb68-4" title="4"><span class="co">#</span></a>
+<a class="sourceLine" id="cb68-5" title="5"><span class="co">###########################################################################################################</span></a>
+<a class="sourceLine" id="cb68-6" title="6"><span class="im">import</span> os </a>
+<a class="sourceLine" id="cb68-7" title="7"><span class="im">import</span> json</a>
+<a class="sourceLine" id="cb68-8" title="8"></a>
+<a class="sourceLine" id="cb68-9" title="9"><span class="bu">print</span>(<span class="st">&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb68-10" title="10"><span class="st">    1- Afficher la liste de courses.</span></a>
+<a class="sourceLine" id="cb68-11" title="11"><span class="st">    2- Ajouter un produit a la liste de courses</span></a>
+<a class="sourceLine" id="cb68-12" title="12"><span class="st">    3- Retirer un produit de la liste de course </span></a>
+<a class="sourceLine" id="cb68-13" title="13"><span class="st">    4- Supprimer toute la liste de courses</span></a>
+<a class="sourceLine" id="cb68-14" title="14"><span class="st">    5- Exporter la liste (JSON)</span></a>
+<a class="sourceLine" id="cb68-15" title="15"><span class="st">    6- Importer une liste (JSON)</span></a>
+<a class="sourceLine" id="cb68-16" title="16"><span class="st">    7- Quitter le programme</span></a>
+<a class="sourceLine" id="cb68-17" title="17"><span class="st">&quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb68-18" title="18"></a>
+<a class="sourceLine" id="cb68-19" title="19">chemin_dossier <span class="op">=</span> os.path.dirname(<span class="va">__file__</span>)</a>
+<a class="sourceLine" id="cb68-20" title="20">chemin_fichier <span class="op">=</span> os.path.join(chemin_dossier, <span class="st">&quot;courses.json&quot;</span>)</a>
+<a class="sourceLine" id="cb68-21" title="21"></a>
+<a class="sourceLine" id="cb68-22" title="22">courses <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb68-23" title="23">continuer <span class="op">=</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb68-24" title="24"><span class="co"># while continuer == True:</span></a>
+<a class="sourceLine" id="cb68-25" title="25"><span class="cf">while</span> continuer:</a>
+<a class="sourceLine" id="cb68-26" title="26">    choix <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Que voulez-vous faire ? &quot;</span>)</a>
+<a class="sourceLine" id="cb68-27" title="27">    <span class="cf">if</span> choix <span class="op">==</span> <span class="st">&quot;1&quot;</span>:</a>
+<a class="sourceLine" id="cb68-28" title="28">        <span class="co"># if courses == []</span></a>
+<a class="sourceLine" id="cb68-29" title="29">        <span class="cf">if</span> <span class="kw">not</span> courses:</a>
+<a class="sourceLine" id="cb68-30" title="30">            <span class="bu">print</span>(<span class="st">&quot;La liste de course est vide&quot;</span>)</a>
+<a class="sourceLine" id="cb68-31" title="31">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb68-32" title="32">            <span class="cf">for</span> produit <span class="kw">in</span> courses:</a>
+<a class="sourceLine" id="cb68-33" title="33">                <span class="co"># produit -&gt; dict</span></a>
+<a class="sourceLine" id="cb68-34" title="34">                <span class="bu">print</span>(<span class="ss">f&quot;- </span><span class="sc">{</span> produit<span class="sc">.</span>get(<span class="st">&#39;nom&#39;</span>)<span class="sc">.</span>capitalize() <span class="sc">}</span><span class="ss"> x</span><span class="sc">{</span>produit<span class="sc">.</span>get(<span class="st">&#39;quantite&#39;</span>)<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb68-35" title="35">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;2&quot;</span>:</a>
+<a class="sourceLine" id="cb68-36" title="36">        nom_produit <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Quel est le nom du produit à ajouter ? &quot;</span>).lower()</a>
+<a class="sourceLine" id="cb68-37" title="37">        quantite_produit <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Combien en voulez-vous ? &quot;</span>)</a>
+<a class="sourceLine" id="cb68-38" title="38">        <span class="cf">if</span> quantite_produit.isnumeric():</a>
+<a class="sourceLine" id="cb68-39" title="39">            quantite_produit <span class="op">=</span> <span class="bu">int</span>(quantite_produit)</a>
+<a class="sourceLine" id="cb68-40" title="40">            produit <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb68-41" title="41">                <span class="st">&#39;nom&#39;</span>: nom_produit,</a>
+<a class="sourceLine" id="cb68-42" title="42">                <span class="st">&#39;quantite&#39;</span>: quantite_produit</a>
+<a class="sourceLine" id="cb68-43" title="43">            }</a>
+<a class="sourceLine" id="cb68-44" title="44">            courses.append(produit)</a>
+<a class="sourceLine" id="cb68-45" title="45">            <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>nom_produit<span class="sc">}</span><span class="ss"> à bien été ajouté(e)&quot;</span>)</a>
+<a class="sourceLine" id="cb68-46" title="46">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb68-47" title="47">            <span class="bu">print</span>(<span class="st">&quot;Vous devez saisir un nombre&quot;</span>)</a>
+<a class="sourceLine" id="cb68-48" title="48">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;3&quot;</span>:</a>
+<a class="sourceLine" id="cb68-49" title="49">        nom_produit <span class="op">=</span> <span class="bu">input</span>(<span class="st">&quot;Quel est le nom du produit à supprimer ? &quot;</span>).lower()</a>
+<a class="sourceLine" id="cb68-50" title="50">        <span class="cf">for</span> produit <span class="kw">in</span> courses:</a>
+<a class="sourceLine" id="cb68-51" title="51">            <span class="cf">if</span> nom_produit <span class="kw">in</span> produit.values():</a>
+<a class="sourceLine" id="cb68-52" title="52">                courses.remove(produit)</a>
+<a class="sourceLine" id="cb68-53" title="53">                <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>nom_produit<span class="sc">}</span><span class="ss"> à bien été supprimé(e)&quot;</span>)</a>
+<a class="sourceLine" id="cb68-54" title="54">            <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb68-55" title="55">                <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>nom_produit<span class="sc">}</span><span class="ss"> n&#39;est pas dans la liste&quot;</span>)</a>
+<a class="sourceLine" id="cb68-56" title="56">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;4&quot;</span>:</a>
+<a class="sourceLine" id="cb68-57" title="57">        courses.clear()</a>
+<a class="sourceLine" id="cb68-58" title="58">        <span class="bu">print</span>(<span class="ss">f&quot;La liste à bien été vidée.&quot;</span>)</a>
+<a class="sourceLine" id="cb68-59" title="59">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;5&quot;</span>:</a>
+<a class="sourceLine" id="cb68-60" title="60">        <span class="co"># chemin_fichier = input(&quot;Quel fichier voulez-vous importer: &quot;)</span></a>
+<a class="sourceLine" id="cb68-61" title="61">        fichier <span class="op">=</span> <span class="va">None</span></a>
+<a class="sourceLine" id="cb68-62" title="62">        <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb68-63" title="63">            fichier <span class="op">=</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;w&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>)</a>
+<a class="sourceLine" id="cb68-64" title="64">            json.dump(courses, fichier, indent<span class="op">=</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb68-65" title="65">        <span class="cf">except</span> <span class="pp">OSError</span> <span class="im">as</span> e:</a>
+<a class="sourceLine" id="cb68-66" title="66">            <span class="bu">print</span>(<span class="ss">f&quot;Erreur: </span><span class="sc">{e}</span><span class="ss">, merci de réesayer avec un autre fichier&quot;</span>)</a>
+<a class="sourceLine" id="cb68-67" title="67">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb68-68" title="68">            <span class="bu">print</span>(<span class="st">&quot;La liste a bien été exportée vers &quot;</span> <span class="op">+</span> chemin_fichier)</a>
+<a class="sourceLine" id="cb68-69" title="69">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;6&quot;</span>:</a>
+<a class="sourceLine" id="cb68-70" title="70">        <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb68-71" title="71">            <span class="cf">with</span> <span class="bu">open</span>(chemin_fichier, <span class="st">&#39;r&#39;</span>, encoding<span class="op">=</span><span class="st">&quot;utf-8&quot;</span>) <span class="im">as</span> fichier:</a>
+<a class="sourceLine" id="cb68-72" title="72">                content <span class="op">=</span> json.load(fichier)</a>
+<a class="sourceLine" id="cb68-73" title="73">                <span class="cf">if</span> <span class="kw">not</span> content:</a>
+<a class="sourceLine" id="cb68-74" title="74">                    <span class="bu">print</span>(<span class="st">&quot;La liste est vide.&quot;</span>)</a>
+<a class="sourceLine" id="cb68-75" title="75">                <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb68-76" title="76">                    courses <span class="op">+=</span> content</a>
+<a class="sourceLine" id="cb68-77" title="77">                    <span class="bu">print</span>(<span class="st">&quot;La liste a bien été importée&quot;</span>)</a>
+<a class="sourceLine" id="cb68-78" title="78">        <span class="cf">except</span> <span class="pp">OSError</span> <span class="im">as</span> e:</a>
+<a class="sourceLine" id="cb68-79" title="79">            <span class="bu">print</span>(e)</a>
+<a class="sourceLine" id="cb68-80" title="80">    <span class="cf">elif</span> choix <span class="op">==</span> <span class="st">&quot;7&quot;</span>:</a>
+<a class="sourceLine" id="cb68-81" title="81">        <span class="bu">print</span>(<span class="st">&quot;Au revoir&quot;</span>)</a>
+<a class="sourceLine" id="cb68-82" title="82">        continuer <span class="op">=</span> <span class="va">False</span></a>
+<a class="sourceLine" id="cb68-83" title="83">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb68-84" title="84">        <span class="bu">print</span>(<span class="st">&quot;Je n&#39;ai compris&quot;</span>)</a></code></pre></div>
+<h3 id="yaml">YAML</h3>
+<p>Contenu du fichier:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb69-1" title="1"><span class="co"># pip install pyyaml</span></a>
+<a class="sourceLine" id="cb69-2" title="2"><span class="im">import</span> yaml</a>
+<a class="sourceLine" id="cb69-3" title="3"><span class="im">import</span> sys</a>
+<a class="sourceLine" id="cb69-4" title="4"></a>
+<a class="sourceLine" id="cb69-5" title="5"></a>
+<a class="sourceLine" id="cb69-6" title="6"><span class="kw">def</span> python2Yaml(filename):</a>
+<a class="sourceLine" id="cb69-7" title="7">    utilisateur <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb69-8" title="8">        <span class="st">&quot;first&quot;</span>: <span class="st">&quot;Rick&quot;</span>,</a>
+<a class="sourceLine" id="cb69-9" title="9">        <span class="st">&quot;last&quot;</span>: <span class="st">&quot;Hochet&quot;</span>,</a>
+<a class="sourceLine" id="cb69-10" title="10">        <span class="st">&quot;email&quot;</span>: <span class="st">&quot;r.hochet@dawan.fr&quot;</span>,</a>
+<a class="sourceLine" id="cb69-11" title="11">        <span class="st">&quot;phone&quot;</span>: <span class="st">&quot;0102030405&quot;</span>,</a>
+<a class="sourceLine" id="cb69-12" title="12">    }</a>
+<a class="sourceLine" id="cb69-13" title="13">    msg <span class="op">=</span> yaml.dump(utilisateur)</a>
+<a class="sourceLine" id="cb69-14" title="14">    fichier <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&quot;w&quot;</span>)</a>
+<a class="sourceLine" id="cb69-15" title="15">    fichier.write(msg)</a>
+<a class="sourceLine" id="cb69-16" title="16">    fichier.close()</a>
+<a class="sourceLine" id="cb69-17" title="17"></a>
+<a class="sourceLine" id="cb69-18" title="18"></a>
+<a class="sourceLine" id="cb69-19" title="19"><span class="kw">def</span> yaml2Python(filename):</a>
+<a class="sourceLine" id="cb69-20" title="20">    fichier <span class="op">=</span> <span class="bu">open</span>(filename, <span class="st">&quot;r&quot;</span>)</a>
+<a class="sourceLine" id="cb69-21" title="21">    msg <span class="op">=</span> fichier.read()</a>
+<a class="sourceLine" id="cb69-22" title="22">    fichier.close()</a>
+<a class="sourceLine" id="cb69-23" title="23">    result <span class="op">=</span> yaml.load(msg)</a>
+<a class="sourceLine" id="cb69-24" title="24">    <span class="bu">print</span>(result)</a>
+<a class="sourceLine" id="cb69-25" title="25"></a>
+<a class="sourceLine" id="cb69-26" title="26"></a>
+<a class="sourceLine" id="cb69-27" title="27"><span class="cf">if</span> <span class="va">__name__</span> <span class="op">==</span> <span class="st">&quot;__main__&quot;</span>:</a>
+<a class="sourceLine" id="cb69-28" title="28">    <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb69-29" title="29">        filename <span class="op">=</span> sys.argv[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb69-30" title="30">        <span class="bu">print</span>(sys.argv)</a>
+<a class="sourceLine" id="cb69-31" title="31">        yaml2Python(filename)</a>
+<a class="sourceLine" id="cb69-32" title="32">        python2Yaml(<span class="st">&#39;sortie.yaml&#39;</span>)</a>
+<a class="sourceLine" id="cb69-33" title="33">    <span class="cf">except</span> <span class="pp">IndexError</span> <span class="im">as</span> ie:</a>
+<a class="sourceLine" id="cb69-34" title="34">        <span class="bu">print</span>(<span class="st">&quot;vous avez oublié le fichier: &quot;</span>)</a>
+<a class="sourceLine" id="cb69-35" title="35">        <span class="bu">print</span>(<span class="st">&quot;USAGE: python app_main.py &lt;input_file&gt;&quot;</span>)</a>
+<a class="sourceLine" id="cb69-36" title="36"></a></code></pre></div>
+<h5 id="résulat-en-sortie">Résulat en sortie</h5>
+<div class="sourceCode" id="cb70"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb70-1" title="1"><span class="fu">version:</span><span class="at"> </span><span class="st">&quot;3.7&quot;</span></a>
+<a class="sourceLine" id="cb70-2" title="2"></a>
+<a class="sourceLine" id="cb70-3" title="3"><span class="fu">services:</span></a>
+<a class="sourceLine" id="cb70-4" title="4">  <span class="fu">frontend:</span></a>
+<a class="sourceLine" id="cb70-5" title="5">    <span class="fu">build:</span></a>
+<a class="sourceLine" id="cb70-6" title="6">      <span class="fu">context:</span><span class="at"> .</span></a>
+<a class="sourceLine" id="cb70-7" title="7">      <span class="fu">dockerfile:</span><span class="at"> ./Dockerfile</span></a>
+<a class="sourceLine" id="cb70-8" title="8">    <span class="fu">command:</span><span class="at"> ./start.sh</span></a>
+<a class="sourceLine" id="cb70-9" title="9">    <span class="fu">volumes:</span></a>
+<a class="sourceLine" id="cb70-10" title="10">      <span class="kw">-</span> .:/app</a>
+<a class="sourceLine" id="cb70-11" title="11">    <span class="fu">ports:</span></a>
+<a class="sourceLine" id="cb70-12" title="12">      <span class="kw">-</span> <span class="st">&quot;8082:8080&quot;</span></a>
+<a class="sourceLine" id="cb70-13" title="13">    <span class="fu">restart:</span><span class="at"> always</span></a>
+<a class="sourceLine" id="cb70-14" title="14">    <span class="fu">networks:</span></a>
+<a class="sourceLine" id="cb70-15" title="15">      <span class="kw">-</span> main</a>
+<a class="sourceLine" id="cb70-16" title="16"></a>
+<a class="sourceLine" id="cb70-17" title="17"><span class="fu">networks:</span></a>
+<a class="sourceLine" id="cb70-18" title="18">  <span class="fu">main:</span></a>
+<a class="sourceLine" id="cb70-19" title="19">    <span class="fu">driver:</span><span class="at"> bridge</span></a></code></pre></div>
+<h1 id="bases-de-données">Bases de Données</h1>
+<h2 id="création-de-bdd">Création de BDD</h2>
+<p>Exemple avec le fichier <code>create.py</code>:</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb71-1" title="1"><span class="co"># BDD: Base de donnée, on peut se representer une base de donnée comme un ensemble de tableaux</span></a>
+<a class="sourceLine" id="cb71-2" title="2"></a>
+<a class="sourceLine" id="cb71-3" title="3"><span class="co"># DB: Data Base</span></a>
+<a class="sourceLine" id="cb71-4" title="4"></a>
+<a class="sourceLine" id="cb71-5" title="5"><span class="co"># mariaDb, postgresql etc... </span></a>
+<a class="sourceLine" id="cb71-6" title="6"><span class="im">import</span> sqlite3</a>
+<a class="sourceLine" id="cb71-7" title="7"></a>
+<a class="sourceLine" id="cb71-8" title="8"><span class="co"># Si la base de donnée n&#39;existe pas elle va etre crée</span></a>
+<a class="sourceLine" id="cb71-9" title="9"><span class="co"># Sinon, on se connecte.</span></a>
+<a class="sourceLine" id="cb71-10" title="10"><span class="co"># connect(chemin_bdd)</span></a>
+<a class="sourceLine" id="cb71-11" title="11">connexion <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">&quot;formation.db&quot;</span>)</a>
+<a class="sourceLine" id="cb71-12" title="12">curseur <span class="op">=</span> connexion.cursor()</a>
+<a class="sourceLine" id="cb71-13" title="13"></a>
+<a class="sourceLine" id="cb71-14" title="14"><span class="co"># Le curseur nous permet d&#39;executer des requetes SQL.</span></a>
+<a class="sourceLine" id="cb71-15" title="15"><span class="co"># utilisateurs -&gt; id, nom, prenom,  </span></a>
+<a class="sourceLine" id="cb71-16" title="16">curseur.execute(<span class="st">&quot;&quot;&quot;</span></a>
+<a class="sourceLine" id="cb71-17" title="17"><span class="st">    CREATE TABLE IF NOT EXISTS utilisateurs (id INTEGER PRIMARY KEY, nom TEXT, prenom TEXT)</span></a>
+<a class="sourceLine" id="cb71-18" title="18"><span class="st">&quot;&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb71-19" title="19"></a>
+<a class="sourceLine" id="cb71-20" title="20"><span class="co"># INSERT INTO monTableau (col1, col2 etc...) VALUES ()</span></a>
+<a class="sourceLine" id="cb71-21" title="21">curseur.execute(<span class="st">&quot;INSERT INTO utilisateurs (nom, prenom) VALUES (&#39;John&#39;, &#39;Doe&#39;)&quot;</span>)</a>
+<a class="sourceLine" id="cb71-22" title="22"></a>
+<a class="sourceLine" id="cb71-23" title="23"><span class="co"># On ne fait jamais ça</span></a>
+<a class="sourceLine" id="cb71-24" title="24"><span class="co"># curseur.execute(f&quot;INSERT INTO utilisateurs (nom, prenom) VALUES (&#39;{}&#39;, &#39;{}&#39;)&quot;) # &#39;; DROP TABLE;  &lt;- injection SQL</span></a>
+<a class="sourceLine" id="cb71-25" title="25"></a>
+<a class="sourceLine" id="cb71-26" title="26">my_utilisateur <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb71-27" title="27">    <span class="st">&#39;last_name&#39;</span>: <span class="st">&#39;Zarella&#39;</span>,</a>
+<a class="sourceLine" id="cb71-28" title="28">    <span class="st">&#39;first_name&#39;</span>: <span class="st">&#39;Maude&#39;</span></a>
+<a class="sourceLine" id="cb71-29" title="29">}</a>
+<a class="sourceLine" id="cb71-30" title="30"><span class="co"># :last_name &lt;- my_utilisateur.get(&#39;last_name&#39;)</span></a>
+<a class="sourceLine" id="cb71-31" title="31">curseur.execute(</a>
+<a class="sourceLine" id="cb71-32" title="32">    <span class="st">&quot;INSERT INTO utilisateurs (nom, prenom) VALUES (:last_name, :first_name)&quot;</span>,</a>
+<a class="sourceLine" id="cb71-33" title="33">    my_utilisateur</a>
+<a class="sourceLine" id="cb71-34" title="34">)</a>
+<a class="sourceLine" id="cb71-35" title="35"></a>
+<a class="sourceLine" id="cb71-36" title="36">my_utilisateur <span class="op">=</span> (<span class="st">&#39;Hochet&#39;</span>, <span class="st">&#39;Rick&#39;</span>)</a>
+<a class="sourceLine" id="cb71-37" title="37">curseur.execute(</a>
+<a class="sourceLine" id="cb71-38" title="38">    <span class="st">&quot;INSERT INTO utilisateurs (nom, prenom) VALUES (?, ?)&quot;</span>,</a>
+<a class="sourceLine" id="cb71-39" title="39">    my_utilisateur</a>
+<a class="sourceLine" id="cb71-40" title="40">)</a>
+<a class="sourceLine" id="cb71-41" title="41"></a>
+<a class="sourceLine" id="cb71-42" title="42"></a>
+<a class="sourceLine" id="cb71-43" title="43"><span class="co"># On doit enregistrer les changements effectués sur les tableaux</span></a>
+<a class="sourceLine" id="cb71-44" title="44">connexion.commit()</a>
+<a class="sourceLine" id="cb71-45" title="45">connexion.close()</a></code></pre></div>
+<h3 id="lecture-de-bdd">Lecture de BDD</h3>
+<p>Dans le fichier <code>read.py</code>:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb72-1" title="1"><span class="im">import</span> sqlite3</a>
+<a class="sourceLine" id="cb72-2" title="2"></a>
+<a class="sourceLine" id="cb72-3" title="3">connexion <span class="op">=</span>  sqlite3.<span class="ex">connect</span>(<span class="st">&quot;formation.db&quot;</span>)</a>
+<a class="sourceLine" id="cb72-4" title="4">curseur <span class="op">=</span> connexion.cursor()</a>
+<a class="sourceLine" id="cb72-5" title="5"></a>
+<a class="sourceLine" id="cb72-6" title="6"><span class="co"># SELECTIONNE toutes les colonnes DEPUIS LE TABLEAU utilisateurs</span></a>
+<a class="sourceLine" id="cb72-7" title="7">sql <span class="op">=</span> <span class="st">&quot;SELECT * FROM utilisateurs&quot;</span></a>
+<a class="sourceLine" id="cb72-8" title="8"><span class="co"># sql = &quot;SELECT nom, prenom FROM utilisateurs&quot;</span></a>
+<a class="sourceLine" id="cb72-9" title="9">curseur.execute(sql)</a>
+<a class="sourceLine" id="cb72-10" title="10"><span class="co"># print(curseur.fetchall()) # &lt;- le curseur se vide</span></a>
+<a class="sourceLine" id="cb72-11" title="11">my_utilisateurs <span class="op">=</span> curseur.fetchall() <span class="co"># &lt;- c&#39;est toujours une liste</span></a>
+<a class="sourceLine" id="cb72-12" title="12"><span class="bu">print</span>(my_utilisateurs)</a>
+<a class="sourceLine" id="cb72-13" title="13"></a>
+<a class="sourceLine" id="cb72-14" title="14"><span class="cf">for</span> utilisateur <span class="kw">in</span> my_utilisateurs:</a>
+<a class="sourceLine" id="cb72-15" title="15">    <span class="bu">print</span>(utilisateur)</a>
+<a class="sourceLine" id="cb72-16" title="16">    </a>
+<a class="sourceLine" id="cb72-17" title="17"><span class="cf">for</span> <span class="bu">id</span>, nom, prenom <span class="kw">in</span> my_utilisateurs:</a>
+<a class="sourceLine" id="cb72-18" title="18">    <span class="bu">print</span>(<span class="ss">f&quot;id: </span><span class="sc">{</span><span class="bu">id</span><span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb72-19" title="19">    <span class="bu">print</span>(<span class="st">&quot;nom: &quot;</span> <span class="op">+</span> nom)</a>
+<a class="sourceLine" id="cb72-20" title="20">    <span class="bu">print</span>(<span class="st">&quot;prenom: &quot;</span> <span class="op">+</span> prenom)</a>
+<a class="sourceLine" id="cb72-21" title="21"></a>
+<a class="sourceLine" id="cb72-22" title="22"></a>
+<a class="sourceLine" id="cb72-23" title="23">sql <span class="op">=</span> <span class="st">&quot;SELECT nom, prenom FROM utilisateurs&quot;</span></a>
+<a class="sourceLine" id="cb72-24" title="24">curseur.execute(sql)</a>
+<a class="sourceLine" id="cb72-25" title="25"></a>
+<a class="sourceLine" id="cb72-26" title="26">utilisateur <span class="op">=</span> curseur.fetchone() <span class="co"># &lt;- un tuple</span></a>
+<a class="sourceLine" id="cb72-27" title="27"><span class="bu">print</span>(utilisateur)</a>
+<a class="sourceLine" id="cb72-28" title="28">utilisateur <span class="op">=</span> curseur.fetchone() <span class="co"># &lt;- un tuple</span></a>
+<a class="sourceLine" id="cb72-29" title="29"><span class="bu">print</span>(utilisateur)</a>
+<a class="sourceLine" id="cb72-30" title="30"></a>
+<a class="sourceLine" id="cb72-31" title="31"></a>
+<a class="sourceLine" id="cb72-32" title="32">sql <span class="op">=</span> <span class="st">&quot;SELECT * FROM utilisateurs WHERE nom=&#39;Hochet&#39;&quot;</span></a>
+<a class="sourceLine" id="cb72-33" title="33">curseur.execute(sql)</a>
+<a class="sourceLine" id="cb72-34" title="34">utilisateur <span class="op">=</span> curseur.fetchone()</a>
+<a class="sourceLine" id="cb72-35" title="35"><span class="bu">print</span>(utilisateur)</a>
+<a class="sourceLine" id="cb72-36" title="36"></a>
+<a class="sourceLine" id="cb72-37" title="37">data <span class="op">=</span> (<span class="dv">2</span>,)</a>
+<a class="sourceLine" id="cb72-38" title="38">sql <span class="op">=</span> <span class="st">&quot;SELECT * FROM utilisateurs WHERE id=?&quot;</span></a>
+<a class="sourceLine" id="cb72-39" title="39">curseur.execute(sql, data)</a>
+<a class="sourceLine" id="cb72-40" title="40">utilisateur <span class="op">=</span> curseur.fetchone()</a>
+<a class="sourceLine" id="cb72-41" title="41"><span class="bu">print</span>(utilisateur)</a>
+<a class="sourceLine" id="cb72-42" title="42"></a>
+<a class="sourceLine" id="cb72-43" title="43"></a>
+<a class="sourceLine" id="cb72-44" title="44"><span class="co"># connexion.commit() # pas necessaire, puisqu&#39;on ne fait aucune modifications sur le tableaux</span></a>
+<a class="sourceLine" id="cb72-45" title="45">connexion.close()</a></code></pre></div>
+<h4 id="update-bdd">Update BDD</h4>
+<p>Mise à jour d’une base de données:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb73-1" title="1"><span class="im">import</span> sqlite3</a>
+<a class="sourceLine" id="cb73-2" title="2"></a>
+<a class="sourceLine" id="cb73-3" title="3">connexion <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">&quot;formationdb&quot;</span>)</a>
+<a class="sourceLine" id="cb73-4" title="4">curseur <span class="op">=</span> connexion.cursor()</a>
+<a class="sourceLine" id="cb73-5" title="5"></a>
+<a class="sourceLine" id="cb73-6" title="6">my_utilisateur <span class="op">=</span> {</a>
+<a class="sourceLine" id="cb73-7" title="7">    <span class="st">&quot;id&quot;</span>:<span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb73-8" title="8">    <span class="st">&quot;last_name&quot;</span>: <span class="st">&quot;Doe&quot;</span>,</a>
+<a class="sourceLine" id="cb73-9" title="9">    <span class="st">&quot;first_name&quot;</span>: <span class="st">&quot;John&quot;</span></a>
+<a class="sourceLine" id="cb73-10" title="10">    </a>
+<a class="sourceLine" id="cb73-11" title="11">}</a>
+<a class="sourceLine" id="cb73-12" title="12"></a>
+<a class="sourceLine" id="cb73-13" title="13">curseur.execute(</a>
+<a class="sourceLine" id="cb73-14" title="14">    <span class="st">&quot;UPDATE utilisateurs SET nom=:last_name, prenom=:first_name WHERE id=:id&quot;</span>,</a>
+<a class="sourceLine" id="cb73-15" title="15">)</a>
+<a class="sourceLine" id="cb73-16" title="16"></a>
+<a class="sourceLine" id="cb73-17" title="17">connexion.commit()</a>
+<a class="sourceLine" id="cb73-18" title="18">connexion.close()</a></code></pre></div>
+<h4 id="delete-dune-bdd">Delete d’une BDD</h4>
+<div class="sourceCode" id="cb74"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb74-1" title="1"><span class="im">import</span> sqlite3</a>
+<a class="sourceLine" id="cb74-2" title="2"></a>
+<a class="sourceLine" id="cb74-3" title="3">connexion <span class="op">=</span> sqlite3.<span class="ex">connect</span>(<span class="st">&quot;formation.db&quot;</span>)</a>
+<a class="sourceLine" id="cb74-4" title="4">curseur <span class="op">=</span> connexion.cursor()</a>
+<a class="sourceLine" id="cb74-5" title="5"></a>
+<a class="sourceLine" id="cb74-6" title="6">utilisateur_id <span class="op">=</span> <span class="bu">int</span>(<span class="bu">input</span>(<span class="st">&quot;Quel est l&#39;id de l&#39;utilisateur a supprimer ? &quot;</span>))</a>
+<a class="sourceLine" id="cb74-7" title="7"></a>
+<a class="sourceLine" id="cb74-8" title="8">curseur.execute(</a>
+<a class="sourceLine" id="cb74-9" title="9">    <span class="st">&quot;DELETE FROM utilisateurs WHERE id=?&quot;</span>,</a>
+<a class="sourceLine" id="cb74-10" title="10">    [utilisateur_id]</a>
+<a class="sourceLine" id="cb74-11" title="11">)</a>
+<a class="sourceLine" id="cb74-12" title="12"></a>
+<a class="sourceLine" id="cb74-13" title="13">connexion.commit()</a>
+<a class="sourceLine" id="cb74-14" title="14">connexion.close()</a></code></pre></div>
+<p>Voir aussi: <a href="#sqllite"><em>Tips &amp; Tricks</em>: SQLLITE</a></p>
+<h1 id="logs">Logs</h1>
+<p>Gestion de logs avec Python.</p>
+<p><strong><em>Official Python Doc</em></strong>: <a href="https://docs.python.org/3/library/logging.html" class="uri">https://docs.python.org/3/library/logging.html</a></p>
+<h2 id="configuration-du-logger">Configuration du logger</h2>
+<h3 id="options-par-défaut">Options par défaut</h3>
+<div class="sourceCode" id="cb75"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb75-1" title="1"><span class="im">import</span> logging</a>
+<a class="sourceLine" id="cb75-2" title="2"></a>
+<a class="sourceLine" id="cb75-3" title="3">logging.debug(<span class="st">&#39;Mode debug pour suivre&#39;</span>)</a>
+<a class="sourceLine" id="cb75-4" title="4">logging.info(<span class="st">&quot;Pour indiquer les infos, actions, appel fonction, etc.&quot;</span>)</a>
+<a class="sourceLine" id="cb75-5" title="5">logging.warning(<span class="st">&quot;Pour indiquer un problème mineur&quot;</span>)</a>
+<a class="sourceLine" id="cb75-6" title="6">logging.error(<span class="st">&quot;Indique un problème important&quot;</span>)</a>
+<a class="sourceLine" id="cb75-7" title="7">logging.critical(<span class="st">&quot;Erreur critique, crash du programme&quot;</span>)</a></code></pre></div>
+<h3 id="configuration-basique-dun-logger">Configuration basique d’un Logger</h3>
+<div class="sourceCode" id="cb76"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb76-1" title="1">logging.basicConfig(</a>
+<a class="sourceLine" id="cb76-2" title="2">    level<span class="op">=</span>logging.INFO,</a>
+<a class="sourceLine" id="cb76-3" title="3">    filename<span class="op">=</span><span class="st">&#39;app.log&#39;</span>,</a>
+<a class="sourceLine" id="cb76-4" title="4">    filemode<span class="op">=</span><span class="st">&#39;a&#39;</span>,</a>
+<a class="sourceLine" id="cb76-5" title="5">    <span class="bu">format</span><span class="op">=</span><span class="st">&quot;[</span><span class="sc">%(levelname)s</span><span class="st">] - </span><span class="sc">%(asctime)s</span><span class="st">, in </span><span class="sc">%(filename)s</span><span class="st"> l.</span><span class="sc">%(lineno)s</span><span class="st"> </span><span class="sc">%(message)s</span><span class="st">&quot;</span>,</a>
+<a class="sourceLine" id="cb76-6" title="6">    datefmt<span class="op">=</span><span class="st">&quot;</span><span class="sc">%d</span><span class="st">/%m/%Y %H:%M:%S&quot;</span></a>
+<a class="sourceLine" id="cb76-7" title="7">)</a>
+<a class="sourceLine" id="cb76-8" title="8"></a>
+<a class="sourceLine" id="cb76-9" title="9">logging.warning(<span class="st">&quot;Pour indiquer, un problème mineur&quot;</span>)</a></code></pre></div>
+<h4 id="résultat-8">Résultat</h4>
+<p><img src="2021-07-26-POEI-Python/2021-07-30_14h46_37.gif" /></p>
+<h1 id="gui-interfaces-graphiques">GUI <em>(Interfaces graphiques)</em></h1>
+<p><strong><em>Official Python Doc:</em></strong> <a href="https://docs.python.org/fr/3/library/tkinter.html" class="uri">https://docs.python.org/fr/3/library/tkinter.html</a></p>
+<h2 id="exemple-basique">Exemple basique</h2>
+<div class="sourceCode" id="cb77"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb77-1" title="1"><span class="im">import</span> tkinter</a>
+<a class="sourceLine" id="cb77-2" title="2"></a>
+<a class="sourceLine" id="cb77-3" title="3">fenetre_principal <span class="op">=</span> tkinter.Tk()</a>
+<a class="sourceLine" id="cb77-4" title="4">fenetre_principal.title(<span class="st">&quot;Hello World&quot;</span>)</a>
+<a class="sourceLine" id="cb77-5" title="5">fenetre_principal.geometry(<span class="st">&quot;600x480&quot;</span>) <span class="co"># &quot;Largeur x hauteur&quot;</span></a>
+<a class="sourceLine" id="cb77-6" title="6"></a>
+<a class="sourceLine" id="cb77-7" title="7"><span class="co"># Text</span></a>
+<a class="sourceLine" id="cb77-8" title="8">message_label <span class="op">=</span> tkinter.Label(fenetre_principal, text<span class="op">=</span><span class="st">&quot;Hello !&quot;</span>)</a>
+<a class="sourceLine" id="cb77-9" title="9">message_label[<span class="st">&quot;fg&quot;</span>] <span class="op">=</span> <span class="st">&quot;red&quot;</span></a>
+<a class="sourceLine" id="cb77-10" title="10">message_label[<span class="st">&quot;background&quot;</span>] <span class="op">=</span> <span class="st">&quot;#34b7eb&quot;</span></a>
+<a class="sourceLine" id="cb77-11" title="11">message_label.pack() <span class="co"># positionne l&#39;élément dans la fenetre</span></a>
+<a class="sourceLine" id="cb77-12" title="12"><span class="co"># message_label.place(x=50, y=300)</span></a>
+<a class="sourceLine" id="cb77-13" title="13"></a>
+<a class="sourceLine" id="cb77-14" title="14">fenetre_principal.mainloop()</a></code></pre></div>
+<h5 id="résultat-9">Résultat</h5>
+<p><img src="2021-07-26-POEI-Python/2021-07-30_15h06_22.gif" /></p>
+<h2 id="autres-exemples">Autres exemples:</h2>
+<h3 id="jeu-de-dés">Jeu de dés:</h3>
+<div class="sourceCode" id="cb78"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb78-1" title="1"><span class="im">import</span> tkinter</a>
+<a class="sourceLine" id="cb78-2" title="2"><span class="im">import</span> random</a>
+<a class="sourceLine" id="cb78-3" title="3"></a>
+<a class="sourceLine" id="cb78-4" title="4"></a>
+<a class="sourceLine" id="cb78-5" title="5"><span class="kw">def</span> lancer_de():</a>
+<a class="sourceLine" id="cb78-6" title="6">    nombre <span class="op">=</span> random.randint(<span class="dv">1</span>, <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb78-7" title="7">    resultat.<span class="bu">set</span>(<span class="ss">f&quot;Résultat: </span><span class="sc">{</span>nombre<span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb78-8" title="8">    <span class="co"># resultat_label[&quot;text&quot;] = f&quot;Résultat: {nombre}&quot;</span></a>
+<a class="sourceLine" id="cb78-9" title="9">    <span class="co"># resultat_label2[&quot;text&quot;] = f&quot;Résultat: {nombre}&quot;</span></a>
+<a class="sourceLine" id="cb78-10" title="10"></a>
+<a class="sourceLine" id="cb78-11" title="11">fenetre_principal <span class="op">=</span> tkinter.Tk()</a>
+<a class="sourceLine" id="cb78-12" title="12">fenetre_principal.title(<span class="st">&quot;Lancer de dé&quot;</span>)</a>
+<a class="sourceLine" id="cb78-13" title="13">fenetre_principal.geometry(<span class="st">&quot;600x480&quot;</span>) <span class="co"># &quot;Largeur x hauteur&quot;</span></a>
+<a class="sourceLine" id="cb78-14" title="14"></a>
+<a class="sourceLine" id="cb78-15" title="15">resultat <span class="op">=</span> tkinter.StringVar(value<span class="op">=</span><span class="st">&quot;Aucun résultat&quot;</span>)</a>
+<a class="sourceLine" id="cb78-16" title="16"></a>
+<a class="sourceLine" id="cb78-17" title="17"><span class="co"># resultat_label = tkinter.Label(fenetre_principal, text=&quot;Aucun résultat&quot;)</span></a>
+<a class="sourceLine" id="cb78-18" title="18">resultat_label <span class="op">=</span> tkinter.Label(fenetre_principal, textvariable<span class="op">=</span>resultat)</a>
+<a class="sourceLine" id="cb78-19" title="19">resultat_label.pack()</a>
+<a class="sourceLine" id="cb78-20" title="20"></a>
+<a class="sourceLine" id="cb78-21" title="21"><span class="co"># resultat_label2 = tkinter.Label(fenetre_principal, text=&quot;Aucun résultat&quot;)</span></a>
+<a class="sourceLine" id="cb78-22" title="22">resultat_label2 <span class="op">=</span> tkinter.Label(fenetre_principal, textvariable<span class="op">=</span>resultat)</a>
+<a class="sourceLine" id="cb78-23" title="23">resultat_label2.pack(side<span class="op">=</span>tkinter.BOTTOM)</a>
+<a class="sourceLine" id="cb78-24" title="24"></a>
+<a class="sourceLine" id="cb78-25" title="25">lancer_btn <span class="op">=</span> tkinter.Button(fenetre_principal, command<span class="op">=</span>lancer_de)</a>
+<a class="sourceLine" id="cb78-26" title="26">lancer_btn[<span class="st">&quot;text&quot;</span>] <span class="op">=</span> <span class="st">&quot;Lancer le dé&quot;</span></a>
+<a class="sourceLine" id="cb78-27" title="27">lancer_btn.pack()</a>
+<a class="sourceLine" id="cb78-28" title="28"></a>
+<a class="sourceLine" id="cb78-29" title="29"></a>
+<a class="sourceLine" id="cb78-30" title="30">fenetre_principal.mainloop()</a>
+<a class="sourceLine" id="cb78-31" title="31"></a>
+<a class="sourceLine" id="cb78-32" title="32"><span class="kw">def</span> command(une_fonction):</a>
+<a class="sourceLine" id="cb78-33" title="33">    <span class="co"># traitement ....</span></a>
+<a class="sourceLine" id="cb78-34" title="34">    une_fonction()</a>
+<a class="sourceLine" id="cb78-35" title="35">    </a>
+<a class="sourceLine" id="cb78-36" title="36">command(une_fonction<span class="op">=</span>lancer_de)</a>
+<a class="sourceLine" id="cb78-37" title="37"><span class="co"># command(lancer_de)</span></a></code></pre></div>
+<h3 id="dialogue">Dialogue</h3>
+<div class="sourceCode" id="cb79"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb79-1" title="1"><span class="im">import</span> tkinter</a>
+<a class="sourceLine" id="cb79-2" title="2"><span class="im">import</span> tkinter.messagebox</a>
+<a class="sourceLine" id="cb79-3" title="3"></a>
+<a class="sourceLine" id="cb79-4" title="4"><span class="kw">def</span> connexion():</a>
+<a class="sourceLine" id="cb79-5" title="5">    mot_de_passe <span class="op">=</span> password_entry.get()</a>
+<a class="sourceLine" id="cb79-6" title="6">    <span class="bu">print</span>(<span class="ss">f&quot;</span><span class="sc">{</span>mot_de_passe<span class="op">=</span><span class="sc">}</span><span class="ss">&quot;</span>)</a>
+<a class="sourceLine" id="cb79-7" title="7">    <span class="cf">if</span> mot_de_passe <span class="op">==</span> <span class="st">&quot;root&quot;</span>:</a>
+<a class="sourceLine" id="cb79-8" title="8">        tkinter.messagebox.showinfo(<span class="st">&quot;Bienvenue&quot;</span>, <span class="st">&quot;Connexion Réussie&quot;</span>)</a>
+<a class="sourceLine" id="cb79-9" title="9">    <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb79-10" title="10">        tkinter.messagebox.showerror(<span class="st">&quot;Attention&quot;</span>, <span class="st">&quot;Identifiants incorrect&quot;</span>)</a>
+<a class="sourceLine" id="cb79-11" title="11"></a>
+<a class="sourceLine" id="cb79-12" title="12"></a>
+<a class="sourceLine" id="cb79-13" title="13">fenetre_principal <span class="op">=</span> tkinter.Tk()</a>
+<a class="sourceLine" id="cb79-14" title="14">fenetre_principal.title(<span class="st">&quot;Dialogues&quot;</span>)</a>
+<a class="sourceLine" id="cb79-15" title="15">fenetre_principal.geometry(<span class="st">&quot;600x480&quot;</span>) <span class="co"># &quot;Largeur x hauteur&quot;</span></a>
+<a class="sourceLine" id="cb79-16" title="16"></a>
+<a class="sourceLine" id="cb79-17" title="17"><span class="co"># Text</span></a>
+<a class="sourceLine" id="cb79-18" title="18">password_label <span class="op">=</span> tkinter.Label(fenetre_principal, text<span class="op">=</span><span class="st">&quot;Mot de passe&quot;</span>)</a>
+<a class="sourceLine" id="cb79-19" title="19">password_label.pack()</a>
+<a class="sourceLine" id="cb79-20" title="20"></a>
+<a class="sourceLine" id="cb79-21" title="21"><span class="co"># Permet à l&#39;utilisateur de saisir des informations </span></a>
+<a class="sourceLine" id="cb79-22" title="22">password_entry <span class="op">=</span> tkinter.Entry(fenetre_principal, show<span class="op">=</span><span class="st">&quot;*&quot;</span>)</a>
+<a class="sourceLine" id="cb79-23" title="23">password_entry.pack()</a>
+<a class="sourceLine" id="cb79-24" title="24"></a>
+<a class="sourceLine" id="cb79-25" title="25">cnx_btn <span class="op">=</span> tkinter.Button(fenetre_principal, text<span class="op">=</span><span class="st">&quot;Se Connecter&quot;</span>, command<span class="op">=</span>connexion)</a>
+<a class="sourceLine" id="cb79-26" title="26">cnx_btn.pack()</a>
+<a class="sourceLine" id="cb79-27" title="27"></a>
+<a class="sourceLine" id="cb79-28" title="28">fenetre_principal.mainloop()</a></code></pre></div>
+<h3 id="calculette-graphique">Calculette graphique</h3>
+<p><a href="https://www.geeksforgeeks.org/python-simple-gui-calculator-using-tkinter/" class="uri">https://www.geeksforgeeks.org/python-simple-gui-calculator-using-tkinter/</a></p>
+<h3 id="menu.py">Menu.py</h3>
+<div class="sourceCode" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb80-1" title="1"><span class="im">import</span> tkinter</a>
+<a class="sourceLine" id="cb80-2" title="2"></a>
+<a class="sourceLine" id="cb80-3" title="3">fenetre_principal <span class="op">=</span> tkinter.Tk()</a>
+<a class="sourceLine" id="cb80-4" title="4">fenetre_principal.title(<span class="st">&quot;Menu&quot;</span>)</a>
+<a class="sourceLine" id="cb80-5" title="5">fenetre_principal.geometry(<span class="st">&quot;600x480&quot;</span>) <span class="co"># &quot;Largeur x hauteur&quot;</span></a>
+<a class="sourceLine" id="cb80-6" title="6"></a>
+<a class="sourceLine" id="cb80-7" title="7">menu_bar <span class="op">=</span> tkinter.Menu(fenetre_principal)</a>
+<a class="sourceLine" id="cb80-8" title="8">sous_menu_fichier <span class="op">=</span> tkinter.Menu(menu_bar, tearoff<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb80-9" title="9">sous_menu_fichier_preference <span class="op">=</span> tkinter.Menu(sous_menu_fichier, tearoff<span class="op">=</span><span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb80-10" title="10"></a>
+<a class="sourceLine" id="cb80-11" title="11">sous_menu_fichier_preference.add_command(label<span class="op">=</span><span class="st">&quot;extensions&quot;</span>)</a>
+<a class="sourceLine" id="cb80-12" title="12"></a>
+<a class="sourceLine" id="cb80-13" title="13"><span class="co"># Configuration du sous menu fichier</span></a>
+<a class="sourceLine" id="cb80-14" title="14">sous_menu_fichier.add_command(label<span class="op">=</span><span class="st">&quot;Importer un fichier JSON&quot;</span>)</a>
+<a class="sourceLine" id="cb80-15" title="15">sous_menu_fichier.add_command(label<span class="op">=</span><span class="st">&quot;Exporter un fichier JSON&quot;</span>)</a>
+<a class="sourceLine" id="cb80-16" title="16">sous_menu_fichier.add_cascade(label<span class="op">=</span><span class="st">&quot;Préferences&quot;</span>, menu<span class="op">=</span>sous_menu_fichier_preference)</a>
+<a class="sourceLine" id="cb80-17" title="17"></a>
+<a class="sourceLine" id="cb80-18" title="18"><span class="co"># add_cascade(): pour l&#39;ajout de sous menu</span></a>
+<a class="sourceLine" id="cb80-19" title="19">menu_bar.add_cascade(label<span class="op">=</span><span class="st">&quot;Fichier&quot;</span>, menu<span class="op">=</span>sous_menu_fichier)</a>
+<a class="sourceLine" id="cb80-20" title="20">menu_bar.add_cascade(label<span class="op">=</span><span class="st">&quot;Editer&quot;</span>)</a>
+<a class="sourceLine" id="cb80-21" title="21"></a>
+<a class="sourceLine" id="cb80-22" title="22"><span class="co"># On configure notre fenetre pour integrer notre menu</span></a>
+<a class="sourceLine" id="cb80-23" title="23">fenetre_principal.config(menu<span class="op">=</span>menu_bar)</a>
+<a class="sourceLine" id="cb80-24" title="24">fenetre_principal.mainloop()</a></code></pre></div>
+<h2 id="tp-courses">TP: Courses</h2>
+<p>Voir Doc : <a href="#code-source-module">Code Source</a></p>
 <hr />
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h2 id="raccourcis-visual-studio">Raccourcis Visual Studio</h2>
 <ul>
-<li><p><code>Ctrl+/</code>: commente/décommente une ou plusieurs lignes</p></li>
-<li><p>Ctrl+</p></li>
+<li><p><code>Ctrl+/</code> : commente/décommente une ou plusieurs lignes</p></li>
+<li><p><code>SHIFT+ ALT + flèche du bas</code> : duplique une ou plusieurs ligne(s)</p></li>
+<li><p><code>ALT + Flèche</code> : déplace une ou plusieurs ligne(s)</p></li>
 </ul>
+<p><a href="https://stackoverflow.com/questions/40993895/how-to-see-a-sqlite-database-content-with-visual-studio-code" class="uri">https://stackoverflow.com/questions/40993895/how-to-see-a-sqlite-database-content-with-visual-studio-code</a></p>
+<h2 id="sqllite">SQLLITE</h2>
+<p><a href="https://www.sqlite.org/doclist.html" class="uri">https://www.sqlite.org/doclist.html</a></p>
+<h4 id="bdd-sql-dans-vs-code">BDD SQL dans VS Code</h4>
+<p>Ouvrir une bdd avec l’extension SQlite de vscode:</p>
+<p>F1 -&gt; Sqlite: open database -&gt; ouvrir l’explorateur -&gt; onglet sqlite explorer -&gt; maTable -&gt; show table</p>
+<h4 id="liens-utiles">Liens utiles</h4>
+<p>SQlite browser: <a href="https://sqlitebrowser.org/" class="uri">https://sqlitebrowser.org/</a></p>
+<p>Row_factory: <a href="https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.row_factory" class="uri">https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.row_factory</a></p>
+<p>Mysql connector: <a href="https://dev.mysql.com/doc/connector-python/en/connector-python-installation-binary.html" class="uri">https://dev.mysql.com/doc/connector-python/en/connector-python-installation-binary.html</a></p>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <hr />
