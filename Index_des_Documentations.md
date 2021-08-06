@@ -38,7 +38,7 @@ extensions: 'extra'
 - [Puppet *(21H)*](2021-07-21-POEI-Puppet.html)
 - [Python: Initiation & Approfondissement *(35H)*](2021-07-26-POEI-Python.html)
 
-- [**Atelier Libre**]
+- [**Atelier Libre**](2021-08-02-POEI-ProjetCapG.html)
 
 
 ### Présentation Finale CapG
