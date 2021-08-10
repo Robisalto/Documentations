@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="David DEBRAY" />
+  <meta name="dcterms.date" content="2021-08-09" />
+  <title>POEI DevOps - Terraform</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="styleDark.css" />
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">POEI DevOps - Terraform</h1>
+<p class="author">David DEBRAY</p>
+<p class="date">2021-08-09</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#environnement-de-travail">Environnement de travail</a><ul>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul></li>
+<li><a href="#comprendre-et-utiliser-terraform">Comprendre et utiliser Terraform</a><ul>
+<li><a href="#composantes-dune-recette">Composantes d’une recette</a></li>
+</ul></li>
+<li><a href="#première-recette">Première recette</a><ul>
+<li><a href="#fichiers-de-configuration">Fichiers de configuration</a><ul>
+<li><a href="#terraform.tf">terraform.tf</a></li>
+</ul></li>
+<li><a href="#vérification">Vérification</a></li>
+</ul></li>
+<li><a href="#structurer-son-projet">Structurer son projet</a></li>
+<li><a href="#testing">Testing</a><ul>
+<li><a href="#checkboxes-styling">Checkboxes Styling</a></li>
+</ul></li>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
+<li><a href="#gitignore">GitIgnore</a></li>
+<li><a href="#versionning">Versionning</a></li>
+<li><a href="#charger-automatiquement-des-variables-denvironnement">Charger automatiquement des variables d’environnement</a><ul>
+<li><a href="#installation-1">Installation</a></li>
+</ul></li>
+<li><a href="#différence-entre-set-et-list">Différence entre <strong>set</strong> et <strong>list</strong></a></li>
+<li><a href="#cloud-provider-frenchie">CLoud Provider (Frenchie ^^)</a></li>
+</ul></li>
+</ul>
+</nav>
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<hr />
+<h4 id="introduction">Introduction</h4>
+<p>Formateur: <strong>Alexandre Chaussier</strong></p>
+<ul>
+<li>Mail: <a href="mailto:a.chaussier@infopen.pro" class="email">a.chaussier@infopen.pro</a></li>
+<li>Tél: 06.63.73.54.92</li>
+</ul>
+<p><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.pqYe3lidnifwA6Ypwwu-gAHaEK%26pid%3DApi&amp;f=1" /></p>
+<p>1ère partie de 3 formations:</p>
+<ul>
+<li>Terraform</li>
+<li>Prometheus &amp; Graphana</li>
+<li>ELK Stack</li>
+</ul>
+<p>Dans <strong>Terraform</strong>, le principe de base est l’<strong>Infrastructure As Code</strong></p>
+<p><img src="https://www.silicon.de/wp-content/uploads/2016/07/infrastructure-as-code-684x338.png" /></p>
+<h1 id="environnement-de-travail">Environnement de travail</h1>
+<ul>
+<li>Site: <a href="https://lms.dawan.training-platforms.infopen.pro/login/index.php" class="uri">https://lms.dawan.training-platforms.infopen.pro/login/index.php</a></li>
+<li>Connexion:
+<ul>
+<li>david.debray</li>
+<li>20.188.43.6</li>
+<li>Formation-S3233</li>
+</ul></li>
+</ul>
+<h2 id="installation">Installation</h2>
+<ol type="1">
+<li>Installer Terraform
+<ul>
+<li>Pour les utilisateurs sous Windows : utiliser les binaires disponibles via le site officiel</li>
+<li>Pour les participants sous Linux ou MacOS : utiliser tfenv</li>
+</ul></li>
+<li>Valider l’installation</li>
+</ol>
+<ul>
+<li>terraform version</li>
+</ul>
+<h2 id="configuration">Configuration</h2>
+<p>Suivant votre système et les outils utilisés, vous pouvez installer certains des composants suivants :</p>
+<p>VS Code</p>
+<ul>
+<li>extension Terraform officielle ou cette alternative considérée plus stable</li>
+<li>si les ateliers se feront sur Azure, installez l’extension Azure Terraform</li>
+</ul>
+<p>VIM</p>
+<ul>
+<li>extension HashiVim Terraform</li>
+</ul>
+<h1 id="comprendre-et-utiliser-terraform">Comprendre et utiliser Terraform</h1>
+<h2 id="composantes-dune-recette">Composantes d’une recette</h2>
+<h1 id="première-recette">Première recette</h1>
+<h2 id="fichiers-de-configuration">Fichiers de configuration</h2>
+<h3 id="terraform.tf">terraform.tf</h3>
+<pre class="tf"><code>terraform {
+  required_providers {
+    azurerm = {
+      source  = &quot;hashicorp/azurerm&quot;
+      version = &quot;2.67.0&quot;
+    }
+    helm = {
+      source = &quot;hashicorp/helm&quot;
+      version = &quot;2.2.0&quot;
+    }
+  }
+}
+
+
+provider &quot;azurerm&quot; {
+  features {}
+}
+
+provider &quot;helm&quot; {
+  kubernetes {
+    host = azurerm_kubernetes_cluster.cluster.kube_config.0.host
+    client_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_certificate)
+    client_key = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.client_key)
+    cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
+  }
+}
+
+
+#
+# Variables
+#
+variable &quot;cluster_name&quot; {
+  description = &quot;Cluster name&quot;
+  type        = string
+
+  validation {
+    condition     = can(regex(&quot;^aks-\\d{2}$&quot;, var.cluster_name))
+    error_message = &quot;Nom de cluster incorrect, ne respecte pas la contrainte.&quot;
+  }
+}
+
+variable &quot;default_pool_name&quot; {
+  default     = &quot;default&quot;
+  description = &quot;Default node pool name&quot;
+  type        = string
+
+  validation {
+    condition     = can(regex(&quot;^[\\w\\d]*$&quot;, var.default_pool_name))
+    error_message = &quot;Nom de pool incorrect.&quot;
+  }
+}
+
+variable &quot;default_pool_vm_count&quot; {
+  default     = 1
+  description = &quot;Default node pool size&quot;
+  type        = number
+
+  validation {
+    condition     = var.default_pool_vm_count &gt;= 1
+    error_message = &quot;Nombre d&#39;instance incorrect.&quot;
+  }
+}
+
+variable &quot;default_pool_vm_size&quot; {
+  default     = &quot;Standard_A2_v2&quot;
+  description = &quot;Default node pool VM size&quot;
+  type        = string
+
+  validation {
+    condition     = contains([&quot;Standard_A2_v2&quot;, &quot;Standard_A4_v2&quot;], var.default_pool_vm_size)
+    error_message = &quot;Type d&#39;instance incorrect.&quot;
+  }
+}
+
+
+#
+# Locals
+#
+locals {
+  trigram = &quot;ach&quot;
+}
+
+
+#
+# Resources
+#
+resource &quot;azurerm_resource_group&quot; &quot;rg&quot; {
+  name     = &quot;${local.trigram}-formation&quot;
+  location = &quot;francecentral&quot;
+}
+
+resource &quot;azurerm_kubernetes_cluster&quot; &quot;cluster&quot; {
+  name                = &quot;${local.trigram}-${var.cluster_name}&quot;
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  dns_prefix          = &quot;${local.trigram}-${var.cluster_name}&quot;
+
+  default_node_pool {
+    name       = var.default_pool_name
+    node_count = var.default_pool_vm_count
+    vm_size    = var.default_pool_vm_size
+  }
+
+  identity {
+    type = &quot;SystemAssigned&quot;
+  }
+}
+
+resource &quot;azurerm_kubernetes_cluster_node_pool&quot; &quot;apps_pool&quot; {
+  name                  = &quot;apps&quot;
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.cluster.id
+  vm_size               = &quot;Standard_A2_v2&quot;
+  node_count            = 1
+}
+
+resource &quot;helm_release&quot; &quot;wordpress&quot; {
+  name = &quot;wordpress&quot;
+  chart = &quot;wordpress&quot;
+  namespace = &quot;wordpress&quot;
+  repository = &quot;https://charts.bitnami.com/bitnami&quot;
+  recreate_pods = true
+  create_namespace = true
+}
+
+
+#
+# Outputs
+#
+output &quot;kubeconfig&quot; {
+  description = &quot;Kubeconfig file content&quot;
+  sensitive   = true
+  value       = azurerm_kubernetes_cluster.cluster.kube_config_raw
+}
+
+
+</code></pre>
+<p>Variables d’environnement:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="bu">export</span> <span class="va">ARM_CLIENT_ID=</span>a66ed6ac-2af7-4a1f-aa2d-977a1297ed40</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="bu">export</span> <span class="va">ARM_TENANT_ID=</span>8bab39af-d0bd-4f92-b600-f6fa584ba0e0</a>
+<a class="sourceLine" id="cb2-3" title="3"><span class="bu">export</span> <span class="va">ARM_CLIENT_SECRET=</span>_YQWGnp.PxH5W-p.VuNwej9HVA_z6R819q</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="bu">export</span> <span class="va">ARM_SUBSCRIPTION_ID=</span>fa18edb6-7c80-423f-9056-4694eb4dbe78</a></code></pre></div>
+<p><img src="2021-08-09-POEI-Terraform/2021-08-10_10h14_27.png" /></p>
+<p>Ne pas oublier le <code>.gitignore</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># Environment Variables</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="ex">.envrc</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># Terraform</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="ex">.terraform/</span></a>
+<a class="sourceLine" id="cb3-6" title="6"><span class="ex">.terraform.lock*</span></a>
+<a class="sourceLine" id="cb3-7" title="7"></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="ex">secret*</span></a></code></pre></div>
+<h2 id="vérification">Vérification</h2>
+<p><img src="2021-08-09-POEI-Terraform/2021-08-10_09h56_03.gif" /></p>
+<h1 id="structurer-son-projet">Structurer son projet</h1>
+<p>Lien vers les fichiers <a href="2021-08-09-POEI-Terraform/structurer_son_projet_aks">Structurer son projet</a></p>
+<h1 id="testing">Testing</h1>
+<h2 id="checkboxes-styling">Checkboxes Styling</h2>
+<ul>
+<li>[ ] Not Done</li>
+<li>[x] Done</li>
+</ul>
+<hr />
+<h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
+<h2 id="gitignore">GitIgnore</h2>
+<p>Gérer le fichier <code>gitignore</code> facilement avec des templates suivant le code utilisé:</p>
+<ul>
+<li><a href="https://github.com/github/gitignore" class="uri">https://github.com/github/gitignore</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/saving-changes/gitignore" class="uri">https://www.atlassian.com/git/tutorials/saving-changes/gitignore</a></li>
+</ul>
+<h2 id="versionning">Versionning</h2>
+<ul>
+<li><a href="https://semver.org/" class="uri">https://semver.org/</a></li>
+</ul>
+<h2 id="charger-automatiquement-des-variables-denvironnement">Charger automatiquement des variables d’environnement</h2>
+<ul>
+<li><a href="https://github.com/direnv/direnv" class="uri">https://github.com/direnv/direnv</a></li>
+</ul>
+<h3 id="installation-1">Installation</h3>
+<p><a href="https://github.com/direnv/direnv/blob/master/docs/installation.md" class="uri">https://github.com/direnv/direnv/blob/master/docs/installation.md</a></p>
+<p>Ajouter dans le bashrc:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">direnv</span> hook bash<span class="va">)</span><span class="st">&quot;</span></a></code></pre></div>
+<p><img src="2021-08-09-POEI-Terraform/2021-08-10_10h12_37.png" /></p>
+<h5 id="résultat">Résultat</h5>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">david.debray@S3233-david</span>:~/Formation_Terraform/formation_terraform$ cd ..</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="ex">direnv</span>: unloading</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="ex">david.debray@S3233-david</span>:~/Formation_Terraform$ cd -</a>
+<a class="sourceLine" id="cb5-4" title="4"><span class="ex">/home/david.debray/Formation_Terraform/formation_terraform</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="ex">direnv</span>: loading .envrc</a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="ex">direnv</span>: export +ARM_CLIENT_ID +ARM_CLIENT_SECRET +ARM_SUBSCRIPTION_ID +ARM_TENANT_ID</a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="ex">david.debray@S3233-david</span>:~/Formation_Terraform/formation_terraform$ env <span class="kw">|</span> <span class="fu">grep</span> ARM</a>
+<a class="sourceLine" id="cb5-8" title="8"><span class="va">ARM_CLIENT_ID=</span>a66ed6ac-2af7-4a1f-aa2d-977a1297ed40</a>
+<a class="sourceLine" id="cb5-9" title="9"><span class="va">ARM_TENANT_ID=</span>8bab39af-d0bd-4f92-b600-f6fa584ba0e0</a>
+<a class="sourceLine" id="cb5-10" title="10"><span class="va">ARM_CLIENT_SECRET=</span>_YQWGnp.PxH5W-p.VuNwej9HVA_z6R819q</a>
+<a class="sourceLine" id="cb5-11" title="11"><span class="va">ARM_SUBSCRIPTION_ID=</span>fa18edb6-7c80-423f-9056-4694eb4dbe78</a>
+<a class="sourceLine" id="cb5-12" title="12"><span class="ex">david.debray@S3233-david</span>:~/Formation_Terraform/formation_terraform$ </a></code></pre></div>
+<h2 id="différence-entre-set-et-list">Différence entre <strong>set</strong> et <strong>list</strong></h2>
+<p>Une <code>list</code> peu prendre des <strong>doublons</strong> (même valeur qui se répète).</p>
+<p>ex: <code>List: ["abc", "ac", "abc"]</code></p>
+<p>Un <code>set</code> ne contient qu’une seule fois la valeur, pas de doublons.</p>
+<p>ex: <code>set: ["abc", "ac"]</code></p>
+<h2 id="cloud-provider-frenchie">CLoud Provider (Frenchie ^^)</h2>
+<ul>
+<li><a href="https://www.scaleway.com/fr/" class="uri">https://www.scaleway.com/fr/</a></li>
+</ul>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<hr />
+<h5 id="the-end" align="center">The End</h5>
+<hr />
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#the-end">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

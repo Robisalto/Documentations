@@ -156,8 +156,47 @@ Like so:
   Tragedy is when I cut my finger. Comedy is when you walk into an open sewer and die.
 </blockquote>
 
+
+
+# Colors
+
+
+```html
+% Color definitions
+% Awesome colors
+\definecolor{awesome-emerald}{HTML}{00A388}
+\definecolor{awesome-skyblue}{HTML}{0395DE}
+\definecolor{awesome-red}{HTML}{DC3522}
+\definecolor{awesome-pink}{HTML}{EF4089}
+\definecolor{awesome-orange}{HTML}{FF6138}
+\definecolor{awesome-nephritis}{HTML}{27AE60}
+\definecolor{awesome-concrete}{HTML}{95A5A6}
+\definecolor{awesome-darknight}{HTML}{131A28} 
+
+```
+
+<p style="color:#00A388;">awesome-emerald</p>
+<p style="color:#0395DE;">awesome-skyblue</p>
+<p style="color:#DC3522;">awesome-red</p>
+<p style="color:#EF4089;">awesome-pink</p>
+<p style="color:#FF6138;">awesome-orange</p>
+<p style="color:#27AE60;">awesome-nephritis</p>
+<p style="color:#95A5A6;">awesome-concrete</p>
+<p style="color:#131A28;">awesome-darknight</p>
+
+## My Titles
+
+<p style="color:#dc3522;">1. Titre 1</p>
+<p style="color:#00e08b;">1.1 Titre 2</p>
+<p style="color:#FF7400;">1.1.1 Titre 3</p>
+<p style="color:#b0af00;">1.1.1.1 Titre 4</p>
+<p style="color:#b200ff;">1.1.1.1.1 Titre 5</p>
+<p style="color:#EF4089;">1.1.1.1.1.1 Titre 6</p>
+
+
+
 # Mathematics
-To write an equation, we use the double-dollar signs: ``$$...$$`', like so:
+To write an equation, we use the double-dollar signs: '``$$...$$``', like so:
 
 ## Pythagore:
 $$ a^2 + b^2 = c^2 $$

@@ -20,25 +20,42 @@ extensions: 'extra'
 *[Dawan Présentation POEI DevOps.pdf](2021-06-07-POEI-Linux/Dawan_Présentation_POEI_DevOps.pdf)*
 
 
+### 1er Quart: *Linux, Shell, Git, Docker, Ansible*
+
 - [Linux Administration: Bases & Services *(35H)*](2021-06-07-POEI-Linux.html)
 - [Programmation Shell *(21H)*](2021-06-14-POEI-Script-Shell.html)
 - [Git *(14H)*](2021-06-17-POEI-Git.html)
 - [Docker: Initiation *(21H)*](2021-06-21-POEI-Docker.html)
 - [Ansible: Initiation *(21H)*](2021-06-24-POEI-Ansible.html)
 
-- **Mise en Situation Docker/Ansible** - Cursus DevOps *(7H)* =>> Not implemented :(
+- [x] **Mise en Situation Docker/Ansible** - Cursus DevOps *(7H)* =>> Not implemented :(
+
+
+### 2e Quart: *Vagrant + Packer*
 
 - [Vagrant/Packer *(21H)*](2021-06-30-POEI-Vagrant_Packer.html)
 - [VMWare VSphere7 *(35H)*](2021-07-05-POEI-VMWare-VSphere7.html)
 
-- [**Mise en situation n°2: VMWare / Ansible**](2021-07-08-POEI-MES-2.html)
+- [X] [**Mise en situation n°2: *VMWare / Ansible***](2021-07-08-POEI-MES-2.html)
+
+
+### 3e Quart: *Cloud, Puppet, Python*
 
 - [Amazon Web Services *(21H)*](2021-07-12-POEI-AWS.html)
 - [Kubernetes *(21H)*](2021-07-16-POEI-Kubernetes.html)
 - [Puppet *(21H)*](2021-07-21-POEI-Puppet.html)
 - [Python: Initiation & Approfondissement *(35H)*](2021-07-26-POEI-Python.html)
 
-- [**Atelier Libre**](2021-08-02-POEI-ProjetCapG.html)
+- [X] [**Atelier Libre**](2021-08-02-POEI-ProjetCapG.html)
+
+
+### 4e Quart: *Terraform, Prometheus & Grafana, ELK*
+
+- [ Terraform: *Infrastructure as Code* *(14H)* ](2021-08-09-POEI-Terraform.html)
+- [ Prometheus & Graphana *(21H)* ]()
+- [ ELK: *Elastic, Logstash, Kibana* *(21H)* ]()
+
+- [X] [**Mise en situation n°3: *Orchestration & Monitoring***]()
 
 
 ### Présentation Finale CapG

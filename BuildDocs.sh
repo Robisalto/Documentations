@@ -14,6 +14,9 @@ echo " " > PandocDoc.log # Clearing log file
 ## Dark theme
 for n in $(cat nav.txt); do pandoc $n.md -s -c styleDark.css -A footer.html --toc -o KnowledgeBase/$n.html; done
 
+## GitHub Style
+# for n in $(cat nav.txt); do pandoc $n.md -s -c github.css -A footer.html --toc -o KnowledgeBase/$n.html; done
+
 ## TEST html theme
 # for n in $(cat nav.txt); do pandoc $n.md -s -c test.css -A footer.html --toc -o KnowledgeBase/$n.html; done
 
