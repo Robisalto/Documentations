@@ -1,0 +1,25 @@
+URL,Description,Tags
+"https://registry.terraform.io/browse/providers Liste des fournisseurs","Liste des fournisseurs dans la registry",Provider
+"https://registry.terraform.io/providers/terraform-provider-openstack/openstack/latest Provider OpenStack","Provider OpenStack dans la registry",Provider
+"https://registry.terraform.io/providers/hashicorp/aws/latest Provider AWS","Provider AWS dans la registry",Provider
+"https://registry.terraform.io/providers/hashicorp/azurerm/latest Provider Azure","Provider Azure dans la registry",Provider
+"https://registry.terraform.io/providers/hashicorp/kubernetes/latest Provider Kubernetes","Provider Kubernetes dans la registry",Provider
+"https://www.terraform.io/docs/language/functions/index.html Les fonctions Terraform","Liste de toutes les fonctions du language",documentation
+"https://www.terraform.io/docs/language/index.html Documentation du language","Référence du language de configuration",documentation
+"https://www.terraform.io/docs/cli/index.html Documentation de la CLI","Documentation de référence de la CLI",documentation
+"https://www.terraform.io/docs/glossary.html Glossaire","Glossaire Terraform",documentation
+"https://github.com/hashicorp/terraform Dépot Git de Terraform","Dépot Git contenant le code source de Terraform","Code source"
+"https://github.com/terraform-providers/terraform-provider-aws Dépot Git du provider AWS","Dépot Git contenant le code source du provider AWS","Code source, Provider"
+"https://github.com/terraform-providers/terraform-provider-azurerm Dépot Git du provider Azure","Dépot Git contenant le code source du provider Azure","Code source, Provider"
+"https://github.com/terraform-providers/terraform-provider-openstack Dépot Git du provider OpenStack","Dépot Git contenant le code source du provider OpenStack","Code source, Provider"
+"https://github.com/terraform-linters/tflint TFlint","Dépot Git contenant le code source du projet TFlint",Outil
+"https://github.com/tfutils/tfenv TFenv","Dépot Git contenant le code source du projet TFenv",Outil
+"https://www.runatlantis.io/ Atlantis - Merge request","Site officiel du projet Atlantis",Outil
+"https://github.com/shuaibiyy/awesome-terraform Awesome list - Terraform","Projet Github de la lister Awesome de Terraform",Outil
+"https://github.com/gruntwork-io/terragrunt Terragrunt","Factorisation et gestion multi-modules",Outil
+"https://community.chef.io/tools/chef-inspec/ Inspec","Test de déploiements d'infrastructure",Outil
+"https://driftctl.com/ Driftctl","Driftctl - Vérification de différences entre un état et la réalité",Outil
+"https://app.terraform.io/session Terraform cloud","Service Hashicorp Terraform cloud",
+"https://github.com/bridgecrewio/checkov Checkov","Vérification des bonnes pratiques de configuration",Outil
+"https://github.com/accurics/terrascan Terrascan","Dépot Git contenant le code source de Terrascan",Outil
+"https://github.com/cycloidio/terracognita Terracognita","Dépot Git contenant le code source de Terracognita",Outil

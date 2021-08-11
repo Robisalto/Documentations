@@ -87,6 +87,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 <nav id="TOC">
 <ul>
+<li><a href="#doc-source">Doc Source</a><ul>
+<li><a href="#infrastructure-as-code">Infrastructure as Code</a></li>
+<li><a href="#composant-dune-recette">Composant d’une recette</a></li>
+<li><a href="#workflow-standard">Workflow standard</a></li>
+<li><a href="#structurer-son-déploiement">Structurer son déploiement</a></li>
+<li><a href="#gestion-du-state">Gestion du State</a></li>
+<li><a href="#langage-avances">Langage avances</a></li>
+<li><a href="#scalabilité-et-ressources-multiples">Scalabilité et Ressources multiples</a></li>
+<li><a href="#import-de-ressources">Import de ressources</a></li>
+<li><a href="#cicd-outillage-tests">CICD outillage tests</a></li>
+<li><a href="#terragrunt">Terragrunt</a></li>
+<li><a href="#qcm-terraform">QCM Terraform</a></li>
+</ul></li>
 <li><a href="#environnement-de-travail">Environnement de travail</a><ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#configuration">Configuration</a></li>
@@ -104,6 +117,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#testing">Testing</a><ul>
 <li><a href="#checkboxes-styling">Checkboxes Styling</a></li>
 </ul></li>
+<li><a href="#kubeapps">Kubeapps</a></li>
 <li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
 <li><a href="#gitignore">GitIgnore</a></li>
 <li><a href="#versionning">Versionning</a></li>
@@ -133,6 +147,41 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Dans <strong>Terraform</strong>, le principe de base est l’<strong>Infrastructure As Code</strong></p>
 <p><img src="https://www.silicon.de/wp-content/uploads/2016/07/infrastructure-as-code-684x338.png" /></p>
+<h1 id="doc-source">Doc Source</h1>
+<p>Documentation source: <a href="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform">2021-07-24__export_formation_terraform</a></p>
+<h2 id="infrastructure-as-code">Infrastructure as Code</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/01__infrastructure_as_code.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="composant-dune-recette">Composant d’une recette</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/02__composantes_d_une_recette.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="workflow-standard">Workflow standard</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/03__workflow_standard.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="structurer-son-déploiement">Structurer son déploiement</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/04__structurer_son_deploiement.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="gestion-du-state">Gestion du State</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/05__gestion_du_state.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="langage-avances">Langage avances</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/06__langage_avances.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="scalabilité-et-ressources-multiples">Scalabilité et Ressources multiples</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/07__scalabilite_et_ressources_multiples.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="import-de-ressources">Import de ressources</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/08__import_de_ressources.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="cicd-outillage-tests">CICD outillage tests</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/09__cicd-outillage-tests.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="terragrunt">Terragrunt</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/10__terragrunt.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
+<h2 id="qcm-terraform">QCM Terraform</h2>
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/QCM__Terraform.html" width="1200px" height="500px" allowfullscreen="yes">
+</iframe>
 <h1 id="environnement-de-travail">Environnement de travail</h1>
 <ul>
 <li>Site: <a href="https://lms.dawan.training-platforms.infopen.pro/login/index.php" class="uri">https://lms.dawan.training-platforms.infopen.pro/login/index.php</a></li>
@@ -171,7 +220,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 id="première-recette">Première recette</h1>
 <h2 id="fichiers-de-configuration">Fichiers de configuration</h2>
 <h3 id="terraform.tf">terraform.tf</h3>
-<pre class="tf"><code>terraform {
+<pre class="hcl"><code>terraform {
   required_providers {
     azurerm = {
       source  = &quot;hashicorp/azurerm&quot;
@@ -332,6 +381,11 @@ output &quot;kubeconfig&quot; {
 <li>[ ] Not Done</li>
 <li>[x] Done</li>
 </ul>
+<h1 id="kubeapps">Kubeapps</h1>
+<div class="info">
+Très utile pour tester.
+</div>
+<p><a href="https://github.com/kubeapps/kubeapps/blob/master/docs/user/getting-started.md" class="uri">https://github.com/kubeapps/kubeapps/blob/master/docs/user/getting-started.md</a></p>
 <hr />
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h2 id="gitignore">GitIgnore</h2>

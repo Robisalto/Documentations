@@ -52,7 +52,7 @@ extensions: 'extra'
 ### 4e Quart: *Terraform, Prometheus & Grafana, ELK*
 
 - [ Terraform: *Infrastructure as Code* *(14H)* ](2021-08-09-POEI-Terraform.html)
-- [ Prometheus & Graphana *(21H)* ]()
+- [ Prometheus & Graphana *(21H)* ](2021-08-11-POEI-Prometheus.html)
 - [ ELK: *Elastic, Logstash, Kibana* *(21H)* ]()
 
 - [X] [**Mise en situation n°3: *Orchestration & Monitoring***]()

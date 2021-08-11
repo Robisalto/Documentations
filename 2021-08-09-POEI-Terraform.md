@@ -36,8 +36,57 @@ Dans **Terraform**, le principe de base est l'**Infrastructure As Code**
 ![](https://www.silicon.de/wp-content/uploads/2016/07/infrastructure-as-code-684x338.png)
 
 
-# Environnement de travail
 
+
+
+# Doc Source
+
+Documentation source: [2021-07-24__export_formation_terraform](2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform)
+
+
+## Infrastructure as Code
+
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/01__infrastructure_as_code.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Composant d'une recette
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/02__composantes_d_une_recette.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Workflow standard
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/03__workflow_standard.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Structurer son déploiement
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/04__structurer_son_deploiement.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Gestion du State
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/05__gestion_du_state.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Langage avances
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/06__langage_avances.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Scalabilité et Ressources multiples
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/07__scalabilite_et_ressources_multiples.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Import de ressources
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/08__import_de_ressources.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## CICD outillage tests
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/09__cicd-outillage-tests.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## Terragrunt
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/10__terragrunt.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+## QCM Terraform
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/exports/QCM__Terraform.html" width="1200px" height="500px" allowfullscreen="yes"> </iframe>
+
+
+
+
+
+
+
+
+
+# Environnement de travail
 
 - Site: <https://lms.dawan.training-platforms.infopen.pro/login/index.php>
 - Connexion:  
@@ -85,7 +134,7 @@ VIM
 
 ### terraform.tf
 
-```tf
+```hcl
 terraform {
   required_providers {
     azurerm = {
@@ -274,6 +323,12 @@ Lien vers les fichiers [Structurer son projet](2021-08-09-POEI-Terraform/structu
 - [ ] Not Done
 - [x] Done
 
+
+# Kubeapps
+
+<div class=info> Très utile pour tester. </div>
+
+<https://github.com/kubeapps/kubeapps/blob/master/docs/user/getting-started.md>
 
 ---
 

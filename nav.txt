@@ -14,6 +14,7 @@
 2021-07-26-POEI-Python
 2021-08-02-POEI-ProjetCapG
 2021-08-09-POEI-Terraform
+2021-08-11-POEI-Prometheus
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet
@@ -76,5 +77,7 @@ TP_Vars_facts_conditions
 TP_ressources
 CHANGELOG
 README
+import_de_ressources_enonce
+import_de_ressources_solution
 DIGESTS
 README
