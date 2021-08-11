@@ -41,7 +41,10 @@ Dans **Terraform**, le principe de base est l'**Infrastructure As Code**
 
 # Doc Source
 
-Documentation source: [2021-07-24__export_formation_terraform](2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform)
+Documentation source: [2021-07-24__export_formation_terraform](2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/)
+
+
+<iframe src="2021-08-09-POEI-Terraform/2021-07-24__export_formation_terraform/"></iframe>
 
 
 ## Infrastructure as Code
