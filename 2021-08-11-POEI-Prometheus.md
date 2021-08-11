@@ -165,19 +165,6 @@ Ce type de métrique est l'équivalent d'un appel à histogram_quantile() mais t
 Je préconise l'utilisation des histogrammes pour ces besoins
 
 
-
---- 
-
-# Ichi
-## Ni
-### San
-#### Yon *(shi)*
-##### Go
-###### Roku
-
-
-
-
 ---
 
 # *Tips & Tricks*
