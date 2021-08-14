@@ -75,6 +75,10 @@ nav li:hover a:hover {
   transition: .4 all ease;
 }
 
+nav li:active a:hover {
+  color: #fffe00;
+} 
+
 
 
 
