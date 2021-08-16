@@ -54,7 +54,7 @@ extensions: 'extra'
 - [ Terraform: *Infrastructure as Code* *(14H)* ](2021-08-09-POEI-Terraform.html)
 - [ Prometheus *(14H)* ](2021-08-11-POEI-Prometheus.html)
 - [ Grafana *(7H)* ](2021-08-13-POEI-Grafana.html)
-- [ ELK: *Elastic, Logstash, Kibana* *(21H)* ]()
+- [ ELK: *Elastic, Logstash, Kibana* *(21H)* ](2021-08-16-POEI-ELK.html)
 
 - [X] [**Mise en situation n°3: *Orchestration & Monitoring***]()
 
