@@ -1,0 +1,8 @@
+---
+
+server.name: 'kibana'
+server.host: '0'
+elasticsearch.hosts:
+{% for _item in (groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | list) %}
+  - "http://{{ _item }}:9200"
+{% endfor %}

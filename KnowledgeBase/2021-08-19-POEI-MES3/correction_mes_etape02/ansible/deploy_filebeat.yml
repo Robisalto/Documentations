@@ -1,0 +1,23 @@
+---
+
+- hosts: all
+  tasks:
+    - name: Create Filebeat folder
+      file:
+        path: /root/filebeat
+        state: directory
+
+    - name: Create Filebeat docker compose file and config files
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: ./templates/docker-compose.elk-filebeat.yml.j2
+          dest: /root/filebeat/docker-compose.yml
+        - src: ./templates/filebeat/filebeat.yml.j2
+          dest: /root/filebeat/filebeat.yml
+
+    - name: Run compose
+      shell: docker-compose up -d --force-recreate
+      args:
+        chdir: /root/filebeat

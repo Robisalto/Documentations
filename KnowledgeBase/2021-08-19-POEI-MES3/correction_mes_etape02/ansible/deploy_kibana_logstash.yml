@@ -1,0 +1,38 @@
+---
+
+- hosts: app
+  tasks:
+    - name: Create Kibana/Logstash folder
+      file:
+        path: "{{ item }}"
+        state: directory
+      loop:
+        - /root/kibana-logstash
+        - /root/kibana-logstash/kibana
+        - /root/kibana-logstash/logstash
+
+    - name: Create Kibana/Logstash docker compose file and config files
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: ./templates/docker-compose.elk-kibana-logstash.yml.j2
+          dest: /root/kibana-logstash/docker-compose.yml
+        - src: ./templates/kibana/kibana.yml.j2
+          dest: /root/kibana-logstash/kibana/kibana.yml
+        - src: ./templates/logstash/logstash.conf.j2
+          dest: /root/kibana-logstash/logstash/logstash.conf
+
+    - name: Install Python dependencies
+      apt:
+        name: [ python3-docker, docker-compose ]
+
+    - name: Apply kernel config
+      sysctl:
+        name: vm.max_map_count
+        value: "262144"
+
+    - name: Run compose
+      shell: docker-compose up -d --force-recreate
+      args:
+        chdir: /root/kibana-logstash

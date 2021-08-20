@@ -1,0 +1,23 @@
+---
+
+version: "3.4"
+
+services:
+  elasticsearch:
+    image: "{{ elastic_es_image }}:{{ elastic_version }}"
+    environment:
+      cluster.name: 'docker-cluster'
+      cluster.initial_master_nodes: "{{ groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | join(',') }}"
+      discovery.seed_hosts: "{{ groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | difference([_private_ip]) | join(',') }}"
+      node.name: "{{ _private_ip }}"
+      network.publish_host: "{{ _private_ip }}"
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+    ports:
+      - "{{ _private_ip }}:9200:9200"
+      - "{{ _private_ip }}:9300:9300"
+    restart: 'unless-stopped'
+    volumes:
+      - 'elasticsearch_data:/usr/share/elasticsearch/data'
+
+volumes:
+  elasticsearch_data: {}

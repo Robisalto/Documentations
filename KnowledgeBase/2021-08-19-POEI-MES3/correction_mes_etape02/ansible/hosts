@@ -1,0 +1,7 @@
+[app]
+ach-alex-4 ansible_host=51.15.241.141 _private_ip=192.168.0.10
+
+[es_cluster]
+ach-alex-1 ansible_host=163.172.145.115 _private_ip=192.168.0.20
+ach-alex-2 ansible_host=51.15.236.232 _private_ip=192.168.0.21
+ach-alex-3 ansible_host=51.15.250.6 _private_ip=192.168.0.22

@@ -1,0 +1,27 @@
+---
+
+- hosts: es_cluster
+  tasks:
+    - name: Create Elasticsearch folder
+      file:
+        path: /root/es
+        state: directory
+
+    - name: Create Elasticsearch docker compose file
+      template:
+        src: ./templates/docker-compose.elk-es.yml.j2
+        dest: /root/es/docker-compose.yml
+
+    - name: Install Python dependencies
+      apt:
+        name: [ python3-docker, docker-compose ]
+
+    - name: Apply kernel config
+      sysctl:
+        name: vm.max_map_count
+        value: "262144"
+
+    - name: Run compose
+      shell: docker-compose up -d --force-recreate
+      args:
+        chdir: /root/es

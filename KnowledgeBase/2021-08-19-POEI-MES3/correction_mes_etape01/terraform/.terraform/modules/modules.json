@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"es_cluster.instance","Source":"../instance","Dir":"modules/instance"},{"Key":"","Source":"","Dir":"."},{"Key":"app","Source":"./modules/app","Dir":"modules/app"},{"Key":"app.instance","Source":"../instance","Dir":"modules/instance"},{"Key":"es_cluster","Source":"./modules/es_cluster","Dir":"modules/es_cluster"}]}

@@ -56,7 +56,7 @@ extensions: 'extra'
 - [ Grafana *(7H)* ](2021-08-13-POEI-Grafana.html)
 - [ ELK: *Elastic, Logstash, Kibana* *(21H)* ](2021-08-16-POEI-ELK.html)
 
-- [X] [**Mise en situation n°3: *Orchestration & Monitoring***]()
+- [X] [**Mise en situation n°3: *Orchestration & Monitoring***](2021-08-19-POEI-MES3.html)
 
 
 ### *DevOps Foundation, CI/CD, Entretien ESN*

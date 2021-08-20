@@ -17,6 +17,7 @@
 2021-08-11-POEI-Prometheus
 2021-08-13-POEI-Grafana
 2021-08-16-POEI-ELK
+2021-08-19-POEI-MES3
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet

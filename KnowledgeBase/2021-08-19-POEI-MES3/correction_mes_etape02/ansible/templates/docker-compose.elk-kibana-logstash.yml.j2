@@ -1,0 +1,22 @@
+---
+
+version: "3.4"
+
+services:
+  logstash:
+    image: "{{ elastic_logstash_image }}:{{ elastic_version }}"
+    environment:
+      LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
+    ports:
+      - "{{ _private_ip }}:6000:6000"
+    restart: 'unless-stopped'
+    volumes:
+      - './logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro'
+
+  kibana:
+    image: "{{ elastic_kibana_image }}:{{ elastic_version }}"
+    ports:
+      - "5601:5601"
+    restart: 'unless-stopped'
+    volumes:
+      - './kibana/kibana.yml:/usr/share/kibana/config/kibana.yml:ro'

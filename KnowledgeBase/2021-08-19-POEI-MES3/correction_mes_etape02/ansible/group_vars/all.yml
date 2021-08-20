@@ -1,0 +1,8 @@
+---
+
+# Elastic stack components
+elastic_version: "7.12.0"
+elastic_es_image: "docker.elastic.co/elasticsearch/elasticsearch"
+elastic_filebeat_image: "docker.elastic.co/beats/filebeat"
+elastic_kibana_image: "docker.elastic.co/kibana/kibana"
+elastic_logstash_image: "docker.elastic.co/logstash/logstash"
