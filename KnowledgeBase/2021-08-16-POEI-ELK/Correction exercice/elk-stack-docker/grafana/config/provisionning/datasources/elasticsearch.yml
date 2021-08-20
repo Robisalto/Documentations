@@ -1,0 +1,35 @@
+---
+
+apiVersion: 1
+
+deleteDatasources:
+  - name: Elasticsearch
+    orgId: 1
+  - name: Elasticsearch-Logs
+    orgId: 1
+
+datasources:
+  - name: Elasticsearch
+    type: elasticsearch
+    access: proxy
+    database: kibana_sample_data_logs
+    orgId: 1
+    url: http://elasticsearch:9200
+    isDefault: False
+    editable: False
+    jsonData:
+      esVersion: 70
+      timeField: "@timestamp"
+  - name: Elasticsearch-Logs
+    type: elasticsearch
+    access: proxy
+    database: kibana_sample_data_logs
+    orgId: 1
+    url: http://elasticsearch:9200
+    isDefault: False
+    editable: False
+    jsonData:
+      esVersion: 70
+      logMessageField: message
+      logLevelField: fields.level
+      timeField: "@timestamp"

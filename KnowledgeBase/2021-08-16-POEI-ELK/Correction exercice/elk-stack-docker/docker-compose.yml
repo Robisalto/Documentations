@@ -1,0 +1,125 @@
+---
+
+version: '3.4'
+
+x-service-base:
+  &service-base
+  logging:
+    driver: 'json-file'
+    options:
+      max-size: "${LOGGING_MAX_SIZE}"
+      max-file: "${LOGGING_MAX_FILE}"
+  restart: 'unless-stopped'
+
+networks:
+  elk:
+    external:
+      name: 'elk'
+
+services:
+  filebeat:
+    <<: *service-base
+    image: "${ELK_FILEBEAT_IMAGE_NAME}:${ELK_VERSION}"
+    command:
+      - '--strict.perms=false' # Pour outrepasser le check de permission de la conf
+    depends_on:
+      - 'logstash'
+    networks:
+      - 'elk'
+    user: 'root'
+    volumes:
+      - './filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro'
+      - '/var/log:/var/log:ro'
+      - 'filebeat_data:/usr/share/filebeat/data'
+
+  elasticsearch01:
+    <<: *service-base
+    image: "${ELK_ELASTICSEARCH_IMAGE_NAME}:${ELK_VERSION}"
+    environment:
+      cluster.name: 'docker-cluster'
+      cluster.initial_master_nodes: 'elasticsearch01,elasticsearch02,elasticsearch03'
+      discovery.seed_hosts: 'elasticsearch02,elasticsearch03'
+      node.name: 'elasticsearch01'
+      ES_JAVA_OPTS: -Xmx1024m -Xms1024m
+    networks:
+      - 'elk'
+    volumes:
+      - 'elasticsearch01_data:/usr/share/elasticsearch/data'
+
+  elasticsearch02:
+    <<: *service-base
+    image: "${ELK_ELASTICSEARCH_IMAGE_NAME}:${ELK_VERSION}"
+    environment:
+      cluster.name: 'docker-cluster'
+      cluster.initial_master_nodes: 'elasticsearch01,elasticsearch02,elasticsearch03'
+      discovery.seed_hosts: 'elasticsearch01,elasticsearch03'
+      node.name: 'elasticsearch02'
+      ES_JAVA_OPTS: -Xmx1024m -Xms1024m
+    networks:
+      - 'elk'
+    volumes:
+      - 'elasticsearch02_data:/usr/share/elasticsearch/data'
+
+  elasticsearch03:
+    <<: *service-base
+    image: "${ELK_ELASTICSEARCH_IMAGE_NAME}:${ELK_VERSION}"
+    environment:
+      cluster.name: 'docker-cluster'
+      cluster.initial_master_nodes: 'elasticsearch01,elasticsearch02,elasticsearch03'
+      discovery.seed_hosts: 'elasticsearch01,elasticsearch02'
+      node.name: 'elasticsearch03'
+      ES_JAVA_OPTS: -Xmx1024m -Xms1024m
+    networks:
+      - 'elk'
+    volumes:
+      - 'elasticsearch03_data:/usr/share/elasticsearch/data'
+
+  elasticsearch_exporter:
+    <<: *service-base
+    image: "${ELASTICSEARCH_EXPORTER_IMAGE_NAME}:${ELASTICSEARCH_EXPORTER_IMAGE_VERSION}"
+    command:
+      - '--es.uri=http://elasticsearch01:9200'
+      - '--es.all'
+      - '--es.cluster_settings'
+      - '--es.indices'
+      - '--es.indices_settings'
+      - '--es.shards'
+      - '--es.snapshots'
+    depends_on:
+      - 'elasticsearch01'
+    networks:
+      - 'elk'
+
+  logstash:
+    <<: *service-base
+    image: "${ELK_LOGSTASH_IMAGE_NAME}:${ELK_VERSION}"
+    depends_on:
+      - 'elasticsearch01'
+    environment:
+      LS_JAVA_OPTS: "-Xmx1024m -Xms1024m"
+    networks:
+      - 'elk'
+    ports:
+      - '6000:6000'
+    volumes:
+      - './logstash/pipeline:/usr/share/logstash/pipeline:ro'
+      - './logstash/data:/tmp/data'
+
+  kibana:
+    <<: *service-base
+    image: "${ELK_KIBANA_IMAGE_NAME}:${ELK_VERSION}"
+    depends_on:
+      - 'elasticsearch01'
+      - 'logstash'
+    networks:
+      - 'elk'
+    ports:
+      - '5601:5601'
+    volumes:
+      - './kibana/config/:/usr/share/kibana/config:ro'
+
+volumes:
+  elasticsearch01_data: {}
+  elasticsearch02_data: {}
+  elasticsearch03_data: {}
+  filebeat_data: {}

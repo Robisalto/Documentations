@@ -1,0 +1,129 @@
+---
+
+version: '3.4'
+
+x-service-base:
+  &service-base
+  logging:
+    driver: 'json-file'
+    options:
+      max-size: "${LOGGING_MAX_SIZE}"
+      max-file: "${LOGGING_MAX_FILE}"
+  networks:
+    - 'elk'
+  restart: 'unless-stopped'
+
+services:
+  elasticsearch01:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.elasticsearch.rule=Host(`elasticsearch01.localhost`)'
+      - 'traefik.http.routers.elasticsearch.entrypoints=web'
+  elasticsearch02:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.elasticsearch.rule=Host(`elasticsearch02.localhost`)'
+      - 'traefik.http.routers.elasticsearch.entrypoints=web'
+  elasticsearch03:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.elasticsearch.rule=Host(`elasticsearch03.localhost`)'
+      - 'traefik.http.routers.elasticsearch.entrypoints=web'
+  elasticsearch_exporter:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.elasticsearch_exporter.rule=Host(`elasticsearch-exporter.localhost`)'
+      - 'traefik.http.routers.elasticsearch_exporter.entrypoints=web'
+      - 'traefik.http.services.elasticsearch_exporter.loadbalancer.server.port=9114'
+  logstash:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.logstash.rule=Host(`logstash.localhost`)'
+      - 'traefik.http.routers.logstash.entrypoints=web'
+    volumes:
+      - 'ubuntu_srv_logs:/logs/ubuntu_srv'
+  kibana:
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.kibana.rule=Host(`kibana.localhost`)'
+      - 'traefik.http.routers.kibana.entrypoints=web'
+
+
+  # Monitoring
+  prometheus:
+    <<: *service-base
+    image: "${PROMETHEUS_IMAGE_NAME}:${PROMETHEUS_IMAGE_VERSION}"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention=72h'
+      - '--web.external-url=http://prometheus.localhost'
+      - '--web.enable-lifecycle'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)'
+      - 'traefik.http.routers.prometheus.entrypoints=web'
+    volumes:
+      - './prometheus/config/:/etc/prometheus/'
+      - 'prometheus_data:/prometheus/'
+
+  grafana:
+    <<: *service-base
+    image: "${GRAFANA_IMAGE_NAME}:${GRAFANA_IMAGE_VERSION}"
+    env_file:
+      - './env/grafana.env'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=elk'
+      - 'traefik.http.routers.grafana.rule=Host(`grafana.localhost`)'
+      - 'traefik.http.routers.grafana.entrypoints=web'
+    volumes:
+      - 'grafana_data:/var/lib/grafana'
+      - './grafana/config/provisionning/datasources:/etc/grafana/provisioning/datasources'
+      - './grafana/config/provisionning/dashboards:/etc/grafana/provisioning/dashboards'
+      - './grafana/config/provisionning/plugins:/etc/grafana/provisioning/plugins'
+      - './grafana/config/dashboards:/etc/grafana/dashboards'
+
+
+  # Tests logstash
+  ubuntu_srv:
+    <<: *service-base
+    image: ubuntu:latest
+    command:
+      - 'bash'
+      - '-c'
+      - '/script.sh'
+    volumes:
+      - './ubuntu/script.sh:/script.sh'
+      - 'ubuntu_srv_logs:/var/log'
+
+
+  # Reverse proxy
+  traefik:
+    <<: *service-base
+    image: "${TRAEFIK_IMAGE_NAME}:${TRAEFIK_IMAGE_VERSION}"
+    command:
+      - '--api.insecure=true'
+      - '--metrics.prometheus=true'
+      - '--metrics.prometheus.addEntryPointsLabels=true'
+      - '--metrics.prometheus.addServicesLabels=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "${TRAEFIK_ENTRYPOINT_PORT}:80"
+      - "${TRAEFIK_DASHBOARD_PORT}:8080"
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+
+volumes:
+  grafana_data: {}
+  prometheus_data: {}
+  ubuntu_srv_logs: {}

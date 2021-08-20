@@ -33,9 +33,29 @@
 <li><a href="#introduction-2">Introduction</a></li>
 </ul></li>
 <li><a href="#la-stack-elastic---bases">La Stack Elastic - Bases</a><ul>
-<li><a href="#section"></a></li>
+<li><a href="#installation-composant">Installation &amp; Composant</a></li>
+<li><a href="#atelier-1">Atelier 1</a></li>
+<li><a href="#elasticsearch---partie-1">Elasticsearch - Partie 1</a><ul>
+<li><a href="#qcm-1">QCM 1</a></li>
 </ul></li>
-<li><a href="#administration-scalabilité">Administration &amp; Scalabilité</a></li>
+<li><a href="#elasticsearch---partie-2">Elasticsearch - Partie 2</a><ul>
+<li><a href="#qcm-2">QCM 2</a></li>
+</ul></li>
+<li><a href="#atelier-2">Atelier 2</a><ul>
+<li><a href="#atelier-2---correction">Atelier 2 - Correction</a></li>
+<li><a href="#qcm---requêtes-elasticsearch">QCM - Requêtes Elasticsearch</a></li>
+</ul></li>
+<li><a href="#logstash">Logstash</a><ul>
+<li><a href="#qcm---logstash">QCM - Logstash</a></li>
+<li><a href="#atelier-3-logstash">Atelier 3 Logstash</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#administration-scalabilité">Administration &amp; Scalabilité</a><ul>
+<li><a href="#qcm">QCM</a></li>
+<li><a href="#atelier">Atelier</a><ul>
+<li><a href="#correction">Correction</a></li>
+</ul></li>
+</ul></li>
 <li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
 <li><a href="#documentations-réseau">Documentations réseau</a></li>
 </ul></li>
@@ -77,10 +97,222 @@
 <iframe src="2021-08-16-POEI-ELK/introduction.html">
 </iframe>
 <h1 id="la-stack-elastic---bases">La Stack Elastic - Bases</h1>
-<h2 id="section"></h2>
-<iframe src="2021-08-16-POEI-ELK/.html">
+<h2 id="installation-composant">Installation &amp; Composant</h2>
+<iframe src="2021-08-16-POEI-ELK/installation.html">
 </iframe>
+<h2 id="atelier-1">Atelier 1</h2>
+<p>Atelier 1 - ES &amp; Kibana Installation d’Elasticsearch &amp; Kibana</p>
+<p>Le but est de déployer les premiers services avec lesquels nous allons travailler</p>
+<ul>
+<li>Créer une recette de déploiement Docker Compose pour déployer une instance de Kibana et d’Elasticsearch</li>
+<li>Valider que Kibana ait accès à Elasticsearch</li>
+<li>Aller dans le menu “Management / Dev Tools”</li>
+<li>Executer cette requête “<code>GET /_cat/health</code>” (cliquer sur “play” pour exécuter)</li>
+</ul>
+<h2 id="elasticsearch---partie-1">Elasticsearch - Partie 1</h2>
+<iframe src="2021-08-16-POEI-ELK/elasticsearch-concepts-1.html">
+</iframe>
+<h3 id="qcm-1">QCM 1</h3>
+<iframe src="2021-08-16-POEI-ELK/QCM - Elasticsearch - Partie 1 Attempt review.html">
+</iframe>
+<h2 id="elasticsearch---partie-2">Elasticsearch - Partie 2</h2>
+<iframe src="2021-08-16-POEI-ELK/elasticsearch-concepts-2.html">
+</iframe>
+<h3 id="qcm-2">QCM 2</h3>
+<iframe src="2021-08-16-POEI-ELK/QCM - Elasticsearch - Partie 2 Attempt review.html">
+</iframe>
+<h2 id="atelier-2">Atelier 2</h2>
+<p>Pour simplifier les manipulations, utilisez la console developpeur de Kibana pour executer vos requêtes Création de données</p>
+<ul>
+<li>Créer un index nommé test01</li>
+<li>Vérifier que cet index est maintenant présent</li>
+<li>Créer ce document dans cet index { “titre”: “Premier document”, “description”: “C’est la première fois que je crée un document dans ES.”, “quantité”: 12, “date_creation”: “18-10-2020” }</li>
+<li>Afficher ce document</li>
+<li>Afficher quel mapping a été appliqué par défaut. Est-il optimal ?</li>
+<li>Essayer de modifier le mapping pour le champ date_creation, pour un plus adapté</li>
+<li>Créer un nouvel index test02</li>
+<li>Appliquer un mapping plus adapté aux données du document ci-dessus</li>
+<li>Afficher la manière dont le texte de la description du document a été traité par l’analyzer</li>
+<li>Créer un index test03 qui :
+<ul>
+<li>intègre le mapping ci-dessus</li>
+<li>indexera la description sans l’altérer</li>
+<li>indexera la description en supprimant les mots sans valeur ajoutée</li>
+</ul></li>
+<li>Faire un import multiple de 4 documents en une seule requête</li>
+</ul>
+<h3 id="atelier-2---correction">Atelier 2 - Correction</h3>
+<h4 id="question-1">Question 1</h4>
+<pre class="kql="><code>PUT /test01</code></pre>
+<h4 id="question-2">Question 2</h4>
+<pre class="kql"><code>GET /_cat/indices</code></pre>
+<h4 id="question-3">Question 3</h4>
+<pre class="kql"><code>POST /test01/_doc/1
+{
+  &quot;titre&quot;: &quot;Premier document&quot;,
+  &quot;description&quot;: &quot;C&#39;est la première fois que je crée un document dans ES.&quot;,
+  &quot;quantité&quot;: 12,
+  &quot;date_creation&quot;: &quot;18-10-2020&quot;
+}
+</code></pre>
+<h4 id="question-4">Question 4</h4>
+<pre class="kql"><code>GET /test01/_doc/1
+</code></pre>
+<h4 id="question-5">Question 5</h4>
+<pre class="kql"><code>GET /test01/_mapping
+GET /test01/?pretty
+
+</code></pre>
+<p>Non, il n’est pas optimal car la date est considérée comme du text.</p>
+<h4 id="question-6">Question 6</h4>
+<pre class="kql"><code>POST /test01/_mapping
+{
+  &quot;properties&quot;: {
+    &quot;date_creation&quot;: {
+      &quot;type&quot;: &quot;date&quot;
+    }
+  }
+}
+</code></pre>
+<p>Il n’est pas possible de changer le mapping d’un champ existant, il faut recréer un nouvel index avec le bon mapping.</p>
+<h4 id="question-7">Question 7</h4>
+<pre class="kql"><code>PUT /test02
+</code></pre>
+<h4 id="question-8">Question 8</h4>
+<pre class="kql"><code>POST /test02/_mapping
+{
+  &quot;properties&quot;: {
+    &quot;titre&quot;: {
+      &quot;type&quot;: &quot;text&quot;,
+      &quot;fields&quot; : {
+        &quot;keyword&quot; : {
+          &quot;type&quot; : &quot;keyword&quot;,
+          &quot;ignore_above&quot; : 256
+        }
+      }
+    },
+    &quot;description&quot;: {
+      &quot;type&quot;: &quot;text&quot;
+    },
+    &quot;quantité&quot;: {
+      &quot;type&quot;: &quot;long&quot;
+    },
+    &quot;date_creation&quot;: {
+      &quot;type&quot;: &quot;date&quot;,
+      &quot;format&quot;: &quot;dd-MM-yyy&quot;
+    }
+  }
+}
+</code></pre>
+<h4 id="question-9">Question 9</h4>
+<pre class="kql"><code>GET /test02/_analyze
+{
+  &quot;text&quot;: &quot;C&#39;est la première fois que je crée un document dans ES.&quot;
+}
+</code></pre>
+<h4 id="question-10">Question 10</h4>
+<pre class="kql"><code>PUT /test03/
+{
+  &quot;settings&quot;: {
+    &quot;analysis&quot;: {
+      &quot;analyzer&quot;: {
+        &quot;std_fr&quot;: {
+          &quot;type&quot;:      &quot;standard&quot;,
+          &quot;stopwords&quot;: &quot;_french_&quot;
+        }
+      }
+    }
+  },
+  &quot;mappings&quot;: {
+    &quot;properties&quot;: {
+      &quot;titre&quot;: {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;fields&quot; : {
+          &quot;keyword&quot; : {
+            &quot;type&quot; : &quot;keyword&quot;,
+            &quot;ignore_above&quot; : 256
+          }
+        }
+      },
+      &quot;description&quot;: {
+        &quot;type&quot;: &quot;text&quot;,
+        &quot;analyzer&quot;: &quot;standard&quot;,
+        &quot;fields&quot;: {
+          &quot;fr&quot;: {
+            &quot;type&quot;:     &quot;text&quot;,
+            &quot;analyzer&quot;: &quot;std_fr&quot;
+          }
+        }
+      },
+      &quot;quantité&quot;: {
+        &quot;type&quot;: &quot;long&quot;
+      },
+      &quot;date_creation&quot;: {
+        &quot;type&quot;: &quot;date&quot;,
+        &quot;format&quot;: &quot;dd-MM-yyy&quot;
+      }
+    }
+  }
+}
+
+GET /test03/_analyze
+{
+  &quot;field&quot;: &quot;description.fr&quot;,
+  &quot;text&quot;: &quot;C&#39;est la première fois que je crée un document dans ES.&quot;
+}
+</code></pre>
+<h4 id="question-11">Question 11</h4>
+<pre class="kql"><code>POST /test03/_bulk
+{&quot;create&quot;: {&quot;_id&quot;: 1}}
+{&quot;titre&quot;: &quot;Premier document&quot;, &quot;description&quot;: &quot;C&#39;est la première fois que je crée un document dans ES.&quot;, &quot;quantité&quot;: 12, &quot;date_creation&quot;: &quot;18-10-2020&quot;}
+{&quot;create&quot;: {&quot;_id&quot;: 2}}
+{&quot;titre&quot;: &quot;Deuxième document&quot;, &quot;description&quot;: &quot;C&#39;est la deuxième fois que je crée un document dans ES.&quot;, &quot;quantité&quot;: 100, &quot;date_creation&quot;: &quot;19-10-2020&quot;}
+{&quot;create&quot;: {&quot;_id&quot;: 3}}
+{&quot;titre&quot;: &quot;Troisième document&quot;, &quot;description&quot;: &quot;C&#39;est la troisième fois que je crée un document dans ES.&quot;, &quot;quantité&quot;: 18, &quot;date_creation&quot;: &quot;18-11-2020&quot;}
+{&quot;create&quot;: {&quot;_id&quot;: 4}}
+{&quot;titre&quot;: &quot;Quatrième document&quot;, &quot;description&quot;: &quot;C&#39;est la quatrième fois que je crée un document dans ES.&quot;, &quot;quantité&quot;: 32, &quot;date_creation&quot;: &quot;18-12-2020&quot;}
+</code></pre>
+<h3 id="qcm---requêtes-elasticsearch">QCM - Requêtes Elasticsearch</h3>
+<iframe src="2021-08-16-POEI-ELK/QCM - Requêtes Elasticsearch Attempt review.html">
+</iframe>
+<h2 id="logstash">Logstash</h2>
+<iframe src="2021-08-16-POEI-ELK/logstash.html">
+</iframe>
+<h3 id="qcm---logstash">QCM - Logstash</h3>
+<iframe src="2021-08-16-POEI-ELK/QCM - Logstash Attempt review.html.html">
+</iframe>
+<h3 id="atelier-3-logstash">Atelier 3 Logstash</h3>
+<p>Atelier 3 - Mise en place de Logstash</p>
+<ul>
+<li>Ajouter un container logstash dans la stack docker-compose existante</li>
+<li>Démarrer dans la stack un container ubuntu, dont le dossier /var/log sera un- volume qui sera également monté dans le container logstash</li>
+<li>Dans ce container, installer rsyslog et rendre le fichier /var/log/syslog lisible- par tout le monde</li>
+<li>Ajouter une configuration à Logstash pour suivre le contenu de ce fichier et- afficher le contenu traité sur stdout</li>
+<li>Tester en utilisant la commande logger dans le conteneur ubuntu pour générer du- contenu</li>
+<li>Configurer logstash pour envoyer les données à Elasticsearch</li>
+<li>Vérifier qu’un index a bien été créé dans Elasticsearch</li>
+<li>Créer un index kibana</li>
+<li>Vérifier que les données sont disponibles depuis Kibana</li>
+<li>Intégrer Filebeat dans la stack pour faire remonter les logs dans Elasticsearch</li>
+<li>Créer un index Kibana pour visualiser ces informations</li>
+<li>Depuis Logstash, exporter le contenu de l’index qui contient les entrées de log dans un CSV</li>
+</ul>
 <h1 id="administration-scalabilité">Administration &amp; Scalabilité</h1>
+<iframe src="2021-08-16-POEI-ELK/administration-scalabilite.html">
+</iframe>
+<h2 id="qcm">QCM</h2>
+<iframe src="2021-08-16-POEI-ELK/QCM - Administration &amp; scalabilité Attempt review.html">
+</iframe>
+<h2 id="atelier">Atelier</h2>
+<p>Atelier 4</p>
+<ul>
+<li>Créer un cluster Elasticsearch de 3 noeuds, nommés elasticsearch01, elasticsearch02, elasticsearch03</li>
+<li>Charger toutes les données de test de la stack</li>
+<li>Créer un snapshot de ces nouveaux index dans un volume dédié</li>
+</ul>
+<h3 id="correction">Correction</h3>
+<iframe src="2021-08-16-POEI-ELK/Correction exercice/">
+</iframe>
 <hr />
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h2 id="documentations-réseau">Documentations réseau</h2>
