@@ -1010,3 +1010,13 @@ See post-processor and [post-processors](https://www.packer.io/docs/templates/hc
 # Code Source Damien:
 
 [Code Source Formation Vagrant/Packer](2021-06-30-POEI-Vagrant-Packer/vagrant-packer-code-source)
+
+
+
+--- 
+
+# *Tips & Tricks*
+
+## Cheatsheet
+
+![](2021-06-30-POEI-Vagrant-Packer/vagrant-cheatsheet.png)

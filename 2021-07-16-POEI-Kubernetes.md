@@ -1303,3 +1303,12 @@ $ kubectl get configmaps
 ```bash
 $ kubectl get configmaps,pod
 ```
+
+
+---
+
+# *Tips & Tricks*
+
+## Cheatsheet
+
+![](2021-07-16-POEI-Kubernetes/kubernetes-cheatsheet.png)

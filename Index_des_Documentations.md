@@ -39,7 +39,7 @@ extensions: 'extra'
 - [X] [**Mise en situation n°2: *VMWare / Ansible***](2021-07-08-POEI-MES-2.html)
 
 
-### 3e Quart: *Cloud, Puppet, Python*
+### 3e Quart: *Cloud, Puppet, Kubernetes, Python*
 
 - [Amazon Web Services *(21H)*](2021-07-12-POEI-AWS.html)
 - [Kubernetes *(21H)*](2021-07-16-POEI-Kubernetes.html)
