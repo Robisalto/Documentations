@@ -1,0 +1,18 @@
+---
+
+version: "3.4"
+
+services:
+  filebeat:
+    image: "{{ elastic_filebeat_image }}:{{ elastic_version }}"
+    command:
+      - '--strict.perms=false'
+    restart: 'unless-stopped'
+    user: 'root'
+    volumes:
+      - './filebeat.yml:/usr/share/filebeat/filebeat.yml:ro'
+      - '/var/log:/var/log:ro'
+      - 'filebeat_data:/usr/share/filebeat/data'
+
+volumes:
+  filebeat_data: {}

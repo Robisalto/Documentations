@@ -1,0 +1,19 @@
+---
+
+version: "3.4"
+
+services:
+  grafana:
+    image: "{{ grafana_image }}:{{ grafana_version }}"
+    ports:
+      - "3000:3000"
+    restart: 'unless-stopped'
+    volumes:
+      - 'grafana_data:/var/lib/grafana'
+      - './provisioning/datasources:/etc/grafana/provisioning/datasources'
+      - './provisioning/dashboards:/etc/grafana/provisioning/dashboards'
+      - './provisioning/plugins:/etc/grafana/provisioning/plugins'
+      - './dashboards:/etc/grafana/dashboards'
+
+volumes:
+  grafana_data: {}

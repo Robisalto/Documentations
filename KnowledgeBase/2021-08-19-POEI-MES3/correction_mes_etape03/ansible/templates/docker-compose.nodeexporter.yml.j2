@@ -1,0 +1,31 @@
+---
+
+version: "3.4"
+
+services:
+  node_exporter:
+    image: "{{ nodeexporter_image }}:{{ nodeexporter_version }}"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(dev|etc|host|proc|run|sys|var\/lib\/docker\/containers\/.*\/mounts\/shm)($$|/)'
+      - '--collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|squashfs|sysfs|tracefs)$$'
+      - '--collector.mountstats'
+      - '--collector.systemd'
+      - '--collector.tcpstat'
+      - '--collector.time'
+      - '--collector.uname'
+      - '--no-collector.powersupplyclass'
+    ports:
+      - '9100:9100'
+    privileged: true
+    restart: 'unless-stopped'
+    user: 'root'
+    volumes:
+      - '/:/rootfs:ro,rslave'
+      - '/cgroup/:/cgroup:ro'
+      - '/dev/disk/:/dev/disk:ro'
+      - '/proc:/host/proc:ro'
+      - '/run:/run:ro'
+      - '/sys:/host/sys:ro'

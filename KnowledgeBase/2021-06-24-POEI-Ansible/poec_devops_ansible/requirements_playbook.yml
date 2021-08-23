@@ -1,0 +1,98 @@
+# Déclarer un play
+# qui s'adresse au groupe nodes
+# qui déclare une tasks pour appeler le module ansible.builtin.apt
+# pour installer trois packages : nano, iperf, wget (liste)
+
+# on va ensuite rebondir sur le concept de variables
+---
+- name: PLAY prerequis outils sur infra
+  hosts: nodes
+  become: true
+
+  # Declarer un block vars:
+  # declarer a l'interieur une variable liste_packages qui contient les éléments
+  vars:
+    # Déclaration d'une liste d'utilisateurs sous forme de dictionnaire
+    liste_users:
+      formation:
+        state: present
+        shell: /bin/bash
+        comment: "User formation"
+        #password: formation123
+        password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          33346165626536643735326365343235656132313865613866633633333066306130356366353166
+          6630353931396430346436383463323239376338623964340a666534626639373463373736666638
+          33376636333266393730346337663732623366356338653637333233613237316164646632336332
+          6630363838346530620a613763376133396235616433313333353332656161616466316136326163
+          35663239306566663963353238366638616438373939646665353962613764663364316136346462
+          30613366393638613831633730643433373138393061333231363439366533626536613936663330
+          65653636616433633737343565653032383334646366626336336539396362616236633963323435
+          33326662626231666131613865666231393934366331616231616434633834316431646633656163
+          66323063646134363735643835623938363335303033393661306538663564353764
+      deploy:
+        state: present
+      dev01:
+        shell: /bin/bash
+        comment: "User developpement"
+        #password: dev0123456
+
+  tasks:
+
+    - name: Module apt pour installation d'une liste de packages
+      ansible.builtin.apt:
+        # Filter default => utile au cas ou une variable n'est pas declarée
+        name: "{{ item.key }}={{ item.value.version | default('*') }}"
+        state: "{{ item.value.state }}" 
+      # Loop : itération sur dictionnaire
+      loop: "{{ liste_packages | dict2items }}"
+      # Ajout d'une condition pour que la task ne soit rellement executee que lorsque la variable liste_packages est définie
+      #when: liste_packages is defined and ansible_os_family == 'Debian'
+      when: liste_packages is defined and ansible_facts['os_family'] == 'Debian'
+
+    - name: Module yum pour installation d'une liste de packages
+      ansible.builtin.yum:
+        # Filter default => utile au cas ou une variable n'est pas declarée
+        name: "{{ item.key }}-{{ item.value.version | default('*') }}"
+        state: "{{ item.value.state }}" 
+      # Loop : itération sur dictionnaire
+      loop: "{{ liste_packages | dict2items }}"
+      # Ajout d'une condition pour que la task ne soit rellement executee que lorsque la variable liste_packages est définie
+      when: liste_packages is defined and ansible_os_family == 'RedHat'
+
+    # Déclarer une task qui utilise le module ansible.buitin.user et qui parcours la structure de donnée
+    # liste_user.
+    # /!\  utilisation d'une iteration
+    # /!\ valeurs par défaut (filter) => default(omit)
+    - name: Creation des users
+      ansible.builtin.user:
+        name: "{{ item.key }}"
+        shell: "{{ item.value.shell | default('/bin/bash') }}"
+        comment: "{{ item.value.comment | default(omit) }}"
+        state: "{{ item.value.state | default('absent') }}"
+        #password: "{{ item.value.password | default(omit) | password_hash('sha512') }}"
+        password: "{{ item.value.password | default(omit) }}"
+      loop: "{{ liste_users | dict2items }}"
+      tags:
+        - crea_users
+      #no_log: true
+
+    - name: Deploiement du message of the day
+      ansible.builtin.copy:
+        dest: /etc/motd
+        src: ./motd
+        owner: root
+        group: root
+        mode: 0644
+      tags:
+        - never
+
+    - name: Deploiement du message of the day sous forme de template
+      ansible.builtin.template:
+        dest: /etc/motd
+        src: ./motd.j2
+        owner: root
+        group: root
+        mode: 0644
+      tags:
+        - deploy_motd

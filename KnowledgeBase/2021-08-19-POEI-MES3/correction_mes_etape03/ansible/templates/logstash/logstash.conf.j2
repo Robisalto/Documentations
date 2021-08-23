@@ -1,0 +1,12 @@
+input {
+  beats {
+    port => 6000
+  }
+}
+
+output {
+  elasticsearch {
+    hosts => ["{{ groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | map('regex_replace', '$', ':9200') | list | join('","') }}"]
+    index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+  }
+}

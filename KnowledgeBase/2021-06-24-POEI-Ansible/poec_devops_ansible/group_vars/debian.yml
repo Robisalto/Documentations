@@ -1,0 +1,10 @@
+liste_packages:
+  iperf:
+    state: present
+    version: 2.0.12+dfsg1-2
+  wget:
+    state: present
+  nano:
+    state: absent
+
+grp_sudo: sudo

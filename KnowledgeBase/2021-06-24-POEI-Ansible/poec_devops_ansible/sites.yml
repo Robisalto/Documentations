@@ -1,0 +1,7 @@
+---
+- name: PLAY prerequis outils sur infra
+  hosts: nodes
+
+  roles:
+    - role: ansible-role-common
+      become: yes

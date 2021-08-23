@@ -1,0 +1,33 @@
+---
+
+- hosts: app
+  tasks:
+    - name: Create Grafana folder
+      file:
+        path: /root/grafana
+        state: directory
+
+    - name: Create Grafana config files
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: ./files/grafana/dashboards
+          dest: /root/grafana/
+        - src: ./files/grafana/provisioning
+          dest: /root/grafana/
+
+    - name: Create Grafana docker compose file
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: ./templates/docker-compose.grafana.yml.j2
+          dest: /root/grafana/docker-compose.yml
+        - src: ./templates/grafana/provisioning/datasources/prometheus.yml
+          dest: /root/grafana/provisioning/datasources/prometheus.yml
+
+    - name: Run compose
+      shell: docker-compose up -d --force-recreate
+      args:
+        chdir: /root/grafana

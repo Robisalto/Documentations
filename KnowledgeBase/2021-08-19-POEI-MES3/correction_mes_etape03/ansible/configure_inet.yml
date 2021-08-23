@@ -1,0 +1,22 @@
+---
+
+- hosts: all
+  tasks:
+    - name: Pause 30s to be sure inet is available
+      pause:
+        seconds: 30
+
+    - name: Get private inet name
+      shell: >
+        ip -o link \
+        | grep {{ _private_inet_mac_address }} \
+        | awk '{ print $2 }' | sed -e 's/://'
+      register: _private_inet_name
+
+    - name: Create Netplan interface file
+      template:
+        src: ./templates/netplan-inet.yaml.j2
+        dest: /etc/netplan/00-installer-config.yaml
+
+    - name: Apply Netplan configuration
+      command: netplan apply

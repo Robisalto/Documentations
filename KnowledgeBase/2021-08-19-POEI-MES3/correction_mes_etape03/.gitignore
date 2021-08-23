@@ -1,0 +1,14 @@
+# Credentials
+.envrc
+
+# Vim
+*.swo
+*.swp
+
+# Terraform
+terraform.tfstate.d/
+.terraform
+*.tfstate*
+
+# Ansible dynamic content
+ansible/hosts

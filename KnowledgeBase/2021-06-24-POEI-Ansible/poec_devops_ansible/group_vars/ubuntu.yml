@@ -1,0 +1,9 @@
+liste_packages:
+  iperf:
+    state: present
+  wget:
+    state: present
+  nano:
+    state: present
+
+grp_sudo: sudo

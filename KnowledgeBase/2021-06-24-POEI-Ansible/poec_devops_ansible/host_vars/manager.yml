@@ -1,0 +1,7 @@
+liste_packages:
+  iperf:
+    state: absent
+  wget:
+    state: absent
+  nano:
+    state: present

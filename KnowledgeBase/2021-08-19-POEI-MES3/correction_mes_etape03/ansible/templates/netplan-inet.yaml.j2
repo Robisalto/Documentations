@@ -1,0 +1,8 @@
+---
+
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    {{ _private_inet_name.stdout }}:
+      addresses: [{{ _private_inet_ip_address }}]

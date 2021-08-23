@@ -1,0 +1,24 @@
+---
+
+global:
+  scrape_interval: '10s'
+  evaluation_interval: '10s'
+alerting:
+  alertmanagers: []
+rule_files: []
+scrape_configs:
+  - job_name: 'elasticsearch'
+    static_configs:
+      - targets:
+{% for _item in (groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | list) %}
+          - "{{ _item }}:9114"
+{% endfor %}
+  - job_name: 'nodeexporter'
+    static_configs:
+      - targets:
+{% for _item in (groups['all'] | map('extract', hostvars, ['_private_ip']) | list) %}
+          - "{{ _item }}:9100"
+{% endfor %}
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['prometheus:9090']

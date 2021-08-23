@@ -1,0 +1,42 @@
+---
+
+version: "3.4"
+
+services:
+  elasticsearch:
+    image: "{{ elastic_es_image }}:{{ elastic_version }}"
+    environment:
+      cluster.name: 'docker-cluster'
+      cluster.initial_master_nodes: "{{ groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | join(',') }}"
+      discovery.seed_hosts: "{{ groups['es_cluster'] | map('extract', hostvars, ['_private_ip']) | difference([_private_ip]) | join(',') }}"
+      node.name: "{{ _private_ip }}"
+      network.publish_host: "{{ _private_ip }}"
+      #cluster.initial_master_nodes: "{{ groups['es_cluster'] | map('extract', hostvars, ['inventory_hostname']) | join(',') }}"
+      #discovery.seed_hosts: "{{ groups['es_cluster'] | map('extract', hostvars, ['inventory_hostname']) | difference([inventory_hostname]) | join(',') }}"
+      #node.name: "{{ inventory_hostname }}"
+      ES_JAVA_OPTS: -Xmx512m -Xms512m
+    ports:
+      - "{{ _private_ip }}:9200:9200"
+      - "{{ _private_ip }}:9300:9300"
+    restart: 'unless-stopped'
+    volumes:
+      - 'elasticsearch_data:/usr/share/elasticsearch/data'
+
+  elasticsearch_exporter:
+    image: "{{ es_exporter_image }}:{{ es_exporter_version }}"
+    command:
+      - '--es.uri=http://elasticsearch:9200'
+      - '--es.all'
+      - '--es.cluster_settings'
+      - '--es.indices'
+      - '--es.indices_settings'
+      - '--es.shards'
+      - '--es.snapshots'
+    depends_on:
+      - 'elasticsearch'
+    ports:
+      - "{{ _private_ip }}:9114:9114"
+    restart: 'unless-stopped'
+
+volumes:
+  elasticsearch_data: {}

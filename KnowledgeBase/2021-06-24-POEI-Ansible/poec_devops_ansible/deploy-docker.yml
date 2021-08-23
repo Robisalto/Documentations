@@ -1,0 +1,5 @@
+- name: deploy docker
+  hosts: srv04
+
+  roles:
+    - ansible-role-docker_3.1.2

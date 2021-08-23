@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="" />
-  <meta name="dcterms.date" content="2021-06-21" />
-  <title>POEI DevOps - Docker</title>
+  <meta name="author" content="Pierre SABLE" />
+  <meta name="dcterms.date" content="2021-06-24" />
+  <title>POEI DevOps - Ansible</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -81,66 +81,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">POEI DevOps - Docker</h1>
-<p class="date">2021-06-21</p>
+<h1 class="title">POEI DevOps - Ansible</h1>
+<p class="author">Pierre SABLE</p>
+<p class="date">2021-06-24</p>
 </header>
 <nav id="TOC">
 <ul>
 <li><a href="#doc-source">Doc Source</a><ul>
-<li><a href="#containers">Containers</a></li>
-<li><a href="#lien-gitlab">Lien GitLab</a></li>
-<li><a href="#autres-liens-utiles">Autres liens utiles</a></li>
-</ul></li>
-<li><a href="#premiers-pas">Premiers pas</a><ul>
-<li><a href="#installation">Installation</a></li>
-<li><a href="#objets">4 objets</a></li>
-<li><a href="#recherche-dimages">Recherche d’images</a></li>
-<li><a href="#instanciation-dun-conteneur">Instanciation d’un conteneur</a></li>
-<li><a href="#concept-image-conteneur">CONCEPT IMAGE =&gt; CONTENEUR</a></li>
-</ul></li>
-<li><a href="#commandes-utiles">Commandes utiles</a><ul>
-<li><a href="#pour-faciliter-le-déploiement-de-containers">Pour faciliter le déploiement de containers</a></li>
-<li><a href="#nettoyage-globale-des-conteneurs-arrêtés">Nettoyage globale des conteneurs arrêtés</a></li>
-</ul></li>
-<li><a href="#utilisation-dune-image-applicative-nginx">Utilisation d’une image applicative nginx</a></li>
-<li><a href="#notion-de-volume">Notion de <strong>Volume</strong></a><ul>
-<li><a href="#volume-de-type-bind">Volume de type bind</a></li>
-<li><a href="#volume-de-type-volume">Volume de type <strong><em>“volume”</em></strong>:</a></li>
-</ul></li>
-<li><a href="#isolation">Isolation</a><ul>
-<li><a href="#concept-de-network">Concept de <strong>Network</strong></a><ul>
-<li><a href="#création-dun-network">Création d’un Network</a></li>
-<li><a href="#instanciation-dun-conteneur-dans-ce-network">Instanciation d’un conteneur dans ce network</a></li>
+<li><a href="#pdf">PDF</a></li>
+<li><a href="#fichiers-de-configuration">Fichiers de configuration</a><ul>
+<li><a href="#organisation-des-fichiers">Organisation des fichiers</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#inspection-dun-objet-docker">Inspection d’un objet Docker</a></li>
-<li><a href="#tp">TP</a><ul>
-<li><a href="#tp-perso">TP Perso</a><ul>
-<li><a href="#création-des-containers">Création des Containers</a></li>
+<li><a href="#installation-configuration-ansible">Installation &amp; Configuration Ansible</a><ul>
+<li><a href="#prérequis-managed-node-deby">Prérequis managed node (deby)</a></li>
+<li><a href="#prérequis-control-node-ansiblectl">Prérequis control node (ansiblectl)</a></li>
 </ul></li>
-<li><a href="#tp-de-pierre">TP de Pierre</a><ul>
-<li><a href="#fichiers-de-configuration">Fichiers de configuration</a></li>
-<li><a href="#création-démarrage-des-containers">Création &amp; Démarrage des Containers</a></li>
-<li><a href="#ajout-dun-container-mariadb">Ajout d’un container MariaDB</a></li>
-<li><a href="#ajout-de-code-php-pour-connexion-au-micro-service-mybdd">Ajout de code php pour connexion au micro-service mybdd</a></li>
-<li><a href="#changement-de-type-de-volume">Changement de type de volume</a></li>
-<li><a href="#générer-une-nouvelle-image-php-qui-contient-nos-modifs">Générer une nouvelle image php qui contient nos modifs</a></li>
+<li><a href="#premiers-pas-avec-ansible">Premiers pas avec Ansible</a><ul>
+<li><a href="#inventaire-ansible">Inventaire ansible</a></li>
+<li><a href="#le-mode-adhoc">Le mode “AdHoc”</a></li>
+<li><a href="#config-ansible">Config ansible</a></li>
+<li><a href="#modules-ansible">Modules ansible :</a></li>
+<li><a href="#playbook">Playbook</a></li>
+<li><a href="#variables">Variables :</a></li>
+<li><a href="#debug-et-variables">DEBUG et VARIABLES</a></li>
+<li><a href="#conditions-et-variables">Conditions et variables :</a></li>
+<li><a href="#itérationd-loops">Itérationd =&gt; LOOPS</a></li>
+<li><a href="#les-facts">Les facts</a></li>
+<li><a href="#gestion-des-fichiers">Gestion des fichiers :</a></li>
+<li><a href="#tags-limits">TAGS / LIMITS :</a></li>
 </ul></li>
-</ul></li>
-<li><a href="#docker-file">Docker File</a><ul>
-<li><a href="#best-pratices">Best Pratices</a></li>
-<li><a href="#tp-dockerfile-tomcat">TP Dockerfile TOMCAT</a><ul>
-<li><a href="#sujet">Sujet</a></li>
-<li><a href="#réponse">Réponse</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#docker-compose">Docker Compose</a><ul>
-<li><a href="#installation-de-docker-compose">Installation de Docker Compose</a></li>
-<li><a href="#fichier-docker-compose.yml">Fichier: docker-compose.yml</a><ul>
-<li><a href="#déclaration-uniquement-pour-mybdd">Déclaration uniquement pour <strong><em>mybdd</em></strong>:</a></li>
-<li><a href="#ajout-mynginx-et-myphp">Ajout <strong><em>mynginx</em></strong> et <strong><em>myphp</em></strong></a></li>
-</ul></li>
-</ul></li>
+<li><a href="#troubleshooting">Troubleshooting</a></li>
+<li><a href="#roles">Roles</a></li>
+<li><a href="#handlers">Handlers</a></li>
 </ul>
 </nav>
 <link rel="icon" href="favicon.png" type="image/png" />
@@ -152,782 +125,281 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Tel : 07.63.88.76.21 (<a href="mailto:psable@dawan.fr" class="email">psable@dawan.fr</a>)</p>
 <hr />
 <h1 id="doc-source">Doc Source</h1>
+<h2 id="pdf">PDF</h2>
 <p>Documentation Source en PDF:</p>
-<iframe src="2021-06-21-POEI-Docker/Formation_Docker-Pierre_SABLE.pdf" width="100%" height="320px" allowfullscreen="yes">
+<iframe src="2021-06-24-POEI-Ansible/Formation_Ansible-Pierre_SABLE.pdf">
 </iframe>
-<h2 id="containers">Containers</h2>
-<div class="info">
-<strong><em>Docker</em></strong> utilise l’OS hôte, dans le cas de Linux peut importe la distribution c’est <strong>le noyau</strong> qui est utilisé.
-</div>
-<h2 id="lien-gitlab">Lien GitLab</h2>
-<p><a href="https://gitlab.com/pierre.sable/poec_devops_docker" class="uri">https://gitlab.com/pierre.sable/poec_devops_docker</a></p>
-<h2 id="autres-liens-utiles">Autres liens utiles</h2>
+<p>Lien: <a href="2021-06-21-POEI-Ansible/Formation_Ansible-Pierre_SABLE.pdf">Formation_Ansible-Pierre_SABLE.pdf</a></p>
+<h2 id="fichiers-de-configuration">Fichiers de configuration</h2>
+<iframe src="2021-06-24-POEI-Ansible/poec_devops_ansible">
+</iframe>
+<h3 id="organisation-des-fichiers">Organisation des fichiers</h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="ex">tree</span> -L 2 poec_devops_ansible/</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="ex">poec_devops_ansible/</span></a>
+<a class="sourceLine" id="cb1-3" title="3">├── <span class="ex">Diagramme_ansible.drawio</span></a>
+<a class="sourceLine" id="cb1-4" title="4">├── <span class="ex">Diagramme_ansible.png</span></a>
+<a class="sourceLine" id="cb1-5" title="5">├── <span class="ex">Diagramme_bootstrap_ansible.png</span></a>
+<a class="sourceLine" id="cb1-6" title="6">├── <span class="ex">README.md</span></a>
+<a class="sourceLine" id="cb1-7" title="7">├── <span class="ex">ansible.cfg</span></a>
+<a class="sourceLine" id="cb1-8" title="8">├── <span class="ex">bootstrap_playbook.yml</span></a>
+<a class="sourceLine" id="cb1-9" title="9">├── <span class="ex">deploy-docker.yml</span></a>
+<a class="sourceLine" id="cb1-10" title="10">├── <span class="ex">group_vars</span></a>
+<a class="sourceLine" id="cb1-11" title="11">│        ├── <span class="ex">centos.yml</span></a>
+<a class="sourceLine" id="cb1-12" title="12">│        ├── <span class="ex">debian.yml</span></a>
+<a class="sourceLine" id="cb1-13" title="13">│        └── <span class="ex">ubuntu.yml</span></a>
+<a class="sourceLine" id="cb1-14" title="14">├── <span class="ex">host_vars</span></a>
+<a class="sourceLine" id="cb1-15" title="15">│        └── <span class="ex">manager.yml</span></a>
+<a class="sourceLine" id="cb1-16" title="16">├── <span class="ex">inventory</span></a>
+<a class="sourceLine" id="cb1-17" title="17">├── <span class="ex">requirements_playbook.yml</span></a>
+<a class="sourceLine" id="cb1-18" title="18">├── <span class="ex">roles</span></a>
+<a class="sourceLine" id="cb1-19" title="19">│        ├── <span class="ex">ansible-role-common</span></a>
+<a class="sourceLine" id="cb1-20" title="20">│        └── <span class="ex">requirements.yml</span></a>
+<a class="sourceLine" id="cb1-21" title="21">└── <span class="ex">sites.yml</span></a>
+<a class="sourceLine" id="cb1-22" title="22"></a>
+<a class="sourceLine" id="cb1-23" title="23"><span class="ex">4</span> directories, 15 files</a></code></pre></div>
+<h1 id="installation-configuration-ansible">Installation &amp; Configuration Ansible</h1>
+<h2 id="prérequis-managed-node-deby">Prérequis managed node (deby)</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#prerequisites" class="uri">https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#prerequisites</a></p>
+<ol type="1">
+<li><p>Vérifier ssh</p></li>
+<li><p>Vérifier l’interpreteur python :</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1">$ <span class="fu">which</span> python</a>
+<a class="sourceLine" id="cb2-2" title="2">$ <span class="ex">python</span></a>
+<a class="sourceLine" id="cb2-3" title="3">$ <span class="ex">python3</span></a></code></pre></div></li>
+<li><p>Mettre en place une mécanique d’élévation de privilège : SUDO</p></li>
+</ol>
 <ul>
-<li><a href="https://docs.docker.com/" class="uri">https://docs.docker.com/</a></li>
+<li><p>SUDO (package) permet d’attribuer des droits spécifiques (devenir root, lancer une commande spécifique en tant que root)</p></li>
+<li><p>Installation en root:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1">$ <span class="ex">apt</span> update</a>
+<a class="sourceLine" id="cb3-2" title="2">$ <span class="ex">apt</span> install sudo</a></code></pre></div></li>
+<li><p>Ajout du user stagiaire dans le groupe SUDO</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1">$ <span class="ex">usermod</span> -aG sudo stagiaire</a></code></pre></div></li>
 </ul>
-<hr />
-<h1 id="premiers-pas">Premiers pas</h1>
-<h2 id="installation">Installation</h2>
-<p>Passage en <strong>root</strong>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">su</span> - <span class="co"># Passe en root et &quot;-&quot; permet de charger l&#39;environnement</span></a></code></pre></div>
-<p>Mise à jour du serveur et installation de <code>curl</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" title="1"><span class="ex">apt</span> update -y <span class="kw">&amp;&amp;</span> <span class="ex">apt</span> install curl -y</a></code></pre></div>
-<p>Lancement du convinience script d’installation de Docker:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" title="1"><span class="ex">curl</span> -fsSL https://get.docker.com -o get-docker.sh</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="fu">sh</span> get-docker.sh</a></code></pre></div>
-<p>On vérifie l’installation avec:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" title="1"><span class="ex">docker</span> -version</a></code></pre></div>
-<p>On ajoute l’utilisateur au groupe:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1"><span class="ex">usermod</span> -aG sudo stagiaire</a></code></pre></div>
-<h2 id="objets">4 objets</h2>
+<h2 id="prérequis-control-node-ansiblectl">Prérequis control node (ansiblectl)</h2>
+<ol type="1">
+<li><p>Vérifier ssh</p></li>
+<li><p>Vérifier l’interpreteur python :</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" title="1">$ <span class="fu">which</span> python</a>
+<a class="sourceLine" id="cb5-2" title="2">$ <span class="ex">python</span></a>
+<a class="sourceLine" id="cb5-3" title="3">$ <span class="ex">python3</span></a></code></pre></div></li>
+<li><p>Binaire ansible</p></li>
+</ol>
 <ul>
-<li>Image</li>
-<li>Container</li>
-<li>Network</li>
-<li>Volume</li>
+<li>Prérequis pip :</li>
 </ul>
-<h5 id="image">1. <strong>Image</strong>:</h5>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1"><span class="ex">stagiaire@debian</span>:~$ docker image --help</a>
-<a class="sourceLine" id="cb6-2" title="2"></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="ex">Usage</span>:  docker image COMMAND</a>
-<a class="sourceLine" id="cb6-4" title="4"></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="ex">Manage</span> images</a>
-<a class="sourceLine" id="cb6-6" title="6"></a>
-<a class="sourceLine" id="cb6-7" title="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb6-8" title="8">  <span class="ex">build</span>       Build an image from a Dockerfile</a>
-<a class="sourceLine" id="cb6-9" title="9">  <span class="bu">history</span>     Show the history of an image</a>
-<a class="sourceLine" id="cb6-10" title="10">  <span class="ex">import</span>      Import the contents from a tarball to create a filesystem image</a>
-<a class="sourceLine" id="cb6-11" title="11">  <span class="ex">inspect</span>     Display detailed information on one or more images</a>
-<a class="sourceLine" id="cb6-12" title="12">  <span class="ex">load</span>        Load an image from a tar archive or STDIN</a>
-<a class="sourceLine" id="cb6-13" title="13">  <span class="fu">ls</span>          List images</a>
-<a class="sourceLine" id="cb6-14" title="14">  <span class="fu">prune</span>       Remove unused images</a>
-<a class="sourceLine" id="cb6-15" title="15">  <span class="ex">pull</span>        Pull an image or a repository from a registry</a>
-<a class="sourceLine" id="cb6-16" title="16">  <span class="ex">push</span>        Push an image or a repository to a registry</a>
-<a class="sourceLine" id="cb6-17" title="17">  <span class="fu">rm</span>          Remove one or more images</a>
-<a class="sourceLine" id="cb6-18" title="18">  <span class="ex">save</span>        Save one or more images to a tar archive (streamed to STDOUT by default)</a>
-<a class="sourceLine" id="cb6-19" title="19">  <span class="ex">tag</span>         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE</a></code></pre></div>
-<h5 id="container">2. <strong>Container</strong>:</h5>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1"><span class="ex">stagiaire@debian</span>:~$ docker container --help</a>
-<a class="sourceLine" id="cb7-2" title="2"></a>
-<a class="sourceLine" id="cb7-3" title="3"><span class="ex">Usage</span>:  docker container COMMAND</a>
-<a class="sourceLine" id="cb7-4" title="4"></a>
-<a class="sourceLine" id="cb7-5" title="5"><span class="ex">Manage</span> containers</a>
-<a class="sourceLine" id="cb7-6" title="6"></a>
-<a class="sourceLine" id="cb7-7" title="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb7-8" title="8">  <span class="ex">attach</span>      Attach local standard input, output, and error streams to a running container</a>
-<a class="sourceLine" id="cb7-9" title="9">  <span class="ex">commit</span>      Create a new image from a container s changes</a>
-<a class="sourceLine" id="cb7-10" title="10">  <span class="fu">cp</span>          Copy files/folders between a container and the local filesystem</a>
-<a class="sourceLine" id="cb7-11" title="11">  <span class="ex">create</span>      Create a new container</a>
-<a class="sourceLine" id="cb7-12" title="12">  <span class="fu">diff</span>        Inspect changes to files or directories on a container s filesystem</a>
-<a class="sourceLine" id="cb7-13" title="13">  <span class="bu">exec</span>        Run a command in a running container</a>
-<a class="sourceLine" id="cb7-14" title="14">  <span class="bu">export</span>      <span class="va">Export</span> <span class="va">a</span> <span class="va">container</span><span class="st">&#39;s filesystem as a tar archive</span></a>
-<a class="sourceLine" id="cb7-15" title="15"><span class="st">  inspect     Display detailed information on one or more containers</span></a>
-<a class="sourceLine" id="cb7-16" title="16"><span class="st">  kill        Kill one or more running containers</span></a>
-<a class="sourceLine" id="cb7-17" title="17"><span class="st">  logs        Fetch the logs of a container</span></a>
-<a class="sourceLine" id="cb7-18" title="18"><span class="st">  ls          List containers</span></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="st">  pause       Pause all processes within one or more containers</span></a>
-<a class="sourceLine" id="cb7-20" title="20"><span class="st">  port        List port mappings or a specific mapping for the container</span></a>
-<a class="sourceLine" id="cb7-21" title="21"><span class="st">  prune       Remove all stopped containers</span></a>
-<a class="sourceLine" id="cb7-22" title="22"><span class="st">  rename      Rename a container</span></a>
-<a class="sourceLine" id="cb7-23" title="23"><span class="st">  restart     Restart one or more containers</span></a>
-<a class="sourceLine" id="cb7-24" title="24"><span class="st">  rm          Remove one or more containers</span></a>
-<a class="sourceLine" id="cb7-25" title="25"><span class="st">  run         Run a command in a new container</span></a>
-<a class="sourceLine" id="cb7-26" title="26"><span class="st">  start       Start one or more stopped containers</span></a>
-<a class="sourceLine" id="cb7-27" title="27"><span class="st">  stats       Display a live stream of container(s) resource usage statistics</span></a>
-<a class="sourceLine" id="cb7-28" title="28"><span class="st">  stop        Stop one or more running containers</span></a>
-<a class="sourceLine" id="cb7-29" title="29"><span class="st">  top         Display the running processes of a container</span></a>
-<a class="sourceLine" id="cb7-30" title="30"><span class="st">  unpause     Unpause all processes within one or more containers</span></a>
-<a class="sourceLine" id="cb7-31" title="31"><span class="st">  update      Update configuration of one or more containers</span></a>
-<a class="sourceLine" id="cb7-32" title="32"><span class="st">  wait        Block until one or more containers stop, then print their exit codes</span></a>
-<a class="sourceLine" id="cb7-33" title="33"></a>
-<a class="sourceLine" id="cb7-34" title="34"><span class="st">Run &#39;</span><span class="va">docker</span> <span class="va">container</span> <span class="va">COMMAND</span> --help<span class="st">&#39; for more information on a command.</span></a></code></pre></div>
-<h5 id="network">3. <strong>Network</strong>:</h5>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1"><span class="ex">stagiaire@debian</span>:~$ docker network --help</a>
-<a class="sourceLine" id="cb8-2" title="2"></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="ex">Usage</span>:  docker network COMMAND</a>
-<a class="sourceLine" id="cb8-4" title="4"></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="ex">Manage</span> networks</a>
-<a class="sourceLine" id="cb8-6" title="6"></a>
-<a class="sourceLine" id="cb8-7" title="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb8-8" title="8">  <span class="ex">connect</span>     Connect a container to a network</a>
-<a class="sourceLine" id="cb8-9" title="9">  <span class="ex">create</span>      Create a network</a>
-<a class="sourceLine" id="cb8-10" title="10">  <span class="ex">disconnect</span>  Disconnect a container from a network</a>
-<a class="sourceLine" id="cb8-11" title="11">  <span class="ex">inspect</span>     Display detailed information on one or more networks</a>
-<a class="sourceLine" id="cb8-12" title="12">  <span class="fu">ls</span>          List networks</a>
-<a class="sourceLine" id="cb8-13" title="13">  <span class="fu">prune</span>       Remove all unused networks</a>
-<a class="sourceLine" id="cb8-14" title="14">  <span class="fu">rm</span>          Remove one or more networks</a>
-<a class="sourceLine" id="cb8-15" title="15"></a>
-<a class="sourceLine" id="cb8-16" title="16"><span class="ex">Run</span> <span class="st">&#39;docker network COMMAND --help&#39;</span> for more information on a command.</a></code></pre></div>
-<h5 id="volume">4. <strong>Volume</strong>:</h5>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1"><span class="ex">stagiaire@debian</span>:~$ docker volume --help</a>
-<a class="sourceLine" id="cb9-2" title="2"></a>
-<a class="sourceLine" id="cb9-3" title="3"><span class="ex">Usage</span>:  docker volume COMMAND</a>
-<a class="sourceLine" id="cb9-4" title="4"></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="ex">Manage</span> volumes</a>
-<a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb9-8" title="8">  <span class="ex">create</span>      Create a volume</a>
-<a class="sourceLine" id="cb9-9" title="9">  <span class="ex">inspect</span>     Display detailed information on one or more volumes</a>
-<a class="sourceLine" id="cb9-10" title="10">  <span class="fu">ls</span>          List volumes</a>
-<a class="sourceLine" id="cb9-11" title="11">  <span class="fu">prune</span>       Remove all unused local volumes</a>
-<a class="sourceLine" id="cb9-12" title="12">  <span class="fu">rm</span>          Remove one or more volumes</a>
-<a class="sourceLine" id="cb9-13" title="13"></a>
-<a class="sourceLine" id="cb9-14" title="14"><span class="ex">Run</span> <span class="st">&#39;docker volume COMMAND --help&#39;</span> for more information on a command.</a></code></pre></div>
-<h2 id="recherche-dimages">Recherche d’images</h2>
-<p>On peut faire une recherche avec la commande <code>search</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1"><span class="ex">docker</span> search nginx</a></code></pre></div>
-<p>Plus simple, se rendre sur <strong>Docker Hub</strong>: <a href="https://hub.docker.com/search?q=&amp;type=image&amp;operating_system=linux&amp;image_filter=official" class="uri">https://hub.docker.com/search?q=&amp;type=image&amp;operating_system=linux&amp;image_filter=official</a></p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1"><span class="ex">docker</span> pull ubuntu <span class="co"># Téléchargement de l&#39;image officielle d&#39;Ubuntu</span></a>
-<a class="sourceLine" id="cb11-2" title="2"></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="ex">OU</span>:</a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="ex">docker</span> image pull <span class="co"># Même chose mais plus longue et on est des fainéants ^^</span></a></code></pre></div>
-<p>On vérifie avec:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1"><span class="ex">docker</span> image ls</a></code></pre></div>
-<h2 id="instanciation-dun-conteneur">Instanciation d’un conteneur</h2>
-<h5 id="première-commande">1. Première commande</h5>
-<p>On lance une instance de container avec:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">docker</span> image run ubuntu:latest</a>
-<a class="sourceLine" id="cb13-2" title="2"></a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="co"># Pour vérifier:</span></a>
-<a class="sourceLine" id="cb13-4" title="4"><span class="ex">docker</span> container ls -a</a>
-<a class="sourceLine" id="cb13-5" title="5"><span class="ex">CONTAINER</span> ID   IMAGE           COMMAND   CREATED          STATUS                      PORTS     NAMES</a>
-<a class="sourceLine" id="cb13-6" title="6"><span class="ex">a6d535e838cc</span>   ubuntu:latest   <span class="st">&quot;bash&quot;</span>    42 seconds ago   Exited (0) <span class="ex">41</span> seconds ago             flamboyant_mayer</a></code></pre></div>
-<div class="info">
-La commande <code>docker container ls</code> n’affiche que les containers <strong>actifs</strong>.
-</div>
-<h5 id="seconde-commande-utilisation-image-ubuntulatest-pour-réaliser-la-commande-echo">2. Seconde commande : utilisation image ubuntu:latest pour réaliser la commande “echo…”</h5>
-<p><code>bash docker container run ubuntu:latest /bin/echo "Hello formation docker"</code></p>
-<h5 id="troisieme-commande-creation-dun-conteneur-et-se-connecter-dedans">3. Troisieme commande : creation d’un conteneur et se connecter dedans</h5>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1"><span class="ex">docker</span> container run -it ubuntu:latest /bin/bash</a>
-<a class="sourceLine" id="cb14-2" title="2"><span class="ex">root@1ba3cc134814</span>:/#</a>
-<a class="sourceLine" id="cb14-3" title="3"><span class="ex">root@1ba3cc134814</span>:/# apt update</a>
-<a class="sourceLine" id="cb14-4" title="4"><span class="ex">root@1ba3cc134814</span>:/# apt install iproute2</a></code></pre></div>
-<h2 id="concept-image-conteneur">CONCEPT IMAGE =&gt; CONTENEUR</h2>
-<div class="warning">
-Une image est immuable (R/O)
-</div>
-<p>Un conteneur intancié ouvre le contenu d’une image mais ne modifie pas directement une image par la suite. Il écrit dans une layer R/W.</p>
-<p>Si un conteneur est supprimé, sa layer R/W aussi</p>
-<p>Un conteneur s’éteind lorsqu’il n’y a plus aucun processus actif à l’intérieur</p>
-<div class="info">
-<strong>On ne modifie jamais une image existante</strong>, par contre on peut générer une nouvelle image à partir de celle que l’on a modifié.
-</div>
-<h1 id="commandes-utiles">Commandes utiles</h1>
-<h2 id="pour-faciliter-le-déploiement-de-containers">Pour faciliter le déploiement de containers</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" title="1">$ <span class="fu">sudo</span> apt update</a>
+<a class="sourceLine" id="cb6-2" title="2">$ <span class="fu">sudo</span> apt install python3-pip</a></code></pre></div>
 <ul>
-<li><p><code>--name</code>: permet d’assigner un nom au container.</p></li>
-<li><p><code>-d</code>: Mode détaché, se lance dans le <em>background</em>, ce qui permet de continuer à utiliser le terminal.</p></li>
-<li><p><code>-p</code>: Permet d’assigner un port particulier.</p></li>
+<li>Install binaire ansible pour le user stagiaire :</li>
 </ul>
-<div class="warning">
-Si on ne publie pas le port, le container ne sera pas accessible.
-</div>
-<h2 id="nettoyage-globale-des-conteneurs-arrêtés">Nettoyage globale des conteneurs arrêtés</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1"><span class="ex">docker</span> container prune</a></code></pre></div>
-<h1 id="utilisation-dune-image-applicative-nginx">Utilisation d’une image applicative nginx</h1>
-<h5 id="premier-déclenchement">1.Premier déclenchement :</h5>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1"><span class="ex">docker</span> container run nginx:1.20-alpine</a></code></pre></div>
-<p>Si l’image demandée n’est présente localement, docker la télécharge depuis le docker hub par défaut (pull)</p>
-<p>L’image applicative de type webserver nginx a prévu de lancer un processus nginx qui ne s’arrête pas : donc le conteneur reste up tant que le processus n’est pas killé</p>
-<h5 id="instanciation-du-conteneur-en-mode-detaché-option--d">2. Instanciation du conteneur en mode detaché : option <strong>-d</strong></h5>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1"><span class="ex">docker</span> container run -d --name mynginx nginx:1.20-alpine</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="ex">a51a7b4f164a9ad3988bb5b4004a5ee13cc44452a825688f5ab304bfe1ae4233</span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="ex">docker</span> container ls</a></code></pre></div>
-<p>Le conteneur est instancié, reste up (visiblement un processus reste actif à l’intérieur) ET le mode detach nous a rendu la main (donc pas de kill)</p>
-<h5 id="executer-une-commande-dans-un-conteneur-démarré-up-exec">3. Executer une commande dans un conteneur démarré (up) : <strong>exec</strong></h5>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1"><span class="ex">docker</span> container exec mynginx cat /etc/nginx/conf.d/default.conf</a></code></pre></div>
-<h5 id="se-connecter-dans-un-conteneur-démarré">4. Se connecter dans un conteneur démarré:</h5>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1"><span class="ex">docker</span> container exec -it mynginx /bin/sh</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" title="1"><span class="ex">docker</span> container run -d --name mynginx2 -p 8080:80 nginx:1.20-alpine</a></code></pre></div>
-<p>Sur le lien: <a href="http://192.168.1.42:8080" class="uri">http://192.168.1.42:8080</a></p>
-<h5 id="mise-en-réseau-de-notre-conteneur-applicatif">5. Mise en réseau de notre conteneur applicatif :</h5>
-<p>Il manque une mise en réseau pour que les utilisateurs externes puissent, au travers de l’interface enp0s8 du docker hôte, être redirigés automatiquement dans le conteneur conteneur applicatif</p>
-<p>publication de port : <a href="https://docs.docker.com/config/containers/container-networking/" class="uri">https://docs.docker.com/config/containers/container-networking/</a></p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" title="1"><span class="ex">docker</span> container rm -f mynginx</a>
-<a class="sourceLine" id="cb21-2" title="2"><span class="ex">docker</span> container run -d --name mynginx -p 8080:80 nginx:1.20-alpine</a></code></pre></div>
-<p>On modifie le fichier <code>/usr/share/nginx/html/index.html</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode html"><code class="sourceCode html"><a class="sourceLine" id="cb22-1" title="1"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="kw">&lt;html&gt;</span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="kw">&lt;head&gt;</span></a>
-<a class="sourceLine" id="cb22-4" title="4"><span class="kw">&lt;title&gt;</span>Bienvenue sur mon site DOCKER ^^!<span class="kw">&lt;/title&gt;</span></a>
-<a class="sourceLine" id="cb22-5" title="5"><span class="kw">&lt;style&gt;</span></a>
-<a class="sourceLine" id="cb22-6" title="6">    body {</a>
-<a class="sourceLine" id="cb22-7" title="7">        <span class="kw">width</span>: <span class="dv">35</span><span class="dt">em</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb22-8" title="8">        <span class="kw">margin</span>: <span class="dv">0</span> <span class="bu">auto</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb22-9" title="9">        <span class="kw">font-family</span>: Tahoma<span class="op">,</span> Verdana<span class="op">,</span> Arial<span class="op">,</span> <span class="dv">sans-serif</span><span class="op">;</span></a>
-<a class="sourceLine" id="cb22-10" title="10">    }</a>
-<a class="sourceLine" id="cb22-11" title="11"><span class="kw">&lt;/style&gt;</span></a>
-<a class="sourceLine" id="cb22-12" title="12"><span class="kw">&lt;/head&gt;</span></a>
-<a class="sourceLine" id="cb22-13" title="13"><span class="kw">&lt;body&gt;</span></a>
-<a class="sourceLine" id="cb22-14" title="14"><span class="kw">&lt;h1&gt;</span>Bienvenue sur nginx DOCKER !<span class="kw">&lt;/h1&gt;</span></a>
-<a class="sourceLine" id="cb22-15" title="15"><span class="kw">&lt;p&gt;</span> Une peu de text, pour faire style... <span class="kw">&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb22-16" title="16"><span class="kw">&lt;p&gt;&lt;em&gt;</span>Hasta la vista !.<span class="kw">&lt;/em&gt;&lt;/p&gt;</span></a>
-<a class="sourceLine" id="cb22-17" title="17"><span class="kw">&lt;/body&gt;</span></a>
-<a class="sourceLine" id="cb22-18" title="18"><span class="kw">&lt;/html&gt;</span></a></code></pre></div>
-<p>Puis sur le site:</p>
-<p><img src="2021-06-21-POEI-Docker/nginx_index.png" /></p>
-<div class="warning">
-Si on détruit le container on perdra tous les changements !!!
-</div>
-<hr />
-<h1 id="notion-de-volume">Notion de <strong>Volume</strong></h1>
-<p><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.howtoforge.com%2Fimages%2Fdocker-how-to-use-it-in-a-practical-way-part-3%2Fbig%2Fpic_7.jpg&amp;f=1&amp;nofb=1" /></p>
-<h2 id="volume-de-type-bind">Volume de type bind</h2>
-<p>=&gt; présentation de fichiers externes (non présent dans l’image) à un conteneur.</p>
-<div class="warning">
-Le contenu du bind est statique. Le container ne peux pas écrire dans le bind.
-</div>
-<p><img src="https://docs.docker.com/storage/images/types-of-mounts-bind.png" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" title="1">$ <span class="ex">pip3</span> install ansible</a></code></pre></div>
 <ul>
-<li>1-1) Détruire le conteneur mynginx</li>
-<li>1-2) Instancier le conteneur en ajoutant l’option de bind de volume :</li>
+<li>Rechargement (sourcing) du fichier d’environnement utilisateur</li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" title="1"><span class="ex">-v</span> /home/stagiaire/formationdocker/html/index.html:/usr/share/nginx/html/index.html</a></code></pre></div>
-<p>Pour faire un <strong>bind</strong> de volume on utilise l’option <code>-v</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" title="1"><span class="ex">stagiaire@debian</span>:~/formation-docker$ docker container rm -f mynginx2 </a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="ex">mynginx2</span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="ex">stagiaire@debian</span>:~/formation-docker$ docker container run -d --name mynginx2 -v /home/stagiaire/formation-docker/html/index.html:/usr/share/nginx/html/index.html -p 8080:80 nginx:1.20-alpine</a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="ex">f8fbbb79149ab1862600d61b6d1d62b3092a20c98da468be320599f54e8847a3</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" title="1">$ <span class="bu">.</span> <span class="ex">.profile</span></a></code></pre></div>
 <ul>
-<li><ol type="1">
-<li>Le volume local <em>(data)</em>:</li>
-</ol></li>
+<li>Test de la version ansible</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb25-1" title="1"><span class="ex">/home/stagiaire/formation-docker/html/index.html</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" title="1">$ <span class="ex">ansible</span> --version</a></code></pre></div>
+<ol start="4" type="1">
+<li>Communication SSH</li>
+</ol>
 <ul>
-<li><ol start="2" type="1">
-<li>Le volume distant <em>(data)</em>:</li>
-</ol></li>
+<li>Test ping vers deby</li>
 </ul>
-<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" title="1"><span class="ex">/usr/share/nginx/html/index.html</span></a></code></pre></div>
-<h2 id="volume-de-type-volume">Volume de type <strong><em>“volume”</em></strong>:</h2>
-<p>Le type <strong><em>volume</em></strong> permet de fournir un stockage en écriture aussi bien que lecture. Permettant de gérer les données générées par les containers.</p>
-<h1 id="isolation">Isolation</h1>
-<div class="warning">
-Par défaut les containers peuvent tous communiquer entre eux. Ils ne sont pas isolés au niveau réseau… Il faut donc mettre en place une isolation par défaut !
-</div>
-<h2 id="concept-de-network">Concept de <strong>Network</strong></h2>
-<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb27-1" title="1"><span class="ex">docker</span> network ls</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" title="1">$ <span class="fu">ping</span> 192.168.0.24</a></code></pre></div>
 <ul>
-<li><p>Réseau de type <strong>bridge</strong> : par défaut (les conteneurs instanciés appartiennet à ce réseau)</p></li>
-<li><p>Réseau <strong>host</strong> : on obtient la même configuration que le docker hote (cas particulier)</p></li>
+<li>Test ssh login/mdt</li>
 </ul>
-<div class="sourceCode" id="cb28"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb28-1" title="1"><span class="ex">docker</span> container run --network host alpine ip a</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" title="1">$ <span class="fu">ssh</span> stagiaire@192.168.0.24</a></code></pre></div>
 <ul>
-<li>Réseau <strong>none</strong>: pas d’interfaces réseau dans le conteneur</li>
+<li>Création paire clé public/privée</li>
 </ul>
-<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" title="1"><span class="ex">docker</span> container run --network none alpine ip a</a></code></pre></div>
-<h3 id="création-dun-network">Création d’un Network</h3>
-<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb30-1" title="1"><span class="ex">stagiaire@debian</span>:~/formation-docker$ docker network create mynetwork</a>
-<a class="sourceLine" id="cb30-2" title="2"><span class="ex">989ccbdb35483bac542dbef0375eafc4fc5c160c8eb5dbed642f3da940bbbcdc</span></a>
-<a class="sourceLine" id="cb30-3" title="3"><span class="ex">stagiaire@debian</span>:~/formation-docker$  docker network inspect mynetwork</a>
-<a class="sourceLine" id="cb30-4" title="4"><span class="bu">[</span></a>
-<a class="sourceLine" id="cb30-5" title="5">    {</a>
-<a class="sourceLine" id="cb30-6" title="6">        <span class="st">&quot;Name&quot;</span>: <span class="st">&quot;mynetwork&quot;</span>,</a>
-<a class="sourceLine" id="cb30-7" title="7">        <span class="st">&quot;Id&quot;</span>: <span class="st">&quot;989ccbdb35483bac542dbef0375eafc4fc5c160c8eb5dbed642f3da940bbbcdc&quot;</span>,</a>
-<a class="sourceLine" id="cb30-8" title="8">        <span class="st">&quot;Created&quot;</span>: <span class="st">&quot;2021-06-22T14:40:37.593317488+02:00&quot;</span>,</a>
-<a class="sourceLine" id="cb30-9" title="9">        <span class="st">&quot;Scope&quot;</span>: <span class="st">&quot;local&quot;</span>,</a>
-<a class="sourceLine" id="cb30-10" title="10">        <span class="st">&quot;Driver&quot;</span>: <span class="st">&quot;bridge&quot;</span>,</a>
-<a class="sourceLine" id="cb30-11" title="11">        <span class="st">&quot;EnableIPv6&quot;</span>: false,</a>
-<a class="sourceLine" id="cb30-12" title="12">        <span class="st">&quot;IPAM&quot;</span>: {</a>
-<a class="sourceLine" id="cb30-13" title="13">            <span class="st">&quot;Driver&quot;</span>: <span class="st">&quot;default&quot;</span>,</a>
-<a class="sourceLine" id="cb30-14" title="14">            <span class="st">&quot;Options&quot;</span>: {},</a>
-<a class="sourceLine" id="cb30-15" title="15">            <span class="st">&quot;Config&quot;</span>: [</a>
-<a class="sourceLine" id="cb30-16" title="16">                {</a>
-<a class="sourceLine" id="cb30-17" title="17">                    <span class="st">&quot;Subnet&quot;</span>: <span class="st">&quot;172.18.0.0/16&quot;</span>,</a>
-<a class="sourceLine" id="cb30-18" title="18">                    <span class="st">&quot;Gateway&quot;</span>: <span class="st">&quot;172.18.0.1&quot;</span></a>
-<a class="sourceLine" id="cb30-19" title="19">                }</a>
-<a class="sourceLine" id="cb30-20" title="20">            ]</a>
-<a class="sourceLine" id="cb30-21" title="21">        },</a>
-<a class="sourceLine" id="cb30-22" title="22">        <span class="st">&quot;Internal&quot;</span>: false,</a>
-<a class="sourceLine" id="cb30-23" title="23">        <span class="st">&quot;Attachable&quot;</span>: false,</a>
-<a class="sourceLine" id="cb30-24" title="24">        <span class="st">&quot;Ingress&quot;</span>: false,</a>
-<a class="sourceLine" id="cb30-25" title="25">        <span class="st">&quot;ConfigFrom&quot;</span>: {</a>
-<a class="sourceLine" id="cb30-26" title="26">            <span class="st">&quot;Network&quot;</span>: <span class="st">&quot;&quot;</span></a>
-<a class="sourceLine" id="cb30-27" title="27">        },</a>
-<a class="sourceLine" id="cb30-28" title="28">        <span class="st">&quot;ConfigOnly&quot;</span>: false,</a>
-<a class="sourceLine" id="cb30-29" title="29">        <span class="st">&quot;Containers&quot;</span>: {},</a>
-<a class="sourceLine" id="cb30-30" title="30">        <span class="st">&quot;Options&quot;</span>: {},</a>
-<a class="sourceLine" id="cb30-31" title="31">        <span class="st">&quot;Labels&quot;</span>: {}</a>
-<a class="sourceLine" id="cb30-32" title="32">    }</a>
-<a class="sourceLine" id="cb30-33" title="33"><span class="bu">]</span></a></code></pre></div>
-<h3 id="instanciation-dun-conteneur-dans-ce-network">Instanciation d’un conteneur dans ce network</h3>
-<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" title="1"><span class="ex">docker</span> container rm -f mynginx</a>
-<a class="sourceLine" id="cb31-2" title="2"><span class="ex">docker</span> container run -d --name mynginx -p 8080:80 -v /home/stagiaire/formation-docker/html/index.html:/usr/share/nginx/html/index.html --network mynetwork nginx:1.20-alpine</a></code></pre></div>
-<h1 id="inspection-dun-objet-docker">Inspection d’un objet Docker</h1>
-<p>Pour visualiser les informations d’un objet Docker on utilise <code>inspect</code>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" title="1">$ <span class="fu">ssh-keygen</span> -t ed25519 -b 4096</a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="ex">Generating</span> public/private ed25519 key pair.</a>
+<a class="sourceLine" id="cb12-3" title="3"> <span class="ex">Enter</span> file in which to save the key (/home/stagiaire/.ssh/id_ed25519)<span class="bu">:</span> </a>
+<a class="sourceLine" id="cb12-4" title="4"> <span class="ex">Enter</span> passphrase (empty for no passphrase)<span class="bu">:</span> </a>
+<a class="sourceLine" id="cb12-5" title="5"> <span class="ex">Enter</span> same passphrase again: </a>
+<a class="sourceLine" id="cb12-6" title="6"> <span class="ex">Your</span> identification has been saved in /home/stagiaire/.ssh/id_ed25519</a>
+<a class="sourceLine" id="cb12-7" title="7"> <span class="ex">Your</span> public key has been saved in /home/stagiaire/.ssh/id_ed25519.pub</a>
+<a class="sourceLine" id="cb12-8" title="8"> <span class="ex">The</span> key fingerprint is:</a>
+<a class="sourceLine" id="cb12-9" title="9"> <span class="ex">SHA256</span>:ARpiK+1Lw3GdpBy5Vf7j/UZRgWvYhj6VHoJ3BURp5Vw stagiaire@ansiblectl</a>
+<a class="sourceLine" id="cb12-10" title="10"> <span class="ex">The</span> key<span class="st">&#39;s randomart image is:</span></a>
+<a class="sourceLine" id="cb12-11" title="11"><span class="st"> +--[ED25519 256]--+</span></a>
+<a class="sourceLine" id="cb12-12" title="12"><span class="st"> |  o o.o..   o+=oE|</span></a>
+<a class="sourceLine" id="cb12-13" title="13"><span class="st"> | o +.B.+     +o.o|</span></a>
+<a class="sourceLine" id="cb12-14" title="14"><span class="st"> |. + =oo o . = ++ |</span></a>
+<a class="sourceLine" id="cb12-15" title="15"><span class="st"> | + o.    + = X.  |</span></a>
+<a class="sourceLine" id="cb12-16" title="16"><span class="st"> |  =     S = B .. |</span></a>
+<a class="sourceLine" id="cb12-17" title="17"><span class="st"> | . o     . = ..  |</span></a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="st"> |  .       . o.   |</span></a>
+<a class="sourceLine" id="cb12-19" title="19"><span class="st"> |             ..  |</span></a>
+<a class="sourceLine" id="cb12-20" title="20"><span class="st"> |             ..  |</span></a>
+<a class="sourceLine" id="cb12-21" title="21"><span class="st"> +----[SHA256]-----+</span></a></code></pre></div>
 <ul>
-<li>Pour un <strong>Container</strong>:</li>
+<li>Envoi de la clé publique sur le serveur distant</li>
 </ul>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb32-1" title="1"><span class="ex">docker</span> container inspect mynginx</a></code></pre></div>
-<ul>
-<li>Pour un <strong>Network</strong>:</li>
-</ul>
-<div class="sourceCode" id="cb33"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb33-1" title="1"><span class="ex">docker</span> network inspect mynetwork</a></code></pre></div>
-<h1 id="tp">TP</h1>
-<h2 id="tp-perso">TP Perso</h2>
-<ul>
-<li><p>3 Containers: <strong>nginx</strong>, <strong>php</strong> et <strong>MariaDB</strong></p></li>
-<li><p>1 Network Bridge</p></li>
-</ul>
-<p>Le réseau <strong>mynetwork</strong> et le container <strong><em>nginx</em></strong> ont été créés précédemment. Rappel des commandes:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb34-1" title="1"><span class="ex">docker</span> network create mynetwork</a></code></pre></div>
-<p>Et pour le container:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb35-1" title="1"><span class="ex">docker</span> container run -d --name mynginx -p 8080:80 -v /home/stagiaire/formation-docker/html/index.html:/usr/share/nginx/html/index.html --network mynetwork nginx:1.20-alpine</a></code></pre></div>
-<h3 id="création-des-containers">Création des Containers</h3>
-<h4 id="myphp">myphp</h4>
-<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb36-1" title="1"><span class="ex">docker</span> pull php</a>
-<a class="sourceLine" id="cb36-2" title="2"></a>
-<a class="sourceLine" id="cb36-3" title="3"><span class="ex">docker</span> container run -t -d --name myphp -p 8081:80 -v /home/stagiaire/formation-docker/php:/usr/share/php --network mynetwork php:latest</a></code></pre></div>
-<h4 id="mymariadb">mymariadb</h4>
-<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb37-1" title="1"><span class="ex">docker</span> pull php</a>
-<a class="sourceLine" id="cb37-2" title="2"></a>
-<a class="sourceLine" id="cb37-3" title="3"><span class="ex">docker</span> container run -t -d --name mymariadb -p 8081:80 -v /home/stagiaire/formation-docker/mariadb:/usr/share/mariadb --network mynetwork mariadb:latest</a></code></pre></div>
-<p><img src="2021-06-21-POEI-Docker/Diagramme_microservice.png" /></p>
-<h2 id="tp-de-pierre">TP de Pierre</h2>
-<p><strong><em>Sujet:</em></strong></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" title="1"><span class="ex">stagiaire@ansiblectl</span>:~$ ssh-copy-id -i /home/stagiaire/.ssh/id_ed25519 stagiaire@192.168.0.24</a></code></pre></div>
+<h1 id="premiers-pas-avec-ansible">Premiers pas avec Ansible</h1>
+<h2 id="inventaire-ansible">Inventaire ansible</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/intro_inventory.html</a></p>
 <blockquote>
-<p><strong>1. Instancier un conteneur myphp, voici les paramètres attendus :</strong></p>
-<ul>
-<li>name: myphp</li>
-<li>detach</li>
-<li>network : mynetwork</li>
-<li>volume : -v /chemin/TP_Appli_microservice/php:/srv/http</li>
-<li>image : phpdockerio/php73-fpm</li>
-</ul>
-<p><strong>2. Détruire le conteneur mynginx</strong></p>
-<p><strong>3. Créer le conteneur mynginx avec les paramètres suivants :</strong></p>
-<ul>
-<li>name: mynginx</li>
-<li>detach</li>
-<li>network : mynetwork</li>
-<li>volume : -v /chemin/TP_Appli_microservice/conf/nginx.conf:/etc/nginx/conf.d/default.conf</li>
-<li>publication port : 8080:80</li>
-<li>image : nginx:1.20-alpine</li>
-</ul>
+<p>Inventaire : point d’entrée pour spécifier les machines de mon réseau; les composant à administrer avec ansible</p>
 </blockquote>
-<h3 id="fichiers-de-configuration">Fichiers de configuration</h3>
-<h5 id="création-des-dossiers-et-fichiers-de-configuration">1. Création des dossiers et fichiers de configuration:</h5>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb38-1" title="1"><span class="fu">mkdir</span> -p TP_Appli_microservice/conf <span class="kw">&amp;&amp;</span> <span class="fu">touch</span> TP_Appli_microservice/conf/nginx.conf</a>
-<a class="sourceLine" id="cb38-2" title="2"><span class="fu">mkdir</span> -p TP_Appli_microservice/php <span class="kw">&amp;&amp;</span> <span class="fu">touch</span> TP_Appli_microservice/php/index.php</a>
-<a class="sourceLine" id="cb38-3" title="3"></a>
-<a class="sourceLine" id="cb38-4" title="4"><span class="co"># Vérification</span></a>
-<a class="sourceLine" id="cb38-5" title="5"><span class="ex">stagiaire@debian</span>:~$ tree TP_Appli_microservice/</a>
-<a class="sourceLine" id="cb38-6" title="6"><span class="ex">TP_Appli_microservice/</span></a>
-<a class="sourceLine" id="cb38-7" title="7">├── <span class="ex">conf</span></a>
-<a class="sourceLine" id="cb38-8" title="8">│   └── <span class="ex">nginx.conf</span></a>
-<a class="sourceLine" id="cb38-9" title="9">├── <span class="ex">mysql</span></a>
-<a class="sourceLine" id="cb38-10" title="10">│   └── <span class="ex">database.sql</span></a>
-<a class="sourceLine" id="cb38-11" title="11">└── <span class="ex">php</span></a>
-<a class="sourceLine" id="cb38-12" title="12">    └── <span class="ex">index.php</span></a></code></pre></div>
-<p>Contenu de <strong><em>nginx.conf</em></strong>:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb39-1" title="1"><span class="co"># nginx.conf</span></a>
-<a class="sourceLine" id="cb39-2" title="2"><span class="ex">server</span> {</a>
-<a class="sourceLine" id="cb39-3" title="3">  <span class="ex">index</span> index.php index.html<span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-4" title="4">  <span class="ex">error_log</span>  /var/log/nginx/error.log<span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-5" title="5">  <span class="ex">access_log</span> /var/log/nginx/access.log<span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-6" title="6">  <span class="ex">location</span> / {</a>
-<a class="sourceLine" id="cb39-7" title="7">      <span class="ex">try_files</span> <span class="va">$uri</span> <span class="va">$uri</span>/ /index.php?<span class="va">$query_string</span><span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-8" title="8">  }</a>
-<a class="sourceLine" id="cb39-9" title="9"></a>
-<a class="sourceLine" id="cb39-10" title="10">  <span class="ex">location</span> ~* \.php$ {</a>
-<a class="sourceLine" id="cb39-11" title="11">    <span class="ex">fastcgi_index</span>   index.php<span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-12" title="12">    <span class="ex">fastcgi_pass</span>    myphp:9000<span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-13" title="13">    <span class="ex">include</span>         fastcgi_params<span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-14" title="14">    <span class="ex">fastcgi_param</span>   SCRIPT_FILENAME    /srv/http<span class="va">$fastcgi_script_name</span><span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-15" title="15">    <span class="ex">fastcgi_param</span>   SCRIPT_NAME        <span class="va">$fastcgi_script_name</span><span class="kw">;</span></a>
-<a class="sourceLine" id="cb39-16" title="16">  }</a>
-<a class="sourceLine" id="cb39-17" title="17">}</a></code></pre></div>
-<p>Contenu de <strong><em>index.php</em></strong>:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># php/index.php</span></a>
-<a class="sourceLine" id="cb40-2" title="2"><span class="op">&lt;</span><span class="ex">?php</span></a>
-<a class="sourceLine" id="cb40-3" title="3"> <span class="bu">echo</span> <span class="st">&quot;&lt;h1&gt; Hello from DOCKER PHP formation 2021&lt;/h1&gt;&quot;</span><span class="kw">;</span></a>
-<a class="sourceLine" id="cb40-4" title="4"> <span class="bu">echo</span> <span class="st">&quot;&lt;h1&gt;Hello World from PHP7-FPM&lt;/h1&gt;&quot;</span><span class="kw">;</span></a>
-<a class="sourceLine" id="cb40-5" title="5"> <span class="bu">echo</span> <span class="st">&#39;Version PHP courante : &#39;</span> . phpversion();</a>
-<a class="sourceLine" id="cb40-6" title="6"><span class="ex">?</span><span class="op">&gt;</span></a></code></pre></div>
-<h3 id="création-démarrage-des-containers">Création &amp; Démarrage des Containers</h3>
-<h5 id="instancier-un-conteneur-myphp-voici-les-paramètres-attendus">1. Instancier un conteneur myphp, voici les paramètres attendus :</h5>
 <ul>
-<li>name: myphp</li>
-<li>detach</li>
-<li>network : mynetwork</li>
-<li>volume : -v /chemin/TP_Appli_microservice/php:/srv/http</li>
-<li>image : phpdockerio/php73-fpm</li>
+<li>élément essentiel : il décrit votre infra</li>
+<li>plusieurs formats : ini = plat ou yaml</li>
+<li><p>déclaration de node ou de groupes qui contiennent des nodes</p></li>
+<li><p>Commande : ansible-inventory</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" title="1">$ <span class="ex">ansible-inventory</span> -i hosts --list -y</a>
+<a class="sourceLine" id="cb14-2" title="2">$ <span class="ex">ansible-inventory</span> -i hosts --graph</a></code></pre></div></li>
 </ul>
-<div class="sourceCode" id="cb41"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb41-1" title="1"><span class="ex">docker</span> container run -d --name myphp -v /home/stagiaire/TP_Appli_microservice/php:/srv/http --network mynetwork phpdockerio/php73-fpm</a></code></pre></div>
-<h5 id="détruire-le-conteneur-mynginx">2. Détruire le conteneur mynginx</h5>
-<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb42-1" title="1"><span class="ex">docker</span> container rm -r mynginx</a></code></pre></div>
-<h5 id="créer-le-conteneur-mynginx-avec-les-paramètres-suivants">3. Créer le conteneur mynginx avec les paramètres suivants :</h5>
+<h2 id="le-mode-adhoc">Le mode “AdHoc”</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/intro_adhoc.html</a></p>
 <ul>
-<li>name: mynginx</li>
-<li>detach</li>
-<li>network : mynetwork</li>
-<li>volume : -v /chemin/TP_Appli_microservice/conf/nginx.conf:/etc/nginx/conf.d/nginx.conf</li>
-<li>publication port : 8080:80</li>
-<li>image : nginx:1.20-alpine</li>
+<li><p>permet du test (module ping, inventaire)</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" title="1">$ <span class="ex">ansible</span> nodes -i inventory -m ping</a></code></pre></div></li>
+<li><p>permet de recolter de l’info</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" title="1">$ <span class="ex">ansible</span> -i inventory -a <span class="st">&quot;df -h&quot;</span> all</a></code></pre></div></li>
+<li><p>permet de déclencher une actions sur les serveurs distants au travers de modules. /! Certaines action necessitent une <em>élévation de privilèges</em>. On utilisera l’option <em>become</em> + <em>ask-become-pass</em> si necessaire.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" title="1">$ <span class="ex">ansible</span> nodes  -m ansible.builtin.apt -a <span class="st">&quot;name=wget state=present&quot;</span> -b --ask-become-pass</a></code></pre></div></li>
 </ul>
-<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" title="1"><span class="ex">docker</span> container run -d --name mynginx -p 8080:80 -v /home/stagiaire/TP_Appli_microservice/conf/nginx.conf:/etc/nginx/conf.d/default.conf --network mynetwork nginx:1.20-alpine</a></code></pre></div>
-<h3 id="ajout-dun-container-mariadb">Ajout d’un container MariaDB</h3>
-<h5 id="télécharger-limage-mariadb10.5">1. Télécharger l’image mariadb:10.5</h5>
-<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" title="1"><span class="ex">docker</span> pull mariadb:10.5</a></code></pre></div>
-<h5 id="instancier-un-conteneur-à-partir-de-cette-image">2. Instancier un conteneur à partir de cette image :</h5>
+<h2 id="config-ansible">Config ansible</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/reference_appendices/config.html" class="uri">https://docs.ansible.com/ansible/latest/reference_appendices/config.html</a></p>
+<blockquote>
+<p>Un fichier <code>ansible.cfg</code> peut être lu au lancement d’une commande ansible.</p>
+</blockquote>
 <ul>
-<li>name: mybdd</li>
-<li>network: mynetwork</li>
-<li>Root password DB: mot_de_pass_bdd</li>
+<li>Plusieurs chemins possible : on parle de <em>“precedence order”</em></li>
+<li>On peut y deposer des valeurs par défaut utilisée lors du lancement ansible</li>
+<li>Plusieurs sections à l’intérieur</li>
 </ul>
-<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" title="1"><span class="ex">docker</span> container run -t -d --name mybdd -e MARIADB_ROOT_PASSWORD=mot_de_pass_bdd --network mynetwork mariadb:10.5</a></code></pre></div>
-<h5 id="utiliser-exec-pour-se-connecter-dans-le-conteneur-puis-exécuter-la-commande-mysql--u-root--p">3. Utiliser exec pour se connecter dans le conteneur puis exécuter la commande “mysql -u root -p”</h5>
-<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb46-1" title="1"><span class="ex">stagiaire@debian</span>:~/TP_Appli_microservice/php$ docker exec -it mybdd mysql -uroot -pmot_de_pass_bdd</a>
-<a class="sourceLine" id="cb46-2" title="2"></a>
-<a class="sourceLine" id="cb46-3" title="3"><span class="ex">Welcome</span> to the MariaDB monitor.  Commands end with <span class="kw">;</span> <span class="ex">or</span> \g.</a>
-<a class="sourceLine" id="cb46-4" title="4"><span class="ex">Your</span> MariaDB connection id is 6</a>
-<a class="sourceLine" id="cb46-5" title="5"><span class="ex">Server</span> version: 10.5.10-MariaDB-1:10.5.10+maria~focal mariadb.org binary distribution</a>
-<a class="sourceLine" id="cb46-6" title="6"></a>
-<a class="sourceLine" id="cb46-7" title="7"><span class="ex">Copyright</span> (c) <span class="ex">2000</span>, 2018, Oracle, MariaDB Corporation Ab and others.</a>
-<a class="sourceLine" id="cb46-8" title="8"></a>
-<a class="sourceLine" id="cb46-9" title="9"><span class="ex">Type</span> <span class="st">&#39;help;&#39;</span> or <span class="st">&#39;\h&#39;</span> for help. Type <span class="st">&#39;\c&#39;</span> to clear the current input statement.</a>
-<a class="sourceLine" id="cb46-10" title="10"></a>
-<a class="sourceLine" id="cb46-11" title="11"><span class="ex">MariaDB</span> [(none)]<span class="op">&gt;</span> </a></code></pre></div>
-<h5 id="quitter-le-conteneur">4. Quitter le conteneur</h5>
-<p>On quitte avec <code>quit</code>.</p>
-<h5 id="lister-les-objets-docker-de-type-volume-que-contatez-vous">5. Lister les objets docker de type volume, que contatez vous ?</h5>
-<p>Nouveau volume crée:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" title="1"><span class="ex">docker</span> volume ls</a>
-<a class="sourceLine" id="cb47-2" title="2"><span class="ex">DRIVER</span>    VOLUME NAME</a>
-<a class="sourceLine" id="cb47-3" title="3"><span class="bu">local</span>     9c23ae437072a0361927652a47e8f0dfe9a6bbfd7193086b8d3c1a6198989d3e</a></code></pre></div>
-<h3 id="ajout-de-code-php-pour-connexion-au-micro-service-mybdd">Ajout de code php pour connexion au micro-service mybdd</h3>
-<h5 id="on-constate-un-pb-de-driver">1. On constate un pb de driver :</h5>
-<p><img src="2021-06-21-POEI-Docker/php_driver_error.png" /></p>
-<h5 id="installation-driver">2. Installation driver</h5>
-<p>il manque un package dans l’image phpdockerio, Réaliser l’install du package php7.3-mysql en live dans le conteneur myphp :</p>
-<p>TIPS : exec, it apt update apt install php7.3-mysql</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb48-1" title="1"><span class="ex">docker</span> exec -it myphp /bin/sh</a>
-<a class="sourceLine" id="cb48-2" title="2"><span class="ex">apt</span> update -y</a>
-<a class="sourceLine" id="cb48-3" title="3"><span class="ex">apt</span> upgrade -y</a>
-<a class="sourceLine" id="cb48-4" title="4"><span class="ex">apt</span> install php7.3-mysql -y</a>
-<a class="sourceLine" id="cb48-5" title="5"><span class="bu">exit</span></a></code></pre></div>
-<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb49-1" title="1"><span class="co"># Redémarrage myphp</span></a>
-<a class="sourceLine" id="cb49-2" title="2"><span class="ex">docker</span> container restart myphp </a>
-<a class="sourceLine" id="cb49-3" title="3"><span class="ex">myphp</span></a>
-<a class="sourceLine" id="cb49-4" title="4"><span class="ex">stagiaire@debian</span>:~$ docker ps</a>
-<a class="sourceLine" id="cb49-5" title="5"><span class="ex">CONTAINER</span> ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                   NAMES</a>
-<a class="sourceLine" id="cb49-6" title="6"><span class="ex">5bee52301b26</span>   mariadb:10.5            <span class="st">&quot;docker-entrypoint.s…&quot;</span>   11 minutes ago   Up 11 minutes   3306/tcp                                mybdd</a>
-<a class="sourceLine" id="cb49-7" title="7"><span class="ex">8301bc85d472</span>   nginx:1.20-alpine       <span class="st">&quot;/docker-entrypoint.…&quot;</span>   18 hours ago     Up 18 hours     0.0.0.0:80-<span class="op">&gt;</span>80/tcp, :::80-<span class="op">&gt;</span>80/tcp       mynginx2</a>
-<a class="sourceLine" id="cb49-8" title="8"><span class="ex">cbbb3e3804de</span>   nginx:1.20-alpine       <span class="st">&quot;/docker-entrypoint.…&quot;</span>   18 hours ago     Up 18 hours     0.0.0.0:8080-<span class="op">&gt;</span>80/tcp, :::8080-<span class="op">&gt;</span>80/tcp   mynginx</a>
-<a class="sourceLine" id="cb49-9" title="9"><span class="ex">0e16e140daa6</span>   phpdockerio/php73-fpm   <span class="st">&quot;/usr/sbin/php-fpm7.…&quot;</span>   18 hours ago     Up 4 seconds    9000/tcp                                myphp</a></code></pre></div>
-<p>Résultat:</p>
-<p><img src="2021-06-21-POEI-Docker/php_driver_ok.png" /></p>
-<h3 id="changement-de-type-de-volume">Changement de type de volume</h3>
-<p>Pour que MariaDB puisse écrire dans le stockage on passe sur un <strong>volume</strong> au lieu d’un <strong>bind</strong>.</p>
-<p>Doc: <a href="https://docs.docker.com/engine/reference/commandline/volume_create/" class="uri">https://docs.docker.com/engine/reference/commandline/volume_create/</a></p>
-<h5 id="destruction-de-mybdd">1. Destruction de mybdd</h5>
-<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb50-1" title="1"><span class="ex">docker</span> rm mybdd -f</a></code></pre></div>
-<h5 id="création-du-volume">2. Création du volume</h5>
-<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb51-1" title="1"><span class="ex">docker</span> volume create myvolume</a></code></pre></div>
-<h5 id="création-container-mybdd-avec-montage-du-volume">3. Création container <strong><em>mybdd</em></strong> avec montage du volume</h5>
-<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb52-1" title="1"><span class="ex">docker</span> container run -d --name mybdd --network mynetwork -e MARIADB_ROOT_PASSWORD=mot_de_pass_bdd -v myvolume:/var/lib/mysql mariadb:10.5</a></code></pre></div>
-<p>Résultat:</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb53-1" title="1"><span class="ex">stagiaire@debian</span>:~/TP_Appli_microservice$ docker ps</a>
-<a class="sourceLine" id="cb53-2" title="2"><span class="ex">CONTAINER</span> ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                   NAMES</a>
-<a class="sourceLine" id="cb53-3" title="3"><span class="ex">35023a4181be</span>   mariadb:10.5            <span class="st">&quot;docker-entrypoint.s…&quot;</span>   15 seconds ago   Up 14 seconds   3306/tcp                                mybdd</a>
-<a class="sourceLine" id="cb53-4" title="4"><span class="ex">8301bc85d472</span>   nginx:1.20-alpine       <span class="st">&quot;/docker-entrypoint.…&quot;</span>   18 hours ago     Up 18 hours     0.0.0.0:80-<span class="op">&gt;</span>80/tcp, :::80-<span class="op">&gt;</span>80/tcp       mynginx2</a>
-<a class="sourceLine" id="cb53-5" title="5"><span class="ex">cbbb3e3804de</span>   nginx:1.20-alpine       <span class="st">&quot;/docker-entrypoint.…&quot;</span>   18 hours ago     Up 18 hours     0.0.0.0:8080-<span class="op">&gt;</span>80/tcp, :::8080-<span class="op">&gt;</span>80/tcp   mynginx</a>
-<a class="sourceLine" id="cb53-6" title="6"><span class="ex">0e16e140daa6</span>   phpdockerio/php73-fpm   <span class="st">&quot;/usr/sbin/php-fpm7.…&quot;</span>   18 hours ago     Up 31 minutes   9000/tcp                                myphp</a>
-<a class="sourceLine" id="cb53-7" title="7"><span class="ex">stagiaire@debian</span>:~/TP_Appli_microservice$ docker inspect mybdd <span class="kw">|</span> <span class="fu">grep</span> volume</a>
-<a class="sourceLine" id="cb53-8" title="8">                <span class="st">&quot;myvolume:/var/lib/mysql&quot;</span></a>
-<a class="sourceLine" id="cb53-9" title="9">                <span class="st">&quot;Type&quot;</span>: <span class="st">&quot;volume&quot;</span>,</a>
-<a class="sourceLine" id="cb53-10" title="10">                <span class="st">&quot;Name&quot;</span>: <span class="st">&quot;myvolume&quot;</span>,</a>
-<a class="sourceLine" id="cb53-11" title="11">                <span class="st">&quot;Source&quot;</span>: <span class="st">&quot;/var/lib/docker/volumes/myvolume/_data&quot;</span>,</a>
-<a class="sourceLine" id="cb53-12" title="12"> </a></code></pre></div>
-<p>Les containers sont dans le même réseau <strong><em>mynetwork</em></strong>, donc ils peuvent communiquer:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb54-1" title="1"><span class="ex">stagiaire@debian</span>:~/TP_Appli_microservice$ docker exec -ti mynginx /bin/sh</a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="ex">/</span> <span class="co"># ping mybdd</span></a>
-<a class="sourceLine" id="cb54-3" title="3"><span class="ex">PING</span> mybdd (172.18.0.5)<span class="bu">:</span> 56 data bytes</a>
-<a class="sourceLine" id="cb54-4" title="4"><span class="ex">64</span> bytes from 172.18.0.5: seq=0 ttl=64 time=0.063 ms</a>
-<a class="sourceLine" id="cb54-5" title="5"><span class="ex">64</span> bytes from 172.18.0.5: seq=1 ttl=64 time=0.056 ms</a>
-<a class="sourceLine" id="cb54-6" title="6">^<span class="ex">C</span></a>
-<a class="sourceLine" id="cb54-7" title="7"><span class="ex">---</span> mybdd ping statistics ---</a>
-<a class="sourceLine" id="cb54-8" title="8"><span class="ex">2</span> packets transmitted, 2 packets received, 0% packet loss</a>
-<a class="sourceLine" id="cb54-9" title="9"><span class="ex">round-trip</span> min/avg/max = 0.056/0.059/0.063 ms</a></code></pre></div>
-<h3 id="générer-une-nouvelle-image-php-qui-contient-nos-modifs">Générer une nouvelle image php qui contient nos modifs</h3>
-<div class="warning">
-Nos modifs réalisées dans le conteneur myphp sont par défaut éphemeres.
-</div>
-<p>Il faut prendre en compte ces modifs en cas de destruction du conteneur : <strong>PRA</strong></p>
-<p>Plusieurs solutions :</p>
+<h2 id="modules-ansible">Modules ansible :</h2>
+<p><a href="https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html" class="uri">https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html</a></p>
 <ul>
-<li>Construire sa propre image</li>
-<li>Générer une nouvelle image à partir du conteneur existant</li>
-</ul>
-<p>Commit :</p>
-<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb55-1" title="1"><span class="ex">docker</span> container commit -a <span class="st">&quot;Pierre&quot;</span> -m <span class="st">&quot;Ajout package php7.3-mysql&quot;</span> myphp php7.3-mysql:1.0</a>
-<a class="sourceLine" id="cb55-2" title="2"><span class="ex">docker</span> image ls</a></code></pre></div>
-<h1 id="docker-file">Docker File</h1>
-<h2 id="best-pratices">Best Pratices</h2>
-<p>Voir: <a href="https://www.docker.com/blog/intro-guide-to-dockerfile-best-practices/">Intro Guide to Dockerfile Best Practices</a></p>
-<p>Sur Docs.Docker: <a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">Best pratices for writing Dockerfiles</a></p>
-<p><img src="2021-06-21-POEI-Docker/dockerfile.png" /></p>
-<div class="info">
-<p>Pour optimiser la construction des containers (temps et énergie), il faut optimiser l’utilisation du cache.</p>
-Respecter <em>(sauf si nécessaire)</em> les pratiques suivantes.
-</div>
-<h5 id="tip-1-order-matters-for-caching">Tip #1: Order matters for caching</h5>
-<p><img src="https://i1.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/ef41db8f-fe5e-4a78-940a-6a929db7929d-1.jpg?ssl=1" /></p>
-<h5 id="tip-2-more-specific-copy-to-limit-cache-busts">Tip #2: More specific COPY to limit cache busts</h5>
-<p><img src="https://i1.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/0c1d0c4e-406c-468c-b6ba-b71ac68b9c84.jpg?ssl=1" /></p>
-<h5 id="tip-3-identify-cacheable-units-such-as-apt-get-update-install">Tip #3: Identify cacheable units such as apt-get update &amp; install</h5>
-<p><img src="https://i2.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/2322a39e-bd7e-4a2b-9a8f-548a97dbacb4.jpg?ssl=1" /></p>
-<h5 id="tip-4-remove-unnecessary-dependencies">Tip #4: Remove unnecessary dependencies</h5>
-<p><img src="https://i0.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/a1b36f64-1a30-45bf-8fcd-4f88437c189e.jpg?ssl=1" /></p>
-<h5 id="tip-5-remove-package-manager-cache">Tip #5: Remove package manager cache</h5>
-<p><img src="https://i2.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/363961a4-005e-46fc-963b-f7b690be12ef.jpg?ssl=1" /></p>
-<h5 id="tip-6-use-official-images-when-possible">Tip #6: Use official images when possible</h5>
-<p><img src="https://i2.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/f336014d-d2aa-4c1b-a2bd-e1d5d6ed0d93.jpg?ssl=1" /></p>
-<h5 id="tip-7-use-more-specific-tags">Tip #7: Use more specific tags</h5>
-<p><img src="https://i1.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/9d991da9-bdb9-4108-8b36-296a5a3772aa.jpg?ssl=1" /></p>
-<h5 id="tip-8-look-for-minimal-flavors">Tip #8: Look for minimal flavors</h5>
-<p><img src="https://i1.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/6c486200-5198-4457-86c0-b5275e70e699.jpg?ssl=1" /></p>
-<h5 id="tip-9-build-from-source-in-a-consistent-environment">Tip #9: Build from source in a consistent environment</h5>
-<p><img src="https://i0.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/f393ad07-c25d-4241-a40f-c6168e0ba4dd.jpg?ssl=1" /></p>
-<h5 id="tip-10-fetch-dependencies-in-a-separate-step">Tip #10: Fetch dependencies in a separate step</h5>
-<p><img src="https://i0.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/41ea71ce-11c3-42a3-8d2b-05fe20901745.jpg?ssl=1" /></p>
-<h5 id="tip-11-use-multi-stage-builds-to-remove-build-dependencies-recommended-dockerfile">Tip #11: Use multi-stage builds to remove build dependencies (recommended Dockerfile)</h5>
-<p><img src="https://i2.wp.com/www.docker.com/blog/wp-content/uploads/2019/07/97ec1992-f0df-4c8f-82a0-e177c230e5c5.jpg?ssl=1" /></p>
-<h2 id="tp-dockerfile-tomcat">TP Dockerfile TOMCAT</h2>
-<h3 id="sujet">Sujet</h3>
-<p><strong>Exercice 1 : Sample tomcat war</strong></p>
-<p>Le but de ce TP est de construire un Dockerfile qui permettra de generer une image docker tomcat avec une application war intégrée</p>
-<ol type="1">
-<li>Creer un répertoire de projet TP_Dockerfile_Tomcat</li>
-<li>Dans ce répertoire projet (microservice) créer un fichier Dockerfile</li>
-<li>Voici le schéma directeur à suivre :</li>
-</ol>
+<li><p>Outils mis à dispo par ansible pour réaliser des actions sur notre parc</p></li>
+<li>Ex avec le module user :
 <ul>
-<li>Partir d’une image de base : centos:8</li>
-<li>Préciser des labels (idéal pour donner des informations lors d’un docker image inspect)</li>
-<li><p>Installer le package java (via yum): <code>yum install -y java-11-openjdk</code></p></li>
-<li><p>Créer un répertoire /opt/tomcat: <code>mkdir</code></p></li>
-<li><p>Récupérer un fichier distant : https://downloads.apache.org/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz</p></li>
+<li><a href="https://docs.ansible.com/ansible/2.9/modules/user_module.html#user-module" class="uri">https://docs.ansible.com/ansible/2.9/modules/user_module.html#user-module</a></li>
+</ul></li>
+<li><p>Avec la doc, il devient plus facile d’utiliser les modules dans un <em>playbook</em> au format YAML =&gt; exemples concrets dans la doc du modules</p></li>
+<li><p>Doc YAML : <a href="https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html" class="uri">https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html</a></p></li>
 </ul>
-<p><code>curl -O https://downloads.apache.org/tomcat/tomcat-8/v8.5.61/bin/apache-tomcat-8.5.61.tar.gz</code></p>
+<h2 id="playbook">Playbook</h2>
 <ul>
-<li>Décompresser l’archive puis déplacer tous le contenu de apache-tomcat-8.5.61 dans /opt/tomcat/</li>
+<li><p>Déclenchement du premier playbook:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" title="1">$ <span class="ex">ansible-playbook</span> premier_playbook.yml -b --ask-become-pass</a></code></pre></div></li>
 </ul>
-<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb56-1" title="1"><span class="fu">tar</span> -zxf apache-tomcat-8.5.61.tar.gz</a>
-<a class="sourceLine" id="cb56-2" title="2"><span class="fu">mv</span> apache-tomcat-8.5.61/* /opt/tomcat/</a></code></pre></div>
+<h2 id="variables">Variables :</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html</a></p>
 <ul>
-<li>Utiliser la directive <strong>WORKDIR</strong> pour se positionner dans le répertoire “/opt/tomcat/webapps”</li>
-<li>Récuperer le fichier distant https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war</li>
-</ul>
-<p><code>curl -O -L</code></p>
+<li>Apportent de la flexibilité au code</li>
+<li>Améliore les besoins future</li>
+<li>Permet de faire de la distinction entre groupes, machines pour un même code</li>
+<li>apporte des structure type liste, dictionnaires pour utilisation dans les modules</li>
+<li><p>Une même variable peut être déclarée à plusieurs endroits en même temps</p></li>
+<li>Les variables d’inventaire :
 <ul>
-<li>Exposer (rendre visible) le port par défaut tomcat 8080</li>
-<li>Préciser la commande finale à exécuter : ENTRYPOINT [“/opt/tomcat/bin/catalina.sh”]</li>
-<li>Préciser l’argument à donner par défaut derrière la commande ENTRYPOINT : CMD [“run”]</li>
+<li>on peut déclarer des variables dans le fichier d’inventaire</li>
+<li>On peut déclarer des variables par groupe d’inventaire ou host d’inventaire</li>
+<li>Les répertoires group_vars et host_vars doivent être à la meme arborescence que leur fichier d’inventaire.</li>
+</ul></li>
 </ul>
-<table style="width:7%;">
-<colgroup>
-<col style="width: 6%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>&gt; Idéalement : Essayer de minimiser le nombre de Layers !!</td>
-</tr>
-</tbody>
-</table>
-<ol type="1">
-<li>Construire une image nommée tomcat:8.5.61 à partir de ce Dockerfile</li>
-<li>Démarrer un nouveau conteneur à partir de cette image :</li>
-</ol>
+<blockquote>
+<p>On va alors prendre en considération la “précédence” des variables</p>
+</blockquote>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_variables.html#variable-precedence-where-should-i-put-a-variable</a></p>
 <ul>
-<li>Il faut publier un port !!! (pour acceder au conteneur depuis le docker hôte)</li>
-<li>Il faudra sans doute le démarrer en mode “détaché”</li>
-<li>Idéalement on lui donne un nom pour le manager plus facilement</li>
-</ul>
-<ol start="3" type="1">
-<li>Tester l’accès depuis un navigateur sur le docker hôte &gt; http://{ip_docker_hote}:8080/sample</li>
-</ol>
-<h3 id="réponse">Réponse</h3>
-<div class="info">
-<p>Pendant la construction du Dockerfile, on peut faire tester et vérifier que les commandes utilisées fonctionnent correctement en créant un container de test.</p>
-<p>Pour cela on utilise la commande suivante:</p>
-<p><code>docker container run --name TestingBuild_CentOS8 -it --rm centos:8 /bin/bash</code></p>
-</div>
-<h4 id="contenu-du-dockerfile">Contenu du dockerfile:</h4>
-<div class="sourceCode" id="cb57"><pre class="sourceCode dockerfile"><code class="sourceCode dockerfile"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># Instruction FROM: image parente de base</span></a>
-<a class="sourceLine" id="cb57-2" title="2"><span class="co"># Permet d&#39;avoir un ensemble de commandes à dispo pour ajouter du contenu</span></a>
-<a class="sourceLine" id="cb57-3" title="3"><span class="kw">FROM</span> centos:8</a>
-<a class="sourceLine" id="cb57-4" title="4"></a>
-<a class="sourceLine" id="cb57-5" title="5"><span class="co"># Metadata, pour donner des infos sur l&#39;uteur, la version, etc.</span></a>
-<a class="sourceLine" id="cb57-6" title="6"><span class="kw">LABEL</span> maintainer=<span class="st">&quot;David.D&quot;</span></a>
-<a class="sourceLine" id="cb57-7" title="7"><span class="kw">LABEL</span> description=<span class="st">&quot;Image TOMCAT avec application intégrée&quot;</span></a>
-<a class="sourceLine" id="cb57-8" title="8"></a>
-<a class="sourceLine" id="cb57-9" title="9"><span class="co"># Intruction pour lancer une commande: RUN</span></a>
-<a class="sourceLine" id="cb57-10" title="10"><span class="kw">RUN</span> yum install -y java-11-openjdk</a>
-<a class="sourceLine" id="cb57-11" title="11"></a>
-<a class="sourceLine" id="cb57-12" title="12"><span class="kw">RUN</span> mkdir /opt/tomcat \ </a>
-<a class="sourceLine" id="cb57-13" title="13">    &amp;&amp; curl -O https://downloads.apache.org/tomcat/tomcat-8/v8.5.68/bin/apache-tomcat-8.5.68.tar.gz \</a>
-<a class="sourceLine" id="cb57-14" title="14">    &amp;&amp; tar -zxf apache-tomcat-8.5.68.tar.gz \</a>
-<a class="sourceLine" id="cb57-15" title="15">    &amp;&amp; mv apache-tomcat-8.5.68/* /opt/tomcat/</a>
-<a class="sourceLine" id="cb57-16" title="16"></a>
-<a class="sourceLine" id="cb57-17" title="17"><span class="co"># Instruction WORKDIR, positionne le shell dans le répertoire désiré (équivalent d&#39;un &quot;cd&quot;)</span></a>
-<a class="sourceLine" id="cb57-18" title="18"><span class="kw">WORKDIR</span> /opt/tomcat/webapps</a>
-<a class="sourceLine" id="cb57-19" title="19"></a>
-<a class="sourceLine" id="cb57-20" title="20"><span class="kw">RUN</span> curl -O -L https://tomcat.apache.org/tomcat-8.0-doc/appdev/sample/sample.war</a>
-<a class="sourceLine" id="cb57-21" title="21"></a>
-<a class="sourceLine" id="cb57-22" title="22"><span class="co"># Exposer le port par défaut tomcat 8080</span></a>
-<a class="sourceLine" id="cb57-23" title="23"><span class="kw">EXPOSE</span> 8080</a>
-<a class="sourceLine" id="cb57-24" title="24"></a>
-<a class="sourceLine" id="cb57-25" title="25"><span class="co"># Instruction CMD : commande finale qui executer quand un conteneur sera instancié à partir de cette image</span></a>
-<a class="sourceLine" id="cb57-26" title="26"><span class="kw">CMD</span> [<span class="st">&quot;/opt/tomcat/bin/catalina.sh&quot;</span>, <span class="st">&quot;run&quot;</span>]</a></code></pre></div>
-<h4 id="construction-de-limage">Construction de l’image</h4>
-<p>Si on est <strong>dans le répertoire</strong>:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb58-1" title="1"><span class="ex">docker</span> image build -t tomcat:8.5.68 .</a></code></pre></div>
-<p>Sinon:</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb59-1" title="1"><span class="ex">docker</span> image build -t tomcat:8.5.68 </a></code></pre></div>
-<p>Vérifiaction:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb60-1" title="1"><span class="ex">stagiaire@debian</span>:~/TP_Dockerfile_TOMCAT$ docker image ls</a>
-<a class="sourceLine" id="cb60-2" title="2"><span class="ex">REPOSITORY</span>                                                         TAG           IMAGE ID       CREATED         SIZE</a>
-<a class="sourceLine" id="cb60-3" title="3"><span class="ex">tomcat</span>                                                             8.5.68        a86f14cd4c6a   5 minutes ago   553MB</a></code></pre></div>
-<div class="sourceCode" id="cb61"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb61-1" title="1"><span class="ex">stagiaire@debian</span>:~/TP_Dockerfile_TOMCAT$ docker image history tomcat:8.5.68 </a>
-<a class="sourceLine" id="cb61-2" title="2"><span class="ex">IMAGE</span>          CREATED          CREATED BY                                      SIZE      COMMENT</a>
-<a class="sourceLine" id="cb61-3" title="3"><span class="ex">a86f14cd4c6a</span>   6 minutes ago    /bin/sh -c <span class="co">#(nop)  CMD [&quot;/opt/tomcat/bin/cat…   0B        </span></a>
-<a class="sourceLine" id="cb61-4" title="4"><span class="ex">0d31df62d259</span>   6 minutes ago    /bin/sh -c <span class="co">#(nop)  EXPOSE 8080                  0B        </span></a>
-<a class="sourceLine" id="cb61-5" title="5"><span class="ex">83d01bcdb9bf</span>   6 minutes ago    /bin/sh -c curl -O -L https://tomcat.apache.…   4.61kB    </a>
-<a class="sourceLine" id="cb61-6" title="6"><span class="ex">86d48a23f357</span>   6 minutes ago    /bin/sh -c <span class="co">#(nop) WORKDIR /opt/tomcat/webapps   0B        </span></a>
-<a class="sourceLine" id="cb61-7" title="7"><span class="ex">792f38315a18</span>   6 minutes ago    /bin/sh -c mkdir /opt/tomcat     <span class="kw">&amp;&amp;</span> <span class="ex">curl</span> -O …   25.3MB    </a>
-<a class="sourceLine" id="cb61-8" title="8"><span class="ex">4feabfba402c</span>   7 minutes ago    /bin/sh -c yum install -y java-11-openjdk       318MB     </a>
-<a class="sourceLine" id="cb61-9" title="9"><span class="ex">ddceba74ddf8</span>   10 minutes ago   /bin/sh -c <span class="co">#(nop)  LABEL description=Image T…   0B        </span></a>
-<a class="sourceLine" id="cb61-10" title="10"><span class="ex">f31e4bddaac1</span>   10 minutes ago   /bin/sh -c <span class="co">#(nop)  LABEL maintainer=David.D     0B        </span></a>
-<a class="sourceLine" id="cb61-11" title="11"><span class="ex">300e315adb2f</span>   6 months ago     /bin/sh -c <span class="co">#(nop)  CMD [&quot;/bin/bash&quot;]            0B        </span></a>
-<a class="sourceLine" id="cb61-12" title="12"><span class="op">&lt;</span><span class="ex">missing</span><span class="op">&gt;</span>      6 months ago     /bin/sh -c <span class="co">#(nop)  LABEL org.label-schema.sc…   0B        </span></a>
-<a class="sourceLine" id="cb61-13" title="13"><span class="op">&lt;</span><span class="ex">missing</span><span class="op">&gt;</span>      6 months ago     /bin/sh -c <span class="co">#(nop) ADD file:bd7a2aed6ede423b7…   209MB  </span></a></code></pre></div>
-<h4 id="démarrer-un-nouveau-conteneur-à-partir-de-cette-image">Démarrer un nouveau conteneur à partir de cette image :</h4>
+<li>Il peut être important de masquer la valeur d’une variable sensible, ou même toute une structure de données popur ne pas donner de piste sur des noms de variable ou la construction d’un fichier yaml
 <ul>
-<li>Il faut publier un port !!! (pour acceder au conteneur depuis le docker hôte)</li>
-<li>Il faudra sans doute le démarrer en mode “détaché”</li>
-<li>Idéalement on lui donne un nom pour le manager plus facilement</li>
+<li>Ansible propose la commande ansible-vault</li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/vault.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/vault.html</a></li>
 </ul>
-<div class="sourceCode" id="cb62"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb62-1" title="1"><span class="ex">docker</span> container run -d --name mytomcat -p 8082:8080 tomcat:8.5.68</a>
-<a class="sourceLine" id="cb62-2" title="2"></a>
-<a class="sourceLine" id="cb62-3" title="3"><span class="ex">stagiaire@debian</span>:~/TP_Dockerfile_TOMCAT$ docker ps</a>
-<a class="sourceLine" id="cb62-4" title="4"><span class="ex">CONTAINER</span> ID   IMAGE                   COMMAND                  CREATED          STATUS          PORTS                                       NAMES</a>
-<a class="sourceLine" id="cb62-5" title="5"><span class="ex">a450d3be32d4</span>   tomcat:8.5.68           <span class="st">&quot;/opt/tomcat/bin/cat…&quot;</span>   14 seconds ago   Up 13 seconds   0.0.0.0:8082-<span class="op">&gt;</span>8080/tcp, :::8082-<span class="op">&gt;</span>8080/tcp   mytomcat</a></code></pre></div>
-<p>Sur : <a href="http://%7Bip_docker_hote%7D:8080/sample" class="uri">http://{ip_docker_hote}:8080/sample</a></p>
-<p><img src="2021-06-21-POEI-Docker/tomcat_working.png" /></p>
-<div class="warning">
-<p>Dans le cas où l’on doit télécharger des fichiers, si le lien ne change pas, la construction utilisera le cache même si le contenu à télécharger à été modifié !</p>
-<p>Pour forcer la construction de l’image sans cache, on utilisera l’option <code>--no-cache</code>.</p>
-Attention ceci est une source d’erreurs !!!
-</div>
-<h1 id="docker-compose">Docker Compose</h1>
-<h2 id="installation-de-docker-compose">Installation de Docker Compose</h2>
-<p>Voir: <a href="https://docs.docker.com/compose/install/" class="uri">https://docs.docker.com/compose/install/</a></p>
-<p>Installation du paquet:</p>
-<div class="sourceCode" id="cb63"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb63-1" title="1"><span class="fu">sudo</span> curl -L <span class="st">&quot;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-</span><span class="va">$(</span><span class="fu">uname</span> -s<span class="va">)</span><span class="st">-</span><span class="va">$(</span><span class="fu">uname</span> -m<span class="va">)</span><span class="st">&quot;</span> -o /usr/local/bin/docker-compose</a></code></pre></div>
-<p>Attribution des droits:</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb64-1" title="1"><span class="fu">sudo</span> chmod +x /usr/local/bin/docker-compose</a></code></pre></div>
-<p>Création des fichiers:</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb65-1" title="1"><span class="ex">stagiaire@debian</span>:~$ tree Docker-compose/</a>
-<a class="sourceLine" id="cb65-2" title="2"><span class="ex">Docker-compose/</span></a>
-<a class="sourceLine" id="cb65-3" title="3">├── <span class="ex">conf</span></a>
-<a class="sourceLine" id="cb65-4" title="4">│   └── <span class="ex">nginx.conf</span></a>
-<a class="sourceLine" id="cb65-5" title="5">├── <span class="ex">docker-compose.yml</span></a>
-<a class="sourceLine" id="cb65-6" title="6">└── <span class="ex">php</span></a>
-<a class="sourceLine" id="cb65-7" title="7">    └── <span class="ex">index.php</span></a>
-<a class="sourceLine" id="cb65-8" title="8"></a>
-<a class="sourceLine" id="cb65-9" title="9"><span class="ex">2</span> directories, 3 files</a></code></pre></div>
-<h2 id="fichier-docker-compose.yml">Fichier: docker-compose.yml</h2>
-<h3 id="déclaration-uniquement-pour-mybdd">Déclaration uniquement pour <strong><em>mybdd</em></strong>:</h3>
-<div class="sourceCode" id="cb66"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb66-1" title="1"><span class="fu">version:</span><span class="at"> </span><span class="st">&quot;2.4&quot;</span></a>
-<a class="sourceLine" id="cb66-2" title="2"></a>
-<a class="sourceLine" id="cb66-3" title="3"><span class="fu">services:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-4" title="4">    <span class="fu">mybdd:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-5" title="5">        <span class="fu">image:</span><span class="at"> mariadb:10.5</span></a>
-<a class="sourceLine" id="cb66-6" title="6">        <span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-7" title="7">            <span class="kw">-</span> mynetwork</a>
-<a class="sourceLine" id="cb66-8" title="8">        <span class="fu">environment:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-9" title="9">            <span class="fu">MARIADB_ROOT_PASSWORD:</span><span class="at"> mot_de_pass_bdd</span></a>
-<a class="sourceLine" id="cb66-10" title="10">            <span class="co"># Même chose avec une autre écruture:</span></a>
-<a class="sourceLine" id="cb66-11" title="11">            <span class="co">#- MARIADB_ROOT_PASSWORD=mot_de_pass_bdd</span></a>
-<a class="sourceLine" id="cb66-12" title="12">        <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb66-13" title="13">            <span class="kw">-</span> myvolume:/var/lib/mysql</a>
-<a class="sourceLine" id="cb66-14" title="14"></a>
-<a class="sourceLine" id="cb66-15" title="15"></a>
-<a class="sourceLine" id="cb66-16" title="16"><span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-17" title="17">    <span class="fu">mynetwork:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-18" title="18"></a>
-<a class="sourceLine" id="cb66-19" title="19"><span class="fu">volumes:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb66-20" title="20">    <span class="fu">myvolume:</span><span class="at"> </span></a></code></pre></div>
-<p>Pour lancer le container depuis <strong><em>docker-compose.yml</em></strong>, on fait un: <code>docker-compose up -d</code></p>
-<h3 id="ajout-mynginx-et-myphp">Ajout <strong><em>mynginx</em></strong> et <strong><em>myphp</em></strong></h3>
-<div class="sourceCode" id="cb67"><pre class="sourceCode yml"><code class="sourceCode yaml"><a class="sourceLine" id="cb67-1" title="1"><span class="fu">version:</span><span class="at"> </span><span class="st">&quot;2.4&quot;</span></a>
-<a class="sourceLine" id="cb67-2" title="2"></a>
-<a class="sourceLine" id="cb67-3" title="3"><span class="fu">services:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-4" title="4">    <span class="fu">mybdd:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-5" title="5">        <span class="fu">image:</span><span class="at"> mariadb:10.5</span></a>
-<a class="sourceLine" id="cb67-6" title="6">        <span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-7" title="7">            <span class="kw">-</span> mynetwork</a>
-<a class="sourceLine" id="cb67-8" title="8">        <span class="fu">environment:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-9" title="9">            <span class="fu">MARIADB_ROOT_PASSWORD:</span><span class="at"> mot_de_pass_bdd</span></a>
-<a class="sourceLine" id="cb67-10" title="10">            <span class="co"># Même chose avec une autre écruture:</span></a>
-<a class="sourceLine" id="cb67-11" title="11">            <span class="co">#- MARIADB_ROOT_PASSWORD=mot_de_pass_bdd</span></a>
-<a class="sourceLine" id="cb67-12" title="12">        <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb67-13" title="13">            <span class="kw">-</span> myvolume:/var/lib/mysql</a>
-<a class="sourceLine" id="cb67-14" title="14">    </a>
-<a class="sourceLine" id="cb67-15" title="15">    <span class="fu">myphp:</span></a>
-<a class="sourceLine" id="cb67-16" title="16">        <span class="fu">image:</span><span class="at"> phpdockerio/php73-fpm</span></a>
-<a class="sourceLine" id="cb67-17" title="17">        <span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-18" title="18">            <span class="kw">-</span> mynetwork</a>
-<a class="sourceLine" id="cb67-19" title="19">        <span class="fu">volumes:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-20" title="20">            <span class="kw">-</span> ./php:/srv/http</a>
-<a class="sourceLine" id="cb67-21" title="21">        </a>
-<a class="sourceLine" id="cb67-22" title="22">    <span class="fu">mynginx:</span></a>
-<a class="sourceLine" id="cb67-23" title="23">        <span class="fu">depends_on:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-24" title="24">            <span class="kw">-</span> myphp</a>
-<a class="sourceLine" id="cb67-25" title="25">            <span class="kw">-</span> mybdd</a>
-<a class="sourceLine" id="cb67-26" title="26">        <span class="fu">image:</span><span class="at"> nginx:1.20-alpine</span></a>
-<a class="sourceLine" id="cb67-27" title="27">        <span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-28" title="28">            <span class="kw">-</span> mynetwork</a>
-<a class="sourceLine" id="cb67-29" title="29">        <span class="fu">ports:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-30" title="30">            <span class="kw">-</span> <span class="st">&quot;8080:80&quot;</span></a>
-<a class="sourceLine" id="cb67-31" title="31">        <span class="fu">volumes:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-32" title="32">            <span class="kw">-</span> ./conf/nginx.conf:/etc/nginx/conf.d/default.conf</a>
-<a class="sourceLine" id="cb67-33" title="33"></a>
-<a class="sourceLine" id="cb67-34" title="34"></a>
-<a class="sourceLine" id="cb67-35" title="35"><span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-36" title="36">    <span class="fu">mynetwork:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-37" title="37"></a>
-<a class="sourceLine" id="cb67-38" title="38"><span class="fu">volumes:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb67-39" title="39">    <span class="fu">myvolume:</span><span class="at"> </span></a></code></pre></div>
-<p>Vérification:</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb68-1" title="1"><span class="ex">root@debian</span>:/home/stagiaire/Docker-compose# docker ps</a>
-<a class="sourceLine" id="cb68-2" title="2"><span class="ex">CONTAINER</span> ID   IMAGE                   COMMAND                  CREATED              STATUS         PORTS                                   NAMES</a>
-<a class="sourceLine" id="cb68-3" title="3"><span class="ex">defb2e410997</span>   nginx:1.20-alpine       <span class="st">&quot;/docker-entrypoint.…&quot;</span>   About a minute ago   Up 3 seconds   0.0.0.0:8080-<span class="op">&gt;</span>80/tcp, :::8080-<span class="op">&gt;</span>80/tcp   docker-compose_mynginx_1</a>
-<a class="sourceLine" id="cb68-4" title="4"><span class="ex">6d82d5f004a2</span>   phpdockerio/php73-fpm   <span class="st">&quot;/usr/sbin/php-fpm7.…&quot;</span>   About a minute ago   Up 4 seconds   9000/tcp                                docker-compose_myphp_1</a>
-<a class="sourceLine" id="cb68-5" title="5"><span class="ex">0eca0e9f5394</span>   mariadb:10.5            <span class="st">&quot;docker-entrypoint.s…&quot;</span>   18 minutes ago       Up 4 seconds   3306/tcp                                docker-compose_mybdd_1</a></code></pre></div>
-<div class="sourceCode" id="cb69"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb69-1" title="1"><span class="ex">stagiaire@debian</span>:~/Docker-compose$ docker-compose ps</a>
-<a class="sourceLine" id="cb69-2" title="2">          <span class="ex">Name</span>                        Command               State               Ports             </a>
-<a class="sourceLine" id="cb69-3" title="3"><span class="ex">--------------------------------------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb69-4" title="4"><span class="ex">docker-compose_mybdd_1</span>     docker-entrypoint.sh mysqld      Up      3306/tcp                      </a>
-<a class="sourceLine" id="cb69-5" title="5"><span class="ex">docker-compose_mynginx_1</span>   /docker-entrypoint.sh ngin ...   Up      0.0.0.0:8080-<span class="op">&gt;</span>80/tcp,:::8080-<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb69-6" title="6">                                                                    <span class="ex">80/tcp</span>                        </a>
-<a class="sourceLine" id="cb69-7" title="7"><span class="ex">docker-compose_myphp_1</span>     /usr/sbin/php-fpm7.3 -O          Up      9000/tcp</a></code></pre></div>
-<hr />
-<div class="wisdomquote">
-<p id="quote">
-<a id="tweetQuote" href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-</p>
-<p id="author">
-</p>
-<div id="getMessage">
-<img id="getMessage" class="icon" src="https://pixabay.com/static/uploads/photo/2016/03/31/23/19/buddha-1297531_960_720.png">
-<p class="prompt">
-Please enlighten me
-</p>
-</div>
-</div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" title="1">$ <span class="ex">ansible-vault</span> encrypt_string <span class="st">&#39;$6$8DbmPhcJeH0mDpyI$MTb.LSbFm1i7/pl5HyFrTzxuC019KpObyNKm1xn1i8jE67z.0p8geqwQJIhgxw00PtMk4Fmyhywp4i05gS.UC1&#39;</span> --name <span class="st">&#39;password&#39;</span></a></code></pre></div>
+<ul>
+<li><p>On doit spécifier le mot de passe vault pour encrypter et decrypter</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" title="1">$ <span class="ex">ansible-playbook</span> requirements_playbook.yml --ask-vault-password</a></code></pre></div></li>
+<li><p>On peut s’appuyer sur un fichier qui contient le mot de passe vault :</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" title="1">$ <span class="ex">ansible-vault</span> encrypt_string <span class="st">&#39;$6$8DbmPhcJeH0mDpyI$MTb.LSbFm1i7/pl5HyFrTzxuC019KpObyNKm1xn1i8jE67z.0p8geqwQJIhgxw00PtMk4Fmyhywp4i05gS.UC1&#39;</span> --name <span class="st">&#39;password&#39;</span> --vault-password-file .vault_password</a>
+<a class="sourceLine" id="cb21-2" title="2">$ <span class="ex">ansible-playbook</span> requirements_playbook.yml --vault-password-file .vault_password</a></code></pre></div></li>
+</ul></li>
+</ul>
+<h2 id="debug-et-variables">DEBUG et VARIABLES</h2>
+<ul>
+<li>On peut utiliser le module debug (ansible.builtin.debug) pour afficher du texte, le contenu d’une variable</li>
+<li><p>Le module debug permet de générer des output suite à l’application de filtre : ex encryption password</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" title="1">$ <span class="ex">ansible</span> -m debug -a <span class="st">&quot;msg={{ &#39;formation123&#39; | password_hash(&#39;sha512&#39;) }}&quot;</span> mydebian</a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="ex">mydebian</span> <span class="kw">|</span> <span class="ex">SUCCESS</span> =<span class="op">&gt;</span> {</a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="st">&quot;msg&quot;</span>: <span class="st">&quot;</span><span class="va">$6$H4kPS1lKBCzVYo8x$9</span><span class="st">Tjk6UCd5mULhlwdhsFuUjCD4FzUbHv.z6TFL6/5vSuJ/PuAlRd.os/34SvDNNftezpcBuH8C6Qfli6bfJd/M0&quot;</span></a>
+<a class="sourceLine" id="cb22-4" title="4">}</a></code></pre></div></li>
+</ul>
+<h2 id="conditions-et-variables">Conditions et variables :</h2>
+<p>Les <code>conditionnals</code> : faire réaliser un task ou non réaliser une task sur condition</p>
+<ul>
+<li>when :</li>
+</ul>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html#basic-conditionals-with-when" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_conditionals.html#basic-conditionals-with-when</a></p>
+<h2 id="itérationd-loops">Itérationd =&gt; LOOPS</h2>
+<ul>
+<li><p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html</a></p></li>
+<li><p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#iterating-over-a-dictionary" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_loops.html#iterating-over-a-dictionary</a></p></li>
+</ul>
+<h2 id="les-facts">Les facts</h2>
+<blockquote>
+<p>Module pour collecter les facts : setup.</p>
+</blockquote>
+<ul>
+<li><p>Module lancé automatiquement lors du déclenchement d’un playbook au travers d’une task <strong>gathering_facts</strong></p></li>
+<li><p>Le module peut être lancé manuellement en mode “Ad-Hoc” ou au travers d’une task dans un playbook</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" title="1">$ <span class="ex">ansible</span> -m setup nodes</a></code></pre></div></li>
+</ul>
+<h2 id="gestion-des-fichiers">Gestion des fichiers :</h2>
+<ul>
+<li>Fichiers statiques (identiques sur toutes les machines)
+<ul>
+<li>module copy</li>
+<li>/! déclarer tous les paramettres</li>
+<li>/! parametres validate et backup pour controler le contenu avant copie finale</li>
+</ul></li>
+<li>Fichier dynamiques =&gt; template : vont être modélisé au déclenchement du playbook grace à un mélange de tesxte et de <strong>variables</strong> et de <strong>facts</strong>
+<ul>
+<li>Ecriture au format <strong>jinja2</strong></li>
+<li><a href="https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html" class="uri">https://docs.ansible.com/ansible/latest/collections/ansible/builtin/template_module.html</a></li>
+<li><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_templating.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_templating.html</a></li>
+</ul></li>
+</ul>
+<h2 id="tags-limits">TAGS / LIMITS :</h2>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_tags.html</a></p>
+<p>Ex :</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" title="1">$ <span class="ex">ansible-playbook</span> requirements_playbook.yml --list-tasks</a>
+<a class="sourceLine" id="cb24-2" title="2">$ <span class="ex">ansible-playbook</span> requirements_playbook.yml --tags crea_users</a>
+<a class="sourceLine" id="cb24-3" title="3">$ <span class="ex">ansible-playbook</span> requirements_playbook.yml --skip-tags crea_users</a></code></pre></div>
+<h1 id="troubleshooting">Troubleshooting</h1>
+<ul>
+<li>Options supplémentaires à l’appel du playbook
+<ul>
+<li>–check (dry-run/preview)</li>
+<li>–diff (vue sur les changements dans un fichier ou templates)</li>
+<li>–syntax-check</li>
+</ul></li>
+<li>Linter : <code>bash  $ pip3 install ansible-lint  $ ansible-lint requirements_playbook.yml</code></li>
+</ul>
+<h1 id="roles">Roles</h1>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_reuse_roles.html</a></p>
+<ul>
+<li>Ensemble autonome d’actions ayant un objectif commun</li>
+<li>Lier les fichiers, structurer l’environnement</li>
+<li>Apporte un fonctionnement par defaut qui peut être surcharger via la redéclaration des variables (dans l’inventaire host_vars, group_vars)</li>
+<li>Un rôle a son propre historique de versionning (release)</li>
+<li>dédié au partage des tâches</li>
+<li>principe du lego =&gt; plus il est petit plus il sera réutilisable</li>
+</ul>
+<h1 id="handlers">Handlers</h1>
+<blockquote>
+<p>Déclenchement d’un task (handlers) sur changement (ex config -&gt; redemarrage)</p>
+</blockquote>
+<p><a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html" class="uri">https://docs.ansible.com/ansible/latest/user_guide/playbooks_handlers.html</a></p>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <hr />

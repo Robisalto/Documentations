@@ -1,0 +1,23 @@
+---
+
+- hosts: app
+  tasks:
+    - name: Create Prometheus folder
+      file:
+        path: /root/prometheus
+        state: directory
+
+    - name: Create Prometheus docker compose file and config files
+      template:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+      loop:
+        - src: ./templates/docker-compose.prometheus.yml.j2
+          dest: /root/prometheus/docker-compose.yml
+        - src: ./templates/prometheus/prometheus.yml.j2
+          dest: /root/prometheus/prometheus.yml
+
+    - name: Run compose
+      shell: docker-compose up -d --force-recreate
+      args:
+        chdir: /root/prometheus

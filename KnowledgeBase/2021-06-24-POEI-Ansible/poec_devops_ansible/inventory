@@ -1,0 +1,18 @@
+[local]
+manager ansible_connection=local
+
+[nodes:children]
+debian
+centos
+
+[ubuntu]
+manager
+
+[debian]
+mydebian  ansible_host=192.168.0.24
+
+[centos]
+mycentos ansible_host=192.168.0.25
+
+[srv]
+srv04 ansible_host=64.227.125.143

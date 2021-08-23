@@ -1,0 +1,26 @@
+---
+
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /var/log/*.log
+
+filebeat.config.modules:
+  path: ${path.config}/modules.d/*.yml
+  reload.enabled: false
+
+setup.kibana:
+  host: "{{ (groups['app'] | map('extract', hostvars, ['_private_ip']))[0] }}:5601"
+
+output.logstash:
+  hosts:
+{% for _item in (groups['app'] | map('extract', hostvars, ['_private_ip']) | list) %}
+    - "{{ _item }}:6000"
+{% endfor %}
+
+processors:
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
+  - add_cloud_metadata: ~
+  - add_docker_metadata: ~

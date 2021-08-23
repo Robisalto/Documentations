@@ -1,0 +1,18 @@
+---
+
+- hosts: all
+  tasks:
+    - name: Create Nodeexporter folder
+      file:
+        path: /root/nodeexporter
+        state: directory
+
+    - name: Create Node exporter docker compose file and config files
+      template:
+        src: ./templates/docker-compose.nodeexporter.yml.j2
+        dest: /root/nodeexporter/docker-compose.yml
+
+    - name: Run compose
+      shell: docker-compose up -d --force-recreate
+      args:
+        chdir: /root/nodeexporter

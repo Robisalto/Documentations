@@ -1,0 +1,9 @@
+grp_sudo: wheel
+
+liste_packages:
+  iperf3:
+    state: present
+  wget:
+    state: present
+  nano:
+    state: absent
