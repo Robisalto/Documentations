@@ -60,7 +60,25 @@ Lien: [Certif_devops_pratiques_v2.1.pdf](2021-08-23-POEI-DevOpsFoundation/Certif
 
 
 
-## CALMS
+#### 1st Way
+
+Tout ce qui concerne les **Flux**.
+
+- Kaban
+- PCDA
+- Improvement KATA
+- Théorie des contraintes
+
+#### 2nd Way
+
+Tout ce qui concerne l' **Intégration Continue**
+
+#### 3rd Way
+
+Tout ce qui concerne le **Retour d'expérience**.
+
+
+# CALMS
 
 ![](https://devblog.axway.com/wp-content/uploads/blog-572x320_DevopsKeepCalms-1.jpg)
 
@@ -68,12 +86,65 @@ Lien: [Certif_devops_pratiques_v2.1.pdf](2021-08-23-POEI-DevOpsFoundation/Certif
 ![](https://miro.medium.com/max/1502/1*OaGYXrJ5IgNCBA7Pbeq1yQ.jpeg)
 
 
+## Culture
+<iframe src="2021-08-23-POEI-DevOpsFoundation/Certif_devops_culture_v1.3.pdf" allowfullscreen="true"></iframe>
 
-# Intégration Continue
+Lien: [Certif_devops_culture_v1.3.pdf](2021-08-23-POEI-DevOpsFoundation/Certif_devops_culture_v1.3.pdf)
 
+## Automation
 <iframe src="2021-08-23-POEI-DevOpsFoundation/Certif_devops_automate_v1.2.pdf" allowfullscreen="true"></iframe>
 
 Lien: [Certif_devops_pratiques_v2.1.pdf](2021-08-23-POEI-DevOpsFoundation/Certif_devops_automate_v1.2.pdf)
+
+
+## Lean
+<iframe src="2021-08-23-POEI-DevOpsFoundation/.pdf" allowfullscreen="true"></iframe>
+
+Lien: [.pdf](2021-08-23-POEI-DevOpsFoundation/.pdf)
+
+
+## Mesure
+<iframe src="2021-08-23-POEI-DevOpsFoundation/Certif_devops_mesure_v1.2.pdf" allowfullscreen="true"></iframe>
+
+Lien: [Certif_devops_mesure_v1.2.pdf](2021-08-23-POEI-DevOpsFoundation/Certif_devops_mesure_v1.2.pdf)
+
+## Share
+<iframe src="2021-08-23-POEI-DevOpsFoundation/Certif_devops_partage_v1.1.pdf" allowfullscreen="true"></iframe>
+
+Lien: [Certif_devops_partage_v1.1.pdf](2021-08-23-POEI-DevOpsFoundation/Certif_devops_partage_v1.1.pdf)
+
+
+# Synthèse
+
+<iframe src="2021-08-23-POEI-DevOpsFoundation/Certif_devops_synthese_v1.5.pdf" allowfullscreen="true"></iframe>
+
+Lien: [Certif_devops_synthese_v1.5.pdf](2021-08-23-POEI-DevOpsFoundation/Certif_devops_synthese_v1.5.pdf)
+
+
+
+
+
+
+# DevOps Tools
+
+<iframe src="2021-08-23-POEI-DevOpsFoundation/Certif_devops_outils_v1.8.pdf" allowfullscreen="true"></iframe>
+
+Lien: [Certif_devops_outils_v1.8.pdf](2021-08-23-POEI-DevOpsFoundation/Certif_devops_outils_v1.8.pdf)
+
+
+## DevOps Periodic Table
+
+<iframe src="2021-08-23-POEI-DevOpsFoundation/Digital.ai_Periodic-Table-of-DevOps.pdf" allowfullscreen="true"></iframe>
+
+Line: [DevOps Periodic Table](https://digital.ai/periodic-table-of-devops-tools)
+
+
+
+
+
+# Exemples de test de Certification
+
+
 
 ---
 
@@ -91,6 +162,7 @@ SRE
   : Ben Treynor, le fondateur de l’équipe SRE chez Google, dit que c’est lorsque l’on donne les tâches d’administration à une équipe de développeurs, qu’émerge la notion de SRE. 
   : Il est commun d’entendre que SRE est une implémentation concrète de la culture **DevOps**.
   : Bonne nouvelle, on parle bien de profil SRE puisque le terme Engineer en anglais fait référence à un ingénieur, donc une personne.
+  :
   :Commençons par discerner 5 piliers dans la culture **DevOps**:
   :   - Faciliter la communication dans l’entreprise
   :   - Accepter et banaliser les erreurs
