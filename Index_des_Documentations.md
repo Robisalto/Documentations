@@ -62,7 +62,7 @@ extensions: 'extra'
 ### *DevOps Foundation, CI/CD, Entretien ESN*
 
 - [ DevOps Foundation ](2021-08-23-POEI-DevOpsFoundation.html)
-- [ Intégration Continue *(CI/CD)* ]()
+- [ Intégration Continue *(CI/CD)* ](2021-08-25-POEI-integration-continue.html)
 - [ Entretien ESN ]()
 
 

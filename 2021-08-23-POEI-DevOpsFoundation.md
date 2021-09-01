@@ -1,7 +1,7 @@
 ---
 title: POEI DevOps - DevOps Foundation
 author: David DEBRAY
-date: 2021-08-13
+date: 2021-08-23
 linkcolor: lightblue
 pdf-engine: xelatex
 header-includes:
@@ -144,6 +144,17 @@ Line: [DevOps Periodic Table](https://digital.ai/periodic-table-of-devops-tools)
 
 # Exemples de test de Certification
 
+## Exemple 1
+
+<iframe src="2021-08-23-POEI-DevOpsFoundation/DOFD_v3.3_Modele_d_examen_1_avec_Responses_French_30July2020.pdf"></iframe>
+
+[DOFD_v3.3_Modele_d_examen_1_avec_Responses_French_30July2020.pdf](2021-08-23-POEI-DevOpsFoundation/DOFD_v3.3_Modele_d_examen_1_avec_Responses_French_30July2020.pdf)
+
+## Exemple 2
+
+<iframe src="2021-08-23-POEI-DevOpsFoundation/DOFD_v3.3_Modele_d_examen_2_avec_Responses_French_01Nov2020.pdf"></iframe>
+
+[DOFD_v3.3_Modele_d_examen_2_avec_Responses_French_01Nov2020.pdf](2021-08-23-POEI-DevOpsFoundation/DOFD_v3.3_Modele_d_examen_2_avec_Responses_French_01Nov2020.pdf)
 
 
 ---

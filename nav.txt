@@ -19,6 +19,8 @@
 2021-08-16-POEI-ELK
 2021-08-19-POEI-MES3
 2021-08-23-POEI-DevOpsFoundation
+2021-08-25-POEI-integration-continue
+2021-08-27-POEI-ESN
 Build_a_Resume_Website_With_Python_and_Django
 Certified_Entry-Level_Python_Programmer_Certification
 CheatSheet

@@ -184,28 +184,34 @@ networks:
 #### 5.3.1.1 Installation de **ansible.posix**:
 
 ```bash
-ansible-galaxy collection install ansible.posix
+
+  ansible-galaxy collection install ansible.posix
+
 ```
  
 #### 5.3.1.2 Installation du rôle ansible **Docker**
 
 ```bash
-ansible-galaxy role install -r roles/requirements.yml -p roles/
-- extracting ansible-role-docker__3.1.2 to /home/stagiaire/ProjetCapGemini/Entreprise2fifou/roles/ansible-role-docker__3.1.2
-- ansible-role-docker__3.1.2 (3.1.2) was installed successfully
+
+  ansible-galaxy role install -r roles/requirements.yml -p roles/
+  - extracting ansible-role-docker__3.1.2 to /home/stagiaire/ProjetCapGemini/Entreprise2fifou/roles/ansible-role-docker__3.1.2
+  - ansible-role-docker__3.1.2 (3.1.2) was installed successfully
+
 ```
  Avec `requirements.yml` contenant:
  
 ```yaml
----
- ### Roles
-## GITHUB / GALAXY
-roles:
-- src: 'https://github.com/geerlingguy/ansible-role-docker'
-  version: '3.1.2'
-  scm: git
-  name: ansible-role-docker__3.1.2
-...
+
+  ---
+     ### Roles
+    ## GITHUB / GALAXY
+    roles:
+    - src: 'https://github.com/geerlingguy/ansible-role-docker'
+      version: '3.1.2'
+      scm: git
+      name: ansible-role-docker__3.1.2
+  ...
+
 ```
 
 
@@ -213,10 +219,12 @@ roles:
 #### 5.3.1.3 Installation de **community.docker**:
 
 ```bash
-ansible-galaxy collection install community.docker
-Process install dependency map
-Starting collection install process
-Installing 'community.docker:1.9.0' to '/home/stagiaire/.ansible/collections/ansible_collections/community/docker'
+
+  ansible-galaxy collection install community.docker
+  Process install dependency map
+  Starting collection install process
+  Installing 'community.docker:1.9.0' to '/home/stagiaire/.ansible/collections/ansible_collections/community/docker'
+
 ```
 
 
@@ -348,8 +356,177 @@ ansible-playbook deploy-apps.yml -b
 
 ## 6.1 Création de la machine virtuelle
 
+Vagrantfile:
+
+```ruby
+## Toute commande doit-ere exécution dans le répertoire contenant le Dockerfile
+# vagrant up
+# vagrant halt
+# vagrant destroy
+# vagrant global-config
+#----------------------
+# vagrant ssh [NAME|ID]
+
+
+#Configuration d'une VM pour un reseau donner
+Vagrant.configure(2) do |config|
+  #nom du reseau
+  int= "Intel(R) Wireless-AC 9260 160MHz"
+  #ip de la VM sur le sous reseau au  choix en 1 et 255 (***.***.*.lala)
+  range = "192.168.1.25"
+  # 255.2555.255.0 dans le config reseau en general (binaire >1.1.1.0)
+  # on choisi le numeros de machine autre que celui de mam machine
+  cidr = "26"
+
+  [
+    #nom de la box , nombre de ram (8G) , memoire disque, cpu
+    ["hyperviseurcapgenano", "#{range}", "8192", "50GB", '4', "ubuntu/focal64"],
+  ].each do |vmname,ip,mem,size,cpu,os|
+    config.vm.define "#{vmname}" do |machine|
+
+      machine.vm.provider "virtualbox" do |v|
+        v.memory = "#{mem}"
+        v.cpus = "#{cpu}"
+        v.name = "#{vmname}"
+        v.customize ["modifyvm", :id, "--ioapic", "on"]
+        v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      end
+      machine.vm.box = "#{os}"
+      # machine.disksize.size = "#{size}"
+      machine.vm.hostname = "#{vmname}"
+      machine.vm.network "public_network",bridge: "#{int}",
+        ip: "#{ip}",
+        netmask: "#{cidr}"
+      machine.ssh.insert_key = false
+    end
+  end
+end
+
+
+```
 
 ## 6.2 Déploiement des playbooks et du serveur Docker
+
+### Bootstrap_playbook.yml
+
+Créer un utilisateur "ansible" qui s'authentifiera avec une clé SSH pour administrer le(s) serveur(s).
+On déploie le bootstrap `ansible-playbook bootstrap_playbook.yaml -b`:
+
+```yaml
+---
+
+- name: PLAY creation utilisateur ansible
+  # Variabilisation de la valeur hosts (pattern) pour pouvoir la définir au lancement du play
+  hosts: "{{ cible | default('all') }}"
+  become: yes
+  user: root
+
+  tasks:
+
+    # Déclaration d'une task qui appelle le module user afin de disposer d'un user ansible
+    - name: Utilisation du module user pour creer ansible
+      ansible.builtin.user:
+        name: ansible
+        shell: /bin/bash
+        # Utilisation d'une variable pour permettre une distinction du groupe désiré
+        groups: "{{ grp_sudo | default('sudo') }}"
+    # Déclaration d'une seconde task qui appelle le module authorized_key pour pousser une clé publique pour le user ansible
+    - name: Module authorized_key pour deployer la clé publique chez ansible
+      ansible.posix.authorized_key:
+        user: ansible
+        state: present
+        key: "{{ lookup('file', '/home/ansible/.ssh/id_ed25519.pub') }}"
+    # Déclaration d'une troisieme task pour générer un fichier de config sudo dédié au user ansible
+    - name: Module copy pour s'assurer q'une fichier sudo pour ansible soit présent avec un contenu précis
+      ansible.builtin.copy:
+        dest: '/etc/sudoers.d/ansible'
+        content: 'ansible ALL=(ALL:ALL) NOPASSWD: ALL'
+        backup: yes
+        owner: root 
+        group: root
+        mode: 0440
+        validate: /usr/sbin/visudo -csf %s
+...
+
+```
+
+### deploy-docker.yml
+
+Permet de déployer le rôle Docker sur la (les) machine(s) cible(s).
+
+```yaml
+---
+- name: PLAY Apelle le rôle ansible-role-docker
+  hosts: "{{ cible | default('targets') }}"
+
+  roles:
+    - role: ansible-role-docker__3.1.2
+      become: true
+...
+
+```
+
+### deploy-apps.yml
+
+```yaml
+---
+
+  - name: PLAY déploiement docker-compose
+
+    hosts: "{{ cible | default('targets') }}"
+    become: true
+
+    vars_files:
+      - myvars.yml
+
+    tasks:
+      - name: Installation prérequis python
+        ansible.builtin.apt:
+          name: ['python', 'python3-pip','python-setuptools']
+          
+      - name: installation docker et docker-compose
+        ansible.builtin.pip:
+          name: ['docker-compose', 'docker']
+          executable: pip3   
+       
+      - name: checkout git            # CLone du répertoire Git
+        ansible.builtin.git:
+          repo: "{{app_git}}"
+          dest: "{{app_path}}/{{file_name}}"
+  #        single_branch: yes
+  #        version: main
+          force: yes
+        tags: always
+
+
+      - name: deploiement docker-compose    # Démarrage "docker-compose up -d" du micro-service
+        community.docker.docker_compose:
+          project_name: "{{file_name}}"
+          project_src: "{{app_path}}/{{file_name}}"
+          restarted: yes
+          state: present
+        register: output
+
+...
+
+```
+
+avec `myvars.yml` contenant:
+
+```yaml
+
+---
+
+  app_git: "https://github.com/davidchdebray/hedgedoc_mariadb.git"
+  app_path: "/home/ansible/docker_apps"
+  file_name: "HedgeDoc_MariaDB"
+
+...
+
+```
+
+
+
 
 
 
@@ -418,13 +595,27 @@ docker run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest | less
 Ici on récupère les informations de vulnérabilités dans un fichier de logs associé:
 
 ```bash
-docker run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest > auditsec_HedgeDoc_APP.log
+
+  docker run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest > auditsec_HedgeDoc_APP.log
+
+  docker run aquasec/trivy ghcr.io/linuxserver/mariadb:latest > auditsec_HedgeDoc_BDD.log
+
 
 ```
 
 ##### Résultat
 
 ![](2021-08-02-POEI-ProjetCapGemini/2021-08-06_11h04_50.gif)
+
+
+```bash
+
+  odin@BBG58Y2:/mnt/c/Users/Admin stagiaire.DESKTOP-8967908/FORMATION/ProjetCapGemini$ tree Security_Audit/
+  Security_Audit/
+  ├── auditsec_HedgeDoc_APP.log
+  └── auditsec_HedgeDoc_BDD.log
+
+```
 
 
 ### 9.1.5 Autres Options
@@ -469,13 +660,64 @@ trivy server --listen 192.168.3.3:3000
 
 
 
-# 10. Conclusion
+# 10. Intégration continue
+
+## Pipeline n°1 HedgeDoc_MariaDB
+
+Contenu du fichier `.gitlab-ci.yml`:
 
 
+```yaml
 
+---
+  image: tmaier/docker-compose
+
+  stages:
+    - build
+    - test
+    - deploy
+  before_script:
+    - >
+      echo "$CI_REGISTRY_PASSWORD" | 
+      docker login $CI_REGISTRY 
+      -u $CI_REGISTRY_USER 
+      --password-stdin
+  services:
+    - docker:dind
+
+  test:
+    stage: test
+    script:
+      - docker-compose -f docker-compose.yml up -d
+      - sleep 15
+      - docker-compose -f docker-compose.yml ps | grep -o "(healthy)"
+
+    rules:
+      - changes:  # Déclenché uniquement quand docker-compose.yml est modifié
+        - docker-compose.yml
+
+...
+
+```
+
+##### Pipiline
+
+![](2021-08-02-POEI-ProjetCapGemini/2021-08-30_16h24_03.png)
+
+
+##### Modification du docker-compose.yml
+
+![](2021-08-02-POEI-ProjetCapGemini/2021-08-31_11h02_16.png)
+
+##### Résultat du Pipeline
+
+![](2021-08-02-POEI-ProjetCapGemini/2021-08-30_16h33_22.png)
 
 --- 
 
-# Left to do 
+# Présentation Finale
 
-- [] 
+
+<iframe src="https://docs.google.com/presentation/d/1pgSIO2wH0fi_REJ-LfEj4fnUgcNGUs3rs1bxWmNwsFs/edit#slide=id.p"></iframe>
+
+<https://docs.google.com/presentation/d/1pgSIO2wH0fi_REJ-LfEj4fnUgcNGUs3rs1bxWmNwsFs/edit#slide=id.p>
