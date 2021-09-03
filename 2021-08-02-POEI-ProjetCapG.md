@@ -15,63 +15,25 @@ extensions: 'extra'
 
 #### Introduction
 
+---
 
-
-# Points à aborder
-
-# Plan de la présentation
-
-- Introduction contexte
-
-1. Présentation entreprise/équipe
-2. Présentation projet
-3. Organisation du Projet
-
-  3.1. Dépôt Git
-  3.2. Authentification par clés SSH
-  
-
-4. Schéma fonctionnel
-
-
-
-5. Code
-
-
-
-
-6. Déploiement
-7. Problèmes rencontrés & Solutions
-8. Résultat
-9. Améliorations prévues
-10. Conclusion
-
-
-+ Cahier des charges
-
-
-
-
-
-
-
-# 1. Présentation entreprise/équipe
+## 1. Présentation entreprise/équipe
 
 - Chafea Bouchenna
 - David Debray
 - Vincent Diard
 
-# 2. Présentation projet
+## 2. Présentation projet
 
 Déploiement d'une solution de documentation collaborative sous forme de micro-service.
 
 
 
-# 3. Organisation du Projet
+## 3. Organisation du Projet
 
 Organisation du projet et de l'équipe projet
 
-## 3.1.Dépôt Git
+### 3.1.Dépôt Git
 
 Pour assurer le travail en équipe et le versionning des modifications tout au long du projet, nous utiliserons **Git**.
 
@@ -80,7 +42,7 @@ Dans notre cas [GitHub](https://github.com/): ![](https://external-content.duckd
 - Dépot GitHub du projet: <https://github.com/vincentdiard/Entreprise2fifou.git>
 
 
-## 3.2. Authentification par clés SSH
+### 3.2. Authentification par clés SSH
 
 Pour sécurisé l'accès au dépot GitHub, nous serons authentifié par clés SSH.
 Depuis la machine qui se connectera au dépot:
@@ -99,264 +61,19 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG8EhxxAC6ZHMyLQo7c+rRTPD48T/PJxb4Rn9qQNXLHl
 
 ```
 
+## 4. Schéma fonctionnel
 
+![schema-infrastructure.png](/hedgedoc/public/uploads/schema-infrastructure.png)
 
+![](https://github.com/davidchdebray/hedgedoc_mariadb/blob/main/hedgedoc_uploads/schema-infrastructure.png)
 
+![schema infrastrucutre](https://codimd.s3.shivering-isles.com/demo/uploads/upload_535a4a04f43f32f22fa1cf9319bbbe2f.png)
 
 
-# 4. Schéma fonctionnel
+## 5. Code
+### 5.1 Déploiement d'une machine virtuelle avec Vagrant
 
-![](2021-08-02-POEI-ProjetCapGemini/schema-infrastructure.png)
-
-
-
-# 5. Code & Fichiers de Configuration
-## 5.1 Déploiement d'une machine virtuelle depuis Ansible
-## 5.2 Création d'un stack micro-service avec Docker
-
-```bash
-stagiaire@mydeby:~/PROJECTS$ tree -aL 1 hedgedoc_mariadb/
-hedgedoc_mariadb/
-├── docker-compose.yml
-├── .env
-├── .envdatabase
-├── .envhedgedoc
-├── .git
-├── .gitignore
-├── hedgedoc_config
-├── hedgedoc_uploads
-├── mariadb_database
-└── README.md
-
-4 directories, 6 files
-```
-
-Contenu du ``docker-compose.yml``:
-
-```yaml
-version: "3"
-services:
-  mariadb:
-    image: ghcr.io/linuxserver/mariadb:${MARIADB_IMAGE_VERSION}
-    container_name: ${DATABASE_NAME}
-    volumes:
-      - ${DATABASE_VOLUME}:/config
-    env_file: 
-      - .envdatabase
-    networks: 
-      backend:
-    restart: ${RESTART_DEFAULT}
-
-  hedgedoc:
-    image: ghcr.io/linuxserver/hedgedoc:${HEDGEDOC_IMAGE_VERSION}
-    container_name: ${APP_NAME}
-    depends_on:
-      - mariadb
-    volumes:
-      - ${APP_VOLUME}:/config
-      - hedgedoc_uploads:/hedgedoc/public/uploads
-
-    env_file: 
-      - .envhedgedoc
-    ports:
-      - "${APP_PORT_IN}:${APP_PORT_OUT}"
-    networks: 
-      backend:
-    restart: ${RESTART_DEFAULT}
-
-
-volumes:
-  mariadb_database:
-  hedgedoc_config:
-  hedgedoc_uploads:
-
-networks: 
-  backend:
-```
-
-
-
-
-## 5.3 Déploiement d'un stack micro-service via Ansible
-
-### 5.3.1 Prérequis *(sur le serveur Ansible)*
-
-#### 5.3.1.1 Installation de **ansible.posix**:
-
-```bash
-
-  ansible-galaxy collection install ansible.posix
-
-```
- 
-#### 5.3.1.2 Installation du rôle ansible **Docker**
-
-```bash
-
-  ansible-galaxy role install -r roles/requirements.yml -p roles/
-  - extracting ansible-role-docker__3.1.2 to /home/stagiaire/ProjetCapGemini/Entreprise2fifou/roles/ansible-role-docker__3.1.2
-  - ansible-role-docker__3.1.2 (3.1.2) was installed successfully
-
-```
- Avec `requirements.yml` contenant:
- 
-```yaml
-
-  ---
-     ### Roles
-    ## GITHUB / GALAXY
-    roles:
-    - src: 'https://github.com/geerlingguy/ansible-role-docker'
-      version: '3.1.2'
-      scm: git
-      name: ansible-role-docker__3.1.2
-  ...
-
-```
-
-
-
-#### 5.3.1.3 Installation de **community.docker**:
-
-```bash
-
-  ansible-galaxy collection install community.docker
-  Process install dependency map
-  Starting collection install process
-  Installing 'community.docker:1.9.0' to '/home/stagiaire/.ansible/collections/ansible_collections/community/docker'
-
-```
-
-
-### 5.3.2 Copie de la clé publique SSH sur le client
-
-```bash
-# Preparation du bootstrap-playbook.yml
-## Copie de clé
-ssh-copy-id -i /home/stagiaire/.ssh/id_ed25519.pub stagiaire@192.168.3.3
-## Test de connexion 
-ssh stagiaire@192.168.3.3
-```
-
-#### 5.3.2.1 Bootstrap playbook
-
-Premier déploiement du playbook `bootstrap-playbook.yml`:
-
-```bash
-ansible-playbook bootstrap_playbook.yaml -b --become-ask-pass --user=stagiaire
-```
-
-Avec `bootstrap-playbook.yml` contenant:
-
-```yaml
----
-
-- name: PLAY creation utilisateur ansible
-  # Variabilisation de la valeur hosts (pattern) pour pouvoir la définir au lancement du play
-  hosts: "{{ cible | default('all') }}"
-
-  tasks:
-
-    # Déclaration d'une task qui appelle le module user afin de disposer d'un user ansible
-    - name: Utilisation du module user pour creer ansible
-      ansible.builtin.user:
-        name: ansible
-        shell: /bin/bash
-        # Utilisation d'une variable pour permettre une distinction du groupe désiré
-        groups: "{{ grp_sudo | default('sudo') }}"
-    # Déclaration d'une seconde task qui appelle le module authorized_key pour pousser une clé publique pour le user ansible
-    - name: Module authorized_key pour deployer la clé publique chez ansible
-      ansible.posix.authorized_key:
-        user: ansible
-        state: present
-        key: "{{ lookup('file', '/home/stagiaire/.ssh/id_ed25519.pub') }}"
-    # Déclaration d'une troisieme task pour générer un fichier de config sudo dédié au user ansible
-    - name: Module copy pour s'assurer q'une fichier sudo pour ansible soit présent avec un contenu précis
-      ansible.builtin.copy:
-        dest: '/etc/sudoers.d/ansible'
-        content: 'ansible ALL=(ALL:ALL) NOPASSWD: ALL'
-        backup: yes
-        owner: root 
-        group: root
-        mode: 0440
-        validate: /usr/sbin/visudo -csf %s
-...
-```
-
-
-#### 5.3.2.2 Déploiement du role Docker
-
-```bash
-ansible-playbook deploy-docker.yml -b
-```
-
-Avec `deploy-docker.yml` contenant:
-```yaml
----
-- name: PLAY Apelle le rôle ansible-role-docker
-  hosts: "{{ cible | default('all') }}"
-
-  roles:
-    - role: ansible-role-docker__3.1.2
-      become: yes
-...
-```
-
-
-#### 5.3.2.3 Déploiement du stack micro-service
-
-On appelle le playbook `deploy-apps.yml`:
-
-```bash
-ansible-playbook deploy-apps.yml -b
-```
-
-
-```yaml
----
-- name: PLAY déploiement docker-compose
-  hosts: davidtest
-  tasks:
-    - name: Installation prérequis python
-      ansible.builtin.apt:
-        name: ['python', 'python3-pip','python-setuptools']
-
-    - name: Install and upgrade pip
-      pip:
-        name: pip
-        extra_args: --upgrade
-        executable: pip3
-        
-    - name: installation docker et docker-compose
-      ansible.builtin.pip:
-        name: ['docker-compose', 'docker']
-        executable: pip3
-
-
-    - name: checkout git
-      ansible.builtin.git:
-        repo: "https://github.com/davidchdebray/hedgedoc_mariadb.git"
-        dest: /home/stagiaire/ProjetCapGemini/DOCUMENTATION
-        force: yes
-      tags: always
-
-    - name: deploiement docker-compose
-      community.docker.docker_compose:
-        project_name: "HedgeDoc_MariaDB"
-        project_src: /home/stagiaire/ProjetCapGemini/DOCUMENTATION
-        restarted: yes
-        state: present
-      register: output
-...
-```
-
-
-
-# 6. Déploiement
-
-## 6.1 Création de la machine virtuelle
-
-Vagrantfile:
+Fichier `Vagrantfile` permettant la création de machines virtuelles:
 
 ```ruby
 ## Toute commande doit-ere exécution dans le répertoire contenant le Dockerfile
@@ -402,144 +119,161 @@ Vagrant.configure(2) do |config|
   end
 end
 
-
 ```
 
-## 6.2 Déploiement des playbooks et du serveur Docker
 
-### Bootstrap_playbook.yml
 
-Créer un utilisateur "ansible" qui s'authentifiera avec une clé SSH pour administrer le(s) serveur(s).
-On déploie le bootstrap `ansible-playbook bootstrap_playbook.yaml -b`:
+### 5.2 Création d'un stack micro-service avec Docker
+
+
+```bash
+stagiaire@mydeby:~/PROJECTS$ tree -aL 1 hedgedoc_mariadb/
+hedgedoc_mariadb/
+├── docker-compose.yml
+├── .env
+├── .envdatabase
+├── .envhedgedoc
+├── .git
+├── .gitignore
+├── hedgedoc_config
+├── hedgedoc_uploads
+├── mariadb_database
+└── README.md
+
+4 directories, 6 files
+```
 
 ```yaml
----
+version: "3"
+services:
+  mariadb:
+    image: ghcr.io/linuxserver/mariadb:${MARIADB_IMAGE_VERSION}
+    container_name: ${DATABASE_NAME}
+    volumes:
+      - ${DATABASE_VOLUME}:/config
+    env_file: 
+      - .envdatabase
+    networks: 
+      backend:
+    restart: ${RESTART_DEFAULT}
 
-- name: PLAY creation utilisateur ansible
-  # Variabilisation de la valeur hosts (pattern) pour pouvoir la définir au lancement du play
-  hosts: "{{ cible | default('all') }}"
-  become: yes
-  user: root
+  hedgedoc:
+    image: ghcr.io/linuxserver/hedgedoc:${HEDGEDOC_IMAGE_VERSION}
+    container_name: ${APP_NAME}
+    depends_on:
+      - mariadb
+    volumes:
+      - ${APP_VOLUME}:/config
+      - hedgedoc_uploads:/hedgedoc/public/uploads
 
-  tasks:
-
-    # Déclaration d'une task qui appelle le module user afin de disposer d'un user ansible
-    - name: Utilisation du module user pour creer ansible
-      ansible.builtin.user:
-        name: ansible
-        shell: /bin/bash
-        # Utilisation d'une variable pour permettre une distinction du groupe désiré
-        groups: "{{ grp_sudo | default('sudo') }}"
-    # Déclaration d'une seconde task qui appelle le module authorized_key pour pousser une clé publique pour le user ansible
-    - name: Module authorized_key pour deployer la clé publique chez ansible
-      ansible.posix.authorized_key:
-        user: ansible
-        state: present
-        key: "{{ lookup('file', '/home/ansible/.ssh/id_ed25519.pub') }}"
-    # Déclaration d'une troisieme task pour générer un fichier de config sudo dédié au user ansible
-    - name: Module copy pour s'assurer q'une fichier sudo pour ansible soit présent avec un contenu précis
-      ansible.builtin.copy:
-        dest: '/etc/sudoers.d/ansible'
-        content: 'ansible ALL=(ALL:ALL) NOPASSWD: ALL'
-        backup: yes
-        owner: root 
-        group: root
-        mode: 0440
-        validate: /usr/sbin/visudo -csf %s
-...
-
-```
-
-### deploy-docker.yml
-
-Permet de déployer le rôle Docker sur la (les) machine(s) cible(s).
-
-```yaml
----
-- name: PLAY Apelle le rôle ansible-role-docker
-  hosts: "{{ cible | default('targets') }}"
-
-  roles:
-    - role: ansible-role-docker__3.1.2
-      become: true
-...
-
-```
-
-### deploy-apps.yml
-
-```yaml
----
-
-  - name: PLAY déploiement docker-compose
-
-    hosts: "{{ cible | default('targets') }}"
-    become: true
-
-    vars_files:
-      - myvars.yml
-
-    tasks:
-      - name: Installation prérequis python
-        ansible.builtin.apt:
-          name: ['python', 'python3-pip','python-setuptools']
-          
-      - name: installation docker et docker-compose
-        ansible.builtin.pip:
-          name: ['docker-compose', 'docker']
-          executable: pip3   
-       
-      - name: checkout git            # CLone du répertoire Git
-        ansible.builtin.git:
-          repo: "{{app_git}}"
-          dest: "{{app_path}}/{{file_name}}"
-  #        single_branch: yes
-  #        version: main
-          force: yes
-        tags: always
+    env_file: 
+      - .envhedgedoc
+    ports:
+      - "${APP_PORT_IN}:${APP_PORT_OUT}"
+    networks: 
+      backend:
+    restart: ${RESTART_DEFAULT}
 
 
-      - name: deploiement docker-compose    # Démarrage "docker-compose up -d" du micro-service
-        community.docker.docker_compose:
-          project_name: "{{file_name}}"
-          project_src: "{{app_path}}/{{file_name}}"
-          restarted: yes
-          state: present
-        register: output
+volumes:
+  mariadb_database:
+  hedgedoc_config:
+  hedgedoc_uploads:
 
-...
-
-```
-
-avec `myvars.yml` contenant:
-
-```yaml
-
----
-
-  app_git: "https://github.com/davidchdebray/hedgedoc_mariadb.git"
-  app_path: "/home/ansible/docker_apps"
-  file_name: "HedgeDoc_MariaDB"
-
-...
-
+networks: 
+  backend:
 ```
 
 
 
 
+### 5.3 Déploiement d'un stack micro-service via Ansible
+
+#### 5.3.1 Prérequis
+
+##### 5.3.1.1 Installation de **ansible.posix**:
+
+```bash
+ansible-galaxy collection install ansible.posix
+```
+ 
+##### 5.3.1.2 Installation du rôle ansible **Docker**
+
+```bash
+ansible-galaxy role install -r roles/requirements.yml -p roles/
+- extracting ansible-role-docker__3.1.2 to /home/stagiaire/ProjetCapGemini/Entreprise2fifou/roles/ansible-role-docker__3.1.2
+- ansible-role-docker__3.1.2 (3.1.2) was installed successfully
+```
+ Avec `requirements.yml` contenant:
+ 
+ ```yaml
+ ### Roles
+## GITHUB / GALAXY
+roles:
+- src: 'https://github.com/geerlingguy/ansible-role-docker'
+  version: '3.1.2'
+  scm: git
+  name: ansible-role-docker__3.1.2
+```
+
+##### 5.3.1.3 Installation de **community.docker**:
+
+```bash
+ansible-galaxy collection install community.docker
+Process install dependency map
+Starting collection install process
+Installing 'community.docker:1.9.0' to '/home/stagiaire/.ansible/collections/ansible_collections/community/docker'
+```
+
+#### 5.3.2
 
 
-## 6.3 Déploiement du stack micro-service
 
 
 
 
 
+```bash
+# Preparation du bootstrap-playbook.yml
+## Copie de clé
+ssh-copy-id -i /home/stagiaire/.ssh/id_ed25519.pub stagiaire@192.168.3.3
+## Test de connexion 
+ssh stagiaire@192.168.3.3
+```
 
-# 7. Problèmes rencontrés & Solutions
-# 8. Résultat
-# 9. Améliorations prévues
+
+
+
+## 6. Déploiement
+
+:::success
+Tests + Implémentations => OK
+:::
+
+:::info
+Documentation reste à rédiger
+:::
+
+
+## 7. Problèmes rencontrés & Solutions
+
+:::success
+Tests + Implémentations => OK
+:::
+
+:::info
+Documentation reste à rédiger
+:::
+
+
+## 8. Résultat
+
+:::success
+Vous êtes actuellement témoin du résultat :+1: 
+:::
+
+
+## 9. Sécurité des images Docker
 
 ## 9.1 Analyse de vulnérabilités *(en cours)*
 
@@ -595,27 +329,13 @@ docker run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest | less
 Ici on récupère les informations de vulnérabilités dans un fichier de logs associé:
 
 ```bash
-
-  docker run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest > auditsec_HedgeDoc_APP.log
-
-  docker run aquasec/trivy ghcr.io/linuxserver/mariadb:latest > auditsec_HedgeDoc_BDD.log
-
+docker run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest > auditsec_HedgeDoc_APP.log
 
 ```
 
 ##### Résultat
 
 ![](2021-08-02-POEI-ProjetCapGemini/2021-08-06_11h04_50.gif)
-
-
-```bash
-
-  odin@BBG58Y2:/mnt/c/Users/Admin stagiaire.DESKTOP-8967908/FORMATION/ProjetCapGemini$ tree Security_Audit/
-  Security_Audit/
-  ├── auditsec_HedgeDoc_APP.log
-  └── auditsec_HedgeDoc_BDD.log
-
-```
 
 
 ### 9.1.5 Autres Options
@@ -658,8 +378,6 @@ trivy server --listen 192.168.3.3:3000
 ```
 
 
-
-
 # 10. Intégration continue
 
 ## Pipeline n°1 HedgeDoc_MariaDB
@@ -700,24 +418,40 @@ Contenu du fichier `.gitlab-ci.yml`:
 
 ```
 
-##### Pipiline
 
-![](2021-08-02-POEI-ProjetCapGemini/2021-08-30_16h24_03.png)
+## Pipeline n°2: ESN_3
 
+:::warning
+Pas encore implémenté
+:::
 
-##### Modification du docker-compose.yml
+# Reste à faire
 
-![](2021-08-02-POEI-ProjetCapGemini/2021-08-31_11h02_16.png)
+- [ ] Monitoring Prometheus & Grafana
 
-##### Résultat du Pipeline
+![](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.EnUfFN7C8Vfaep5DPRq6HQHaEc%26pid%3DApi&f=1)
 
-![](2021-08-02-POEI-ProjetCapGemini/2021-08-30_16h33_22.png)
-
---- 
-
-# Présentation Finale
+---
 
 
-<iframe src="https://docs.google.com/presentation/d/1pgSIO2wH0fi_REJ-LfEj4fnUgcNGUs3rs1bxWmNwsFs/edit#slide=id.p"></iframe>
+- [ ] Surveillance des logs avec le Stack ELK *(ElasticSearch, Logstash, Kibana)*
 
-<https://docs.google.com/presentation/d/1pgSIO2wH0fi_REJ-LfEj4fnUgcNGUs3rs1bxWmNwsFs/edit#slide=id.p>
+![](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogz.io%2Fwp-content%2Fuploads%2F2018%2F08%2Fimage21-1024x328.png&f=1&nofb=1)
+
+---
+
+
+- [ ] Intégration continue des différents composants, y compris:
+    - [ ] tests de sécurité automatisés des images Docker
+
+![](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.callr.tech%2Fgitlab-ansible-docker-ci-cd%2Fgitlab-docker-ansible.png&f=1&nofb=1)
+
+
+
+
+
+
+
+
+
+
