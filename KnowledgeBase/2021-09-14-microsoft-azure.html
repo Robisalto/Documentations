@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Mehdi Sebbane" />
+  <meta name="dcterms.date" content="2021-09-14" />
+  <title>Microsoft Azure Virtual Training Day</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="styleDark.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+  
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Microsoft Azure Virtual Training Day</h1>
+<p class="author">Mehdi Sebbane</p>
+<p class="date">2021-09-14</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#préparer-la-certification-az900">Préparer la Certification AZ900</a></li>
+<li><a href="#module-1---concepts-du-cloud-azure">Module 1 - Concepts du Cloud Azure</a>
+<ul>
+<li><a href="#modèles-cloud">Modèles Cloud</a></li>
+</ul></li>
+<li><a href="#module-2---services-azure-de-base">Module 2 - Services Azure de base</a>
+<ul>
+<li><a href="#les-régions">Les régions</a></li>
+<li><a href="#les-ressources">Les Ressources</a>
+<ul>
+<li><a href="#les-groupes-de-ressources">Les groupes de ressources</a></li>
+<li><a href="#gestionnaire-de-ressources">Gestionnaire de ressources</a></li>
+<li><a href="#les-abonnements-azure">Les abonnements Azure</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#module-3---outils-de-gestion-et-solutions-azure">Module 3 - Outils de gestion et solutions Azure</a>
+<ul>
+<li><a href="#azure-advisor-free">Azure Advisor <em>(free)</em></a></li>
+<li><a href="#azure-monitor">Azure Monitor</a></li>
+<li><a href="#azure-service-health">Azure Service Health</a></li>
+<li><a href="#azure-resource-manager">Azure Resource Manager</a></li>
+</ul></li>
+<li><a href="#online-resources">Online Resources</a>
+<ul>
+<li><a href="#official-resources">Official Resources</a></li>
+<li><a href="#other-resources">Other Resources</a></li>
+</ul></li>
+<li><a href="#glossaire"><em>Glossaire</em></a></li>
+</ul>
+</nav>
+<hr />
+<hr />
+<link rel="icon" href="favicon.png" type="image/png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<h4 id="introduction">Introduction</h4>
+<p>Formateur <strong>Mehdi Sebbane</strong>: <a href="https://www.linkedin.com/in/mehdi-sebbane-913a134/"><em>Profil LinkedIn</em></a></p>
+<p>Préparation à la certification <strong>AZ900</strong>.</p>
+<p>Partie 1: <a href="https://event.on24.com/wcc/r/3262319/79D7A552D03369897F33E3707C985EBC" class="uri">https://event.on24.com/wcc/r/3262319/79D7A552D03369897F33E3707C985EBC</a></p>
+<p>Partie 2: <a href="https://event.on24.com/wcc/r/3262346/E54A27301337FF25C7D690F15324DB66" class="uri">https://event.on24.com/wcc/r/3262346/E54A27301337FF25C7D690F15324DB66</a></p>
+<h1 id="préparer-la-certification-az900">Préparer la Certification AZ900</h1>
+<p>Domaines de certification AZ900:</p>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-09-38.png" /></p>
+<h1 id="module-1---concepts-du-cloud-azure">Module 1 - Concepts du Cloud Azure</h1>
+<h3 id="modèles-cloud">Modèles Cloud</h3>
+<ul>
+<li>3 types de Cloud: public/privé/hybride</li>
+</ul>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-09-50.png" /></p>
+<h1 id="module-2---services-azure-de-base">Module 2 - Services Azure de base</h1>
+<h2 id="les-régions">Les régions</h2>
+<p><strong>Région</strong>: Centre de données distribués dans le monde et donnant un accès aux services Azure.</p>
+<p>Influe sur:</p>
+<ul>
+<li>la <strong>latence</strong>,</li>
+<li>le <strong>prix</strong>,</li>
+<li>la <strong>législation</strong>.</li>
+</ul>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-08.png" /></p>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-14.png" /></p>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-15.png" /></p>
+<h2 id="les-ressources">Les Ressources</h2>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-16.png" /></p>
+<h3 id="les-groupes-de-ressources">Les groupes de ressources</h3>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-17.png" /></p>
+<div class="info">
+<p>Un groupe de ressources peut contenir des ressources de régions différentes.</p>
+</div>
+<h3 id="gestionnaire-de-ressources">Gestionnaire de ressources</h3>
+<p>Le <strong>Azure Resource Manager</strong>:</p>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-20.png" /></p>
+<h3 id="les-abonnements-azure">Les abonnements Azure</h3>
+<p><img src="2021-09-14-microsoft-azure/2021-09-14-10-21.png" /></p>
+<div class="warning">
+<p>Par défaut les ressources d’un abonnment ne peuvent pas communiquer avec les ressources d’un autre abonnement.</p>
+</div>
+<div class="info">
+<p>Pour changer ça on utilisera le <strong>pairing</strong>.</p>
+</div>
+<h1 id="module-3---outils-de-gestion-et-solutions-azure">Module 3 - Outils de gestion et solutions Azure</h1>
+<h3 id="azure-advisor-free">Azure Advisor <em>(free)</em></h3>
+<p><img src="2021-09-14-microsoft-azure/2021-09-13_11h53_27.png" /></p>
+<h3 id="azure-monitor">Azure Monitor</h3>
+<p><img src="2021-09-14-microsoft-azure/2021-09-13_11h55_26.png" /></p>
+<h3 id="azure-service-health">Azure Service Health</h3>
+<p><img src="2021-09-14-microsoft-azure/2021-09-13_11h56_46.png" /></p>
+<h3 id="azure-resource-manager">Azure Resource Manager</h3>
+<p><img src="2021-09-14-microsoft-azure/2021-09-13_11h58_04.png" /></p>
+<h1 id="online-resources">Online Resources</h1>
+<h2 id="official-resources">Official Resources</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/learn/certifications/exams/az-900">Inscrivez-vous à l’examen de certification Microsoft Azure - Notions de base.</a></li>
+<li><a href="https://docs.microsoft.com/learn/paths/azure-fundamentals">Consulter Microsoft Learn pour découvrir davantage de formations Azure gratuites</a></li>
+<li><a href="https://azure.microsoft.com/free/">Créer un compte Azure</a></li>
+<li><a href="https://azure.microsoft.com/free/">Utiliser le portail Azure</a></li>
+<li><a href="https://docs.microsoft.com/learn/modules/explore-types-cloud-services/6-compare-cloud-services">Description des principaux concepts Azure</a></li>
+<li><a href="https://docs.microsoft.com/azure/best-practices-availability-paired-regions">Continuité et reprise d’activité: Régions jumelées Azure</a></li>
+<li><a href="https://azure.microsoft.com/global-infrastructure/services/">Disponibilité des produits par régions</a></li>
+<li><a href="https://docs.microsoft.com/cli/azure/get-started-with-azure-cli">Get started with Azure CLI</a></li>
+<li><a href="https://docs.microsoft.com/azure/cloud-shell/overview">Vue d’ensemble d’Azure Cloud Shell</a></li>
+<li><a href="https://docs.microsoft.com/azure/compliance/">Documentation sur la conformité Azure</a></li>
+<li><a href="https://azure.microsoft.com/pricing/calculator/">Estimer les coûts avec la calculatrice de prix Azure</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/architecture/aws-professional/">Azure pour les professionnels AWS</a></li>
+<li><a href="https://docs.microsoft.com/azure/architecture/gcp-professional/services">Comparaison des services GCP et Azure</a></li>
+<li><a href="https://www.pluralsight.com/partners/microsoft/azure">Découvrez les évalutions basées sur les rôles de <strong>Pluralsight</strong></a></li>
+</ul>
+<h2 id="other-resources">Other Resources</h2>
+<ul>
+<li><a href="https://thierrybtblog.wordpress.com/" class="uri">https://thierrybtblog.wordpress.com/</a></li>
+</ul>
+<hr />
+<hr />
+<h1 id="glossaire"><em>Glossaire</em></h1>
+<dl>
+<dt>Terme</dt>
+<dd>Définition
+</dd>
+</dl>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<hr />
+<h5 id="the-end" align="center">The End</h5>
+<hr />
+
+<div class="footer" id="bottom">
+  <p> *** <a href="#top">Top / Début</a> - <a href="Index_des_Documentations.html">Index des Documentations</a> - <a href="#the-end">Bottom / Fin</a> *** </p>
+</div>
+</body>
+</html>

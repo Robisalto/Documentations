@@ -7,94 +7,106 @@
   <meta name="author" content="David DEBRAY" />
   <meta name="dcterms.date" content="2021-08-11" />
   <title>POEI DevOps - Prometheus</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">POEI DevOps - Prometheus</h1>
 <p class="author">David DEBRAY</p>
 <p class="date">2021-08-11</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#documentations">Documentations</a><ul>
+<li><a href="#documentations">Documentations</a>
+<ul>
 <li><a href="#site-officiel">Site Officiel</a></li>
 <li><a href="#online-docs">Online Docs</a></li>
 <li><a href="#doc-source">Doc Source</a></li>
 </ul></li>
-<li><a href="#introduction-à-prometheus">Introduction à Prometheus</a><ul>
+<li><a href="#introduction-à-prometheus">Introduction à Prometheus</a>
+<ul>
 <li><a href="#introduction-1">Introduction</a></li>
 <li><a href="#fonctionnement-de-prometheus">Fonctionnement de Prometheus</a></li>
-<li><a href="#décomposition-réseau">Décomposition réseau</a><ul>
+<li><a href="#décomposition-réseau">Décomposition réseau</a>
+<ul>
 <li><a href="#petit-qcm-notions-de-base">Petit QCM <em>(Notions de base)</em></a></li>
 </ul></li>
-<li><a href="#les-types-de-données">Les Types de Données</a><ul>
+<li><a href="#les-types-de-données">Les Types de Données</a>
+<ul>
 <li><a href="#counter">Counter</a></li>
 <li><a href="#gauge">Gauge</a></li>
 <li><a href="#histogram">Histogram</a></li>
@@ -102,33 +114,41 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#qcm---introduction">QCM - Introduction</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#fonctionnement-et-architecture-de-prometheus">Fonctionnement et Architecture de Prometheus</a><ul>
-<li><a href="#présentation-de-prometheus">Présentation de Prometheus</a><ul>
+<li><a href="#fonctionnement-et-architecture-de-prometheus">Fonctionnement et Architecture de Prometheus</a>
+<ul>
+<li><a href="#présentation-de-prometheus">Présentation de Prometheus</a>
+<ul>
 <li><a href="#qcm---présentation-de-prometheus">QCM - Présentation de Prometheus</a></li>
 </ul></li>
 <li><a href="#slides---déploiement-et-configuration-h5p">Slides - Déploiement et configuration H5P</a></li>
 <li><a href="#exemple-de-configuration-principale-h5p">Exemple de configuration principale H5P</a></li>
 <li><a href="#exemple-de-relabels-h5p">Exemple de relabels H5P</a></li>
 <li><a href="#exemple-de-recording-rules-h5p">Exemple de recording rules H5P</a></li>
-<li><a href="#exemple-dalerting-rule-h5p">Exemple d’alerting rule H5P</a><ul>
+<li><a href="#exemple-dalerting-rule-h5p">Exemple d’alerting rule H5P</a>
+<ul>
 <li><a href="#qcm---déploiement-et-configuration-quiz">QCM - Déploiement et configuration Quiz</a></li>
 </ul></li>
 <li><a href="#recette-docker-compose-de-la-plateforme-complète">Recette Docker Compose de la plateforme complète</a></li>
 </ul></li>
-<li><a href="#le-language-promql">Le language PromQL</a><ul>
-<li><a href="#les-bases">Les Bases</a><ul>
+<li><a href="#le-language-promql">Le language PromQL</a>
+<ul>
+<li><a href="#les-bases">Les Bases</a>
+<ul>
 <li><a href="#utilisation-de-regex">Utilisation de REGEX</a></li>
 <li><a href="#rappel-sur-la-théorie-des-ensemble">Rappel sur la théorie des ensemble</a></li>
 <li><a href="#qcm---les-base-du-promql">QCM - Les Base du PromQL</a></li>
 </ul></li>
-<li><a href="#promql-les-fonctions">PromQL: Les Fonctions</a><ul>
+<li><a href="#promql-les-fonctions">PromQL: Les Fonctions</a>
+<ul>
 <li><a href="#qcm---création-de-requêtes-promql">QCM - Création de requêtes PromQL</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#déploiement-et-configuration">Déploiement et configuration</a><ul>
+<li><a href="#déploiement-et-configuration">Déploiement et configuration</a>
+<ul>
 <li><a href="#exemple-de-déploiement-via-docker-compose">Exemple de déploiement via Docker-compose</a></li>
 </ul></li>
-<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a>
+<ul>
 <li><a href="#documentations-réseau">Documentations réseau</a></li>
 </ul></li>
 </ul>
@@ -139,8 +159,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h4 id="introduction">Introduction</h4>
 <p>Formateur: <strong>Alexandre Chaussier</strong></p>
 <ul>
-<li>Mail: <a href="mailto:a.chaussier@infopen.pro">a.chaussier@infopen.pro</a></li>
-<li>Tél: <a href="06.63.73.54.92" class="uri">06.63.73.54.92</a></li>
+<li>Mail: <a href="mailto:a.chaussier@infopen.pro" class="email">a.chaussier@infopen.pro</a></li>
+<li>Tél: <a href="06.63.73.54.92">06.63.73.54.92</a></li>
 </ul>
 <p>2e partie de 3 formations:</p>
 <ul>
@@ -206,18 +226,18 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h3 id="counter">Counter</h3>
 <p>C’est une valeur qui ne peut qu’augmenter ou être remise à 0, dans le cas de redémarrage par exemple</p>
 <p>Exemple: nombre de requêtes, d’erreurs, …</p>
-<pre class="sourceCode go" id="cb1"><code class="sourceCode go"><a class="sourceLine" id="cb1-1" data-line-number="1"># HELP node_softnet_processed_total Number of processed packets</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"># TYPE node_softnet_processed_total counter</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">node_softnet_processed_total{cpu=<span class="st">&quot;0&quot;</span>} <span class="dv">2</span><span class="fl">.40324588e+08</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">node_softnet_processed_total{cpu=<span class="st">&quot;1&quot;</span>} <span class="dv">2</span><span class="fl">.40305375e+08</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">node_softnet_processed_total{cpu=<span class="st">&quot;2&quot;</span>} <span class="dv">2</span><span class="fl">.38303536e+08</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">node_softnet_processed_total{cpu=<span class="st">&quot;3&quot;</span>} <span class="dv">2</span><span class="fl">.37670081e+08</span></a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb1-1"><a href="#cb1-1"></a># HELP node_softnet_processed_total Number of processed packets</span>
+<span id="cb1-2"><a href="#cb1-2"></a># TYPE node_softnet_processed_total counter</span>
+<span id="cb1-3"><a href="#cb1-3"></a>node_softnet_processed_total{cpu=<span class="st">&quot;0&quot;</span>} <span class="dv">2</span><span class="fl">.40324588e+08</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>node_softnet_processed_total{cpu=<span class="st">&quot;1&quot;</span>} <span class="dv">2</span><span class="fl">.40305375e+08</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>node_softnet_processed_total{cpu=<span class="st">&quot;2&quot;</span>} <span class="dv">2</span><span class="fl">.38303536e+08</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a>node_softnet_processed_total{cpu=<span class="st">&quot;3&quot;</span>} <span class="dv">2</span><span class="fl">.37670081e+08</span></span></code></pre></div>
 <h3 id="gauge">Gauge</h3>
 <p>C’est une valeur entière qui peut être incrémentée ou décrémentée, à la différence du compteur</p>
 <p>Exemple: les consommations mémoire, les températures, …</p>
-<pre class="sourceCode go" id="cb2"><code class="sourceCode go"><a class="sourceLine" id="cb2-1" data-line-number="1"># HELP node_entropy_available_bits Bits of available entropy.</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"># TYPE node_entropy_available_bits gauge</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">node_entropy_available_bits <span class="dv">3941</span></a></code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb2-1"><a href="#cb2-1"></a># HELP node_entropy_available_bits Bits of available entropy.</span>
+<span id="cb2-2"><a href="#cb2-2"></a># TYPE node_entropy_available_bits gauge</span>
+<span id="cb2-3"><a href="#cb2-3"></a>node_entropy_available_bits <span class="dv">3941</span></span></code></pre></div>
 <h3 id="histogram">Histogram</h3>
 <p>Permet de distribuer des valeurs sur un ensemble de poches.</p>
 <p>Par exemple, pour connaître la répartition de requêtes par leur temps d’exécution.</p>
@@ -234,16 +254,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>avec 5 poches ( 0.5 , 1 , 2 , 3 et 5 )</li>
 <li>ayant traité 3 requêtes qui ont respectivement duré 1s , 2s , 3s</li>
 </ul>
-<pre class="sourceCode go" id="cb3"><code class="sourceCode go"><a class="sourceLine" id="cb3-1" data-line-number="1"># HELP http_request_duration_seconds Request duration histogram</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"># TYPE http_request_duration_seconds histogram</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">http_request_duration_seconds_bucket{le=<span class="st">&quot;0.5&quot;</span>} <span class="dv">0</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">http_request_duration_seconds_bucket{le=<span class="st">&quot;1&quot;</span>} <span class="dv">1</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">http_request_duration_seconds_bucket{le=<span class="st">&quot;2&quot;</span>} <span class="dv">2</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">http_request_duration_seconds_bucket{le=<span class="st">&quot;3&quot;</span>} <span class="dv">3</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">http_request_duration_seconds_bucket{le=<span class="st">&quot;5&quot;</span>} <span class="dv">3</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8">http_request_duration_seconds_bucket{le=<span class="st">&quot;+Inf&quot;</span>} <span class="dv">3</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9">http_request_duration_seconds_sum <span class="dv">6</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10">http_request_duration_seconds_count <span class="dv">3</span></a></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode go"><code class="sourceCode go"><span id="cb3-1"><a href="#cb3-1"></a># HELP http_request_duration_seconds Request duration histogram</span>
+<span id="cb3-2"><a href="#cb3-2"></a># TYPE http_request_duration_seconds histogram</span>
+<span id="cb3-3"><a href="#cb3-3"></a>http_request_duration_seconds_bucket{le=<span class="st">&quot;0.5&quot;</span>} <span class="dv">0</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>http_request_duration_seconds_bucket{le=<span class="st">&quot;1&quot;</span>} <span class="dv">1</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a>http_request_duration_seconds_bucket{le=<span class="st">&quot;2&quot;</span>} <span class="dv">2</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>http_request_duration_seconds_bucket{le=<span class="st">&quot;3&quot;</span>} <span class="dv">3</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>http_request_duration_seconds_bucket{le=<span class="st">&quot;5&quot;</span>} <span class="dv">3</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>http_request_duration_seconds_bucket{le=<span class="st">&quot;+Inf&quot;</span>} <span class="dv">3</span></span>
+<span id="cb3-9"><a href="#cb3-9"></a>http_request_duration_seconds_sum <span class="dv">6</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>http_request_duration_seconds_count <span class="dv">3</span></span></code></pre></div>
 <h3 id="summary-moins-utilisé-et-plus-compliqué">Summary <em>(moins utilisé et plus compliqué)</em></h3>
 <p>Ce type de métrique est l’équivalent d’un appel à histogram_quantile() mais traité coté client</p>
 <ul>
@@ -283,305 +303,305 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <iframe src="2021-08-11-POEI-Prometheus/Export-des-slides/quiz-03-deploiement-et-configuration.html">
 </iframe>
 <h2 id="recette-docker-compose-de-la-plateforme-complète">Recette Docker Compose de la plateforme complète</h2>
-<pre class="sourceCode yaml" id="cb4"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="fu">version:</span><span class="at"> </span><span class="st">&#39;3.4&#39;</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="fu">x-logging:</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">    <span class="dt">&amp;default-logging</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="fu">driver:</span><span class="at"> </span><span class="st">&#39;json-file&#39;</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="fu">options:</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">      <span class="fu">max-size:</span><span class="at"> </span><span class="st">&quot;${LOGGING_MAX_SIZE}&quot;</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">      <span class="fu">max-file:</span><span class="at"> </span><span class="st">&quot;${LOGGING_MAX_FILE}&quot;</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">  <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13">    <span class="fu">alertmanager_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14">    <span class="fu">grafana_png:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-15" data-line-number="15">    <span class="fu">inbucket_config:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-16" data-line-number="16">    <span class="fu">inbucket_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="fu">postgres_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-18" data-line-number="18">    <span class="fu">prometheus_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-19" data-line-number="19">    <span class="fu">prometheus_fed_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-20" data-line-number="20">    <span class="fu">promlens_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-21" data-line-number="21">    <span class="fu">victoriametrics_data:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb4-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb4-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb4-24" data-line-number="24">  <span class="fu">services:</span></a>
-<a class="sourceLine" id="cb4-25" data-line-number="25">    <span class="fu">alertmanager:</span></a>
-<a class="sourceLine" id="cb4-26" data-line-number="26">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${ALERTMANAGER_IMAGE_NAME}:${ALERTMANAGER_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-27" data-line-number="27">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-28" data-line-number="28">        <span class="kw">-</span> <span class="st">&#39;--config.file=/etc/alertmanager/config.yml&#39;</span></a>
-<a class="sourceLine" id="cb4-29" data-line-number="29">        <span class="kw">-</span> <span class="st">&#39;--storage.path=/alertmanager&#39;</span></a>
-<a class="sourceLine" id="cb4-30" data-line-number="30">        <span class="kw">-</span> <span class="st">&#39;--web.external-url=http://alertmanager.localhost&#39;</span></a>
-<a class="sourceLine" id="cb4-31" data-line-number="31">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-32" data-line-number="32">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-33" data-line-number="33">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-34" data-line-number="34">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-35" data-line-number="35">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.alertmanager.rule=Host(`alertmanager.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-36" data-line-number="36">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.alertmanager.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-37" data-line-number="37">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-38" data-line-number="38">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-39" data-line-number="39">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-40" data-line-number="40">        <span class="kw">-</span> <span class="st">&#39;alertmanager_data:/alertmanager&#39;</span></a>
-<a class="sourceLine" id="cb4-41" data-line-number="41">        <span class="kw">-</span> <span class="st">&#39;./config/alertmanager/config.yml:/etc/alertmanager/config.yml:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-42" data-line-number="42">        <span class="kw">-</span> <span class="st">&#39;/etc/ssl/certs:/etc/ssl/certs:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-43" data-line-number="43">        <span class="kw">-</span> <span class="st">&#39;/etc/pki:/etc/pki:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-44" data-line-number="44"></a>
-<a class="sourceLine" id="cb4-45" data-line-number="45">    <span class="fu">blackbox_exporter:</span></a>
-<a class="sourceLine" id="cb4-46" data-line-number="46">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${BLACKBOX_EXPORTER_IMAGE_NAME}:${BLACKBOX_EXPORTER_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-47" data-line-number="47">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-48" data-line-number="48">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-49" data-line-number="49">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-50" data-line-number="50">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-51" data-line-number="51">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.blackbox_exporter.rule=Host(`blackbox-exporter.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-52" data-line-number="52">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.blackbox_exporter.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-53" data-line-number="53">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-54" data-line-number="54">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-55" data-line-number="55">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-56" data-line-number="56">        <span class="kw">-</span> <span class="st">&#39;./config/blackbox_exporter/config.yml:/etc/blackbox_exporter/config.yml:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-57" data-line-number="57"></a>
-<a class="sourceLine" id="cb4-58" data-line-number="58">    <span class="fu">cadvisor:</span></a>
-<a class="sourceLine" id="cb4-59" data-line-number="59">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${CADVISOR_IMAGE_NAME}:${CADVISOR_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-60" data-line-number="60">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-61" data-line-number="61">        <span class="kw">-</span> <span class="st">&#39;/usr/bin/cadvisor&#39;</span></a>
-<a class="sourceLine" id="cb4-62" data-line-number="62">        <span class="kw">-</span> <span class="st">&#39;-port 8080&#39;</span></a>
-<a class="sourceLine" id="cb4-63" data-line-number="63">        <span class="kw">-</span> <span class="st">&#39;-logtostderr&#39;</span></a>
-<a class="sourceLine" id="cb4-64" data-line-number="64">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-65" data-line-number="65">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-66" data-line-number="66">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-67" data-line-number="67">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-68" data-line-number="68">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.cadvisor.rule=Host(`cadvisor.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-69" data-line-number="69">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.cadvisor.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-70" data-line-number="70">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-71" data-line-number="71">      <span class="fu">privileged:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb4-72" data-line-number="72">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-73" data-line-number="73">      <span class="fu">user:</span><span class="at"> </span><span class="st">&#39;root&#39;</span></a>
-<a class="sourceLine" id="cb4-74" data-line-number="74">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-75" data-line-number="75">        <span class="kw">-</span> <span class="st">&#39;/:/rootfs:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-76" data-line-number="76">        <span class="kw">-</span> <span class="st">&#39;/cgroup/:/cgroup:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-77" data-line-number="77">        <span class="kw">-</span> <span class="st">&#39;/dev/disk/:/dev/disk:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-78" data-line-number="78">        <span class="kw">-</span> <span class="st">&#39;/dev/kmsg/:/dev/kmsg:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-79" data-line-number="79">        <span class="kw">-</span> <span class="st">&#39;/proc:/host/proc:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-80" data-line-number="80">        <span class="kw">-</span> <span class="st">&#39;/sys:/sys:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-81" data-line-number="81">        <span class="kw">-</span> <span class="st">&#39;/var/lib/docker/:/var/lib/docker:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-82" data-line-number="82">        <span class="kw">-</span> <span class="st">&#39;/var/run:/var/run:rw&#39;</span></a>
-<a class="sourceLine" id="cb4-83" data-line-number="83"></a>
-<a class="sourceLine" id="cb4-84" data-line-number="84">    <span class="fu">grafana:</span></a>
-<a class="sourceLine" id="cb4-85" data-line-number="85">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${GRAFANA_IMAGE_NAME}:${GRAFANA_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-86" data-line-number="86">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-87" data-line-number="87">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-88" data-line-number="88">      <span class="fu">env_file:</span></a>
-<a class="sourceLine" id="cb4-89" data-line-number="89">        <span class="kw">-</span> <span class="st">&#39;./env/grafana.env&#39;</span></a>
-<a class="sourceLine" id="cb4-90" data-line-number="90">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-91" data-line-number="91">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-92" data-line-number="92">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.grafana.rule=Host(`grafana.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-93" data-line-number="93">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.grafana.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-94" data-line-number="94">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-95" data-line-number="95">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-96" data-line-number="96">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-97" data-line-number="97">        <span class="kw">-</span> <span class="st">&#39;grafana_png:/var/lib/grafana/png&#39;</span></a>
-<a class="sourceLine" id="cb4-98" data-line-number="98">        <span class="kw">-</span> <span class="st">&#39;./config/grafana/provisionning/datasources:/etc/grafana/provisioning/datasources&#39;</span></a>
-<a class="sourceLine" id="cb4-99" data-line-number="99">        <span class="kw">-</span> <span class="st">&#39;./config/grafana/provisionning/dashboards:/etc/grafana/provisioning/dashboards&#39;</span></a>
-<a class="sourceLine" id="cb4-100" data-line-number="100">        <span class="kw">-</span> <span class="st">&#39;./config/grafana/provisionning/plugins:/etc/grafana/provisioning/plugins&#39;</span></a>
-<a class="sourceLine" id="cb4-101" data-line-number="101">        <span class="kw">-</span> <span class="st">&#39;./config/grafana/dashboards:/var/lib/grafana/dashboards&#39;</span></a>
-<a class="sourceLine" id="cb4-102" data-line-number="102"></a>
-<a class="sourceLine" id="cb4-103" data-line-number="103">    <span class="fu">inbucket:</span></a>
-<a class="sourceLine" id="cb4-104" data-line-number="104">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${INBUCKET_IMAGE_NAME}:${INBUCKET_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-105" data-line-number="105">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-106" data-line-number="106">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-107" data-line-number="107">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-108" data-line-number="108">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-109" data-line-number="109">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.inbucket.rule=Host(`inbucket.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-110" data-line-number="110">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.inbucket.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-111" data-line-number="111">        <span class="kw">-</span> <span class="st">&#39;traefik.http.services.inbucket.loadbalancer.server.port=9000&#39;</span></a>
-<a class="sourceLine" id="cb4-112" data-line-number="112">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-113" data-line-number="113">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-114" data-line-number="114">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-115" data-line-number="115">        <span class="kw">-</span> <span class="st">&#39;inbucket_config:/config&#39;</span></a>
-<a class="sourceLine" id="cb4-116" data-line-number="116">        <span class="kw">-</span> <span class="st">&#39;inbucket_data:/storage&#39;</span></a>
-<a class="sourceLine" id="cb4-117" data-line-number="117"></a>
-<a class="sourceLine" id="cb4-118" data-line-number="118">    <span class="fu">node_exporter:</span></a>
-<a class="sourceLine" id="cb4-119" data-line-number="119">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${NODE_EXPORTER_IMAGE_NAME}:${NODE_EXPORTER_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-120" data-line-number="120">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-121" data-line-number="121">        <span class="kw">-</span> <span class="st">&#39;--path.procfs=/host/proc&#39;</span></a>
-<a class="sourceLine" id="cb4-122" data-line-number="122">        <span class="kw">-</span> <span class="st">&#39;--path.rootfs=/rootfs&#39;</span></a>
-<a class="sourceLine" id="cb4-123" data-line-number="123">        <span class="kw">-</span> <span class="st">&#39;--path.sysfs=/host/sys&#39;</span></a>
-<a class="sourceLine" id="cb4-124" data-line-number="124">        <span class="kw">-</span> <span class="st">&#39;--collector.filesystem.ignored-mount-points=^/(dev|etc|host|proc|run|sys|var\/lib\/docker\/containers\/.*\/mounts\/shm)($$|/)&#39;</span></a>
-<a class="sourceLine" id="cb4-125" data-line-number="125">        <span class="kw">-</span> <span class="st">&#39;--collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|squashfs|sysfs|tracefs)$$&#39;</span></a>
-<a class="sourceLine" id="cb4-126" data-line-number="126">        <span class="kw">-</span> <span class="st">&#39;--collector.mountstats&#39;</span></a>
-<a class="sourceLine" id="cb4-127" data-line-number="127">        <span class="kw">-</span> <span class="st">&#39;--collector.systemd&#39;</span></a>
-<a class="sourceLine" id="cb4-128" data-line-number="128">        <span class="kw">-</span> <span class="st">&#39;--collector.tcpstat&#39;</span></a>
-<a class="sourceLine" id="cb4-129" data-line-number="129">        <span class="kw">-</span> <span class="st">&#39;--collector.time&#39;</span></a>
-<a class="sourceLine" id="cb4-130" data-line-number="130">        <span class="kw">-</span> <span class="st">&#39;--collector.uname&#39;</span></a>
-<a class="sourceLine" id="cb4-131" data-line-number="131">        <span class="kw">-</span> <span class="st">&#39;--no-collector.powersupplyclass&#39;</span></a>
-<a class="sourceLine" id="cb4-132" data-line-number="132">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-133" data-line-number="133">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-134" data-line-number="134">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-135" data-line-number="135">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-136" data-line-number="136">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.node_exporter.rule=Host(`node-exporter.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-137" data-line-number="137">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.node_exporter.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-138" data-line-number="138">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-139" data-line-number="139">      <span class="fu">privileged:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb4-140" data-line-number="140">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-141" data-line-number="141">      <span class="fu">user:</span><span class="at"> </span><span class="st">&#39;root&#39;</span></a>
-<a class="sourceLine" id="cb4-142" data-line-number="142">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-143" data-line-number="143">        <span class="kw">-</span> <span class="st">&#39;/:/rootfs:ro,rslave&#39;</span></a>
-<a class="sourceLine" id="cb4-144" data-line-number="144">        <span class="kw">-</span> <span class="st">&#39;/cgroup/:/cgroup:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-145" data-line-number="145">        <span class="kw">-</span> <span class="st">&#39;/dev/disk/:/dev/disk:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-146" data-line-number="146">        <span class="kw">-</span> <span class="st">&#39;/proc:/host/proc:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-147" data-line-number="147">        <span class="kw">-</span> <span class="st">&#39;/run:/run:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-148" data-line-number="148">        <span class="kw">-</span> <span class="st">&#39;/sys:/host/sys:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-149" data-line-number="149"></a>
-<a class="sourceLine" id="cb4-150" data-line-number="150">    <span class="fu">postgres:</span></a>
-<a class="sourceLine" id="cb4-151" data-line-number="151">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${POSTGRES_IMAGE_NAME}:${POSTGRES_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-152" data-line-number="152">      <span class="fu">env_file:</span></a>
-<a class="sourceLine" id="cb4-153" data-line-number="153">        <span class="kw">-</span> <span class="st">&#39;./env/postgres.env&#39;</span></a>
-<a class="sourceLine" id="cb4-154" data-line-number="154">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-155" data-line-number="155">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-156" data-line-number="156">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-157" data-line-number="157">        <span class="kw">-</span> <span class="st">&#39;postgres_data:/var/lib/postgresql/data&#39;</span></a>
-<a class="sourceLine" id="cb4-158" data-line-number="158"></a>
-<a class="sourceLine" id="cb4-159" data-line-number="159">    <span class="fu">prometheus:</span></a>
-<a class="sourceLine" id="cb4-160" data-line-number="160">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${PROMETHEUS_IMAGE_NAME}:${PROMETHEUS_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-161" data-line-number="161">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-162" data-line-number="162">        <span class="kw">-</span> <span class="st">&#39;--config.file=/etc/prometheus/prometheus.yml&#39;</span></a>
-<a class="sourceLine" id="cb4-163" data-line-number="163">        <span class="kw">-</span> <span class="st">&#39;--storage.tsdb.path=/prometheus&#39;</span></a>
-<a class="sourceLine" id="cb4-164" data-line-number="164">        <span class="kw">-</span> <span class="st">&#39;--storage.tsdb.retention=30m&#39;</span></a>
-<a class="sourceLine" id="cb4-165" data-line-number="165">        <span class="kw">-</span> <span class="st">&#39;--web.external-url=http://prometheus.localhost&#39;</span></a>
-<a class="sourceLine" id="cb4-166" data-line-number="166">        <span class="kw">-</span> <span class="st">&#39;--web.enable-lifecycle&#39;</span></a>
-<a class="sourceLine" id="cb4-167" data-line-number="167">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-168" data-line-number="168">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-169" data-line-number="169">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-170" data-line-number="170">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-171" data-line-number="171">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-172" data-line-number="172">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.prometheus.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-173" data-line-number="173">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-174" data-line-number="174">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-175" data-line-number="175">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-176" data-line-number="176">        <span class="kw">-</span> <span class="st">&#39;./config/prometheus/:/etc/prometheus/&#39;</span></a>
-<a class="sourceLine" id="cb4-177" data-line-number="177">        <span class="kw">-</span> <span class="st">&#39;prometheus_data:/prometheus/&#39;</span></a>
-<a class="sourceLine" id="cb4-178" data-line-number="178"></a>
-<a class="sourceLine" id="cb4-179" data-line-number="179">    <span class="fu">process_exporter:</span></a>
-<a class="sourceLine" id="cb4-180" data-line-number="180">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${PROCESS_EXPORTER_IMAGE_NAME}:${PROCESS_EXPORTER_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-181" data-line-number="181">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-182" data-line-number="182">        <span class="kw">-</span> <span class="st">&#39;-procfs=/host/proc&#39;</span></a>
-<a class="sourceLine" id="cb4-183" data-line-number="183">        <span class="kw">-</span> <span class="st">&#39;-config.path=/etc/config.yml&#39;</span></a>
-<a class="sourceLine" id="cb4-184" data-line-number="184">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-185" data-line-number="185">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-186" data-line-number="186">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.process_exporter.rule=Host(`process-exporter.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-187" data-line-number="187">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.process_exporter.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-188" data-line-number="188">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-189" data-line-number="189">      <span class="fu">privileged:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb4-190" data-line-number="190">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-191" data-line-number="191">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-192" data-line-number="192">        <span class="kw">-</span> <span class="st">&#39;./config/process-exporter/config.yml:/etc/config.yml&#39;</span></a>
-<a class="sourceLine" id="cb4-193" data-line-number="193">        <span class="kw">-</span> <span class="st">&#39;/proc:/host/proc:ro&#39;</span></a>
-<a class="sourceLine" id="cb4-194" data-line-number="194"></a>
-<a class="sourceLine" id="cb4-195" data-line-number="195">    <span class="fu">prometheus_fed:</span></a>
-<a class="sourceLine" id="cb4-196" data-line-number="196">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${PROMETHEUS_IMAGE_NAME}:${PROMETHEUS_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-197" data-line-number="197">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-198" data-line-number="198">        <span class="kw">-</span> <span class="st">&#39;--config.file=/etc/prometheus/prometheus-fed.yml&#39;</span></a>
-<a class="sourceLine" id="cb4-199" data-line-number="199">        <span class="kw">-</span> <span class="st">&#39;--storage.tsdb.path=/prometheus&#39;</span></a>
-<a class="sourceLine" id="cb4-200" data-line-number="200">        <span class="kw">-</span> <span class="st">&#39;--storage.tsdb.retention=30m&#39;</span></a>
-<a class="sourceLine" id="cb4-201" data-line-number="201">        <span class="kw">-</span> <span class="st">&#39;--web.external-url=http://prometheus-fed.localhost&#39;</span></a>
-<a class="sourceLine" id="cb4-202" data-line-number="202">        <span class="kw">-</span> <span class="st">&#39;--web.enable-lifecycle&#39;</span></a>
-<a class="sourceLine" id="cb4-203" data-line-number="203">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-204" data-line-number="204">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-205" data-line-number="205">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-206" data-line-number="206">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-207" data-line-number="207">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.prometheus_fed.rule=Host(`prometheus-fed.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-208" data-line-number="208">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.prometheus_fed.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-209" data-line-number="209">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-210" data-line-number="210">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-211" data-line-number="211">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-212" data-line-number="212">        <span class="kw">-</span> <span class="st">&#39;./config/prometheus/:/etc/prometheus/&#39;</span></a>
-<a class="sourceLine" id="cb4-213" data-line-number="213">        <span class="kw">-</span> <span class="st">&#39;prometheus_fed_data:/prometheus/&#39;</span></a>
-<a class="sourceLine" id="cb4-214" data-line-number="214"></a>
-<a class="sourceLine" id="cb4-215" data-line-number="215">    <span class="fu">pushgateway:</span></a>
-<a class="sourceLine" id="cb4-216" data-line-number="216">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${PUSHGATEWAY_IMAGE_NAME}:${PUSHGATEWAY_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-217" data-line-number="217">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-218" data-line-number="218">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-219" data-line-number="219">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-220" data-line-number="220">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-221" data-line-number="221">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.pushgateway.rule=Host(`pushgateway.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-222" data-line-number="222">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.pushgateway.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-223" data-line-number="223">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-224" data-line-number="224">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-225" data-line-number="225"></a>
-<a class="sourceLine" id="cb4-226" data-line-number="226">    <span class="fu">victoriametrics:</span></a>
-<a class="sourceLine" id="cb4-227" data-line-number="227">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${VICTORIAMETRICS_IMAGE_NAME}:${VICTORIAMETRICS_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-228" data-line-number="228">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-229" data-line-number="229">        <span class="kw">-</span> <span class="st">&#39;--storageDataPath=/storage&#39;</span></a>
-<a class="sourceLine" id="cb4-230" data-line-number="230">        <span class="kw">-</span> <span class="st">&#39;--graphiteListenAddr=:2003&#39;</span></a>
-<a class="sourceLine" id="cb4-231" data-line-number="231">        <span class="kw">-</span> <span class="st">&#39;--opentsdbListenAddr=:4242&#39;</span></a>
-<a class="sourceLine" id="cb4-232" data-line-number="232">        <span class="kw">-</span> <span class="st">&#39;--httpListenAddr=:8428&#39;</span></a>
-<a class="sourceLine" id="cb4-233" data-line-number="233">        <span class="kw">-</span> <span class="st">&#39;--influxListenAddr=:8089&#39;</span></a>
-<a class="sourceLine" id="cb4-234" data-line-number="234">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-235" data-line-number="235">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-236" data-line-number="236">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-237" data-line-number="237">          <span class="kw">-</span> <span class="st">&#39;victoriametrics_data:/storage&#39;</span></a>
-<a class="sourceLine" id="cb4-238" data-line-number="238"></a>
-<a class="sourceLine" id="cb4-239" data-line-number="239">    <span class="fu">promlens:</span></a>
-<a class="sourceLine" id="cb4-240" data-line-number="240">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${PROMLENS_IMAGE_NAME}:${PROMLENS_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-241" data-line-number="241">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-242" data-line-number="242">        <span class="co">#- &quot;--license.key=${PROMLENS_LICENSE_KEY}&quot;</span></a>
-<a class="sourceLine" id="cb4-243" data-line-number="243">        <span class="kw">-</span> <span class="st">&#39;--shared-links.sql.driver=sqlite3&#39;</span></a>
-<a class="sourceLine" id="cb4-244" data-line-number="244">        <span class="kw">-</span> <span class="st">&#39;--shared-links.sql.dsn=/data/promlens-links.db&#39;</span></a>
-<a class="sourceLine" id="cb4-245" data-line-number="245">        <span class="co">#- &#39;--grafana.url=http://grafana:3000&#39;</span></a>
-<a class="sourceLine" id="cb4-246" data-line-number="246">        <span class="co">#- &#39;--grafana.api-token=${PROMLENS_GRAFANA_API_KEY}&#39;</span></a>
-<a class="sourceLine" id="cb4-247" data-line-number="247">        <span class="kw">-</span> <span class="st">&#39;--web.default-prometheus-url=http://victoriametrics:8428&#39;</span></a>
-<a class="sourceLine" id="cb4-248" data-line-number="248">        <span class="kw">-</span> <span class="st">&#39;--web.external-url=http://promlens.localhost&#39;</span></a>
-<a class="sourceLine" id="cb4-249" data-line-number="249">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-250" data-line-number="250">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-251" data-line-number="251">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-252" data-line-number="252">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-253" data-line-number="253">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.promlens.rule=Host(`promlens.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-254" data-line-number="254">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.promlens.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-255" data-line-number="255">        <span class="kw">-</span> <span class="st">&#39;traefik.http.services.promlens.loadbalancer.server.port=8080&#39;</span></a>
-<a class="sourceLine" id="cb4-256" data-line-number="256">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-257" data-line-number="257">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-258" data-line-number="258">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-259" data-line-number="259">          <span class="kw">-</span> <span class="st">&#39;promlens_data:/data&#39;</span></a>
-<a class="sourceLine" id="cb4-260" data-line-number="260"></a>
-<a class="sourceLine" id="cb4-261" data-line-number="261">    <span class="fu">flask_app:</span></a>
-<a class="sourceLine" id="cb4-262" data-line-number="262">      <span class="fu">build:</span></a>
-<a class="sourceLine" id="cb4-263" data-line-number="263">        <span class="fu">context:</span><span class="at"> </span><span class="st">&#39;docker/flask-app&#39;</span></a>
-<a class="sourceLine" id="cb4-264" data-line-number="264">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-265" data-line-number="265">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-266" data-line-number="266">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb4-267" data-line-number="267">        <span class="kw">-</span> <span class="st">&#39;traefik.enable=true&#39;</span></a>
-<a class="sourceLine" id="cb4-268" data-line-number="268">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.flask_app.rule=Host(`flask-app.localhost`)&#39;</span></a>
-<a class="sourceLine" id="cb4-269" data-line-number="269">        <span class="kw">-</span> <span class="st">&#39;traefik.http.routers.flask_app.entrypoints=web&#39;</span></a>
-<a class="sourceLine" id="cb4-270" data-line-number="270">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-271" data-line-number="271">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-272" data-line-number="272"></a>
-<a class="sourceLine" id="cb4-273" data-line-number="273">    <span class="fu">flask_app_scrap:</span></a>
-<a class="sourceLine" id="cb4-274" data-line-number="274">      <span class="fu">build:</span></a>
-<a class="sourceLine" id="cb4-275" data-line-number="275">        <span class="fu">context:</span><span class="at"> </span><span class="st">&#39;docker/flask-app-scrap&#39;</span></a>
-<a class="sourceLine" id="cb4-276" data-line-number="276">      <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb4-277" data-line-number="277">        <span class="kw">-</span> <span class="st">&#39;traefik&#39;</span></a>
-<a class="sourceLine" id="cb4-278" data-line-number="278">        <span class="kw">-</span> <span class="st">&#39;flask_app&#39;</span></a>
-<a class="sourceLine" id="cb4-279" data-line-number="279">      <span class="fu">logging:</span><span class="at"> </span><span class="dt">*default-logging</span></a>
-<a class="sourceLine" id="cb4-280" data-line-number="280">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-281" data-line-number="281"></a>
-<a class="sourceLine" id="cb4-282" data-line-number="282"></a>
-<a class="sourceLine" id="cb4-283" data-line-number="283">    <span class="co"># Reverse proxy</span></a>
-<a class="sourceLine" id="cb4-284" data-line-number="284">    <span class="fu">traefik:</span></a>
-<a class="sourceLine" id="cb4-285" data-line-number="285">      <span class="fu">image:</span><span class="at"> </span><span class="st">&quot;${TRAEFIK_IMAGE_NAME}:${TRAEFIK_IMAGE_VERSION}&quot;</span></a>
-<a class="sourceLine" id="cb4-286" data-line-number="286">      <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb4-287" data-line-number="287">        <span class="kw">-</span> <span class="st">&#39;--api.insecure=true&#39;</span></a>
-<a class="sourceLine" id="cb4-288" data-line-number="288">        <span class="kw">-</span> <span class="st">&#39;--metrics.prometheus=true&#39;</span></a>
-<a class="sourceLine" id="cb4-289" data-line-number="289">        <span class="kw">-</span> <span class="st">&#39;--metrics.prometheus.addEntryPointsLabels=true&#39;</span></a>
-<a class="sourceLine" id="cb4-290" data-line-number="290">        <span class="kw">-</span> <span class="st">&#39;--metrics.prometheus.addServicesLabels=true&#39;</span></a>
-<a class="sourceLine" id="cb4-291" data-line-number="291">        <span class="kw">-</span> <span class="st">&#39;--providers.docker=true&#39;</span></a>
-<a class="sourceLine" id="cb4-292" data-line-number="292">        <span class="kw">-</span> <span class="st">&#39;--providers.docker.exposedbydefault=false&#39;</span></a>
-<a class="sourceLine" id="cb4-293" data-line-number="293">        <span class="kw">-</span> <span class="st">&#39;--entrypoints.web.address=:80&#39;</span></a>
-<a class="sourceLine" id="cb4-294" data-line-number="294">      <span class="fu">ports:</span></a>
-<a class="sourceLine" id="cb4-295" data-line-number="295">        <span class="kw">-</span> <span class="st">&#39;80:80&#39;</span></a>
-<a class="sourceLine" id="cb4-296" data-line-number="296">        <span class="kw">-</span> <span class="st">&#39;8080:8080&#39;</span></a>
-<a class="sourceLine" id="cb4-297" data-line-number="297">      <span class="fu">restart:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></a>
-<a class="sourceLine" id="cb4-298" data-line-number="298">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb4-299" data-line-number="299">        <span class="kw">-</span> <span class="st">&#39;/var/run/docker.sock:/var/run/docker.sock:ro&#39;</span></a></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb4-1"><a href="#cb4-1"></a><span class="pp">---</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;3.4&#39;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="at">  </span><span class="fu">x-logging</span><span class="kw">:</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="at">    </span><span class="ot">&amp;default-logging</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="at">    </span><span class="fu">driver</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;json-file&#39;</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="at">    </span><span class="fu">options</span><span class="kw">:</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="at">      </span><span class="fu">max-size</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${LOGGING_MAX_SIZE}&quot;</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="at">      </span><span class="fu">max-file</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${LOGGING_MAX_FILE}&quot;</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a></span>
+<span id="cb4-12"><a href="#cb4-12"></a><span class="at">  </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="at">    </span><span class="fu">alertmanager_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="at">    </span><span class="fu">grafana_png</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="at">    </span><span class="fu">inbucket_config</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="at">    </span><span class="fu">inbucket_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="at">    </span><span class="fu">postgres_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="at">    </span><span class="fu">prometheus_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="at">    </span><span class="fu">prometheus_fed_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a><span class="at">    </span><span class="fu">promlens_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a><span class="at">    </span><span class="fu">victoriametrics_data</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb4-22"><a href="#cb4-22"></a></span>
+<span id="cb4-23"><a href="#cb4-23"></a></span>
+<span id="cb4-24"><a href="#cb4-24"></a><span class="at">  </span><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a><span class="at">    </span><span class="fu">alertmanager</span><span class="kw">:</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${ALERTMANAGER_IMAGE_NAME}:${ALERTMANAGER_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-27"><a href="#cb4-27"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-28"><a href="#cb4-28"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--config.file=/etc/alertmanager/config.yml&#39;</span></span>
+<span id="cb4-29"><a href="#cb4-29"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--storage.path=/alertmanager&#39;</span></span>
+<span id="cb4-30"><a href="#cb4-30"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.external-url=http://alertmanager.localhost&#39;</span></span>
+<span id="cb4-31"><a href="#cb4-31"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-32"><a href="#cb4-32"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-33"><a href="#cb4-33"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-34"><a href="#cb4-34"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-35"><a href="#cb4-35"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.alertmanager.rule=Host(`alertmanager.localhost`)&#39;</span></span>
+<span id="cb4-36"><a href="#cb4-36"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.alertmanager.entrypoints=web&#39;</span></span>
+<span id="cb4-37"><a href="#cb4-37"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-38"><a href="#cb4-38"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-39"><a href="#cb4-39"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-40"><a href="#cb4-40"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;alertmanager_data:/alertmanager&#39;</span></span>
+<span id="cb4-41"><a href="#cb4-41"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/alertmanager/config.yml:/etc/alertmanager/config.yml:ro&#39;</span></span>
+<span id="cb4-42"><a href="#cb4-42"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/etc/ssl/certs:/etc/ssl/certs:ro&#39;</span></span>
+<span id="cb4-43"><a href="#cb4-43"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/etc/pki:/etc/pki:ro&#39;</span></span>
+<span id="cb4-44"><a href="#cb4-44"></a></span>
+<span id="cb4-45"><a href="#cb4-45"></a><span class="at">    </span><span class="fu">blackbox_exporter</span><span class="kw">:</span></span>
+<span id="cb4-46"><a href="#cb4-46"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${BLACKBOX_EXPORTER_IMAGE_NAME}:${BLACKBOX_EXPORTER_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-47"><a href="#cb4-47"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-48"><a href="#cb4-48"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-49"><a href="#cb4-49"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-50"><a href="#cb4-50"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-51"><a href="#cb4-51"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.blackbox_exporter.rule=Host(`blackbox-exporter.localhost`)&#39;</span></span>
+<span id="cb4-52"><a href="#cb4-52"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.blackbox_exporter.entrypoints=web&#39;</span></span>
+<span id="cb4-53"><a href="#cb4-53"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-54"><a href="#cb4-54"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-55"><a href="#cb4-55"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-56"><a href="#cb4-56"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/blackbox_exporter/config.yml:/etc/blackbox_exporter/config.yml:ro&#39;</span></span>
+<span id="cb4-57"><a href="#cb4-57"></a></span>
+<span id="cb4-58"><a href="#cb4-58"></a><span class="at">    </span><span class="fu">cadvisor</span><span class="kw">:</span></span>
+<span id="cb4-59"><a href="#cb4-59"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${CADVISOR_IMAGE_NAME}:${CADVISOR_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-60"><a href="#cb4-60"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-61"><a href="#cb4-61"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/usr/bin/cadvisor&#39;</span></span>
+<span id="cb4-62"><a href="#cb4-62"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;-port 8080&#39;</span></span>
+<span id="cb4-63"><a href="#cb4-63"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;-logtostderr&#39;</span></span>
+<span id="cb4-64"><a href="#cb4-64"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-65"><a href="#cb4-65"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-66"><a href="#cb4-66"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-67"><a href="#cb4-67"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-68"><a href="#cb4-68"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.cadvisor.rule=Host(`cadvisor.localhost`)&#39;</span></span>
+<span id="cb4-69"><a href="#cb4-69"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.cadvisor.entrypoints=web&#39;</span></span>
+<span id="cb4-70"><a href="#cb4-70"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-71"><a href="#cb4-71"></a><span class="at">      </span><span class="fu">privileged</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-72"><a href="#cb4-72"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-73"><a href="#cb4-73"></a><span class="at">      </span><span class="fu">user</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;root&#39;</span></span>
+<span id="cb4-74"><a href="#cb4-74"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-75"><a href="#cb4-75"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/:/rootfs:ro&#39;</span></span>
+<span id="cb4-76"><a href="#cb4-76"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/cgroup/:/cgroup:ro&#39;</span></span>
+<span id="cb4-77"><a href="#cb4-77"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/dev/disk/:/dev/disk:ro&#39;</span></span>
+<span id="cb4-78"><a href="#cb4-78"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/dev/kmsg/:/dev/kmsg:ro&#39;</span></span>
+<span id="cb4-79"><a href="#cb4-79"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/proc:/host/proc:ro&#39;</span></span>
+<span id="cb4-80"><a href="#cb4-80"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/sys:/sys:ro&#39;</span></span>
+<span id="cb4-81"><a href="#cb4-81"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/var/lib/docker/:/var/lib/docker:ro&#39;</span></span>
+<span id="cb4-82"><a href="#cb4-82"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/var/run:/var/run:rw&#39;</span></span>
+<span id="cb4-83"><a href="#cb4-83"></a></span>
+<span id="cb4-84"><a href="#cb4-84"></a><span class="at">    </span><span class="fu">grafana</span><span class="kw">:</span></span>
+<span id="cb4-85"><a href="#cb4-85"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${GRAFANA_IMAGE_NAME}:${GRAFANA_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-86"><a href="#cb4-86"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-87"><a href="#cb4-87"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-88"><a href="#cb4-88"></a><span class="at">      </span><span class="fu">env_file</span><span class="kw">:</span></span>
+<span id="cb4-89"><a href="#cb4-89"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./env/grafana.env&#39;</span></span>
+<span id="cb4-90"><a href="#cb4-90"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-91"><a href="#cb4-91"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-92"><a href="#cb4-92"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.grafana.rule=Host(`grafana.localhost`)&#39;</span></span>
+<span id="cb4-93"><a href="#cb4-93"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.grafana.entrypoints=web&#39;</span></span>
+<span id="cb4-94"><a href="#cb4-94"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-95"><a href="#cb4-95"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-96"><a href="#cb4-96"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-97"><a href="#cb4-97"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;grafana_png:/var/lib/grafana/png&#39;</span></span>
+<span id="cb4-98"><a href="#cb4-98"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/grafana/provisionning/datasources:/etc/grafana/provisioning/datasources&#39;</span></span>
+<span id="cb4-99"><a href="#cb4-99"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/grafana/provisionning/dashboards:/etc/grafana/provisioning/dashboards&#39;</span></span>
+<span id="cb4-100"><a href="#cb4-100"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/grafana/provisionning/plugins:/etc/grafana/provisioning/plugins&#39;</span></span>
+<span id="cb4-101"><a href="#cb4-101"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/grafana/dashboards:/var/lib/grafana/dashboards&#39;</span></span>
+<span id="cb4-102"><a href="#cb4-102"></a></span>
+<span id="cb4-103"><a href="#cb4-103"></a><span class="at">    </span><span class="fu">inbucket</span><span class="kw">:</span></span>
+<span id="cb4-104"><a href="#cb4-104"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${INBUCKET_IMAGE_NAME}:${INBUCKET_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-105"><a href="#cb4-105"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-106"><a href="#cb4-106"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-107"><a href="#cb4-107"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-108"><a href="#cb4-108"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-109"><a href="#cb4-109"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.inbucket.rule=Host(`inbucket.localhost`)&#39;</span></span>
+<span id="cb4-110"><a href="#cb4-110"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.inbucket.entrypoints=web&#39;</span></span>
+<span id="cb4-111"><a href="#cb4-111"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.services.inbucket.loadbalancer.server.port=9000&#39;</span></span>
+<span id="cb4-112"><a href="#cb4-112"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-113"><a href="#cb4-113"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-114"><a href="#cb4-114"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-115"><a href="#cb4-115"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;inbucket_config:/config&#39;</span></span>
+<span id="cb4-116"><a href="#cb4-116"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;inbucket_data:/storage&#39;</span></span>
+<span id="cb4-117"><a href="#cb4-117"></a></span>
+<span id="cb4-118"><a href="#cb4-118"></a><span class="at">    </span><span class="fu">node_exporter</span><span class="kw">:</span></span>
+<span id="cb4-119"><a href="#cb4-119"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${NODE_EXPORTER_IMAGE_NAME}:${NODE_EXPORTER_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-120"><a href="#cb4-120"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-121"><a href="#cb4-121"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--path.procfs=/host/proc&#39;</span></span>
+<span id="cb4-122"><a href="#cb4-122"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--path.rootfs=/rootfs&#39;</span></span>
+<span id="cb4-123"><a href="#cb4-123"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--path.sysfs=/host/sys&#39;</span></span>
+<span id="cb4-124"><a href="#cb4-124"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.filesystem.ignored-mount-points=^/(dev|etc|host|proc|run|sys|var\/lib\/docker\/containers\/.*\/mounts\/shm)($$|/)&#39;</span></span>
+<span id="cb4-125"><a href="#cb4-125"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|squashfs|sysfs|tracefs)$$&#39;</span></span>
+<span id="cb4-126"><a href="#cb4-126"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.mountstats&#39;</span></span>
+<span id="cb4-127"><a href="#cb4-127"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.systemd&#39;</span></span>
+<span id="cb4-128"><a href="#cb4-128"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.tcpstat&#39;</span></span>
+<span id="cb4-129"><a href="#cb4-129"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.time&#39;</span></span>
+<span id="cb4-130"><a href="#cb4-130"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--collector.uname&#39;</span></span>
+<span id="cb4-131"><a href="#cb4-131"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--no-collector.powersupplyclass&#39;</span></span>
+<span id="cb4-132"><a href="#cb4-132"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-133"><a href="#cb4-133"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-134"><a href="#cb4-134"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-135"><a href="#cb4-135"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-136"><a href="#cb4-136"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.node_exporter.rule=Host(`node-exporter.localhost`)&#39;</span></span>
+<span id="cb4-137"><a href="#cb4-137"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.node_exporter.entrypoints=web&#39;</span></span>
+<span id="cb4-138"><a href="#cb4-138"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-139"><a href="#cb4-139"></a><span class="at">      </span><span class="fu">privileged</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-140"><a href="#cb4-140"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-141"><a href="#cb4-141"></a><span class="at">      </span><span class="fu">user</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;root&#39;</span></span>
+<span id="cb4-142"><a href="#cb4-142"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-143"><a href="#cb4-143"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/:/rootfs:ro,rslave&#39;</span></span>
+<span id="cb4-144"><a href="#cb4-144"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/cgroup/:/cgroup:ro&#39;</span></span>
+<span id="cb4-145"><a href="#cb4-145"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/dev/disk/:/dev/disk:ro&#39;</span></span>
+<span id="cb4-146"><a href="#cb4-146"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/proc:/host/proc:ro&#39;</span></span>
+<span id="cb4-147"><a href="#cb4-147"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/run:/run:ro&#39;</span></span>
+<span id="cb4-148"><a href="#cb4-148"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/sys:/host/sys:ro&#39;</span></span>
+<span id="cb4-149"><a href="#cb4-149"></a></span>
+<span id="cb4-150"><a href="#cb4-150"></a><span class="at">    </span><span class="fu">postgres</span><span class="kw">:</span></span>
+<span id="cb4-151"><a href="#cb4-151"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${POSTGRES_IMAGE_NAME}:${POSTGRES_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-152"><a href="#cb4-152"></a><span class="at">      </span><span class="fu">env_file</span><span class="kw">:</span></span>
+<span id="cb4-153"><a href="#cb4-153"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./env/postgres.env&#39;</span></span>
+<span id="cb4-154"><a href="#cb4-154"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-155"><a href="#cb4-155"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-156"><a href="#cb4-156"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-157"><a href="#cb4-157"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;postgres_data:/var/lib/postgresql/data&#39;</span></span>
+<span id="cb4-158"><a href="#cb4-158"></a></span>
+<span id="cb4-159"><a href="#cb4-159"></a><span class="at">    </span><span class="fu">prometheus</span><span class="kw">:</span></span>
+<span id="cb4-160"><a href="#cb4-160"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${PROMETHEUS_IMAGE_NAME}:${PROMETHEUS_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-161"><a href="#cb4-161"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-162"><a href="#cb4-162"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--config.file=/etc/prometheus/prometheus.yml&#39;</span></span>
+<span id="cb4-163"><a href="#cb4-163"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--storage.tsdb.path=/prometheus&#39;</span></span>
+<span id="cb4-164"><a href="#cb4-164"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--storage.tsdb.retention=30m&#39;</span></span>
+<span id="cb4-165"><a href="#cb4-165"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.external-url=http://prometheus.localhost&#39;</span></span>
+<span id="cb4-166"><a href="#cb4-166"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.enable-lifecycle&#39;</span></span>
+<span id="cb4-167"><a href="#cb4-167"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-168"><a href="#cb4-168"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-169"><a href="#cb4-169"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-170"><a href="#cb4-170"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-171"><a href="#cb4-171"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.prometheus.rule=Host(`prometheus.localhost`)&#39;</span></span>
+<span id="cb4-172"><a href="#cb4-172"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.prometheus.entrypoints=web&#39;</span></span>
+<span id="cb4-173"><a href="#cb4-173"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-174"><a href="#cb4-174"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-175"><a href="#cb4-175"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-176"><a href="#cb4-176"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/prometheus/:/etc/prometheus/&#39;</span></span>
+<span id="cb4-177"><a href="#cb4-177"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;prometheus_data:/prometheus/&#39;</span></span>
+<span id="cb4-178"><a href="#cb4-178"></a></span>
+<span id="cb4-179"><a href="#cb4-179"></a><span class="at">    </span><span class="fu">process_exporter</span><span class="kw">:</span></span>
+<span id="cb4-180"><a href="#cb4-180"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${PROCESS_EXPORTER_IMAGE_NAME}:${PROCESS_EXPORTER_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-181"><a href="#cb4-181"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-182"><a href="#cb4-182"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;-procfs=/host/proc&#39;</span></span>
+<span id="cb4-183"><a href="#cb4-183"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;-config.path=/etc/config.yml&#39;</span></span>
+<span id="cb4-184"><a href="#cb4-184"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-185"><a href="#cb4-185"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-186"><a href="#cb4-186"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.process_exporter.rule=Host(`process-exporter.localhost`)&#39;</span></span>
+<span id="cb4-187"><a href="#cb4-187"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.process_exporter.entrypoints=web&#39;</span></span>
+<span id="cb4-188"><a href="#cb4-188"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-189"><a href="#cb4-189"></a><span class="at">      </span><span class="fu">privileged</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb4-190"><a href="#cb4-190"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-191"><a href="#cb4-191"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-192"><a href="#cb4-192"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/process-exporter/config.yml:/etc/config.yml&#39;</span></span>
+<span id="cb4-193"><a href="#cb4-193"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/proc:/host/proc:ro&#39;</span></span>
+<span id="cb4-194"><a href="#cb4-194"></a></span>
+<span id="cb4-195"><a href="#cb4-195"></a><span class="at">    </span><span class="fu">prometheus_fed</span><span class="kw">:</span></span>
+<span id="cb4-196"><a href="#cb4-196"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${PROMETHEUS_IMAGE_NAME}:${PROMETHEUS_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-197"><a href="#cb4-197"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-198"><a href="#cb4-198"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--config.file=/etc/prometheus/prometheus-fed.yml&#39;</span></span>
+<span id="cb4-199"><a href="#cb4-199"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--storage.tsdb.path=/prometheus&#39;</span></span>
+<span id="cb4-200"><a href="#cb4-200"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--storage.tsdb.retention=30m&#39;</span></span>
+<span id="cb4-201"><a href="#cb4-201"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.external-url=http://prometheus-fed.localhost&#39;</span></span>
+<span id="cb4-202"><a href="#cb4-202"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.enable-lifecycle&#39;</span></span>
+<span id="cb4-203"><a href="#cb4-203"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-204"><a href="#cb4-204"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-205"><a href="#cb4-205"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-206"><a href="#cb4-206"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-207"><a href="#cb4-207"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.prometheus_fed.rule=Host(`prometheus-fed.localhost`)&#39;</span></span>
+<span id="cb4-208"><a href="#cb4-208"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.prometheus_fed.entrypoints=web&#39;</span></span>
+<span id="cb4-209"><a href="#cb4-209"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-210"><a href="#cb4-210"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-211"><a href="#cb4-211"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-212"><a href="#cb4-212"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;./config/prometheus/:/etc/prometheus/&#39;</span></span>
+<span id="cb4-213"><a href="#cb4-213"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;prometheus_fed_data:/prometheus/&#39;</span></span>
+<span id="cb4-214"><a href="#cb4-214"></a></span>
+<span id="cb4-215"><a href="#cb4-215"></a><span class="at">    </span><span class="fu">pushgateway</span><span class="kw">:</span></span>
+<span id="cb4-216"><a href="#cb4-216"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${PUSHGATEWAY_IMAGE_NAME}:${PUSHGATEWAY_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-217"><a href="#cb4-217"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-218"><a href="#cb4-218"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-219"><a href="#cb4-219"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-220"><a href="#cb4-220"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-221"><a href="#cb4-221"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.pushgateway.rule=Host(`pushgateway.localhost`)&#39;</span></span>
+<span id="cb4-222"><a href="#cb4-222"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.pushgateway.entrypoints=web&#39;</span></span>
+<span id="cb4-223"><a href="#cb4-223"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-224"><a href="#cb4-224"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-225"><a href="#cb4-225"></a></span>
+<span id="cb4-226"><a href="#cb4-226"></a><span class="at">    </span><span class="fu">victoriametrics</span><span class="kw">:</span></span>
+<span id="cb4-227"><a href="#cb4-227"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${VICTORIAMETRICS_IMAGE_NAME}:${VICTORIAMETRICS_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-228"><a href="#cb4-228"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-229"><a href="#cb4-229"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--storageDataPath=/storage&#39;</span></span>
+<span id="cb4-230"><a href="#cb4-230"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--graphiteListenAddr=:2003&#39;</span></span>
+<span id="cb4-231"><a href="#cb4-231"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--opentsdbListenAddr=:4242&#39;</span></span>
+<span id="cb4-232"><a href="#cb4-232"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--httpListenAddr=:8428&#39;</span></span>
+<span id="cb4-233"><a href="#cb4-233"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--influxListenAddr=:8089&#39;</span></span>
+<span id="cb4-234"><a href="#cb4-234"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-235"><a href="#cb4-235"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-236"><a href="#cb4-236"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-237"><a href="#cb4-237"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;victoriametrics_data:/storage&#39;</span></span>
+<span id="cb4-238"><a href="#cb4-238"></a></span>
+<span id="cb4-239"><a href="#cb4-239"></a><span class="at">    </span><span class="fu">promlens</span><span class="kw">:</span></span>
+<span id="cb4-240"><a href="#cb4-240"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${PROMLENS_IMAGE_NAME}:${PROMLENS_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-241"><a href="#cb4-241"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-242"><a href="#cb4-242"></a><span class="co">        #- &quot;--license.key=${PROMLENS_LICENSE_KEY}&quot;</span></span>
+<span id="cb4-243"><a href="#cb4-243"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--shared-links.sql.driver=sqlite3&#39;</span></span>
+<span id="cb4-244"><a href="#cb4-244"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--shared-links.sql.dsn=/data/promlens-links.db&#39;</span></span>
+<span id="cb4-245"><a href="#cb4-245"></a><span class="co">        #- &#39;--grafana.url=http://grafana:3000&#39;</span></span>
+<span id="cb4-246"><a href="#cb4-246"></a><span class="co">        #- &#39;--grafana.api-token=${PROMLENS_GRAFANA_API_KEY}&#39;</span></span>
+<span id="cb4-247"><a href="#cb4-247"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.default-prometheus-url=http://victoriametrics:8428&#39;</span></span>
+<span id="cb4-248"><a href="#cb4-248"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--web.external-url=http://promlens.localhost&#39;</span></span>
+<span id="cb4-249"><a href="#cb4-249"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-250"><a href="#cb4-250"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-251"><a href="#cb4-251"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-252"><a href="#cb4-252"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-253"><a href="#cb4-253"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.promlens.rule=Host(`promlens.localhost`)&#39;</span></span>
+<span id="cb4-254"><a href="#cb4-254"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.promlens.entrypoints=web&#39;</span></span>
+<span id="cb4-255"><a href="#cb4-255"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.services.promlens.loadbalancer.server.port=8080&#39;</span></span>
+<span id="cb4-256"><a href="#cb4-256"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-257"><a href="#cb4-257"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-258"><a href="#cb4-258"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-259"><a href="#cb4-259"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;promlens_data:/data&#39;</span></span>
+<span id="cb4-260"><a href="#cb4-260"></a></span>
+<span id="cb4-261"><a href="#cb4-261"></a><span class="at">    </span><span class="fu">flask_app</span><span class="kw">:</span></span>
+<span id="cb4-262"><a href="#cb4-262"></a><span class="at">      </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb4-263"><a href="#cb4-263"></a><span class="at">        </span><span class="fu">context</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;docker/flask-app&#39;</span></span>
+<span id="cb4-264"><a href="#cb4-264"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-265"><a href="#cb4-265"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-266"><a href="#cb4-266"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb4-267"><a href="#cb4-267"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.enable=true&#39;</span></span>
+<span id="cb4-268"><a href="#cb4-268"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.flask_app.rule=Host(`flask-app.localhost`)&#39;</span></span>
+<span id="cb4-269"><a href="#cb4-269"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik.http.routers.flask_app.entrypoints=web&#39;</span></span>
+<span id="cb4-270"><a href="#cb4-270"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-271"><a href="#cb4-271"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-272"><a href="#cb4-272"></a></span>
+<span id="cb4-273"><a href="#cb4-273"></a><span class="at">    </span><span class="fu">flask_app_scrap</span><span class="kw">:</span></span>
+<span id="cb4-274"><a href="#cb4-274"></a><span class="at">      </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb4-275"><a href="#cb4-275"></a><span class="at">        </span><span class="fu">context</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;docker/flask-app-scrap&#39;</span></span>
+<span id="cb4-276"><a href="#cb4-276"></a><span class="at">      </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb4-277"><a href="#cb4-277"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;traefik&#39;</span></span>
+<span id="cb4-278"><a href="#cb4-278"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;flask_app&#39;</span></span>
+<span id="cb4-279"><a href="#cb4-279"></a><span class="at">      </span><span class="fu">logging</span><span class="kw">:</span><span class="at"> </span><span class="ot">*default-logging</span></span>
+<span id="cb4-280"><a href="#cb4-280"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-281"><a href="#cb4-281"></a></span>
+<span id="cb4-282"><a href="#cb4-282"></a></span>
+<span id="cb4-283"><a href="#cb4-283"></a><span class="co">    # Reverse proxy</span></span>
+<span id="cb4-284"><a href="#cb4-284"></a><span class="at">    </span><span class="fu">traefik</span><span class="kw">:</span></span>
+<span id="cb4-285"><a href="#cb4-285"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;${TRAEFIK_IMAGE_NAME}:${TRAEFIK_IMAGE_VERSION}&quot;</span></span>
+<span id="cb4-286"><a href="#cb4-286"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb4-287"><a href="#cb4-287"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--api.insecure=true&#39;</span></span>
+<span id="cb4-288"><a href="#cb4-288"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--metrics.prometheus=true&#39;</span></span>
+<span id="cb4-289"><a href="#cb4-289"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--metrics.prometheus.addEntryPointsLabels=true&#39;</span></span>
+<span id="cb4-290"><a href="#cb4-290"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--metrics.prometheus.addServicesLabels=true&#39;</span></span>
+<span id="cb4-291"><a href="#cb4-291"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--providers.docker=true&#39;</span></span>
+<span id="cb4-292"><a href="#cb4-292"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--providers.docker.exposedbydefault=false&#39;</span></span>
+<span id="cb4-293"><a href="#cb4-293"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;--entrypoints.web.address=:80&#39;</span></span>
+<span id="cb4-294"><a href="#cb4-294"></a><span class="at">      </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb4-295"><a href="#cb4-295"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;80:80&#39;</span></span>
+<span id="cb4-296"><a href="#cb4-296"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;8080:8080&#39;</span></span>
+<span id="cb4-297"><a href="#cb4-297"></a><span class="at">      </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;unless-stopped&#39;</span></span>
+<span id="cb4-298"><a href="#cb4-298"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb4-299"><a href="#cb4-299"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="st">&#39;/var/run/docker.sock:/var/run/docker.sock:ro&#39;</span></span></code></pre></div>
 <h1 id="le-language-promql">Le language PromQL</h1>
 <h2 id="les-bases">Les Bases</h2>
 <iframe src="2021-08-11-POEI-Prometheus/Export-des-slides/promql_bases.html">
@@ -625,25 +645,25 @@ up offset 1d unless up</code></pre>
 <h1 id="déploiement-et-configuration">Déploiement et configuration</h1>
 <p><img src="2021-08-11-POEI-Prometheus/2021-08-11_16h45_03.png" /></p>
 <h2 id="exemple-de-déploiement-via-docker-compose">Exemple de déploiement via Docker-compose</h2>
-<pre class="sourceCode yaml" id="cb9"><code class="sourceCode yaml"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="fu">version:</span><span class="at"> </span><span class="st">&#39;3&#39;</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="fu">services:</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">    <span class="fu">alertmanager:</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">      <span class="fu">container_name:</span><span class="at"> alertmanager</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">      <span class="fu">image:</span><span class="at"> prom/alertmanager:latest</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">      <span class="fu">ports:</span><span class="at"> </span><span class="kw">[</span> <span class="st">&quot;9093:9093&quot;</span> <span class="kw">]</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">    <span class="fu">prometheus:</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">      <span class="fu">container_name:</span><span class="at"> prometheus</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">      <span class="fu">image:</span><span class="at"> prom/prometheus:latest</span></a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">      <span class="fu">ports:</span><span class="at"> </span><span class="kw">[</span> <span class="st">&quot;9090:9090&quot;</span> <span class="kw">]</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13">    <span class="fu">pushgateway:</span></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">      <span class="fu">container_name:</span><span class="at"> pushgateway</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15">      <span class="fu">image:</span><span class="at"> prom/pushgateway:latest</span></a>
-<a class="sourceLine" id="cb9-16" data-line-number="16">      <span class="fu">ports:</span><span class="at"> </span><span class="kw">[</span> <span class="st">&quot;9091:9091&quot;</span> <span class="kw">]</span></a>
-<a class="sourceLine" id="cb9-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb9-18" data-line-number="18"></a>
-<a class="sourceLine" id="cb9-19" data-line-number="19"><span class="co">...</span></a></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1"></a><span class="pp">---</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;3&#39;</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="at">  </span><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="at">    </span><span class="fu">alertmanager</span><span class="kw">:</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="at">      </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> alertmanager</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> prom/alertmanager:latest</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="at">      </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at"> </span><span class="st">&quot;9093:9093&quot;</span><span class="at"> </span><span class="kw">]</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="at">    </span><span class="fu">prometheus</span><span class="kw">:</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="at">      </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> prometheus</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> prom/prometheus:latest</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="at">      </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at"> </span><span class="st">&quot;9090:9090&quot;</span><span class="at"> </span><span class="kw">]</span></span>
+<span id="cb9-13"><a href="#cb9-13"></a><span class="at">    </span><span class="fu">pushgateway</span><span class="kw">:</span></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="at">      </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> pushgateway</span></span>
+<span id="cb9-15"><a href="#cb9-15"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> prom/pushgateway:latest</span></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="at">      </span><span class="fu">ports</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at"> </span><span class="st">&quot;9091:9091&quot;</span><span class="at"> </span><span class="kw">]</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a></span>
+<span id="cb9-18"><a href="#cb9-18"></a></span>
+<span id="cb9-19"><a href="#cb9-19"></a><span class="co">...</span></span></code></pre></div>
 <hr />
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h2 id="documentations-réseau">Documentations réseau</h2>

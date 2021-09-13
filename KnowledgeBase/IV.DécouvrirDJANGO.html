@@ -6,28 +6,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David DEBRAY" />
   <title>IV. Découvrir DJANGO</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">IV. Découvrir DJANGO</h1>
 <p class="author">David DEBRAY</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#i.-sinitier-à-django">I. S’initier à Django</a><ul>
+<li><a href="#i.-sinitier-à-django">I. S’initier à Django</a>
+<ul>
 <li><a href="#i-i.-aborder-cette-formation-sur-django">I-I. Aborder cette formation sur Django</a></li>
 <li><a href="#i-ii.-utiliser-les-fichiers-source">I-II. Utiliser les fichiers source</a></li>
 <li><a href="#i-iii.-comprendre-django">I-III. Comprendre Django</a></li>
@@ -38,7 +40,8 @@
 <li><a href="#i-viii.-générer-les-modèles-avec-inspectdb">I-VIII. Générer les modèles avec inspectdb</a></li>
 <li><a href="#i-ix.-créer-une-application">I-IX. Créer une application</a></li>
 </ul></li>
-<li><a href="#ii.-configurer-les-routes-et-créer-des-vues-et-des-gabarits">II. Configurer les routes et créer des vues et des gabarits</a><ul>
+<li><a href="#ii.-configurer-les-routes-et-créer-des-vues-et-des-gabarits">II. Configurer les routes et créer des vues et des gabarits</a>
+<ul>
 <li><a href="#ii-i.-configurer-les-routes-dans-django">II-I. Configurer les routes dans Django</a></li>
 <li><a href="#ii-ii.-créer-la-première-vue">II-II. Créer la première vue</a></li>
 <li><a href="#ii-iii.-déclarer-lapplication">II-III. Déclarer l’application</a></li>
@@ -46,7 +49,8 @@
 <li><a href="#ii-iv.-créer-un-gabarit-1">II-IV. Créer un gabarit</a></li>
 <li><a href="#ii-vi.-envoyer-des-informations-au-gabarit">II-VI. Envoyer des informations au gabarit</a></li>
 </ul></li>
-<li><a href="#iii.-afficher-des-requêtes-avec-django">III. Afficher des requêtes avec Django</a><ul>
+<li><a href="#iii.-afficher-des-requêtes-avec-django">III. Afficher des requêtes avec Django</a>
+<ul>
 <li><a href="#iii-i.-appeler-un-modèle-dans-une-vue">III-I. Appeler un modèle dans une vue</a></li>
 <li><a href="#iii-ii.-créer-un-gabarit-pour-afficher-des-données-du-modèle">III-II. Créer un gabarit pour afficher des données du modèle</a></li>
 <li><a href="#iii-iii.-créer-un-gabarit-global">III-III. Créer un gabarit global</a></li>
@@ -58,7 +62,8 @@
 <li><a href="#iii-ix.-déboguer-avec-pdb">III-IX. Déboguer avec pdb</a></li>
 <li><a href="#iii-x.-créer-des-variables-dans-le-gabarit">III-X. Créer des variables dans le gabarit</a></li>
 </ul></li>
-<li><a href="#iv.-installer-son-application-django">IV. Installer son application Django</a><ul>
+<li><a href="#iv.-installer-son-application-django">IV. Installer son application Django</a>
+<ul>
 <li><a href="#iv-i.-préparer-la-gestion-des-formulaires">IV-I. Préparer la gestion des formulaires</a></li>
 <li><a href="#iv-ii.-créer-une-classe-form">IV-II. Créer une classe Form</a></li>
 <li><a href="#iv-iii.-intégrer-form-dans-un-gabarit">IV-III. Intégrer Form dans un gabarit</a></li>
@@ -113,7 +118,7 @@ sudo pip3 install virtualenv</code></pre>
 </video>
 <p><code>./manage.py migrate</code></p>
 <figure>
-<img src="IV.DécouvrirDJANGO\I-VII.%20Paramétrer%20la%20base%20de%20données.png" alt="Paramétrer la base de données" /><figcaption>Paramétrer la base de données</figcaption>
+<img src="IV.DécouvrirDJANGO\I-VII.%20Paramétrer%20la%20base%20de%20données.png" alt="" /><figcaption>Paramétrer la base de données</figcaption>
 </figure>
 <h2 id="i-viii.-générer-les-modèles-avec-inspectdb">I-VIII. Générer les modèles avec inspectdb</h2>
 <video width="600" height="337" controls>

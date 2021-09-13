@@ -7,91 +7,103 @@
   <meta name="author" content="David DEBRAY" />
   <meta name="dcterms.date" content="2021-08-19" />
   <title>POEI DevOps - Mise en situation 3</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">POEI DevOps - Mise en situation 3</h1>
 <p class="author">David DEBRAY</p>
 <p class="date">2021-08-19</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#enoncé-de-la-mise-en-situation">Enoncé de la mise en situation</a><ul>
-<li><a href="#conseils">Conseils</a><ul>
+<li><a href="#enoncé-de-la-mise-en-situation">Enoncé de la mise en situation</a>
+<ul>
+<li><a href="#conseils">Conseils</a>
+<ul>
 <li><a href="#schéma-infrastructure">Schéma infrastructure</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#partie-1---terraform">Partie 1 - Terraform</a><ul>
+<li><a href="#partie-1---terraform">Partie 1 - Terraform</a>
+<ul>
 <li><a href="#liste-des-ressources-terraform-qui-seront-utiles">Liste des ressources terraform qui seront utiles:</a></li>
 <li><a href="#credentials">Credentials :</a></li>
-<li><a href="#adressage-ip">Adressage IP :</a><ul>
+<li><a href="#adressage-ip">Adressage IP :</a>
+<ul>
 <li><a href="#exemple-de-fichier-de-configuration-réseau">Exemple de fichier de configuration réseau</a></li>
 <li><a href="#schéma-découpage-des-modules">Schéma découpage des modules</a></li>
 <li><a href="#schéma-focus-instance">Schéma focus instance</a></li>
@@ -99,10 +111,12 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul></li>
 <li><a href="#correction---partie-1">Correction - Partie 1</a></li>
 </ul></li>
-<li><a href="#partie-2---elk">Partie 2 - ELK</a><ul>
+<li><a href="#partie-2---elk">Partie 2 - ELK</a>
+<ul>
 <li><a href="#correction---partie-2">Correction - Partie 2</a></li>
 </ul></li>
-<li><a href="#partie-3---prometheus-grafana">Partie 3 - Prometheus &amp; Grafana</a><ul>
+<li><a href="#partie-3---prometheus-grafana">Partie 3 - Prometheus &amp; Grafana</a>
+<ul>
 <li><a href="#correction---partie-3">Correction - Partie 3</a></li>
 </ul></li>
 <li><a href="#rappel-sur-les-réseaux">Rappel sur les réseaux</a></li>
@@ -114,8 +128,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h4 id="introduction">Introduction</h4>
 <p>Formateur: <strong>Alexandre Chaussier</strong></p>
 <ul>
-<li>Mail: <a href="mailto:a.chaussier@infopen.pro">a.chaussier@infopen.pro</a></li>
-<li>Tél: <a href="06.63.73.54.92" class="uri">06.63.73.54.92</a></li>
+<li>Mail: <a href="mailto:a.chaussier@infopen.pro" class="email">a.chaussier@infopen.pro</a></li>
+<li>Tél: <a href="06.63.73.54.92">06.63.73.54.92</a></li>
 </ul>
 <p>2e partie de 3 formations:</p>
 <ul>
@@ -162,11 +176,11 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>null_resource (peut-être pas, dépendra de vous)</li>
 </ul>
 <h2 id="credentials">Credentials :</h2>
-<pre class="sourceCode bash" id="cb1"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">export</span> <span class="va">SCW_ACCESS_KEY=</span>SCWS687168P6BC5HGNJE</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="bu">export</span> <span class="va">SCW_SECRET_KEY=</span>f91cbf6f-4c04-4ab7-b7cc-5169f5490fd7</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="bu">export</span> <span class="va">SCW_DEFAULT_PROJECT_ID=</span>6be15ce2-55f0-4ff7-a620-2a789d55a99f</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="bu">export</span> <span class="va">SCW_DEFAULT_REGION=</span>fr-par</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="bu">export</span> <span class="va">SCW_DEFAULT_ZONE=</span>fr-par-1</a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="bu">export</span> <span class="va">SCW_ACCESS_KEY=</span>SCWS687168P6BC5HGNJE</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">export</span> <span class="va">SCW_SECRET_KEY=</span>f91cbf6f-4c04-4ab7-b7cc-5169f5490fd7</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="bu">export</span> <span class="va">SCW_DEFAULT_PROJECT_ID=</span>6be15ce2-55f0-4ff7-a620-2a789d55a99f</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="bu">export</span> <span class="va">SCW_DEFAULT_REGION=</span>fr-par</span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="bu">export</span> <span class="va">SCW_DEFAULT_ZONE=</span>fr-par-1</span></code></pre></div>
 <h2 id="adressage-ip">Adressage IP :</h2>
 <ul>
 <li>Documentation : Configuration d’une adresse IP avec Netplan</li>
@@ -176,13 +190,13 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>Instance Applications : 192.168.0.10</li>
 </ul>
 <h3 id="exemple-de-fichier-de-configuration-réseau">Exemple de fichier de configuration réseau</h3>
-<pre class="sourceCode yaml" id="cb2"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">network:</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="fu">version:</span><span class="at"> 2</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="fu">renderer:</span><span class="at"> networkd</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">  <span class="fu">ethernets:</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="fu">ens5:</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">      <span class="fu">addresses:</span><span class="at"> </span><span class="kw">[</span>192.168.0.10/24<span class="kw">]</span></a></code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb2-1"><a href="#cb2-1"></a><span class="pp">---</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">network</span><span class="kw">:</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="at">  </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="at">  </span><span class="fu">renderer</span><span class="kw">:</span><span class="at"> networkd</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="at">  </span><span class="fu">ethernets</span><span class="kw">:</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="at">    </span><span class="fu">ens5</span><span class="kw">:</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="at">      </span><span class="fu">addresses</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">192.168.0.10/</span><span class="dv">24</span><span class="kw">]</span></span></code></pre></div>
 <h3 id="schéma-découpage-des-modules">Schéma découpage des modules</h3>
 <p><img src="2021-08-19-POEI-MES3/2021-08-20_14h37_11.png" /></p>
 <h3 id="schéma-focus-instance">Schéma focus instance</h3>

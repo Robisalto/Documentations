@@ -7,60 +7,71 @@
   <meta name="author" content="David DEBRAY" />
   <meta name="dcterms.date" content="2021-08-13" />
   <title>POEI DevOps - ELK Stack</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">POEI DevOps - ELK Stack</h1>
 <p class="author">David DEBRAY</p>
 <p class="date">2021-08-13</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#documentations">Documentations</a><ul>
+<li><a href="#documentations">Documentations</a>
+<ul>
 <li><a href="#site-officiel">Site Officiel</a></li>
 <li><a href="#online-docs">Online Docs</a></li>
 <li><a href="#doc-source">Doc Source</a></li>
 </ul></li>
-<li><a href="#introduction-1">Introduction</a><ul>
+<li><a href="#introduction-1">Introduction</a>
+<ul>
 <li><a href="#introduction-2">Introduction</a></li>
 </ul></li>
-<li><a href="#la-stack-elastic---bases">La Stack Elastic - Bases</a><ul>
+<li><a href="#la-stack-elastic---bases">La Stack Elastic - Bases</a>
+<ul>
 <li><a href="#installation-composant">Installation &amp; Composant</a></li>
 <li><a href="#atelier-1">Atelier 1</a></li>
-<li><a href="#elasticsearch---partie-1">Elasticsearch - Partie 1</a><ul>
+<li><a href="#elasticsearch---partie-1">Elasticsearch - Partie 1</a>
+<ul>
 <li><a href="#qcm-1">QCM 1</a></li>
 </ul></li>
-<li><a href="#elasticsearch---partie-2">Elasticsearch - Partie 2</a><ul>
+<li><a href="#elasticsearch---partie-2">Elasticsearch - Partie 2</a>
+<ul>
 <li><a href="#qcm-2">QCM 2</a></li>
 </ul></li>
-<li><a href="#atelier-2">Atelier 2</a><ul>
+<li><a href="#atelier-2">Atelier 2</a>
+<ul>
 <li><a href="#atelier-2---correction">Atelier 2 - Correction</a></li>
 <li><a href="#qcm---requêtes-elasticsearch">QCM - Requêtes Elasticsearch</a></li>
 </ul></li>
-<li><a href="#logstash">Logstash</a><ul>
+<li><a href="#logstash">Logstash</a>
+<ul>
 <li><a href="#qcm---logstash">QCM - Logstash</a></li>
 <li><a href="#atelier-3-logstash">Atelier 3 Logstash</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#administration-scalabilité">Administration &amp; Scalabilité</a><ul>
+<li><a href="#administration-scalabilité">Administration &amp; Scalabilité</a>
+<ul>
 <li><a href="#qcm">QCM</a></li>
-<li><a href="#atelier">Atelier</a><ul>
+<li><a href="#atelier">Atelier</a>
+<ul>
 <li><a href="#correction">Correction</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a>
+<ul>
 <li><a href="#documentations-réseau">Documentations réseau</a></li>
 </ul></li>
 </ul>
@@ -71,8 +82,8 @@
 <h4 id="introduction">Introduction</h4>
 <p>Formateur: <strong>Alexandre Chaussier</strong></p>
 <ul>
-<li>Mail: <a href="mailto:a.chaussier@infopen.pro">a.chaussier@infopen.pro</a></li>
-<li>Tél: <a href="06.63.73.54.92" class="uri">06.63.73.54.92</a></li>
+<li>Mail: <a href="mailto:a.chaussier@infopen.pro" class="email">a.chaussier@infopen.pro</a></li>
+<li>Tél: <a href="06.63.73.54.92">06.63.73.54.92</a></li>
 </ul>
 <p>2e partie de 3 formations:</p>
 <ul>

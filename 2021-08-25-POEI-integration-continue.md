@@ -9,10 +9,15 @@ header-includes:
 classoption: "12pt"
 extensions: 'extra'
 ---
+
+---
+
+---
+
+
 <link rel="icon" href="favicon.png" type="image/png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
----
 
 #### Introduction
 
@@ -23,9 +28,7 @@ Administrateur Système
 
 @: mlamamra@dawan.fr / tel: +3368392662
 
----
 
----
 
 
 # Installation & Configuration
@@ -35,7 +38,7 @@ Administrateur Système
 
 
 
----
+
 
 # *Tips & Tricks*
 

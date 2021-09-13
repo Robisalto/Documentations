@@ -4,97 +4,108 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <meta name="author" content="" />
   <meta name="dcterms.date" content="2021-06-21" />
   <title>POEI DevOps - Docker</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">POEI DevOps - Docker</h1>
+<p class="author"></p>
 <p class="date">2021-06-21</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#doc-source">Doc Source</a><ul>
+<li><a href="#doc-source">Doc Source</a>
+<ul>
 <li><a href="#containers">Containers</a></li>
 <li><a href="#lien-gitlab">Lien GitLab</a></li>
 <li><a href="#autres-liens-utiles">Autres liens utiles</a></li>
 </ul></li>
-<li><a href="#premiers-pas">Premiers pas</a><ul>
+<li><a href="#premiers-pas">Premiers pas</a>
+<ul>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#objets">4 objets</a></li>
 <li><a href="#recherche-dimages">Recherche d’images</a></li>
 <li><a href="#instanciation-dun-conteneur">Instanciation d’un conteneur</a></li>
 <li><a href="#concept-image-conteneur">CONCEPT IMAGE =&gt; CONTENEUR</a></li>
 </ul></li>
-<li><a href="#commandes-utiles">Commandes utiles</a><ul>
+<li><a href="#commandes-utiles">Commandes utiles</a>
+<ul>
 <li><a href="#pour-faciliter-le-déploiement-de-containers">Pour faciliter le déploiement de containers</a></li>
 <li><a href="#nettoyage-globale-des-conteneurs-arrêtés">Nettoyage globale des conteneurs arrêtés</a></li>
 </ul></li>
@@ -108,7 +119,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <!-- <script>myscripts.js</script> -->
 <h4 id="formation-docker-initiation">Formation Docker: Initiation</h4>
 <p>Pierre Sablé, Formateur &amp; Administrateur Systèmes Linux - DevOps. 21H du 21/06/21 au 23/06/21</p>
-<p>Tel : 07.63.88.76.21 (<a href="mailto:psable@dawan.fr">psable@dawan.fr</a>)</p>
+<p>Tel : 07.63.88.76.21 (<a href="mailto:psable@dawan.fr" class="email">psable@dawan.fr</a>)</p>
 <hr />
 <h1 id="doc-source">Doc Source</h1>
 <p>Documentation Source en PDF:</p>
@@ -127,16 +138,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <h1 id="premiers-pas">Premiers pas</h1>
 <h2 id="installation">Installation</h2>
 <p>Passage en <strong>root</strong>:</p>
-<pre class="sourceCode bash" id="cb1"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">su</span> - <span class="co"># Passe en root et &quot;-&quot; permet de charger l&#39;environnement</span></a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">su</span> - <span class="co"># Passe en root et &quot;-&quot; permet de charger l&#39;environnement</span></span></code></pre></div>
 <p>Mise à jour du serveur et installation de <code>curl</code>:</p>
-<pre class="sourceCode bash" id="cb2"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">apt</span> update -y <span class="kw">&amp;&amp;</span> <span class="ex">apt</span> install curl -y</a></code></pre>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="ex">apt</span> update -y <span class="kw">&amp;&amp;</span> <span class="ex">apt</span> install curl -y</span></code></pre></div>
 <p>Lancement du convinience script d’installation de Docker:</p>
-<pre class="sourceCode bash" id="cb3"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="ex">curl</span> -fsSL https://get.docker.com -o get-docker.sh</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="fu">sh</span> get-docker.sh</a></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">curl</span> -fsSL https://get.docker.com -o get-docker.sh</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="fu">sh</span> get-docker.sh</span></code></pre></div>
 <p>On vérifie l’installation avec:</p>
-<pre class="sourceCode bash" id="cb4"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">docker</span> -version</a></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">docker</span> -version</span></code></pre></div>
 <p>On ajoute l’utilisateur au groupe:</p>
-<pre class="sourceCode bash" id="cb5"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="ex">usermod</span> -aG sudo stagiaire</a></code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">usermod</span> -aG sudo stagiaire</span></code></pre></div>
 <h2 id="objets">4 objets</h2>
 <ul>
 <li>Image</li>
@@ -145,121 +156,124 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li>Volume</li>
 </ul>
 <h5 id="image">1. <strong>Image</strong>:</h5>
-<pre class="sourceCode bash" id="cb6"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">stagiaire@debian</span>:~$ docker image --help</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="ex">Usage</span>:  docker image COMMAND</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="ex">Manage</span> images</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">  <span class="ex">build</span>       Build an image from a Dockerfile</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">  <span class="bu">history</span>     Show the history of an image</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">  <span class="ex">import</span>      Import the contents from a tarball to create a filesystem image</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11">  <span class="ex">inspect</span>     Display detailed information on one or more images</a>
-<a class="sourceLine" id="cb6-12" data-line-number="12">  <span class="ex">load</span>        Load an image from a tar archive or STDIN</a>
-<a class="sourceLine" id="cb6-13" data-line-number="13">  <span class="fu">ls</span>          List images</a>
-<a class="sourceLine" id="cb6-14" data-line-number="14">  <span class="fu">prune</span>       Remove unused images</a>
-<a class="sourceLine" id="cb6-15" data-line-number="15">  <span class="ex">pull</span>        Pull an image or a repository from a registry</a>
-<a class="sourceLine" id="cb6-16" data-line-number="16">  <span class="ex">push</span>        Push an image or a repository to a registry</a>
-<a class="sourceLine" id="cb6-17" data-line-number="17">  <span class="fu">rm</span>          Remove one or more images</a>
-<a class="sourceLine" id="cb6-18" data-line-number="18">  <span class="ex">save</span>        Save one or more images to a tar archive (streamed to STDOUT by default)</a>
-<a class="sourceLine" id="cb6-19" data-line-number="19">  <span class="ex">tag</span>         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE</a></code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">stagiaire@debian</span>:~$ docker image --help</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="ex">Usage</span>:  docker image COMMAND</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="ex">Manage</span> images</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="ex">Commands</span>:</span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="ex">build</span>       Build an image from a Dockerfile</span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="bu">history</span>     Show the history of an image</span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="ex">import</span>      Import the contents from a tarball to create a filesystem image</span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="ex">inspect</span>     Display detailed information on one or more images</span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="ex">load</span>        Load an image from a tar archive or STDIN</span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">ls</span>          List images</span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">prune</span>       Remove unused images</span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="ex">pull</span>        Pull an image or a repository from a registry</span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="ex">push</span>        Push an image or a repository to a registry</span>
+<span id="cb6-17"><a href="#cb6-17"></a>  <span class="fu">rm</span>          Remove one or more images</span>
+<span id="cb6-18"><a href="#cb6-18"></a>  <span class="ex">save</span>        Save one or more images to a tar archive (streamed to STDOUT by default)</span>
+<span id="cb6-19"><a href="#cb6-19"></a>  <span class="ex">tag</span>         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE</span></code></pre></div>
 <h5 id="container">2. <strong>Container</strong>:</h5>
-<pre class="sourceCode bash" id="cb7"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">stagiaire@debian</span>:~$ docker container --help</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="ex">Usage</span>:  docker container COMMAND</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="ex">Manage</span> containers</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">  <span class="ex">attach</span>      Attach local standard input, output, and error streams to a running container</a>
-<a class="sourceLine" id="cb7-9" data-line-number="9">  <span class="ex">commit</span>      Create a new image from a container s changes</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">  <span class="fu">cp</span>          Copy files/folders between a container and the local filesystem</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">  <span class="ex">create</span>      Create a new container</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">  <span class="fu">diff</span>        Inspect changes to files or directories on a container s filesystem</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">  <span class="bu">exec</span>        Run a command in a running container</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">  <span class="bu">export</span>      <span class="va">Export</span> <span class="va">a</span> <span class="va">container</span><span class="st">&#39;s filesystem as a tar archive</span></a>
-<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="st">  inspect     Display detailed information on one or more containers</span></a>
-<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  kill        Kill one or more running containers</span></a>
-<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">  logs        Fetch the logs of a container</span></a>
-<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="st">  ls          List containers</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="st">  pause       Pause all processes within one or more containers</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="st">  port        List port mappings or a specific mapping for the container</span></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="st">  prune       Remove all stopped containers</span></a>
-<a class="sourceLine" id="cb7-22" data-line-number="22"><span class="st">  rename      Rename a container</span></a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"><span class="st">  restart     Restart one or more containers</span></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24"><span class="st">  rm          Remove one or more containers</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25"><span class="st">  run         Run a command in a new container</span></a>
-<a class="sourceLine" id="cb7-26" data-line-number="26"><span class="st">  start       Start one or more stopped containers</span></a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="st">  stats       Display a live stream of container(s) resource usage statistics</span></a>
-<a class="sourceLine" id="cb7-28" data-line-number="28"><span class="st">  stop        Stop one or more running containers</span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="st">  top         Display the running processes of a container</span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="st">  unpause     Unpause all processes within one or more containers</span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="st">  update      Update configuration of one or more containers</span></a>
-<a class="sourceLine" id="cb7-32" data-line-number="32"><span class="st">  wait        Block until one or more containers stop, then print their exit codes</span></a>
-<a class="sourceLine" id="cb7-33" data-line-number="33"></a>
-<a class="sourceLine" id="cb7-34" data-line-number="34"><span class="st">Run &#39;</span><span class="va">docker</span> <span class="va">container</span> <span class="va">COMMAND</span> --help<span class="st">&#39; for more information on a command.</span></a></code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">stagiaire@debian</span>:~$ docker container --help</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">Usage</span>:  docker container COMMAND</span>
+<span id="cb7-4"><a href="#cb7-4"></a></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">Manage</span> containers</span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="ex">Commands</span>:</span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="ex">attach</span>      Attach local standard input, output, and error streams to a running container</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="ex">commit</span>      Create a new image from a container s changes</span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">cp</span>          Copy files/folders between a container and the local filesystem</span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="ex">create</span>      Create a new container</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">diff</span>        Inspect changes to files or directories on a container s filesystem</span>
+<span id="cb7-13"><a href="#cb7-13"></a>  <span class="bu">exec</span>        Run a command in a running container</span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="bu">export</span>      <span class="va">Export</span> <span class="va">a</span> <span class="va">container</span><span class="st">&#39;s filesystem as a tar archive</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a><span class="st">  inspect     Display detailed information on one or more containers</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a><span class="st">  kill        Kill one or more running containers</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="st">  logs        Fetch the logs of a container</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a><span class="st">  ls          List containers</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="st">  pause       Pause all processes within one or more containers</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a><span class="st">  port        List port mappings or a specific mapping for the container</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="st">  prune       Remove all stopped containers</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a><span class="st">  rename      Rename a container</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a><span class="st">  restart     Restart one or more containers</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a><span class="st">  rm          Remove one or more containers</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="st">  run         Run a command in a new container</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="st">  start       Start one or more stopped containers</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="st">  stats       Display a live stream of container(s) resource usage statistics</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a><span class="st">  stop        Stop one or more running containers</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a><span class="st">  top         Display the running processes of a container</span></span>
+<span id="cb7-30"><a href="#cb7-30"></a><span class="st">  unpause     Unpause all processes within one or more containers</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a><span class="st">  update      Update configuration of one or more containers</span></span>
+<span id="cb7-32"><a href="#cb7-32"></a><span class="st">  wait        Block until one or more containers stop, then print their exit codes</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a></span>
+<span id="cb7-34"><a href="#cb7-34"></a><span class="st">Run &#39;</span><span class="va">docker</span> <span class="va">container</span> <span class="va">COMMAND</span> --help<span class="st">&#39; for more information on a command.</span></span></code></pre></div>
 <h5 id="network">3. <strong>Network</strong>:</h5>
-<pre class="sourceCode bash" id="cb8"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">stagiaire@debian</span>:~$ docker network --help</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="ex">Usage</span>:  docker network COMMAND</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="ex">Manage</span> networks</a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">  <span class="ex">connect</span>     Connect a container to a network</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9">  <span class="ex">create</span>      Create a network</a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">  <span class="ex">disconnect</span>  Disconnect a container from a network</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">  <span class="ex">inspect</span>     Display detailed information on one or more networks</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">  <span class="fu">ls</span>          List networks</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">  <span class="fu">prune</span>       Remove all unused networks</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">  <span class="fu">rm</span>          Remove one or more networks</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="ex">Run</span> <span class="st">&#39;docker network COMMAND --help&#39;</span> for more information on a command.</a></code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">stagiaire@debian</span>:~$ docker network --help</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">Usage</span>:  docker network COMMAND</span>
+<span id="cb8-4"><a href="#cb8-4"></a></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="ex">Manage</span> networks</span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="ex">Commands</span>:</span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="ex">connect</span>     Connect a container to a network</span>
+<span id="cb8-9"><a href="#cb8-9"></a>  <span class="ex">create</span>      Create a network</span>
+<span id="cb8-10"><a href="#cb8-10"></a>  <span class="ex">disconnect</span>  Disconnect a container from a network</span>
+<span id="cb8-11"><a href="#cb8-11"></a>  <span class="ex">inspect</span>     Display detailed information on one or more networks</span>
+<span id="cb8-12"><a href="#cb8-12"></a>  <span class="fu">ls</span>          List networks</span>
+<span id="cb8-13"><a href="#cb8-13"></a>  <span class="fu">prune</span>       Remove all unused networks</span>
+<span id="cb8-14"><a href="#cb8-14"></a>  <span class="fu">rm</span>          Remove one or more networks</span>
+<span id="cb8-15"><a href="#cb8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="ex">Run</span> <span class="st">&#39;docker network COMMAND --help&#39;</span> for more information on a command.</span></code></pre></div>
 <h5 id="volume">4. <strong>Volume</strong>:</h5>
-<pre class="sourceCode bash" id="cb9"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">stagiaire@debian</span>:~$ docker volume --help</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">Usage</span>:  docker volume COMMAND</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="ex">Manage</span> volumes</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="ex">Commands</span>:</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">  <span class="ex">create</span>      Create a volume</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">  <span class="ex">inspect</span>     Display detailed information on one or more volumes</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">  <span class="fu">ls</span>          List volumes</a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">  <span class="fu">prune</span>       Remove all unused local volumes</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">  <span class="fu">rm</span>          Remove one or more volumes</a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb9-14" data-line-number="14"><span class="ex">Run</span> <span class="st">&#39;docker volume COMMAND --help&#39;</span> for more information on a command.</a></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">stagiaire@debian</span>:~$ docker volume --help</span>
+<span id="cb9-2"><a href="#cb9-2"></a></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="ex">Usage</span>:  docker volume COMMAND</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="ex">Manage</span> volumes</span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="ex">Commands</span>:</span>
+<span id="cb9-8"><a href="#cb9-8"></a>  <span class="ex">create</span>      Create a volume</span>
+<span id="cb9-9"><a href="#cb9-9"></a>  <span class="ex">inspect</span>     Display detailed information on one or more volumes</span>
+<span id="cb9-10"><a href="#cb9-10"></a>  <span class="fu">ls</span>          List volumes</span>
+<span id="cb9-11"><a href="#cb9-11"></a>  <span class="fu">prune</span>       Remove all unused local volumes</span>
+<span id="cb9-12"><a href="#cb9-12"></a>  <span class="fu">rm</span>          Remove one or more volumes</span>
+<span id="cb9-13"><a href="#cb9-13"></a></span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="ex">Run</span> <span class="st">&#39;docker volume COMMAND --help&#39;</span> for more information on a command.</span></code></pre></div>
 <h2 id="recherche-dimages">Recherche d’images</h2>
 <p>On peut faire une recherche avec la commande <code>search</code>:</p>
-<pre class="sourceCode bash" id="cb10"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ex">docker</span> search nginx</a></code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="ex">docker</span> search nginx</span></code></pre></div>
 <p>Plus simple, se rendre sur <strong>Docker Hub</strong>: <a href="https://hub.docker.com/search?q=&amp;type=image&amp;operating_system=linux&amp;image_filter=official" class="uri">https://hub.docker.com/search?q=&amp;type=image&amp;operating_system=linux&amp;image_filter=official</a></p>
-<pre class="sourceCode bash" id="cb11"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">docker</span> pull ubuntu <span class="co"># Téléchargement de l&#39;image officielle d&#39;Ubuntu</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="ex">OU</span>:</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="ex">docker</span> image pull <span class="co"># Même chose mais plus longue et on est des fainéants ^^</span></a></code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">docker</span> pull ubuntu <span class="co"># Téléchargement de l&#39;image officielle d&#39;Ubuntu</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="ex">OU</span>:</span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="ex">docker</span> image pull <span class="co"># Même chose mais plus longue et on est des fainéants ^^</span></span></code></pre></div>
 <p>On vérifie avec:</p>
-<pre class="sourceCode bash" id="cb12"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">docker</span> image ls</a></code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">docker</span> image ls</span></code></pre></div>
 <h2 id="instanciation-dun-conteneur">Instanciation d’un conteneur</h2>
 <h5 id="première-commande">1. Première commande</h5>
 <p>On lance une instance de container avec:</p>
-<pre class="sourceCode bash" id="cb13"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">docker</span> image run ubuntu:latest</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co"># Pour vérifier:</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="ex">docker</span> container ls -a</a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="ex">CONTAINER</span> ID   IMAGE           COMMAND   CREATED          STATUS                      PORTS     NAMES</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="ex">a6d535e838cc</span>   ubuntu:latest   <span class="st">&quot;bash&quot;</span>    42 seconds ago   Exited (0) <span class="ex">41</span> seconds ago             flamboyant_mayer</a></code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">docker</span> image run ubuntu:latest</span>
+<span id="cb13-2"><a href="#cb13-2"></a></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="co"># Pour vérifier:</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="ex">docker</span> container ls -a</span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="ex">CONTAINER</span> ID   IMAGE           COMMAND   CREATED          STATUS                      PORTS     NAMES</span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="ex">a6d535e838cc</span>   ubuntu:latest   <span class="st">&quot;bash&quot;</span>    42 seconds ago   Exited (0) <span class="ex">41</span> seconds ago             flamboyant_mayer</span></code></pre></div>
 <div class="info">
 La commande <code>docker container ls</code> n’affiche que les containers <strong>actifs</strong>.
 </div>
 <h5 id="seconde-commande-utilisation-image-ubuntulatest-pour-réaliser-la-commande-echo">2. Seconde commande : utilisation image ubuntu:latest pour réaliser la commande “echo…”</h5>
-<p><code>bash docker container run ubuntu:latest /bin/echo &quot;Hello formation docker&quot;</code></p>
-<h5 id="troisieme-commande-creation-dun-conteneur-et-se-connecter-dedans">3. Troisieme commande : creation d’un conteneur et se connecter dedans</h5>
-<pre class="sourceCode bash" id="cb14"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ex">docker</span> container run -it ubuntu:latest /bin/bash</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="ex">root@1ba3cc134814</span>:/#</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="ex">root@1ba3cc134814</span>:/# apt update</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="ex">root@1ba3cc134814</span>:/# apt install iproute2</a></code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">docker</span> container run ubuntu:latest /bin/echo <span class="st">&quot;Hello formation docker&quot;</span><span class="kw">```</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co">##### 3. Troisieme commande : creation d&#39;un conteneur et se connecter dedans</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="kw">```</span>bash</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="ex">docker</span> container run -it ubuntu:latest /bin/bash</span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="ex">root@1ba3cc134814</span>:/#</span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="ex">root@1ba3cc134814</span>:/# apt update</span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="ex">root@1ba3cc134814</span>:/# apt install iproute2</span></code></pre></div>
 <h2 id="concept-image-conteneur">CONCEPT IMAGE =&gt; CONTENEUR</h2>
 <div class="warning">
 Une image est immuable (R/O)
@@ -281,23 +295,23 @@ Une image est immuable (R/O)
 Si on ne publie pas le port, le container ne sera pas accessible.
 </div>
 <h2 id="nettoyage-globale-des-conteneurs-arrêtés">Nettoyage globale des conteneurs arrêtés</h2>
-<pre class="sourceCode bash" id="cb15"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">docker</span> container prune</a></code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">docker</span> container prune</span></code></pre></div>
 <h1 id="utilisation-dune-image-applicative-nginx">Utilisation d’une image applicative nginx</h1>
 <h5 id="premier-déclenchement">1.Premier déclenchement :</h5>
-<pre class="sourceCode bash" id="cb16"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="ex">docker</span> container run nginx:1.20-alpine</a></code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="ex">docker</span> container run nginx:1.20-alpine</span></code></pre></div>
 <p>Si l’image demandée n’est présente localement, docker la télécharge depuis le docker hub par défaut (pull)</p>
 <p>L’image applicative de type webserver nginx a prévu de lancer un processus nginx qui ne s’arrête pas : donc le conteneur reste up tant que le processus n’est pas killé</p>
 <h5 id="instanciation-du-conteneur-en-mode-detaché-option--d">2. Instanciation du conteneur en mode detaché : option <strong>-d</strong></h5>
-<pre class="sourceCode bash" id="cb17"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="ex">docker</span> container run -d --name mynginx nginx:1.20-alpine</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="ex">a51a7b4f164a9ad3988bb5b4004a5ee13cc44452a825688f5ab304bfe1ae4233</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="ex">docker</span> container ls</a></code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">docker</span> container run -d --name mynginx nginx:1.20-alpine</span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="ex">a51a7b4f164a9ad3988bb5b4004a5ee13cc44452a825688f5ab304bfe1ae4233</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="ex">docker</span> container ls</span></code></pre></div>
 <p>Le conteneur est instancié, reste up (visiblement un processus reste actif à l’intérieur) ET le mode detach nous a rendu la main (donc pas de kill)</p>
 <h5 id="executer-une-commande-dans-un-conteneur-démarré-up-exec">3. Executer une commande dans un conteneur démarré (up) : <strong>exec</strong></h5>
-<pre class="sourceCode bash" id="cb18"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="ex">docker</span> container exec mynginx cat /etc/nginx/conf.d/default.conf</a></code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="ex">docker</span> container exec mynginx cat /etc/nginx/conf.d/default.conf</span></code></pre></div>
 <h5 id="se-connecter-dans-un-conteneur-démarré">4. Se connecter dans un conteneur démarré:</h5>
-<pre class="sourceCode bash" id="cb19"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="ex">docker</span> container exec -it mynginx /bin/sh</a></code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="ex">docker</span> container exec -it mynginx /bin/sh</span></code></pre></div>
 <h1 id="configuration-de-la-vm">Configuration de la VM</h1>
-<pre class="sourceCode bash" id="cb20"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="ex">docker</span> container run -d --name mynginx2 -p 8080:80 nginx:1.20-alpine</a></code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="ex">docker</span> container run -d --name mynginx2 -p 8080:80 nginx:1.20-alpine</span></code></pre></div>
 <hr />
 <div class="wisdomquote">
 <p id="quote">

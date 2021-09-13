@@ -14,21 +14,6 @@ echo " " > PandocDoc.log # Clearing log file
 ## Dark theme
 for n in $(cat nav.txt); do pandoc $n.md -s -c styleDark.css -A footer.html --toc -o KnowledgeBase/$n.html; done
 
-## GitHub Style
-# for n in $(cat nav.txt); do pandoc $n.md -s -c github.css -A footer.html --toc -o KnowledgeBase/$n.html; done
-
-## TEST html theme
-# for n in $(cat nav.txt); do pandoc $n.md -s -c test.css -A footer.html --toc -o KnowledgeBase/$n.html; done
-
-## Mozilla html theme
-# for n in $(cat nav.txt); do pandoc $n.md -s -c Mozilla.css -A footer.html --toc -o KnowledgeBase/$n.html; done
-
-## Digital Ocean theme
-# for n in $(cat nav.txt); do pandoc $n.md -s -c digitalocean.css -A footer.html --toc -o KnowledgeBase/$n.html; done
-
-
-
-
 #### --------------------- Generate PDFs --------------------- ####
 #### --------------------------------------------------------- ####
 
@@ -54,3 +39,5 @@ echo " "
 # ls -al KnowledgeBase/ | grep "pdf"
 # echo " "
 echo " "
+
+echo " " > nav.txt

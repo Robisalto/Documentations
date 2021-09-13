@@ -7,88 +7,99 @@
   <meta name="author" content="Pierre SABLE" />
   <meta name="dcterms.date" content="2021-07-16" />
   <title>POEI DevOps - Kubernetes</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">POEI DevOps - Kubernetes</h1>
 <p class="author">Pierre SABLE</p>
 <p class="date">2021-07-16</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#doc-source">Doc Source</a><ul>
+<li><a href="#doc-source">Doc Source</a>
+<ul>
 <li><a href="#gitlab">Gitlab</a></li>
 <li><a href="#doc-officielle">Doc Officielle</a></li>
 </ul></li>
-<li><a href="#k8s-intro">K8S Intro</a><ul>
-<li><a href="#philosophie-derrière-kubernetes-et-le-mouvement-cloud-native">Philosophie derrière Kubernetes et le mouvement “Cloud Native”</a><ul>
+<li><a href="#k8s-intro">K8S Intro</a>
+<ul>
+<li><a href="#philosophie-derrière-kubernetes-et-le-mouvement-cloud-native">Philosophie derrière Kubernetes et le mouvement “Cloud Native”</a>
+<ul>
 <li><a href="#historique-et-popularité">Historique et popularité</a></li>
 <li><a href="#le-cloud">Le Cloud</a></li>
 <li><a href="#conteneurisation">Conteneurisation</a></li>
@@ -98,16 +109,20 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#architecture-logicielle-optimale-pour-kubernetes">Architecture logicielle optimale pour Kubernetes</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#maquette">Maquette</a><ul>
-<li><a href="#déploiement-de-la-maquette-k8s-binaire-kubectl">Déploiement de la maquette K8S + binaire kubectl</a><ul>
+<li><a href="#maquette">Maquette</a>
+<ul>
+<li><a href="#déploiement-de-la-maquette-k8s-binaire-kubectl">Déploiement de la maquette K8S + binaire kubectl</a>
+<ul>
 <li><a href="#installation-du-client-kubectl">Installation du client kubectl</a></li>
 <li><a href="#installation-du-cluster-kubernetes">Installation du cluster Kubernetes</a></li>
 <li><a href="#test-client-vers-cluster-k8s">Test CLIENT vers Cluster K8S :</a></li>
 </ul></li>
 <li><a href="#démarrage">Démarrage</a></li>
 </ul></li>
-<li><a href="#tp-1">TP 1</a><ul>
-<li><a href="#tp1création-dun-pod">TP1:Création d’un Pod</a><ul>
+<li><a href="#tp-1">TP 1</a>
+<ul>
+<li><a href="#tp1création-dun-pod">TP1:Création d’un Pod</a>
+<ul>
 <li><a href="#création-de-la-spécification">1. Création de la spécification</a></li>
 <li><a href="#lancement-du-pod">2. Lancement du Pod</a></li>
 <li><a href="#vérification">3. Vérification</a></li>
@@ -116,8 +131,10 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#suppression-du-pod">6. Suppression du Pod</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#tp2">TP2</a><ul>
-<li><a href="#tp2-création-dun-pod-multi-conteneurs">TP2: Création d’un Pod multi conteneurs</a><ul>
+<li><a href="#tp2">TP2</a>
+<ul>
+<li><a href="#tp2-création-dun-pod-multi-conteneurs">TP2: Création d’un Pod multi conteneurs</a>
+<ul>
 <li><a href="#création-du-namespace-multi">1. Création du namespace : multi</a></li>
 <li><a href="#création-de-la-spécification-1">2. Création de la spécification</a></li>
 <li><a href="#lancement-du-pod-1">3. Lancement du Pod</a></li>
@@ -128,8 +145,10 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 </ul></li>
 <li><a href="#utilisation-volume-emptydir-et-conteneur-side-car">Utilisation volume emptyDir et conteneur side-car</a></li>
 </ul></li>
-<li><a href="#tp3">TP3</a><ul>
-<li><a href="#création-dun-service-nodeport">Création d’un Service NodePort</a><ul>
+<li><a href="#tp3">TP3</a>
+<ul>
+<li><a href="#création-dun-service-nodeport">Création d’un Service NodePort</a>
+<ul>
 <li><a href="#prépa-suppression-des-ressources">Prépa : suppression des ressources</a></li>
 <li><a href="#ajout-de-label-dans-la-spécification-multipod">1. Ajout de label dans la spécification multipod</a></li>
 <li><a href="#création-de-la-spécification-service">2. Création de la spécification Service</a></li>
@@ -139,19 +158,24 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#fichier-yaml">Fichier YAML:</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#dashboard">Dashboard</a><ul>
+<li><a href="#dashboard">Dashboard</a>
+<ul>
 <li><a href="#installation-du-dashboard">Installation du Dashboard</a></li>
 </ul></li>
-<li><a href="#tp4">TP4</a><ul>
-<li><a href="#création-dun-déploiement">Création d’un déploiement</a><ul>
+<li><a href="#tp4">TP4</a>
+<ul>
+<li><a href="#création-dun-déploiement">Création d’un déploiement</a>
+<ul>
 <li><a href="#prépa-suppression-des-ressources-1">Prépa : suppression des ressources</a></li>
 <li><a href="#transformer-la-spécification-multipod">1. Transformer la spécification multipod</a></li>
 <li><a href="#application-des-ressources-1">2. Application des ressources</a></li>
 <li><a href="#résultats">Résultats</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#tp5">TP5</a><ul>
-<li><a href="#création-dun-fichier-de-spec-backend">1. Création d’un fichier de spec backend</a><ul>
+<li><a href="#tp5">TP5</a>
+<ul>
+<li><a href="#création-dun-fichier-de-spec-backend">1. Création d’un fichier de spec backend</a>
+<ul>
 <li><a href="#ressource-namespace">1.1 Ressource namespace</a></li>
 <li><a href="#ressource-déployment">1.2 Ressource Déployment</a></li>
 <li><a href="#ressource-service-de-type-clusterip">1.3. Ressource service de type ClusterIP</a></li>
@@ -162,15 +186,18 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#détails-du-service">1.8. Détails du service</a></li>
 </ul></li>
 <li><a href="#création-dun-fichier-de-spec-frontend">Création d’un fichier de spec frontend</a></li>
-<li><a href="#création-dun-fichier-de-spec-backend-1">2. Création d’un fichier de spec backend</a><ul>
+<li><a href="#création-dun-fichier-de-spec-backend-1">2. Création d’un fichier de spec backend</a>
+<ul>
 <li><a href="#ressource-déployment-1">2.1 Ressource Déployment</a></li>
 <li><a href="#ressource-service-de-type-nodeport">2.2 Ressource service de type NodePort</a></li>
 <li><a href="#application-des-ressources-3">2.3 Application des ressources</a></li>
 <li><a href="#accès-au-service-depuis-le-cluster-1">2.4 Accès au Service depuis le cluster</a></li>
 </ul></li>
 </ul></li>
-<li><a href="#tp-6">TP 6</a><ul>
-<li><a href="#stratégie-rolling-update-et-rollback">Stratégie Rolling Update et rollback</a><ul>
+<li><a href="#tp-6">TP 6</a>
+<ul>
+<li><a href="#stratégie-rolling-update-et-rollback">Stratégie Rolling Update et rollback</a>
+<ul>
 <li><a href="#ajout-de-stratégie-de-rolling-update">1. Ajout de stratégie de rolling update</a></li>
 <li><a href="#update-des-ressources-deployment">2. Update des ressources deployment</a></li>
 </ul></li>
@@ -178,14 +205,15 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#faire-un-scale-à-10-réplicas-du-déploiement-frontend">4. Faire un scale à 10 réplicas du déploiement frontend</a></li>
 <li><a href="#réaliser-un-rolling-update-du-déploiement-frontend">5. Réaliser un rolling update du déploiement frontend :</a></li>
 </ul></li>
-<li><a href="#documentation">Documentation</a><ul>
+<li><a href="#documentation">Documentation</a>
+<ul>
 <li><a href="#client-kubectl">Client Kubectl</a></li>
 <li><a href="#configuration-du-client">Configuration du client :</a></li>
 <li><a href="#lister-les-ressources-k8s">Lister les ressources k8s</a></li>
 <li><a href="#lister-les-ressources-créées-dans-le-cluster">Lister les ressources créées dans le cluster</a></li>
-<li><a href="#récuperer-de-linfo-dans-le-cluster">Récuperer de l’info dans le cluster</a></li>
 <li><a href="#documentation---aide">Documentation - aide</a></li>
-<li><a href="#les-pods">LES PODS</a><ul>
+<li><a href="#les-pods">LES PODS</a>
+<ul>
 <li><a href="#approche-impérative">Approche impérative</a></li>
 <li><a href="#approche-déclarative">Approche déclarative</a></li>
 </ul></li>
@@ -194,7 +222,8 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#scaling-horizontal---mise-à-léchelle">Scaling horizontal - Mise à l’échelle</a></li>
 <li><a href="#configmaps">ConfigMaps</a></li>
 </ul></li>
-<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a><ul>
+<li><a href="#tips-tricks"><em>Tips &amp; Tricks</em></a>
+<ul>
 <li><a href="#cheatsheet">Cheatsheet</a></li>
 </ul></li>
 </ul>
@@ -311,7 +340,7 @@ Il est un des projets qui symbolise et supporte techniquement ces transformation
 </blockquote>
 <p>https://kubernetes.io/fr/docs/tasks/tools/install-minikube/</p>
 <h3 id="test-client-vers-cluster-k8s">Test CLIENT vers Cluster K8S :</h3>
-<pre class="sourceCode bash" id="cb1"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="ex">kubectl</span> cluster-info</a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">kubectl</span> cluster-info</span></code></pre></div>
 <h5 id="mein-stuff">Mein Stuff 😄</h5>
 <ul>
 <li>Kubernetes: <a href="https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/" class="uri">https://v1-18.docs.kubernetes.io/docs/tasks/tools/install-kubectl/</a></li>
@@ -362,21 +391,21 @@ To further debug and diagnose cluster problems, use &#39;kubectl cluster-info du
 <p>Dans cet exercice, vous allez créer une spécification pour lancer un premier Pod.</p>
 <h3 id="création-de-la-spécification">1. Création de la spécification</h3>
 <p>Créez un fichier yaml <em>whoami.yaml</em> définissant un Pod ayant les propriétés suivantes: - nom du Pod: <em>whoami</em> - image du container: <em>containous/whoami</em> - nom du container: <em>whoami</em></p>
-<pre class="sourceCode yaml" id="cb5"><code class="sourceCode yaml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="fu">kind:</span><span class="at"> Pod</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="fu">creationTimestamp:</span><span class="at"> </span><span class="dt">null</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="fu">run:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">  <span class="fu">name:</span><span class="at"> whoami</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">  <span class="fu">containers:</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">  <span class="kw">-</span> <span class="fu">image:</span><span class="at"> containous/whoami</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">    <span class="fu">name:</span><span class="at"> whoami</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">    <span class="fu">resources:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13">  <span class="fu">dnsPolicy:</span><span class="at"> ClusterFirst</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">  <span class="fu">restartPolicy:</span><span class="at"> Always</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="fu">status:</span><span class="at"> </span><span class="kw">{}</span></a></code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="at">  </span><span class="fu">creationTimestamp</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> whoami</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> containous/whoami</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> whoami</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="at">    </span><span class="fu">resources</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="at">  </span><span class="fu">dnsPolicy</span><span class="kw">:</span><span class="at"> ClusterFirst</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="at">  </span><span class="fu">restartPolicy</span><span class="kw">:</span><span class="at"> Always</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="fu">status</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span></code></pre></div>
 <h3 id="lancement-du-pod">2. Lancement du Pod</h3>
 <p>Lancez le Pod à l’aide de <em>kubectl</em></p>
 <p><code>kubectl apply -f whoami.yaml</code></p>
@@ -388,176 +417,176 @@ nginx    1/1     Running   0          37m
 whoami   1/1     Running   0          81s</code></pre>
 <h3 id="details-du-pod">4. Details du Pod</h3>
 <p>Observez les détails du Pod à l’aide de <em>kubectl</em> et retrouvez l’information de l’image utilisée par le container <em>whoami</em>.</p>
-<pre class="sourceCode bash" id="cb7"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1">$ <span class="ex">kubectl</span> describe pod whoami</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="ex">Name</span>:         whoami</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="ex">Namespace</span>:    default</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="ex">Priority</span>:     0</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="ex">Node</span>:         minikube/192.168.99.100</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="ex">Start</span> Time:   Fri, 16 Jul 2021 15:49:53 +0200</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="ex">Labels</span>:       run=nginx</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="ex">Annotations</span>:  <span class="op">&lt;</span>none<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="ex">Status</span>:       Running</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="ex">IP</span>:           172.17.0.4</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="ex">IPs</span>:</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">  <span class="ex">IP</span>:  172.17.0.4</a>
-<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="ex">Containers</span>:</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">  <span class="ex">whoami</span>:</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">    <span class="ex">Container</span> ID:   docker://4497f232925a182598ddaddaa724b33729cc6230068a78951616c14b691fcd14</a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">    <span class="ex">Image</span>:          containous/whoami</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">    <span class="ex">Image</span> ID:       docker-pullable://containous/whoami@sha256:7d6a3c8f91470a23ef380320609ee6e69ac68d20bc804f3a1c6065fb56cfa34e</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">    <span class="ex">Port</span>:           <span class="op">&lt;</span>none<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">    <span class="ex">Host</span> Port:      <span class="op">&lt;</span>none<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-20" data-line-number="20">    <span class="ex">State</span>:          Running</a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">      <span class="ex">Started</span>:      Fri, 16 Jul 2021 15:50:01 +0200</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">    <span class="ex">Ready</span>:          True</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23">    <span class="ex">Restart</span> Count:  0</a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">    <span class="ex">Environment</span>:    <span class="op">&lt;</span>none<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-25" data-line-number="25">    <span class="ex">Mounts</span>:</a>
-<a class="sourceLine" id="cb7-26" data-line-number="26">      <span class="ex">/var/run/secrets/kubernetes.io/serviceaccount</span> from kube-api-access-4p99m (ro)</a>
-<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="ex">Conditions</span>:</a>
-<a class="sourceLine" id="cb7-28" data-line-number="28">  <span class="ex">Type</span>              Status</a>
-<a class="sourceLine" id="cb7-29" data-line-number="29">  <span class="ex">Initialized</span>       True</a>
-<a class="sourceLine" id="cb7-30" data-line-number="30">  <span class="ex">Ready</span>             True</a>
-<a class="sourceLine" id="cb7-31" data-line-number="31">  <span class="ex">ContainersReady</span>   True</a>
-<a class="sourceLine" id="cb7-32" data-line-number="32">  <span class="ex">PodScheduled</span>      True</a>
-<a class="sourceLine" id="cb7-33" data-line-number="33"><span class="ex">Volumes</span>:</a>
-<a class="sourceLine" id="cb7-34" data-line-number="34">  <span class="ex">kube-api-access-4p99m</span>:</a>
-<a class="sourceLine" id="cb7-35" data-line-number="35">    <span class="ex">Type</span>:                    Projected (a volume that contains injected data from multiple sources)</a>
-<a class="sourceLine" id="cb7-36" data-line-number="36">    <span class="ex">TokenExpirationSeconds</span>:  3607</a>
-<a class="sourceLine" id="cb7-37" data-line-number="37">    <span class="ex">ConfigMapName</span>:           kube-root-ca.crt</a>
-<a class="sourceLine" id="cb7-38" data-line-number="38">    <span class="ex">ConfigMapOptional</span>:       <span class="op">&lt;</span>nil<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-39" data-line-number="39">    <span class="ex">DownwardAPI</span>:             true</a>
-<a class="sourceLine" id="cb7-40" data-line-number="40"><span class="ex">QoS</span> Class:                   BestEffort</a>
-<a class="sourceLine" id="cb7-41" data-line-number="41"><span class="ex">Node-Selectors</span>:              <span class="op">&lt;</span>none<span class="op">&gt;</span></a>
-<a class="sourceLine" id="cb7-42" data-line-number="42"><span class="ex">Tolerations</span>:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s</a>
-<a class="sourceLine" id="cb7-43" data-line-number="43">                             <span class="ex">node.kubernetes.io</span>/unreachable:<span class="ex">NoExecute</span> op=Exists for 300s</a>
-<a class="sourceLine" id="cb7-44" data-line-number="44"><span class="ex">Events</span>:</a>
-<a class="sourceLine" id="cb7-45" data-line-number="45">  <span class="ex">Type</span>    Reason     Age   From               Message</a>
-<a class="sourceLine" id="cb7-46" data-line-number="46">  <span class="ex">----</span>    ------     ----  ----               -------</a>
-<a class="sourceLine" id="cb7-47" data-line-number="47">  <span class="ex">Normal</span>  Scheduled  2m3s  default-scheduler  Successfully assigned default/whoami to minikube</a>
-<a class="sourceLine" id="cb7-48" data-line-number="48">  <span class="ex">Normal</span>  Pulling    2m2s  kubelet            Pulling image <span class="st">&quot;containous/whoami&quot;</span></a>
-<a class="sourceLine" id="cb7-49" data-line-number="49">  <span class="ex">Normal</span>  Pulled     115s  kubelet            Successfully pulled image <span class="st">&quot;containous/whoami&quot;</span> in 7.271245805s</a>
-<a class="sourceLine" id="cb7-50" data-line-number="50">  <span class="ex">Normal</span>  Created    115s  kubelet            Created container whoami</a>
-<a class="sourceLine" id="cb7-51" data-line-number="51">  <span class="ex">Normal</span>  Started    115s  kubelet            Started container whoami</a></code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a>$ <span class="ex">kubectl</span> describe pod whoami</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">Name</span>:         whoami</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">Namespace</span>:    default</span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="ex">Priority</span>:     0</span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="ex">Node</span>:         minikube/192.168.99.100</span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="ex">Start</span> Time:   Fri, 16 Jul 2021 15:49:53 +0200</span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="ex">Labels</span>:       run=nginx</span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="ex">Annotations</span>:  <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a><span class="ex">Status</span>:       Running</span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="ex">IP</span>:           172.17.0.4</span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="ex">IPs</span>:</span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="ex">IP</span>:  172.17.0.4</span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="ex">Containers</span>:</span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="ex">whoami</span>:</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="ex">Container</span> ID:   docker://4497f232925a182598ddaddaa724b33729cc6230068a78951616c14b691fcd14</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="ex">Image</span>:          containous/whoami</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="ex">Image</span> ID:       docker-pullable://containous/whoami@sha256:7d6a3c8f91470a23ef380320609ee6e69ac68d20bc804f3a1c6065fb56cfa34e</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="ex">Port</span>:           <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb7-19"><a href="#cb7-19"></a>    <span class="ex">Host</span> Port:      <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>    <span class="ex">State</span>:          Running</span>
+<span id="cb7-21"><a href="#cb7-21"></a>      <span class="ex">Started</span>:      Fri, 16 Jul 2021 15:50:01 +0200</span>
+<span id="cb7-22"><a href="#cb7-22"></a>    <span class="ex">Ready</span>:          True</span>
+<span id="cb7-23"><a href="#cb7-23"></a>    <span class="ex">Restart</span> Count:  0</span>
+<span id="cb7-24"><a href="#cb7-24"></a>    <span class="ex">Environment</span>:    <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb7-25"><a href="#cb7-25"></a>    <span class="ex">Mounts</span>:</span>
+<span id="cb7-26"><a href="#cb7-26"></a>      <span class="ex">/var/run/secrets/kubernetes.io/serviceaccount</span> from kube-api-access-4p99m (ro)</span>
+<span id="cb7-27"><a href="#cb7-27"></a><span class="ex">Conditions</span>:</span>
+<span id="cb7-28"><a href="#cb7-28"></a>  <span class="ex">Type</span>              Status</span>
+<span id="cb7-29"><a href="#cb7-29"></a>  <span class="ex">Initialized</span>       True</span>
+<span id="cb7-30"><a href="#cb7-30"></a>  <span class="ex">Ready</span>             True</span>
+<span id="cb7-31"><a href="#cb7-31"></a>  <span class="ex">ContainersReady</span>   True</span>
+<span id="cb7-32"><a href="#cb7-32"></a>  <span class="ex">PodScheduled</span>      True</span>
+<span id="cb7-33"><a href="#cb7-33"></a><span class="ex">Volumes</span>:</span>
+<span id="cb7-34"><a href="#cb7-34"></a>  <span class="ex">kube-api-access-4p99m</span>:</span>
+<span id="cb7-35"><a href="#cb7-35"></a>    <span class="ex">Type</span>:                    Projected (a volume that contains injected data from multiple sources)</span>
+<span id="cb7-36"><a href="#cb7-36"></a>    <span class="ex">TokenExpirationSeconds</span>:  3607</span>
+<span id="cb7-37"><a href="#cb7-37"></a>    <span class="ex">ConfigMapName</span>:           kube-root-ca.crt</span>
+<span id="cb7-38"><a href="#cb7-38"></a>    <span class="ex">ConfigMapOptional</span>:       <span class="op">&lt;</span>nil<span class="op">&gt;</span></span>
+<span id="cb7-39"><a href="#cb7-39"></a>    <span class="ex">DownwardAPI</span>:             true</span>
+<span id="cb7-40"><a href="#cb7-40"></a><span class="ex">QoS</span> Class:                   BestEffort</span>
+<span id="cb7-41"><a href="#cb7-41"></a><span class="ex">Node-Selectors</span>:              <span class="op">&lt;</span>none<span class="op">&gt;</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a><span class="ex">Tolerations</span>:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s</span>
+<span id="cb7-43"><a href="#cb7-43"></a>                             <span class="ex">node.kubernetes.io</span>/unreachable:<span class="ex">NoExecute</span> op=Exists for 300s</span>
+<span id="cb7-44"><a href="#cb7-44"></a><span class="ex">Events</span>:</span>
+<span id="cb7-45"><a href="#cb7-45"></a>  <span class="ex">Type</span>    Reason     Age   From               Message</span>
+<span id="cb7-46"><a href="#cb7-46"></a>  <span class="ex">----</span>    ------     ----  ----               -------</span>
+<span id="cb7-47"><a href="#cb7-47"></a>  <span class="ex">Normal</span>  Scheduled  2m3s  default-scheduler  Successfully assigned default/whoami to minikube</span>
+<span id="cb7-48"><a href="#cb7-48"></a>  <span class="ex">Normal</span>  Pulling    2m2s  kubelet            Pulling image <span class="st">&quot;containous/whoami&quot;</span></span>
+<span id="cb7-49"><a href="#cb7-49"></a>  <span class="ex">Normal</span>  Pulled     115s  kubelet            Successfully pulled image <span class="st">&quot;containous/whoami&quot;</span> in 7.271245805s</span>
+<span id="cb7-50"><a href="#cb7-50"></a>  <span class="ex">Normal</span>  Created    115s  kubelet            Created container whoami</span>
+<span id="cb7-51"><a href="#cb7-51"></a>  <span class="ex">Normal</span>  Started    115s  kubelet            Started container whoami</span></code></pre></div>
 <h3 id="accès-à-lapplication-via-un-port-forward">5. Accès à l’application via un port-forward</h3>
 <p>Avec la commande <em>kubectl port-forward</em> envoyer une requête à l’application</p>
-<pre class="sourceCode bash" id="cb8"><code class="sourceCode bash"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="ex">kubectl</span> port-forward whoami 8080:80</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="ex">Forwarding</span> from 127.0.0.1:8080 -<span class="op">&gt;</span> 80</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="ex">Forwarding</span> from [::1]:8080 -<span class="op">&gt;</span> 80</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="ex">Handling</span> connection for 8080</a></code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">kubectl</span> port-forward whoami 8080:80</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">Forwarding</span> from 127.0.0.1:8080 -<span class="op">&gt;</span> 80</span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="ex">Forwarding</span> from [::1]:8080 -<span class="op">&gt;</span> 80</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="ex">Handling</span> connection for 8080</span></code></pre></div>
 <h3 id="suppression-du-pod">6. Suppression du Pod</h3>
 <p>Supprimez le Pod.</p>
-<pre class="sourceCode bash" id="cb9"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1">$ <span class="ex">kubectl</span> delete pod whoami</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="ex">pod</span> <span class="st">&quot;whoami&quot;</span> deleted</a></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>$ <span class="ex">kubectl</span> delete pod whoami</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">pod</span> <span class="st">&quot;whoami&quot;</span> deleted</span></code></pre></div>
 <h1 id="tp2">TP2</h1>
 <h2 id="tp2-création-dun-pod-multi-conteneurs">TP2: Création d’un Pod multi conteneurs</h2>
 <p>Dans cet exercice, vous allez créer un namespace dédié et une une spécification pour lancer un Pod avec deux conteneurs.</p>
 <h3 id="création-du-namespace-multi">1. Création du namespace : multi</h3>
 <p>Créer un fichier de spec “ns_multi.yml” pour le namespace multi à partir d’une commande impérative:</p>
-<pre class="sourceCode yaml" id="cb10"><code class="sourceCode yaml"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="fu">kind:</span><span class="at"> Namespace</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="fu">name:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">  <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">    <span class="fu">name:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">...</span></a></code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb10-1"><a href="#cb10-1"></a><span class="pp">---</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="co">...</span></span></code></pre></div>
 <p>Appliquer le fichier de spec:</p>
-<pre class="sourceCode bash" id="cb11"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1">$ <span class="ex">kubectl</span> apply -f ns_multi.yml </a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="ex">namespace/multi</span> created</a></code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>$ <span class="ex">kubectl</span> apply -f ns_multi.yml </span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="ex">namespace/multi</span> created</span></code></pre></div>
 <h4 id="vérification-1">Vérification</h4>
-<pre class="sourceCode bash" id="cb12"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1">$ <span class="ex">kubectl</span> get namespace</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="ex">NAME</span>              STATUS   AGE</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="ex">default</span>           Active   119m</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="ex">kube-node-lease</span>   Active   119m</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="ex">kube-public</span>       Active   119m</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="ex">kube-system</span>       Active   119m</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="ex">multi</span>             Active   18m</a></code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>$ <span class="ex">kubectl</span> get namespace</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">NAME</span>              STATUS   AGE</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="ex">default</span>           Active   119m</span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="ex">kube-node-lease</span>   Active   119m</span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="ex">kube-public</span>       Active   119m</span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="ex">kube-system</span>       Active   119m</span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="ex">multi</span>             Active   18m</span></code></pre></div>
 <h4 id="correction-de-pierre">Correction de Pierre</h4>
-<pre class="sourceCode bash" id="cb13"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">kubectl</span> create namespace multi --dry-run=client <span class="op">&gt;</span> ns_multi.yaml</a></code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">kubectl</span> create namespace multi --dry-run=client <span class="op">&gt;</span> ns_multi.yaml</span></code></pre></div>
 <h3 id="création-de-la-spécification-1">2. Création de la spécification</h3>
 <p>Créez un fichier yaml <em>multipod.yaml</em> définissant un Pod ayant les propriétés suivantes:</p>
 <ul>
-<li>nom du Pod: <em>mulitpod</em></li>
-<li>namespace: <em>multi</em></li>
-<li>image du container nginx: <em>nginx:1.18-alpine</em></li>
+<li><p>nom du Pod: <em>mulitpod</em></p></li>
+<li><p>namespace: <em>multi</em></p></li>
+<li><p>image du container nginx: <em>nginx:1.18-alpine</em></p></li>
 <li><p>nom du container: <em>nginx</em></p></li>
-<li>image du container debian : <em>debian:buster-slim</em></li>
-<li>nom du container: <em>debian</em></li>
+<li><p>image du container debian : <em>debian:buster-slim</em></p></li>
+<li><p>nom du container: <em>debian</em></p></li>
 <li><p>command: [“sleep”, “600”]</p></li>
 </ul>
-<pre class="sourceCode yaml" id="cb14"><code class="sourceCode yaml"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="fu">kind:</span><span class="at"> Pod</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">  <span class="fu">creationTimestamp:</span><span class="at"> </span><span class="dt">null</span></a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">  <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7">    <span class="fu">run:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb14-8" data-line-number="8">  <span class="fu">name:</span><span class="at"> mulitpod</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9">  <span class="fu">namespace:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11">  <span class="fu">containers:</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12">  <span class="kw">-</span> <span class="fu">image:</span><span class="at"> nginx:1.18-alpine</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13">    <span class="fu">name:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15">  <span class="kw">-</span> <span class="fu">image:</span><span class="at"> debian:buster-slim</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16">    <span class="fu">name:</span><span class="at"> debian</span></a>
-<a class="sourceLine" id="cb14-17" data-line-number="17">    <span class="fu">command:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;sleep&quot;</span><span class="kw">,</span> <span class="st">&quot;600&quot;</span><span class="kw">]</span></a>
-<a class="sourceLine" id="cb14-18" data-line-number="18"><span class="co">...</span></a></code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb14-1"><a href="#cb14-1"></a><span class="pp">---</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="at">  </span><span class="fu">creationTimestamp</span><span class="kw">:</span><span class="at"> </span><span class="ch">null</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a><span class="at">    </span><span class="fu">run</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> mulitpod</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb14-11"><a href="#cb14-11"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:1.18-alpine</span></span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a></span>
+<span id="cb14-15"><a href="#cb14-15"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">image</span><span class="kw">:</span><span class="at"> debian:buster-slim</span></span>
+<span id="cb14-16"><a href="#cb14-16"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> debian</span></span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;sleep&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;600&quot;</span><span class="kw">]</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a><span class="co">...</span></span></code></pre></div>
 <h3 id="lancement-du-pod-1">3. Lancement du Pod</h3>
 <p>Lancez le Pod à l’aide de <em>kubectl</em></p>
-<pre class="sourceCode bash" id="cb15"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">kubectl</span> apply -f multipod.yaml</a></code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">kubectl</span> apply -f multipod.yaml</span></code></pre></div>
 <h3 id="vérification-2">4. Vérification</h3>
 <p>Listez les Pods lancés et assurez vous que le Pod <em>multipod</em> apparait bien dans cette liste.</p>
 <div class="warning">
 Penser au namespace !!
 </div>
-<pre class="sourceCode bash" id="cb16"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1">$  <span class="ex">kubectl</span> get pods --namespace=multi</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="ex">NAME</span>       READY   STATUS    RESTARTS   AGE</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="ex">mulitpod</span>   2/2     Running   0          6s</a></code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a>$  <span class="ex">kubectl</span> get pods --namespace=multi</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="ex">NAME</span>       READY   STATUS    RESTARTS   AGE</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="ex">mulitpod</span>   2/2     Running   0          6s</span></code></pre></div>
 <h4 id="correction-pierre">Correction Pierre</h4>
-<pre class="sourceCode bash" id="cb17"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1">$  <span class="ex">kubectl</span> get pods -n multi </a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="ex">NAME</span>       READY   STATUS    RESTARTS   AGE</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="ex">mulitpod</span>   2/2     Running   1          12m</a></code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a>$  <span class="ex">kubectl</span> get pods -n multi </span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="ex">NAME</span>       READY   STATUS    RESTARTS   AGE</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="ex">mulitpod</span>   2/2     Running   1          12m</span></code></pre></div>
 <h5 id="all-namespaces">All namespaces</h5>
-<pre class="sourceCode bash" id="cb18"><code class="sourceCode bash"><a class="sourceLine" id="cb18-1" data-line-number="1">$  <span class="ex">kubectl</span> get pods --all-namespaces</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="ex">NAMESPACE</span>     NAME                               READY   STATUS    RESTARTS   AGE</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="ex">kube-system</span>   coredns-558bd4d5db-pr8h2           1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="ex">kube-system</span>   etcd-minikube                      1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="ex">kube-system</span>   kube-apiserver-minikube            1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="ex">kube-system</span>   kube-controller-manager-minikube   1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="ex">kube-system</span>   kube-proxy-npcdx                   1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="ex">kube-system</span>   kube-scheduler-minikube            1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="ex">kube-system</span>   storage-provisioner                1/1     Running   0          125m</a>
-<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="ex">multi</span>         mulitpod                           2/2     Running   1          13m</a></code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a>$  <span class="ex">kubectl</span> get pods --all-namespaces</span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="ex">NAMESPACE</span>     NAME                               READY   STATUS    RESTARTS   AGE</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="ex">kube-system</span>   coredns-558bd4d5db-pr8h2           1/1     Running   0          125m</span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="ex">kube-system</span>   etcd-minikube                      1/1     Running   0          125m</span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="ex">kube-system</span>   kube-apiserver-minikube            1/1     Running   0          125m</span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="ex">kube-system</span>   kube-controller-manager-minikube   1/1     Running   0          125m</span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="ex">kube-system</span>   kube-proxy-npcdx                   1/1     Running   0          125m</span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="ex">kube-system</span>   kube-scheduler-minikube            1/1     Running   0          125m</span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="ex">kube-system</span>   storage-provisioner                1/1     Running   0          125m</span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="ex">multi</span>         mulitpod                           2/2     Running   1          13m</span></code></pre></div>
 <h3 id="details-du-pod-1">5. Details du Pod</h3>
 <p>Observez les détails du Pod à l’aide de <em>kubectl</em> et retrouvez l’information de l’image utilisée par le container <em>multipod</em>.</p>
-<pre class="sourceCode bash" id="cb19"><code class="sourceCode bash"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="ex">kubectl</span> -n multi describe pod multipod </a></code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="ex">kubectl</span> -n multi describe pod multipod </span></code></pre></div>
 <h3 id="se-connecter-dans-le-conteneur-debian-du-pod-multipod">6. Se connecter dans le conteneur debian du pod multipod</h3>
 <p>Avec la commande <em>kubectl exec -it</em> se connecter dans le conteneur debian Installer le package curl</p>
 <p><code>apt update &amp;&amp; apt install curl</code></p>
 <p>Tester une requete curl vers le service pod_ngin <code>curl http://localhost:80</code></p>
 <h4 id="connexion-dans-le-conteneur">Connexion dans le conteneur</h4>
-<pre class="sourceCode bash" id="cb20"><code class="sourceCode bash"><a class="sourceLine" id="cb20-1" data-line-number="1">$  <span class="ex">kubectl</span> -n multi exec -it multipod -c debian -- bash</a></code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a>$  <span class="ex">kubectl</span> -n multi exec -it multipod -c debian -- bash</span></code></pre></div>
 <h4 id="update-test">Update &amp; Test</h4>
-<pre class="sourceCode bash" id="cb21"><code class="sourceCode bash"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="ex">apt</span> update</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="ex">apt</span> install curl</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="ex">curl</span> http://127.0.0.1:80</a></code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="ex">apt</span> update</span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="ex">apt</span> install curl</span>
+<span id="cb21-3"><a href="#cb21-3"></a></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="ex">curl</span> http://127.0.0.1:80</span></code></pre></div>
 <h3 id="suppression-du-pod-1">7. Suppression du Pod</h3>
 <p>Supprimez le Pod.</p>
-<pre class="sourceCode bash" id="cb22"><code class="sourceCode bash"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="ex">kubectl</span> delete -f multipod.yaml</a></code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="ex">kubectl</span> delete -f multipod.yaml</span></code></pre></div>
 <h2 id="utilisation-volume-emptydir-et-conteneur-side-car">Utilisation volume emptyDir et conteneur side-car</h2>
 <p>On souhaite utiliser un conteneur <strong>side-car</strong> <em>(ou satellite)</em> qui dispose de commandes pour télécharger du code source dans un volume de type <code>emptyDir</code> et ainsi le mettre à dispo du conteneur applicatif nginx.</p>
-<pre class="sourceCode bash" id="cb23"><code class="sourceCode bash"><a class="sourceLine" id="cb23-1" data-line-number="1">$ <span class="ex">kubectl</span> apply -f multipod.yaml</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2">$ <span class="ex">kubectl</span> get po -n multi</a>
-<a class="sourceLine" id="cb23-3" data-line-number="3">$ <span class="ex">kubectl</span> port-forward -n multi multipod 8080:80</a></code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a>$ <span class="ex">kubectl</span> apply -f multipod.yaml</span>
+<span id="cb23-2"><a href="#cb23-2"></a>$ <span class="ex">kubectl</span> get po -n multi</span>
+<span id="cb23-3"><a href="#cb23-3"></a>$ <span class="ex">kubectl</span> port-forward -n multi multipod 8080:80</span></code></pre></div>
 <h1 id="tp3">TP3</h1>
 <h2 id="création-dun-service-nodeport">Création d’un Service NodePort</h2>
 <p>Dans cet exercice, vous allez modifier le fichier de spécification multipod.yaml afin d’ajouter une ressource de type service NodePort</p>
 <p>Le but est d’exposer de facon définitive le port applicatif 80 sur le serveur nginx</p>
 <h3 id="prépa-suppression-des-ressources">Prépa : suppression des ressources</h3>
-<pre class="sourceCode bash" id="cb24"><code class="sourceCode bash"><a class="sourceLine" id="cb24-1" data-line-number="1">$ <span class="ex">kubectl</span> delete -f multipod</a></code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a>$ <span class="ex">kubectl</span> delete -f multipod</span></code></pre></div>
 <h3 id="ajout-de-label-dans-la-spécification-multipod">1. Ajout de label dans la spécification multipod</h3>
 <p>Dans le fichier <em>multipod.yaml</em>, ajouter un label afin de pouvoir par la suite associer d’autres ressources à ce pod (service)</p>
 <ul>
@@ -567,19 +596,19 @@ Penser au namespace !!
 <p>Dans le fichier <em>multipod.yaml</em> définissant ajouter une ressource de type service définissant les caractéristiques suivantes : - nom du service: <em>multipod</em> - type: <em>NodePort</em> - un selector permettant le groupement des Pods ayant le label <em>app: multipod</em>. - exposition du port <em>80</em> à l’intérieur du cluster - forward des requètes vers le port <em>80</em> des Pods sous-jacents - exposition du port 31001 sur chacun des nodes du cluster (accès depuis l’extérieur)</p>
 <ul>
 <li><p>Ex definition service NodePort</p>
-<pre class="sourceCode yaml" id="cb25"><code class="sourceCode yaml"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="fu">kind:</span><span class="at"> Service</span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb25-4" data-line-number="4">  <span class="fu">name:</span><span class="at"> my-service</span></a>
-<a class="sourceLine" id="cb25-5" data-line-number="5"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb25-6" data-line-number="6">  <span class="fu">selector:</span></a>
-<a class="sourceLine" id="cb25-7" data-line-number="7">    <span class="fu">app:</span><span class="at"> MyApp</span></a>
-<a class="sourceLine" id="cb25-8" data-line-number="8">  <span class="fu">type:</span><span class="at"> NodePort</span></a>
-<a class="sourceLine" id="cb25-9" data-line-number="9">  <span class="fu">ports:</span></a>
-<a class="sourceLine" id="cb25-10" data-line-number="10">    <span class="kw">-</span> <span class="fu">protocol:</span><span class="at"> TCP</span></a>
-<a class="sourceLine" id="cb25-11" data-line-number="11">      <span class="fu">port:</span><span class="at"> 80</span></a>
-<a class="sourceLine" id="cb25-12" data-line-number="12">      <span class="fu">targetPort:</span><span class="at"> 80</span></a>
-<a class="sourceLine" id="cb25-13" data-line-number="13">      <span class="fu">nodePort:</span><span class="at"> 31001</span></a></code></pre></li>
+<div class="sourceCode" id="cb25"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> my-service</span></span>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> MyApp</span></span>
+<span id="cb25-8"><a href="#cb25-8"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb25-9"><a href="#cb25-9"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb25-10"><a href="#cb25-10"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">protocol</span><span class="kw">:</span><span class="at"> TCP</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a><span class="at">      </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb25-12"><a href="#cb25-12"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb25-13"><a href="#cb25-13"></a><span class="at">      </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">31001</span></span></code></pre></div></li>
 </ul>
 <h3 id="application-des-ressources">3. Application des ressources</h3>
 <p>Relancer l’application à l’aide de <em>kubectl apply</em></p>
@@ -587,7 +616,7 @@ Penser au namespace !!
 <h3 id="accès-au-service-depuis-lextérieur">4. Accès au Service depuis l’extérieur</h3>
 <p>Lancez un navigateur sur le port 31001 de l’une des machines du cluster.</p>
 <p>Note: vous pouvez obtenir les adresses IP des nodes de votre cluster dans la colonne <em>INTERNAL-IP</em> du résultat de la commande suivante:</p>
-<pre class="sourceCode bash" id="cb26"><code class="sourceCode bash"><a class="sourceLine" id="cb26-1" data-line-number="1">$ <span class="ex">kubectl</span> get nodes -o wide</a></code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1"></a>$ <span class="ex">kubectl</span> get nodes -o wide</span></code></pre></div>
 <h3 id="annexe">Annexe</h3>
 <div class="warning">
 Attention au namespace
@@ -599,194 +628,194 @@ Attention au namespace
 <ul>
 <li>Lister les ressources du namespace multi :</li>
 </ul>
-<pre class="sourceCode bash" id="cb27"><code class="sourceCode bash"><a class="sourceLine" id="cb27-1" data-line-number="1">$ <span class="ex">kubectl</span> get -n multi all</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2">$ <span class="ex">kubectl</span> get -n multi pod,service</a></code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1"></a>$ <span class="ex">kubectl</span> get -n multi all</span>
+<span id="cb27-2"><a href="#cb27-2"></a>$ <span class="ex">kubectl</span> get -n multi pod,service</span></code></pre></div>
 <h3 id="fichier-yaml">Fichier YAML:</h3>
 <p>Ci-dessous le résultat dans le fichier <code>multipod.yaml</code>:</p>
-<pre class="sourceCode yaml" id="cb28"><code class="sourceCode yaml"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="fu">kind:</span><span class="at"> Namespace</span></a>
-<a class="sourceLine" id="cb28-5" data-line-number="5"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb28-6" data-line-number="6">  <span class="fu">name:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb28-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb28-8" data-line-number="8"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb28-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb28-10" data-line-number="10"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb28-11" data-line-number="11"><span class="fu">kind:</span><span class="at"> Pod</span></a>
-<a class="sourceLine" id="cb28-12" data-line-number="12"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb28-13" data-line-number="13">  <span class="fu">name:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb28-14" data-line-number="14">  <span class="fu">namespace:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb28-15" data-line-number="15">  <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb28-16" data-line-number="16">    <span class="fu">app:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb28-17" data-line-number="17"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb28-18" data-line-number="18">  <span class="fu">containers:</span></a>
-<a class="sourceLine" id="cb28-19" data-line-number="19">    <span class="kw">-</span> <span class="fu">name:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb28-20" data-line-number="20">      <span class="fu">image:</span><span class="at"> nginx:1.18-alpine</span></a>
-<a class="sourceLine" id="cb28-21" data-line-number="21">      <span class="fu">volumeMounts:</span></a>
-<a class="sourceLine" id="cb28-22" data-line-number="22">        <span class="kw">-</span> <span class="fu">name:</span><span class="at"> multipod-partage</span></a>
-<a class="sourceLine" id="cb28-23" data-line-number="23">          <span class="fu">mountPath:</span><span class="at"> /usr/share/nginx/html</span></a>
-<a class="sourceLine" id="cb28-24" data-line-number="24">  <span class="fu">initContainers:</span></a>
-<a class="sourceLine" id="cb28-25" data-line-number="25">    <span class="kw">-</span> <span class="fu">name:</span><span class="at"> alpine</span></a>
-<a class="sourceLine" id="cb28-26" data-line-number="26">      <span class="fu">image:</span><span class="at"> alpine:3.12</span></a>
-<a class="sourceLine" id="cb28-27" data-line-number="27">      <span class="fu">command:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;/bin/sh&quot;</span><span class="kw">]</span></a>
-<a class="sourceLine" id="cb28-28" data-line-number="28">      <span class="fu">args:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;-c&quot;</span><span class="fu">, &quot;wget https:</span><span class="at">//raw.githubusercontent.com/psable/k8s_html/master/index.html -P /partage/&quot;]</span></a>
-<a class="sourceLine" id="cb28-29" data-line-number="29">      <span class="fu">volumeMounts:</span></a>
-<a class="sourceLine" id="cb28-30" data-line-number="30">        <span class="kw">-</span> <span class="fu">name:</span><span class="at"> multipod-partage</span></a>
-<a class="sourceLine" id="cb28-31" data-line-number="31">          <span class="fu">mountPath:</span><span class="at"> /partage</span></a>
-<a class="sourceLine" id="cb28-32" data-line-number="32">  <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb28-33" data-line-number="33">    <span class="kw">-</span> <span class="fu">name:</span><span class="at"> multipod-partage</span></a>
-<a class="sourceLine" id="cb28-34" data-line-number="34">      <span class="fu">emptyDir:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb28-35" data-line-number="35"></a>
-<a class="sourceLine" id="cb28-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb28-37" data-line-number="37"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb28-38" data-line-number="38"></a>
-<a class="sourceLine" id="cb28-39" data-line-number="39"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb28-40" data-line-number="40"><span class="fu">kind:</span><span class="at"> Service</span></a>
-<a class="sourceLine" id="cb28-41" data-line-number="41"><span class="fu">metadata:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb28-42" data-line-number="42">  <span class="fu">name:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb28-43" data-line-number="43">  <span class="fu">namespace:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb28-44" data-line-number="44"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb28-45" data-line-number="45">  <span class="fu">selector:</span></a>
-<a class="sourceLine" id="cb28-46" data-line-number="46">    <span class="fu">app:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb28-47" data-line-number="47">  <span class="fu">type:</span><span class="at"> NodePort</span></a>
-<a class="sourceLine" id="cb28-48" data-line-number="48">  <span class="fu">ports:</span></a>
-<a class="sourceLine" id="cb28-49" data-line-number="49">    <span class="kw">-</span> <span class="fu">port:</span><span class="at"> 80</span></a>
-<a class="sourceLine" id="cb28-50" data-line-number="50">      <span class="fu">targetPort:</span><span class="at"> 80</span></a>
-<a class="sourceLine" id="cb28-51" data-line-number="51">      <span class="fu">nodePort:</span><span class="at"> 31001</span></a>
-<a class="sourceLine" id="cb28-52" data-line-number="52">      <span class="fu">protocol:</span><span class="at"> TCP</span></a>
-<a class="sourceLine" id="cb28-53" data-line-number="53"></a>
-<a class="sourceLine" id="cb28-54" data-line-number="54"></a>
-<a class="sourceLine" id="cb28-55" data-line-number="55"></a>
-<a class="sourceLine" id="cb28-56" data-line-number="56"><span class="co">...</span></a></code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb28-1"><a href="#cb28-1"></a><span class="pp">---</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a></span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="pp">---</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb28-12"><a href="#cb28-12"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb28-16"><a href="#cb28-16"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb28-19"><a href="#cb28-19"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb28-20"><a href="#cb28-20"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:1.18-alpine</span></span>
+<span id="cb28-21"><a href="#cb28-21"></a><span class="at">      </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb28-22"><a href="#cb28-22"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod-partage</span></span>
+<span id="cb28-23"><a href="#cb28-23"></a><span class="at">          </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /usr/share/nginx/html</span></span>
+<span id="cb28-24"><a href="#cb28-24"></a><span class="at">  </span><span class="fu">initContainers</span><span class="kw">:</span></span>
+<span id="cb28-25"><a href="#cb28-25"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> alpine</span></span>
+<span id="cb28-26"><a href="#cb28-26"></a><span class="at">      </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:3.12</span></span>
+<span id="cb28-27"><a href="#cb28-27"></a><span class="at">      </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;/bin/sh&quot;</span><span class="kw">]</span></span>
+<span id="cb28-28"><a href="#cb28-28"></a><span class="at">      </span><span class="fu">args</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;-c&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;wget https://raw.githubusercontent.com/psable/k8s_html/master/index.html -P /partage/&quot;</span><span class="kw">]</span></span>
+<span id="cb28-29"><a href="#cb28-29"></a><span class="at">      </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb28-30"><a href="#cb28-30"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod-partage</span></span>
+<span id="cb28-31"><a href="#cb28-31"></a><span class="at">          </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /partage</span></span>
+<span id="cb28-32"><a href="#cb28-32"></a><span class="at">  </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb28-33"><a href="#cb28-33"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod-partage</span></span>
+<span id="cb28-34"><a href="#cb28-34"></a><span class="at">      </span><span class="fu">emptyDir</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb28-35"><a href="#cb28-35"></a></span>
+<span id="cb28-36"><a href="#cb28-36"></a></span>
+<span id="cb28-37"><a href="#cb28-37"></a><span class="pp">---</span></span>
+<span id="cb28-38"><a href="#cb28-38"></a></span>
+<span id="cb28-39"><a href="#cb28-39"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb28-40"><a href="#cb28-40"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb28-41"><a href="#cb28-41"></a><span class="fu">metadata</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb28-42"><a href="#cb28-42"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb28-43"><a href="#cb28-43"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb28-44"><a href="#cb28-44"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb28-45"><a href="#cb28-45"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb28-46"><a href="#cb28-46"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb28-47"><a href="#cb28-47"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb28-48"><a href="#cb28-48"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb28-49"><a href="#cb28-49"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb28-50"><a href="#cb28-50"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb28-51"><a href="#cb28-51"></a><span class="at">      </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">31001</span></span>
+<span id="cb28-52"><a href="#cb28-52"></a><span class="at">      </span><span class="fu">protocol</span><span class="kw">:</span><span class="at"> TCP</span></span>
+<span id="cb28-53"><a href="#cb28-53"></a></span>
+<span id="cb28-54"><a href="#cb28-54"></a></span>
+<span id="cb28-55"><a href="#cb28-55"></a></span>
+<span id="cb28-56"><a href="#cb28-56"></a><span class="co">...</span></span></code></pre></div>
 <h4 id="vérification-3">Vérification</h4>
-<pre class="sourceCode bash" id="cb29"><code class="sourceCode bash"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/Kubernetes</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2">$ <span class="ex">kubectl.exe</span> get all -n multi</a>
-<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="ex">NAME</span>           READY   STATUS    RESTARTS   AGE</a>
-<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="ex">pod/multipod</span>   1/1     Running   0          4m59s</a>
-<a class="sourceLine" id="cb29-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="ex">NAME</span>               TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        <span class="ex">AGE</span></a>
-<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="ex">service/multipod</span>   NodePort   10.99.48.217   <span class="op">&lt;</span>none<span class="op">&gt;</span>        80:31001/TCP   4m59s</a>
-<a class="sourceLine" id="cb29-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/Kubernetes</a>
-<a class="sourceLine" id="cb29-10" data-line-number="10">$ <span class="ex">kubectl.exe</span> get nodes -o wide</a>
-<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="ex">NAME</span>       STATUS   ROLES                  AGE     VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE               KERNEL-VERSION   CONTAINER-RUNTIME</a>
-<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="ex">minikube</span>   Ready    control-plane,master   2d23h   v1.21.2   192.168.99.100   <span class="op">&lt;</span>none<span class="op">&gt;</span>        Buildroot 2020.02.12   4.19.182         docker://20.10.6</a></code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1"></a><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/Kubernetes</span>
+<span id="cb29-2"><a href="#cb29-2"></a>$ <span class="ex">kubectl.exe</span> get all -n multi</span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="ex">NAME</span>           READY   STATUS    RESTARTS   AGE</span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="ex">pod/multipod</span>   1/1     Running   0          4m59s</span>
+<span id="cb29-5"><a href="#cb29-5"></a></span>
+<span id="cb29-6"><a href="#cb29-6"></a><span class="ex">NAME</span>               TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)        <span class="ex">AGE</span></span>
+<span id="cb29-7"><a href="#cb29-7"></a><span class="ex">service/multipod</span>   NodePort   10.99.48.217   <span class="op">&lt;</span>none<span class="op">&gt;</span>        80:31001/TCP   4m59s</span>
+<span id="cb29-8"><a href="#cb29-8"></a></span>
+<span id="cb29-9"><a href="#cb29-9"></a><span class="ex">Admin</span> stagiaire@BBG58Y2 MINGW64 ~/Kubernetes</span>
+<span id="cb29-10"><a href="#cb29-10"></a>$ <span class="ex">kubectl.exe</span> get nodes -o wide</span>
+<span id="cb29-11"><a href="#cb29-11"></a><span class="ex">NAME</span>       STATUS   ROLES                  AGE     VERSION   INTERNAL-IP      EXTERNAL-IP   OS-IMAGE               KERNEL-VERSION   CONTAINER-RUNTIME</span>
+<span id="cb29-12"><a href="#cb29-12"></a><span class="ex">minikube</span>   Ready    control-plane,master   2d23h   v1.21.2   192.168.99.100   <span class="op">&lt;</span>none<span class="op">&gt;</span>        Buildroot 2020.02.12   4.19.182         docker://20.10.6</span></code></pre></div>
 <h5 id="page-web">Page web</h5>
 <p><img src="2021-07-16-POEI-Kubernetes/2021-07-19_14h12_08.png" /></p>
 <h1 id="dashboard">Dashboard</h1>
 <p>Documentation officielle du <a href="https://kubernetes.io/fr/docs/tasks/access-application-cluster/web-ui-dashboard/">Tableau de bord (Dashboard)</a></p>
 <h2 id="installation-du-dashboard">Installation du Dashboard</h2>
 <p>On intalle le tableau de bord avec:</p>
-<pre class="sourceCode bash" id="cb30"><code class="sourceCode bash"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="ex">kubectl</span> apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml</a></code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1"></a><span class="ex">kubectl</span> apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml</span></code></pre></div>
 <h1 id="tp4">TP4</h1>
 <h2 id="création-dun-déploiement">Création d’un déploiement</h2>
 <p>Dans cet exercice, vous allez modifier le fichier de spécification multipod.yaml afin de transformer le simple en un deployment (+ replicaset + pod)</p>
 <h3 id="prépa-suppression-des-ressources-1">Prépa : suppression des ressources</h3>
-<pre class="sourceCode bash" id="cb31"><code class="sourceCode bash"><a class="sourceLine" id="cb31-1" data-line-number="1">$ <span class="ex">kubectl</span> delete -f multipod</a></code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb31-1"><a href="#cb31-1"></a>$ <span class="ex">kubectl</span> delete -f multipod</span></code></pre></div>
 <h3 id="transformer-la-spécification-multipod">1. Transformer la spécification multipod</h3>
 <p>Ex :</p>
-<pre class="sourceCode yaml" id="cb32"><code class="sourceCode yaml"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="fu">apiVersion:</span><span class="at"> apps/v1</span></a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="fu">kind:</span><span class="at"> Deployment</span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb32-4" data-line-number="4">  <span class="fu">name:</span><span class="at"> nginx-deployment</span></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5">  <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb32-6" data-line-number="6">    <span class="fu">app:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb32-8" data-line-number="8">  <span class="fu">replicas:</span><span class="at"> 3</span></a>
-<a class="sourceLine" id="cb32-9" data-line-number="9">  <span class="fu">selector:</span></a>
-<a class="sourceLine" id="cb32-10" data-line-number="10">    <span class="fu">matchLabels:</span></a>
-<a class="sourceLine" id="cb32-11" data-line-number="11">      <span class="fu">app:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb32-12" data-line-number="12">  <span class="fu">template:</span></a>
-<a class="sourceLine" id="cb32-13" data-line-number="13">    <span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb32-14" data-line-number="14">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb32-15" data-line-number="15">        <span class="fu">app:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb32-16" data-line-number="16">    <span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb32-17" data-line-number="17">      <span class="fu">containers:</span></a>
-<a class="sourceLine" id="cb32-18" data-line-number="18">      <span class="kw">-</span> <span class="fu">name:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb32-19" data-line-number="19">        <span class="fu">image:</span><span class="at"> nginx:1.7.9</span></a>
-<a class="sourceLine" id="cb32-20" data-line-number="20">        <span class="fu">ports:</span></a>
-<a class="sourceLine" id="cb32-21" data-line-number="21">        <span class="kw">-</span> <span class="fu">containerPort:</span><span class="at"> 80</span></a></code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx-deployment</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb32-14"><a href="#cb32-14"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb32-17"><a href="#cb32-17"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb32-18"><a href="#cb32-18"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb32-19"><a href="#cb32-19"></a><span class="at">        </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:1.7.9</span></span>
+<span id="cb32-20"><a href="#cb32-20"></a><span class="at">        </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb32-21"><a href="#cb32-21"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">containerPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span></code></pre></div>
 <h3 id="application-des-ressources-1">2. Application des ressources</h3>
 <p>Relancer l’application à l’aide de <em>kubectl apply</em></p>
 <p>Vérifier la création des ressources : <em>kubectl get</em></p>
 <h3 id="résultats">Résultats</h3>
 <h4 id="fichier-yaml-1">Fichier YAML</h4>
 <p>Contenu du fichier <code>multipod.yaml</code>:</p>
-<pre class="sourceCode yaml" id="cb33"><code class="sourceCode yaml"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="fu">kind:</span><span class="at"> Namespace</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6">  <span class="fu">name:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="fu">apiVersion:</span><span class="at"> apps/v1</span></a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="fu">kind:</span><span class="at"> Deployment</span></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb33-13" data-line-number="13">  <span class="fu">name:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb33-14" data-line-number="14">  <span class="fu">namespace:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb33-15" data-line-number="15">  <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb33-16" data-line-number="16">    <span class="fu">app:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb33-17" data-line-number="17"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb33-18" data-line-number="18">  <span class="fu">replicas:</span><span class="at"> 1</span></a>
-<a class="sourceLine" id="cb33-19" data-line-number="19">  <span class="fu">selector:</span></a>
-<a class="sourceLine" id="cb33-20" data-line-number="20">    <span class="fu">matchLabels:</span></a>
-<a class="sourceLine" id="cb33-21" data-line-number="21">      <span class="fu">app:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb33-22" data-line-number="22">  <span class="fu">template:</span></a>
-<a class="sourceLine" id="cb33-23" data-line-number="23">    <span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb33-24" data-line-number="24">      <span class="fu">labels:</span></a>
-<a class="sourceLine" id="cb33-25" data-line-number="25">        <span class="fu">app:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb33-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb33-27" data-line-number="27">    <span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb33-28" data-line-number="28">      <span class="fu">containers:</span></a>
-<a class="sourceLine" id="cb33-29" data-line-number="29">        <span class="kw">-</span> <span class="fu">name:</span><span class="at"> nginx</span></a>
-<a class="sourceLine" id="cb33-30" data-line-number="30">          <span class="fu">image:</span><span class="at"> nginx:1.18-alpine</span></a>
-<a class="sourceLine" id="cb33-31" data-line-number="31">          <span class="fu">volumeMounts:</span></a>
-<a class="sourceLine" id="cb33-32" data-line-number="32">            <span class="kw">-</span> <span class="fu">name:</span><span class="at"> multipod-partage</span></a>
-<a class="sourceLine" id="cb33-33" data-line-number="33">              <span class="fu">mountPath:</span><span class="at"> /usr/share/nginx/html</span></a>
-<a class="sourceLine" id="cb33-34" data-line-number="34">      <span class="fu">initContainers:</span></a>
-<a class="sourceLine" id="cb33-35" data-line-number="35">        <span class="kw">-</span> <span class="fu">name:</span><span class="at"> alpine</span></a>
-<a class="sourceLine" id="cb33-36" data-line-number="36">          <span class="fu">image:</span><span class="at"> alpine:3.12</span></a>
-<a class="sourceLine" id="cb33-37" data-line-number="37">          <span class="fu">command:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;/bin/sh&quot;</span><span class="kw">]</span></a>
-<a class="sourceLine" id="cb33-38" data-line-number="38">          <span class="fu">args:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;-c&quot;</span><span class="fu">, &quot;wget https:</span><span class="at">//raw.githubusercontent.com/psable/k8s_html/master/index.html -P /partage/&quot;]</span></a>
-<a class="sourceLine" id="cb33-39" data-line-number="39">          <span class="fu">volumeMounts:</span></a>
-<a class="sourceLine" id="cb33-40" data-line-number="40">            <span class="kw">-</span> <span class="fu">name:</span><span class="at"> multipod-partage</span></a>
-<a class="sourceLine" id="cb33-41" data-line-number="41">              <span class="fu">mountPath:</span><span class="at"> /partage</span></a>
-<a class="sourceLine" id="cb33-42" data-line-number="42">      <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb33-43" data-line-number="43">        <span class="kw">-</span> <span class="fu">name:</span><span class="at"> multipod-partage</span></a>
-<a class="sourceLine" id="cb33-44" data-line-number="44">          <span class="fu">emptyDir:</span><span class="at"> </span><span class="kw">{}</span></a>
-<a class="sourceLine" id="cb33-45" data-line-number="45"></a>
-<a class="sourceLine" id="cb33-46" data-line-number="46"></a>
-<a class="sourceLine" id="cb33-47" data-line-number="47"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb33-48" data-line-number="48"></a>
-<a class="sourceLine" id="cb33-49" data-line-number="49"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb33-50" data-line-number="50"><span class="fu">kind:</span><span class="at"> Service</span></a>
-<a class="sourceLine" id="cb33-51" data-line-number="51"><span class="fu">metadata:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb33-52" data-line-number="52">  <span class="fu">name:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb33-53" data-line-number="53">  <span class="fu">namespace:</span><span class="at"> multi</span></a>
-<a class="sourceLine" id="cb33-54" data-line-number="54"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb33-55" data-line-number="55">  <span class="fu">selector:</span></a>
-<a class="sourceLine" id="cb33-56" data-line-number="56">    <span class="fu">app:</span><span class="at"> multipod</span></a>
-<a class="sourceLine" id="cb33-57" data-line-number="57">  <span class="fu">type:</span><span class="at"> NodePort</span></a>
-<a class="sourceLine" id="cb33-58" data-line-number="58">  <span class="fu">ports:</span></a>
-<a class="sourceLine" id="cb33-59" data-line-number="59">    <span class="kw">-</span> <span class="fu">port:</span><span class="at"> 80</span></a>
-<a class="sourceLine" id="cb33-60" data-line-number="60">      <span class="fu">targetPort:</span><span class="at"> 80</span></a>
-<a class="sourceLine" id="cb33-61" data-line-number="61">      <span class="fu">nodePort:</span><span class="at"> 31001</span></a>
-<a class="sourceLine" id="cb33-62" data-line-number="62">      <span class="fu">protocol:</span><span class="at"> TCP</span></a>
-<a class="sourceLine" id="cb33-63" data-line-number="63"></a>
-<a class="sourceLine" id="cb33-64" data-line-number="64"></a>
-<a class="sourceLine" id="cb33-65" data-line-number="65"><span class="co">...</span></a></code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb33-1"><a href="#cb33-1"></a><span class="pp">---</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Namespace</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a></span>
+<span id="cb33-8"><a href="#cb33-8"></a><span class="pp">---</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a></span>
+<span id="cb33-10"><a href="#cb33-10"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> apps/v1</span></span>
+<span id="cb33-11"><a href="#cb33-11"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Deployment</span></span>
+<span id="cb33-12"><a href="#cb33-12"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb33-13"><a href="#cb33-13"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb33-14"><a href="#cb33-14"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb33-15"><a href="#cb33-15"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb33-16"><a href="#cb33-16"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb33-17"><a href="#cb33-17"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb33-18"><a href="#cb33-18"></a><span class="at">  </span><span class="fu">replicas</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb33-19"><a href="#cb33-19"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb33-20"><a href="#cb33-20"></a><span class="at">    </span><span class="fu">matchLabels</span><span class="kw">:</span></span>
+<span id="cb33-21"><a href="#cb33-21"></a><span class="at">      </span><span class="fu">app</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb33-22"><a href="#cb33-22"></a><span class="at">  </span><span class="fu">template</span><span class="kw">:</span></span>
+<span id="cb33-23"><a href="#cb33-23"></a><span class="at">    </span><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb33-24"><a href="#cb33-24"></a><span class="at">      </span><span class="fu">labels</span><span class="kw">:</span></span>
+<span id="cb33-25"><a href="#cb33-25"></a><span class="at">        </span><span class="fu">app</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb33-26"><a href="#cb33-26"></a></span>
+<span id="cb33-27"><a href="#cb33-27"></a><span class="at">    </span><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb33-28"><a href="#cb33-28"></a><span class="at">      </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb33-29"><a href="#cb33-29"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> nginx</span></span>
+<span id="cb33-30"><a href="#cb33-30"></a><span class="at">          </span><span class="fu">image</span><span class="kw">:</span><span class="at"> nginx:1.18-alpine</span></span>
+<span id="cb33-31"><a href="#cb33-31"></a><span class="at">          </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb33-32"><a href="#cb33-32"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod-partage</span></span>
+<span id="cb33-33"><a href="#cb33-33"></a><span class="at">              </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /usr/share/nginx/html</span></span>
+<span id="cb33-34"><a href="#cb33-34"></a><span class="at">      </span><span class="fu">initContainers</span><span class="kw">:</span></span>
+<span id="cb33-35"><a href="#cb33-35"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> alpine</span></span>
+<span id="cb33-36"><a href="#cb33-36"></a><span class="at">          </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:3.12</span></span>
+<span id="cb33-37"><a href="#cb33-37"></a><span class="at">          </span><span class="fu">command</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;/bin/sh&quot;</span><span class="kw">]</span></span>
+<span id="cb33-38"><a href="#cb33-38"></a><span class="at">          </span><span class="fu">args</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;-c&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;wget https://raw.githubusercontent.com/psable/k8s_html/master/index.html -P /partage/&quot;</span><span class="kw">]</span></span>
+<span id="cb33-39"><a href="#cb33-39"></a><span class="at">          </span><span class="fu">volumeMounts</span><span class="kw">:</span></span>
+<span id="cb33-40"><a href="#cb33-40"></a><span class="at">            </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod-partage</span></span>
+<span id="cb33-41"><a href="#cb33-41"></a><span class="at">              </span><span class="fu">mountPath</span><span class="kw">:</span><span class="at"> /partage</span></span>
+<span id="cb33-42"><a href="#cb33-42"></a><span class="at">      </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb33-43"><a href="#cb33-43"></a><span class="at">        </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod-partage</span></span>
+<span id="cb33-44"><a href="#cb33-44"></a><span class="at">          </span><span class="fu">emptyDir</span><span class="kw">:</span><span class="at"> </span><span class="kw">{}</span></span>
+<span id="cb33-45"><a href="#cb33-45"></a></span>
+<span id="cb33-46"><a href="#cb33-46"></a></span>
+<span id="cb33-47"><a href="#cb33-47"></a><span class="pp">---</span></span>
+<span id="cb33-48"><a href="#cb33-48"></a></span>
+<span id="cb33-49"><a href="#cb33-49"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb33-50"><a href="#cb33-50"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Service</span></span>
+<span id="cb33-51"><a href="#cb33-51"></a><span class="fu">metadata</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb33-52"><a href="#cb33-52"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb33-53"><a href="#cb33-53"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> multi</span></span>
+<span id="cb33-54"><a href="#cb33-54"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb33-55"><a href="#cb33-55"></a><span class="at">  </span><span class="fu">selector</span><span class="kw">:</span></span>
+<span id="cb33-56"><a href="#cb33-56"></a><span class="at">    </span><span class="fu">app</span><span class="kw">:</span><span class="at"> multipod</span></span>
+<span id="cb33-57"><a href="#cb33-57"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> NodePort</span></span>
+<span id="cb33-58"><a href="#cb33-58"></a><span class="at">  </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb33-59"><a href="#cb33-59"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">port</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb33-60"><a href="#cb33-60"></a><span class="at">      </span><span class="fu">targetPort</span><span class="kw">:</span><span class="at"> </span><span class="dv">80</span></span>
+<span id="cb33-61"><a href="#cb33-61"></a><span class="at">      </span><span class="fu">nodePort</span><span class="kw">:</span><span class="at"> </span><span class="dv">31001</span></span>
+<span id="cb33-62"><a href="#cb33-62"></a><span class="at">      </span><span class="fu">protocol</span><span class="kw">:</span><span class="at"> TCP</span></span>
+<span id="cb33-63"><a href="#cb33-63"></a></span>
+<span id="cb33-64"><a href="#cb33-64"></a></span>
+<span id="cb33-65"><a href="#cb33-65"></a><span class="co">...</span></span></code></pre></div>
 <h5 id="création-du-deployment">Création du Deployment</h5>
-<pre class="sourceCode bash" id="cb34"><code class="sourceCode bash"><a class="sourceLine" id="cb34-1" data-line-number="1">$ <span class="ex">kubectl.exe</span> apply -f multipod.yaml</a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="ex">namespace/multi</span> unchanged</a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="ex">deployment.apps/multipod</span> created</a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="ex">service/multipod</span> unchanged</a></code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb34-1"><a href="#cb34-1"></a>$ <span class="ex">kubectl.exe</span> apply -f multipod.yaml</span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="ex">namespace/multi</span> unchanged</span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="ex">deployment.apps/multipod</span> created</span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="ex">service/multipod</span> unchanged</span></code></pre></div>
 <h5 id="vérification-4">Vérification</h5>
-<pre class="sourceCode bash" id="cb35"><code class="sourceCode bash"><a class="sourceLine" id="cb35-1" data-line-number="1">$ <span class="ex">kubectl.exe</span> get deployments -n multi</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="ex">NAME</span>       READY   UP-TO-DATE   AVAILABLE   AGE</a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="ex">multipod</span>   1/1     1            1           24s</a></code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb35-1"><a href="#cb35-1"></a>$ <span class="ex">kubectl.exe</span> get deployments -n multi</span>
+<span id="cb35-2"><a href="#cb35-2"></a><span class="ex">NAME</span>       READY   UP-TO-DATE   AVAILABLE   AGE</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="ex">multipod</span>   1/1     1            1           24s</span></code></pre></div>
 <h1 id="tp5">TP5</h1>
 <p>Dans cet exercice, vous allez créer un Deployment et l’exposer à l’intérieur du cluster en utilisant un Service de type <em>ClusterIP</em>.</p>
 <p>Schéma:</p>
@@ -828,20 +857,20 @@ Attention au namespace
 <ul>
 <li>Créer un fichier <em>client_pod.yaml</em> définissant le Pod dont la spécification est la suivante:</li>
 </ul>
-<pre class="sourceCode yaml" id="cb37"><code class="sourceCode yaml"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="fu">apiVersion:</span><span class="at"> v1</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="fu">kind:</span><span class="at"> Pod</span></a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="fu">metadata:</span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4">  <span class="fu">name:</span><span class="at"> debug</span></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5">  <span class="fu">namespace:</span><span class="at"> myphp</span></a>
-<a class="sourceLine" id="cb37-6" data-line-number="6">  <span class="fu">labels:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb37-7" data-line-number="7">    <span class="fu">projet:</span><span class="at"> myphp</span></a>
-<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="fu">spec:</span></a>
-<a class="sourceLine" id="cb37-9" data-line-number="9">  <span class="fu">containers:</span></a>
-<a class="sourceLine" id="cb37-10" data-line-number="10">  <span class="kw">-</span> <span class="fu">name:</span><span class="at"> debug</span></a>
-<a class="sourceLine" id="cb37-11" data-line-number="11">    <span class="fu">image:</span><span class="at"> alpine:3.9</span></a>
-<a class="sourceLine" id="cb37-12" data-line-number="12">    <span class="fu">command:</span></a>
-<a class="sourceLine" id="cb37-13" data-line-number="13">    <span class="kw">-</span> <span class="st">&quot;sleep&quot;</span></a>
-<a class="sourceLine" id="cb37-14" data-line-number="14">    <span class="kw">-</span> <span class="st">&quot;10000&quot;</span></a></code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">apiVersion</span><span class="kw">:</span><span class="at"> v1</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a><span class="fu">kind</span><span class="kw">:</span><span class="at"> Pod</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="fu">metadata</span><span class="kw">:</span></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="at">  </span><span class="fu">name</span><span class="kw">:</span><span class="at"> debug</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="at">  </span><span class="fu">namespace</span><span class="kw">:</span><span class="at"> myphp</span></span>
+<span id="cb37-6"><a href="#cb37-6"></a><span class="at">  </span><span class="fu">labels</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="at">    </span><span class="fu">projet</span><span class="kw">:</span><span class="at"> myphp</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a><span class="fu">spec</span><span class="kw">:</span></span>
+<span id="cb37-9"><a href="#cb37-9"></a><span class="at">  </span><span class="fu">containers</span><span class="kw">:</span></span>
+<span id="cb37-10"><a href="#cb37-10"></a><span class="at">  </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> debug</span></span>
+<span id="cb37-11"><a href="#cb37-11"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> alpine:3.9</span></span>
+<span id="cb37-12"><a href="#cb37-12"></a><span class="at">    </span><span class="fu">command</span><span class="kw">:</span></span>
+<span id="cb37-13"><a href="#cb37-13"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;sleep&quot;</span></span>
+<span id="cb37-14"><a href="#cb37-14"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;10000&quot;</span></span></code></pre></div>
 <p>Nous allons utiliser ce Pod pour accèder au Service <em>backend</em> depuis l’intérieur du cluster. Ce Pod contient un seul container, basé sur alpine et qui est lancé avec la commande <code>sleep 10000</code>. Ce container sera donc en attente pendant 10000 secondes. Nous pourrons alors lancer un shell intéractif à l’intérieur de celui-ci et tester la communication avec le Service <em>backend</em>.</p>
 <ul>
 <li>Lancez le Pod avec <em>kubectl</em>.</li>
@@ -906,11 +935,11 @@ kubectl get service backend -o yaml</code></pre>
 <p>Le but est de réaliser une mise à jour des images en 2.0 de l’appli PHP (et faire un rollback si nécessaire)</p>
 <h3 id="ajout-de-stratégie-de-rolling-update">1. Ajout de stratégie de rolling update</h3>
 <p>Dans les fichiers de spécification <code>myphp_frontend.yaml</code> et <code>myphp_backend.yaml</code>, ajouter une stratégie de rolling update pour avoir 0 downtime et un max replicas supplémentaire à 1</p>
-<pre class="sourceCode yaml" id="cb42"><code class="sourceCode yaml"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="fu">strategy:</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">  <span class="fu">type:</span><span class="at"> RollingUpdate</span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3">  <span class="fu">rollingUpdate:</span></a>
-<a class="sourceLine" id="cb42-4" data-line-number="4">    <span class="fu">maxSurge:</span><span class="at"> 1</span></a>
-<a class="sourceLine" id="cb42-5" data-line-number="5">    <span class="fu">maxUnavailable:</span><span class="at"> 0</span></a></code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">strategy</span><span class="kw">:</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> RollingUpdate</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="at">  </span><span class="fu">rollingUpdate</span><span class="kw">:</span></span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="at">    </span><span class="fu">maxSurge</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb42-5"><a href="#cb42-5"></a><span class="at">    </span><span class="fu">maxUnavailable</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span></span></code></pre></div>
 <h3 id="update-des-ressources-deployment">2. Update des ressources deployment</h3>
 <p>Appliquer les nouvelles spec : <code>kubectl apply</code></p>
 <h2 id="vérification-de-lapplication-de-la-stratégie-dans-le-dashboard">3. Vérification de l’application de la stratégie dans le dashboard</h2>
@@ -926,7 +955,7 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <blockquote>
 <p>Répérer le nom du déploiement (kubectl get), repérer le nom du conteneur (spec yaml)</p>
 </blockquote>
-<pre class="sourceCode bash" id="cb43"><code class="sourceCode bash"><a class="sourceLine" id="cb43-1" data-line-number="1">$ <span class="ex">kubectl</span> set image {nom du déploiement frontend} <span class="dt">{conteneur}</span>=<span class="ex">bilbloke</span>/frontend:<span class="ex">2.0</span> --record</a></code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1"></a>$ <span class="ex">kubectl</span> set image {nom du déploiement frontend} <span class="dt">{conteneur}</span>=<span class="ex">bilbloke</span>/frontend:<span class="ex">2.0</span> --record</span></code></pre></div>
 <p>Résultat:</p>
 <iframe src="2021-07-16-POEI-Kubernetes/2021-07-20_12h20_33.mp4">
 </iframe>
@@ -936,12 +965,12 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <ul>
 <li>Info sur le cluster :</li>
 </ul>
-<pre class="sourceCode bash" id="cb44"><code class="sourceCode bash"><a class="sourceLine" id="cb44-1" data-line-number="1">$ <span class="ex">kubectl</span> cluster-info</a></code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1"></a>$ <span class="ex">kubectl</span> cluster-info</span></code></pre></div>
 <ul>
 <li>Info sur les nodes :</li>
 </ul>
-<pre class="sourceCode bash" id="cb45"><code class="sourceCode bash"><a class="sourceLine" id="cb45-1" data-line-number="1">$ <span class="ex">kubectl</span> get nodes</a>
-<a class="sourceLine" id="cb45-2" data-line-number="2">$ <span class="ex">kubectl</span> get nodes -o wide</a></code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1"></a>$ <span class="ex">kubectl</span> get nodes</span>
+<span id="cb45-2"><a href="#cb45-2"></a>$ <span class="ex">kubectl</span> get nodes -o wide</span></code></pre></div>
 <h2 id="configuration-du-client">Configuration du client :</h2>
 <ul>
 <li>Configuration kubectl
@@ -959,32 +988,37 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 </ul></li>
 </ul>
 <h2 id="lister-les-ressources-k8s">Lister les ressources k8s</h2>
-<pre class="sourceCode bash" id="cb46"><code class="sourceCode bash"><a class="sourceLine" id="cb46-1" data-line-number="1">$ <span class="ex">kubectl</span> api-resources</a></code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb46-1"><a href="#cb46-1"></a>$ <span class="ex">kubectl</span> api-resources</span></code></pre></div>
 <h2 id="lister-les-ressources-créées-dans-le-cluster">Lister les ressources créées dans le cluster</h2>
-<p>```bash $ kubectl get pod $ kubectl get pod -n multi</p>
-<h2 id="récuperer-de-linfo-dans-le-cluster">Récuperer de l’info dans le cluster</h2>
-<blockquote>
-<p>On interroge des ressources</p>
-</blockquote>
-<pre class="sourceCode bash" id="cb47"><code class="sourceCode bash"><a class="sourceLine" id="cb47-1" data-line-number="1">$ <span class="ex">kubectl</span> get pod</a></code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb47-1"><a href="#cb47-1"></a>$ <span class="ex">kubectl</span> get pod</span>
+<span id="cb47-2"><a href="#cb47-2"></a>$ <span class="ex">kubectl</span> get pod -n multi</span>
+<span id="cb47-3"><a href="#cb47-3"></a></span>
+<span id="cb47-4"><a href="#cb47-4"></a></span>
+<span id="cb47-5"><a href="#cb47-5"></a></span>
+<span id="cb47-6"><a href="#cb47-6"></a><span class="co">## Récuperer de l&#39;info dans le cluster </span></span>
+<span id="cb47-7"><a href="#cb47-7"></a></span>
+<span id="cb47-8"><a href="#cb47-8"></a><span class="op">&gt;</span> <span class="ex">On</span> interroge des ressources</span>
+<span id="cb47-9"><a href="#cb47-9"></a></span>
+<span id="cb47-10"><a href="#cb47-10"></a><span class="kw">```</span><span class="fu">bash</span></span>
+<span id="cb47-11"><a href="#cb47-11"></a>$ <span class="ex">kubectl</span> get pod</span></code></pre></div>
 <blockquote>
 <p>Les ressources sont déclarée dans des namespace. Cela permet de ranger, dissocier des ressources par équipe, projets, fonctionnalités, environnement.</p>
 </blockquote>
 <ul>
 <li>Interroger la ressources de type pod dans le namespace systeme : kube-system</li>
 </ul>
-<pre class="sourceCode bash" id="cb48"><code class="sourceCode bash"><a class="sourceLine" id="cb48-1" data-line-number="1">$ <span class="ex">kubectl</span> get pod -n kube-system</a></code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1"></a>$ <span class="ex">kubectl</span> get pod -n kube-system</span></code></pre></div>
 <h2 id="documentation---aide">Documentation - aide</h2>
 <ul>
 <li>Lister les ressources :</li>
 </ul>
-<pre class="sourceCode bash" id="cb49"><code class="sourceCode bash"><a class="sourceLine" id="cb49-1" data-line-number="1">$ <span class="ex">kubectl</span> api-resources</a></code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1"></a>$ <span class="ex">kubectl</span> api-resources</span></code></pre></div>
 <ul>
 <li>Description, information, syntaxe :</li>
 </ul>
-<pre class="sourceCode bash" id="cb50"><code class="sourceCode bash"><a class="sourceLine" id="cb50-1" data-line-number="1">$ <span class="ex">kubectl</span> explain pods</a>
-<a class="sourceLine" id="cb50-2" data-line-number="2">$ <span class="ex">kubectl</span> explain pods.spec</a>
-<a class="sourceLine" id="cb50-3" data-line-number="3">$ <span class="ex">kubectl</span> explain pods.spec.containers</a></code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1"></a>$ <span class="ex">kubectl</span> explain pods</span>
+<span id="cb50-2"><a href="#cb50-2"></a>$ <span class="ex">kubectl</span> explain pods.spec</span>
+<span id="cb50-3"><a href="#cb50-3"></a>$ <span class="ex">kubectl</span> explain pods.spec.containers</span></code></pre></div>
 <h2 id="les-pods">LES PODS</h2>
 <ul>
 <li><p><a href="https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/" class="uri">https://kubernetes.io/fr/docs/concepts/workloads/pods/pod-overview/</a></p></li>
@@ -1000,22 +1034,22 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <ol type="1">
 <li>Création d’une ressource de type pod :</li>
 </ol>
-<pre class="sourceCode bash" id="cb51"><code class="sourceCode bash"><a class="sourceLine" id="cb51-1" data-line-number="1">$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine</a></code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1"></a>$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine</span></code></pre></div>
 <ol start="2" type="1">
 <li>Lister le pod (namespace default)</li>
 </ol>
-<pre class="sourceCode bash" id="cb52"><code class="sourceCode bash"><a class="sourceLine" id="cb52-1" data-line-number="1">$ <span class="ex">kubectl</span> get pods</a></code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1"></a>$ <span class="ex">kubectl</span> get pods</span></code></pre></div>
 <ol start="3" type="1">
 <li>Obtenir les infos sur la ressource pod + les events (logs)</li>
 </ol>
-<pre class="sourceCode bash" id="cb53"><code class="sourceCode bash"><a class="sourceLine" id="cb53-1" data-line-number="1">$ <span class="ex">kubectl</span> describe pod nginx</a></code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1"></a>$ <span class="ex">kubectl</span> describe pod nginx</span></code></pre></div>
 <ol start="4" type="1">
 <li>Utilisation du port-forwarding pour bind un port local vers le pod (test, debugging)</li>
 </ol>
 <ul>
 <li><a href="https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/" class="uri">https://kubernetes.io/docs/tasks/access-application-cluster/port-forward-access-application-cluster/</a></li>
 </ul>
-<pre class="sourceCode bash" id="cb54"><code class="sourceCode bash"><a class="sourceLine" id="cb54-1" data-line-number="1">$ <span class="ex">kubectl</span> port-forward nginx 8080:80</a></code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1"></a>$ <span class="ex">kubectl</span> port-forward nginx 8080:80</span></code></pre></div>
 <ol start="5" type="1">
 <li>Transposer les commande docker à kubernetes</li>
 </ol>
@@ -1026,7 +1060,7 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <ol start="6" type="1">
 <li>Supprimer une ressource POD :</li>
 </ol>
-<pre class="sourceCode bash" id="cb55"><code class="sourceCode bash"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="ex">kubectl</span> delete pod nginx</a></code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1"></a><span class="ex">kubectl</span> delete pod nginx</span></code></pre></div>
 <h3 id="approche-déclarative">Approche déclarative</h3>
 <blockquote>
 <p>Approche déclarative : spec (spécification YAML)</p>
@@ -1034,11 +1068,11 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <ol type="1">
 <li>Utiliser la commande impérative pour générer un fichier de spec</li>
 </ol>
-<pre class="sourceCode bash" id="cb56"><code class="sourceCode bash"><a class="sourceLine" id="cb56-1" data-line-number="1">$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine --dry-run=client -o yaml <span class="op">&gt;</span> spec_pod.yml</a></code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1"></a>$ <span class="ex">kubectl</span> run nginx --image nginx:1.18-alpine --dry-run=client -o yaml <span class="op">&gt;</span> spec_pod.yml</span></code></pre></div>
 <ol start="2" type="1">
 <li>Déclarer la ressource</li>
 </ol>
-<pre class="sourceCode bash" id="cb57"><code class="sourceCode bash"><a class="sourceLine" id="cb57-1" data-line-number="1">$ <span class="ex">kubectl</span> apply -f spec_pod.yml</a></code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb57-1"><a href="#cb57-1"></a>$ <span class="ex">kubectl</span> apply -f spec_pod.yml</span></code></pre></div>
 <h2 id="mise-en-réseau---service">Mise en réseau - service</h2>
 <ul>
 <li><p><a href="https://kubernetes.io/fr/docs/concepts/services-networking/service/" class="uri">https://kubernetes.io/fr/docs/concepts/services-networking/service/</a></p></li>
@@ -1058,8 +1092,8 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <blockquote>
 <p>Prérequis : activation des <strong>metrics</strong> pour les Pods</p>
 </blockquote>
-<pre class="sourceCode bash" id="cb58"><code class="sourceCode bash"><a class="sourceLine" id="cb58-1" data-line-number="1">$ <span class="ex">kubectl.exe</span> -n myphp scale deployment.apps/frontend-deploy --replicas=8</a>
-<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="ex">deployment.apps/frontend-deploy</span> scaled</a></code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb58-1"><a href="#cb58-1"></a>$ <span class="ex">kubectl.exe</span> -n myphp scale deployment.apps/frontend-deploy --replicas=8</span>
+<span id="cb58-2"><a href="#cb58-2"></a><span class="ex">deployment.apps/frontend-deploy</span> scaled</span></code></pre></div>
 <p>Résultat sur le Dashboard <em>(minikube)</em>:</p>
 <p><img src="2021-07-16-POEI-Kubernetes/2021-07-19_14h12_08.png" /></p>
 <h2 id="configmaps">ConfigMaps</h2>
@@ -1067,12 +1101,12 @@ On peut utiliser le dashboard pour faire la mise à l’échelle (la commande ku
 <ul>
 <li>Lister les ressources configMaps : il faut les chercher explicitement</li>
 </ul>
-<pre class="sourceCode bash" id="cb59"><code class="sourceCode bash"><a class="sourceLine" id="cb59-1" data-line-number="1">$ <span class="ex">kubectl</span> get cm</a>
-<a class="sourceLine" id="cb59-2" data-line-number="2">$ <span class="ex">kubectl</span> get configmaps</a></code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb59-1"><a href="#cb59-1"></a>$ <span class="ex">kubectl</span> get cm</span>
+<span id="cb59-2"><a href="#cb59-2"></a>$ <span class="ex">kubectl</span> get configmaps</span></code></pre></div>
 <ul>
 <li>Lister pod et configMaps du namespace default</li>
 </ul>
-<pre class="sourceCode bash" id="cb60"><code class="sourceCode bash"><a class="sourceLine" id="cb60-1" data-line-number="1">$ <span class="ex">kubectl</span> get configmaps,pod</a></code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb60-1"><a href="#cb60-1"></a>$ <span class="ex">kubectl</span> get configmaps,pod</span></code></pre></div>
 <hr />
 <h1 id="tips-tricks"><em>Tips &amp; Tricks</em></h1>
 <h2 id="cheatsheet">Cheatsheet</h2>

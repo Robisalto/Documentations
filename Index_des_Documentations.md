@@ -15,6 +15,10 @@ extensions: 'extra'
 # Formations
 - [Configurer Visual Studio Code](ConfigurerVisualStudioCode.html)
 
+## Formations avec **Capgemini**
+
+- [Microsoft Azure Virtual Training Day](2021-09-14-microsoft-azure.html)
+
 ## POEI DevOps
 
 *[Dawan Présentation POEI DevOps.pdf](2021-06-07-POEI-Linux/Dawan_Présentation_POEI_DevOps.pdf)*

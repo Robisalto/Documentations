@@ -6,27 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="David DEBRAY" />
   <title>Digital Ocean Markdown Tutorial</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">Digital Ocean Markdown Tutorial</h1>
 <p class="author">David DEBRAY</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#title-header-h1-header">Title Header (H1 header)</a><ul>
+<li><a href="#title-header-h1-header">Title Header (H1 header)</a>
+<ul>
 <li><a href="#introduction-h3-header">Introduction (H3 header)</a></li>
 <li><a href="#prerequisites-h2-header">Prerequisites (H2 header)</a></li>
 <li><a href="#step-1-title-case">Step 1 — Title Case</a></li>
@@ -39,7 +41,7 @@
 <p><link rel="icon" href="favicon.png" type="image/png" /></p>
 <h1 id="title-header-h1-header">Title Header (H1 header)</h1>
 <h3 id="introduction-h3-header">Introduction (H3 header)</h3>
-<p>This is some placeholder text to show examples of Markdown formatting. We have <a href="https://github.com/do-community/do-article-templates">a full article template</a> you can use when writing a DigitalOcean article. Please refer to our style and formatting guidelines for more detailed explanations: <a href="do.co/style" class="uri">do.co/style</a></p>
+<p>This is some placeholder text to show examples of Markdown formatting. We have <a href="https://github.com/do-community/do-article-templates">a full article template</a> you can use when writing a DigitalOcean article. Please refer to our style and formatting guidelines for more detailed explanations: <a href="do.co/style">do.co/style</a></p>
 <h2 id="prerequisites-h2-header">Prerequisites (H2 header)</h2>
 <p>Before you begin this guide you’ll need the following:</p>
 <ul>
@@ -67,13 +69,13 @@ Could not connect to Redis at 127.0.0.1:6379: Connection refused</code></pre>
 <h2 id="step-3-title-case">Step 3 — Title Case</h2>
 <p>Here’s how to include an image:</p>
 <figure>
-<img src="https://assets.digitalocean.com/logos/DO_Logo_horizontal_blue.png" alt="Alt text for screen readers" /><figcaption>Alt text for screen readers</figcaption>
+<img src="https://assets.digitalocean.com/logos/DO_Logo_horizontal_blue.png" alt="" /><figcaption>Alt text for screen readers</figcaption>
 </figure>
 <p>Here is a note, a warning, some info and a draft note:</p>
-<p>&lt;<span class="math inline">&gt;[<em>n</em><em>o</em><em>t</em><em>e</em>]* * <em>N</em><em>o</em><em>t</em><em>e</em> : * * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>f</em><em>o</em><em>r</em><em>n</em><em>o</em><em>t</em><em>e</em><em>s</em><em>o</em><em>n</em><em>a</em><em>p</em><em>u</em><em>b</em><em>l</em><em>i</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>.&lt;</span>&gt;</p>
-<p>&lt;<span class="math inline">&gt;[<em>w</em><em>a</em><em>r</em><em>n</em><em>i</em><em>n</em><em>g</em>]* * <em>W</em><em>a</em><em>r</em><em>n</em><em>i</em><em>n</em><em>g</em> : * * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>t</em><em>o</em><em>w</em><em>a</em><em>r</em><em>n</em><em>u</em><em>s</em><em>e</em><em>r</em><em>s</em>.&lt;</span>&gt;</p>
-<p>&lt;<span class="math inline">&gt;[<em>i</em><em>n</em><em>f</em><em>o</em>]* * <em>I</em><em>n</em><em>f</em><em>o</em> : * * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>f</em><em>o</em><em>r</em><em>p</em><em>r</em><em>o</em><em>d</em><em>u</em><em>c</em><em>t</em><em>i</em><em>n</em><em>f</em><em>o</em><em>r</em><em>m</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>.&lt;</span>&gt;</p>
-<p>&lt;<span class="math inline">&gt;[<em>d</em><em>r</em><em>a</em><em>f</em><em>t</em>]* * <em>D</em><em>r</em><em>a</em><em>f</em><em>t</em> : * * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>f</em><em>o</em><em>r</em><em>n</em><em>o</em><em>t</em><em>e</em><em>s</em><em>i</em><em>n</em><em>a</em><em>d</em><em>r</em><em>a</em><em>f</em><em>t</em><em>p</em><em>u</em><em>b</em><em>l</em><em>i</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>.&lt;</span>&gt;</p>
+<p>&lt;<span class="math inline"> &gt; [<em>n</em><em>o</em><em>t</em><em>e</em>] *  * <em>N</em><em>o</em><em>t</em><em>e</em> :  *  * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>f</em><em>o</em><em>r</em><em>n</em><em>o</em><em>t</em><em>e</em><em>s</em><em>o</em><em>n</em><em>a</em><em>p</em><em>u</em><em>b</em><em>l</em><em>i</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>.&lt;</span>&gt;</p>
+<p>&lt;<span class="math inline"> &gt; [<em>w</em><em>a</em><em>r</em><em>n</em><em>i</em><em>n</em><em>g</em>] *  * <em>W</em><em>a</em><em>r</em><em>n</em><em>i</em><em>n</em><em>g</em> :  *  * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>t</em><em>o</em><em>w</em><em>a</em><em>r</em><em>n</em><em>u</em><em>s</em><em>e</em><em>r</em><em>s</em>.&lt;</span>&gt;</p>
+<p>&lt;<span class="math inline"> &gt; [<em>i</em><em>n</em><em>f</em><em>o</em>] *  * <em>I</em><em>n</em><em>f</em><em>o</em> :  *  * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>f</em><em>o</em><em>r</em><em>p</em><em>r</em><em>o</em><em>d</em><em>u</em><em>c</em><em>t</em><em>i</em><em>n</em><em>f</em><em>o</em><em>r</em><em>m</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>.&lt;</span>&gt;</p>
+<p>&lt;<span class="math inline"> &gt; [<em>d</em><em>r</em><em>a</em><em>f</em><em>t</em>] *  * <em>D</em><em>r</em><em>a</em><em>f</em><em>t</em> :  *  * <em>U</em><em>s</em><em>e</em><em>t</em><em>h</em><em>i</em><em>s</em><em>f</em><em>o</em><em>r</em><em>n</em><em>o</em><em>t</em><em>e</em><em>s</em><em>i</em><em>n</em><em>a</em><em>d</em><em>r</em><em>a</em><em>f</em><em>t</em><em>p</em><em>u</em><em>b</em><em>l</em><em>i</em><em>c</em><em>a</em><em>t</em><em>i</em><em>o</em><em>n</em>.&lt;</span>&gt;</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>Please refer to our <a href="http://do.co/style">writing guidelines</a> for more detailed explanations on our style and formatting.</p>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">

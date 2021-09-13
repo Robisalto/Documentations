@@ -7,90 +7,100 @@
   <meta name="author" content="David DEBRAY" />
   <meta name="dcterms.date" content="2021-08-02" />
   <title>POEI DevOps - Projet CapG</title>
-  <style type="text/css">
-      code{white-space: pre-wrap;}
-      span.smallcaps{font-variant: small-caps;}
-      span.underline{text-decoration: underline;}
-      div.line-block{white-space: pre-line;}
-      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <style type="text/css">
-a.sourceLine { display: inline-block; min-height: 1.25em; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; }
-@media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
-}
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-    color: #aaaaaa;
-  }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-@media screen {
-a.sourceLine::before { text-decoration: underline; color: initial; }
-}
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.bn { color: #40a070; } /* BaseN */
-code span.fl { color: #40a070; } /* Float */
-code span.ch { color: #4070a0; } /* Char */
-code span.st { color: #4070a0; } /* String */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.ot { color: #007020; } /* Other */
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.fu { color: #06287e; } /* Function */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code span.cn { color: #880000; } /* Constant */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.im { } /* Import */
-code span.va { color: #19177c; } /* Variable */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.op { color: #666666; } /* Operator */
-code span.bu { } /* BuiltIn */
-code span.ex { } /* Extension */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.at { color: #7d9029; } /* Attribute */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-  <link rel="stylesheet" href="styleDark.css">
+  <link rel="stylesheet" href="styleDark.css" />
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
   
 </head>
 <body>
-<header>
+<header id="title-block-header">
 <h1 class="title">POEI DevOps - Projet CapG</h1>
 <p class="author">David DEBRAY</p>
 <p class="date">2021-08-02</p>
 </header>
-<nav id="TOC">
+<nav id="TOC" role="doc-toc">
 <ul>
 <li><a href="#présentation-entrepriseéquipe">1. Présentation entreprise/équipe</a></li>
 <li><a href="#présentation-projet">2. Présentation projet</a></li>
-<li><a href="#organisation-du-projet">3. Organisation du Projet</a><ul>
+<li><a href="#organisation-du-projet">3. Organisation du Projet</a>
+<ul>
 <li><a href="#dépôt-git">3.1.Dépôt Git</a></li>
 <li><a href="#authentification-par-clés-ssh">3.2. Authentification par clés SSH</a></li>
 </ul></li>
 <li><a href="#schéma-fonctionnel">4. Schéma fonctionnel</a></li>
-<li><a href="#code">5. Code</a><ul>
+<li><a href="#code">5. Code</a>
+<ul>
 <li><a href="#déploiement-dune-machine-virtuelle-avec-vagrant">5.1 Déploiement d’une machine virtuelle avec Vagrant</a></li>
 <li><a href="#création-dun-stack-micro-service-avec-docker">5.2 Création d’un stack micro-service avec Docker</a></li>
 <li><a href="#déploiement-dun-stack-micro-service-via-ansible">5.3 Déploiement d’un stack micro-service via Ansible</a></li>
@@ -99,14 +109,16 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <li><a href="#problèmes-rencontrés-solutions">7. Problèmes rencontrés &amp; Solutions</a></li>
 <li><a href="#résultat">8. Résultat</a></li>
 <li><a href="#sécurité-des-images-docker">9. Sécurité des images Docker</a></li>
-<li><a href="#analyse-de-vulnérabilités-en-cours">9.1 Analyse de vulnérabilités <em>(en cours)</em></a><ul>
+<li><a href="#analyse-de-vulnérabilités-en-cours">9.1 Analyse de vulnérabilités <em>(en cours)</em></a>
+<ul>
 <li><a href="#choix-des-images-à-analyser">9.1.2 Choix de(s) image(s) à analyser</a></li>
 <li><a href="#téléchargement-execution-live-de-trivy">9.1.3 Téléchargement &amp; Execution <em>Live</em> de <strong>Trivy</strong></a></li>
 <li><a href="#log-des-vulnérabilités">9.1.4 Log des vulnérabilités</a></li>
 <li><a href="#autres-options">9.1.5 Autres Options</a></li>
 <li><a href="#scan-dun-service">9.1.3 Scan d’un service</a></li>
 </ul></li>
-<li><a href="#intégration-continue">10. Intégration continue</a><ul>
+<li><a href="#intégration-continue">10. Intégration continue</a>
+<ul>
 <li><a href="#pipeline-n1-hedgedoc_mariadb">Pipeline n°1 HedgeDoc_MariaDB</a></li>
 <li><a href="#pipeline-n2-esn_3">Pipeline n°2: ESN_3</a></li>
 </ul></li>
@@ -138,7 +150,7 @@ code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Infor
 <ol type="1">
 <li>On génère la pair de clés <em>(privée/publique)</em></li>
 </ol>
-<pre class="sourceCode bash" id="cb1"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="fu">ssh-keygen</span> -t ed25519</a></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">ssh-keygen</span> -t ed25519</span></code></pre></div>
 <ol start="2" type="1">
 <li>Lecture du contenu de la clé publique</li>
 </ol>
@@ -147,137 +159,137 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG8EhxxAC6ZHMyLQo7c+rRTPD48T/PJxb4Rn9qQNXLHl
 </code></pre>
 <h2 id="schéma-fonctionnel">4. Schéma fonctionnel</h2>
 <figure>
-<img src="/hedgedoc/public/uploads/schema-infrastructure.png" alt="schema-infrastructure.png" /><figcaption>schema-infrastructure.png</figcaption>
+<img src="/hedgedoc/public/uploads/schema-infrastructure.png" alt="" /><figcaption>schema-infrastructure.png</figcaption>
 </figure>
 <p><img src="https://github.com/davidchdebray/hedgedoc_mariadb/blob/main/hedgedoc_uploads/schema-infrastructure.png" /></p>
 <figure>
-<img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_535a4a04f43f32f22fa1cf9319bbbe2f.png" alt="schema infrastrucutre" /><figcaption>schema infrastrucutre</figcaption>
+<img src="https://codimd.s3.shivering-isles.com/demo/uploads/upload_535a4a04f43f32f22fa1cf9319bbbe2f.png" alt="" /><figcaption>schema infrastrucutre</figcaption>
 </figure>
 <h2 id="code">5. Code</h2>
 <h3 id="déploiement-dune-machine-virtuelle-avec-vagrant">5.1 Déploiement d’une machine virtuelle avec Vagrant</h3>
 <p>Fichier <code>Vagrantfile</code> permettant la création de machines virtuelles:</p>
-<pre class="sourceCode ruby" id="cb3"><code class="sourceCode ruby"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">## Toute commande doit-ere exécution dans le répertoire contenant le Dockerfile</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># vagrant up</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co"># vagrant halt</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># vagrant destroy</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># vagrant global-config</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#----------------------</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co"># vagrant ssh [NAME|ID]</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#Configuration d&#39;une VM pour un reseau donner</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="dt">Vagrant</span>.configure(<span class="dv">2</span>) <span class="kw">do</span> |config|</a>
-<a class="sourceLine" id="cb3-12" data-line-number="12">  <span class="co">#nom du reseau</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13">  int= <span class="st">&quot;Intel(R) Wireless-AC 9260 160MHz&quot;</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14">  <span class="co">#ip de la VM sur le sous reseau au  choix en 1 et 255 (***.***.*.lala)</span></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15">  range = <span class="st">&quot;192.168.1.25&quot;</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16">  <span class="co"># 255.2555.255.0 dans le config reseau en general (binaire &gt;1.1.1.0)</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17">  <span class="co"># on choisi le numeros de machine autre que celui de mam machine</span></a>
-<a class="sourceLine" id="cb3-18" data-line-number="18">  cidr = <span class="st">&quot;26&quot;</span></a>
-<a class="sourceLine" id="cb3-19" data-line-number="19"></a>
-<a class="sourceLine" id="cb3-20" data-line-number="20">  [</a>
-<a class="sourceLine" id="cb3-21" data-line-number="21">    <span class="co">#nom de la box , nombre de ram (8G) , memoire disque, cpu</span></a>
-<a class="sourceLine" id="cb3-22" data-line-number="22">    [<span class="st">&quot;hyperviseurcapgenano&quot;</span>, <span class="st">&quot;</span><span class="ot">#{</span>range<span class="ot">}</span><span class="st">&quot;</span>, <span class="st">&quot;8192&quot;</span>, <span class="st">&quot;50GB&quot;</span>, <span class="ch">&#39;4&#39;</span>, <span class="st">&quot;ubuntu/focal64&quot;</span>],</a>
-<a class="sourceLine" id="cb3-23" data-line-number="23">  ].each <span class="kw">do</span> |vmname,ip,mem,size,cpu,os|</a>
-<a class="sourceLine" id="cb3-24" data-line-number="24">    config.vm.define <span class="st">&quot;</span><span class="ot">#{</span>vmname<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">do</span> |machine|</a>
-<a class="sourceLine" id="cb3-25" data-line-number="25"></a>
-<a class="sourceLine" id="cb3-26" data-line-number="26">      machine.vm.provider <span class="st">&quot;virtualbox&quot;</span> <span class="kw">do</span> |v|</a>
-<a class="sourceLine" id="cb3-27" data-line-number="27">        v.memory = <span class="st">&quot;</span><span class="ot">#{</span>mem<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-28" data-line-number="28">        v.cpus = <span class="st">&quot;</span><span class="ot">#{</span>cpu<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-29" data-line-number="29">        v.name = <span class="st">&quot;</span><span class="ot">#{</span>vmname<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-30" data-line-number="30">        v.customize [<span class="st">&quot;modifyvm&quot;</span>, <span class="st">:id</span>, <span class="st">&quot;--ioapic&quot;</span>, <span class="st">&quot;on&quot;</span>]</a>
-<a class="sourceLine" id="cb3-31" data-line-number="31">        v.customize [<span class="st">&quot;modifyvm&quot;</span>, <span class="st">:id</span>, <span class="st">&quot;--natdnshostresolver1&quot;</span>, <span class="st">&quot;on&quot;</span>]</a>
-<a class="sourceLine" id="cb3-32" data-line-number="32">      <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-33" data-line-number="33">      machine.vm.box = <span class="st">&quot;</span><span class="ot">#{</span>os<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-34" data-line-number="34">      <span class="co"># machine.disksize.size = &quot;#{size}&quot;</span></a>
-<a class="sourceLine" id="cb3-35" data-line-number="35">      machine.vm.hostname = <span class="st">&quot;</span><span class="ot">#{</span>vmname<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-36" data-line-number="36">      machine.vm.network <span class="st">&quot;public_network&quot;</span>,<span class="st">bridge: &quot;</span><span class="ot">#{</span>int<span class="ot">}</span><span class="st">&quot;</span>,</a>
-<a class="sourceLine" id="cb3-37" data-line-number="37">        <span class="st">ip: &quot;</span><span class="ot">#{</span>ip<span class="ot">}</span><span class="st">&quot;</span>,</a>
-<a class="sourceLine" id="cb3-38" data-line-number="38">        <span class="st">netmask: &quot;</span><span class="ot">#{</span>cidr<span class="ot">}</span><span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb3-39" data-line-number="39">      machine.ssh.insert_key = <span class="dv">false</span></a>
-<a class="sourceLine" id="cb3-40" data-line-number="40">    <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-41" data-line-number="41">  <span class="kw">end</span></a>
-<a class="sourceLine" id="cb3-42" data-line-number="42"><span class="kw">end</span></a></code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">## Toute commande doit-ere exécution dans le répertoire contenant le Dockerfile</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co"># vagrant up</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="co"># vagrant halt</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># vagrant destroy</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># vagrant global-config</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a><span class="co">#----------------------</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># vagrant ssh [NAME|ID]</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a></span>
+<span id="cb3-10"><a href="#cb3-10"></a><span class="co">#Configuration d&#39;une VM pour un reseau donner</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a><span class="dt">Vagrant</span>.configure(<span class="dv">2</span>) <span class="kw">do</span> |config|</span>
+<span id="cb3-12"><a href="#cb3-12"></a>  <span class="co">#nom du reseau</span></span>
+<span id="cb3-13"><a href="#cb3-13"></a>  int= <span class="st">&quot;Intel(R) Wireless-AC 9260 160MHz&quot;</span></span>
+<span id="cb3-14"><a href="#cb3-14"></a>  <span class="co">#ip de la VM sur le sous reseau au  choix en 1 et 255 (***.***.*.lala)</span></span>
+<span id="cb3-15"><a href="#cb3-15"></a>  range = <span class="st">&quot;192.168.1.25&quot;</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="co"># 255.2555.255.0 dans le config reseau en general (binaire &gt;1.1.1.0)</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="co"># on choisi le numeros de machine autre que celui de mam machine</span></span>
+<span id="cb3-18"><a href="#cb3-18"></a>  cidr = <span class="st">&quot;26&quot;</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a></span>
+<span id="cb3-20"><a href="#cb3-20"></a>  [</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="co">#nom de la box , nombre de ram (8G) , memoire disque, cpu</span></span>
+<span id="cb3-22"><a href="#cb3-22"></a>    [<span class="st">&quot;hyperviseurcapgenano&quot;</span>, <span class="st">&quot;</span><span class="ot">#{</span>range<span class="ot">}</span><span class="st">&quot;</span>, <span class="st">&quot;8192&quot;</span>, <span class="st">&quot;50GB&quot;</span>, <span class="ch">&#39;4&#39;</span>, <span class="st">&quot;ubuntu/focal64&quot;</span>],</span>
+<span id="cb3-23"><a href="#cb3-23"></a>  ].each <span class="kw">do</span> |vmname,ip,mem,size,cpu,os|</span>
+<span id="cb3-24"><a href="#cb3-24"></a>    config.vm.define <span class="st">&quot;</span><span class="ot">#{</span>vmname<span class="ot">}</span><span class="st">&quot;</span> <span class="kw">do</span> |machine|</span>
+<span id="cb3-25"><a href="#cb3-25"></a></span>
+<span id="cb3-26"><a href="#cb3-26"></a>      machine.vm.provider <span class="st">&quot;virtualbox&quot;</span> <span class="kw">do</span> |v|</span>
+<span id="cb3-27"><a href="#cb3-27"></a>        v.memory = <span class="st">&quot;</span><span class="ot">#{</span>mem<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb3-28"><a href="#cb3-28"></a>        v.cpus = <span class="st">&quot;</span><span class="ot">#{</span>cpu<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb3-29"><a href="#cb3-29"></a>        v.name = <span class="st">&quot;</span><span class="ot">#{</span>vmname<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb3-30"><a href="#cb3-30"></a>        v.customize [<span class="st">&quot;modifyvm&quot;</span>, <span class="st">:id</span>, <span class="st">&quot;--ioapic&quot;</span>, <span class="st">&quot;on&quot;</span>]</span>
+<span id="cb3-31"><a href="#cb3-31"></a>        v.customize [<span class="st">&quot;modifyvm&quot;</span>, <span class="st">:id</span>, <span class="st">&quot;--natdnshostresolver1&quot;</span>, <span class="st">&quot;on&quot;</span>]</span>
+<span id="cb3-32"><a href="#cb3-32"></a>      <span class="kw">end</span></span>
+<span id="cb3-33"><a href="#cb3-33"></a>      machine.vm.box = <span class="st">&quot;</span><span class="ot">#{</span>os<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb3-34"><a href="#cb3-34"></a>      <span class="co"># machine.disksize.size = &quot;#{size}&quot;</span></span>
+<span id="cb3-35"><a href="#cb3-35"></a>      machine.vm.hostname = <span class="st">&quot;</span><span class="ot">#{</span>vmname<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb3-36"><a href="#cb3-36"></a>      machine.vm.network <span class="st">&quot;public_network&quot;</span>,<span class="st">bridge: &quot;</span><span class="ot">#{</span>int<span class="ot">}</span><span class="st">&quot;</span>,</span>
+<span id="cb3-37"><a href="#cb3-37"></a>        <span class="st">ip: &quot;</span><span class="ot">#{</span>ip<span class="ot">}</span><span class="st">&quot;</span>,</span>
+<span id="cb3-38"><a href="#cb3-38"></a>        <span class="st">netmask: &quot;</span><span class="ot">#{</span>cidr<span class="ot">}</span><span class="st">&quot;</span></span>
+<span id="cb3-39"><a href="#cb3-39"></a>      machine.ssh.insert_key = <span class="dv">false</span></span>
+<span id="cb3-40"><a href="#cb3-40"></a>    <span class="kw">end</span></span>
+<span id="cb3-41"><a href="#cb3-41"></a>  <span class="kw">end</span></span>
+<span id="cb3-42"><a href="#cb3-42"></a><span class="kw">end</span></span></code></pre></div>
 <h3 id="création-dun-stack-micro-service-avec-docker">5.2 Création d’un stack micro-service avec Docker</h3>
-<pre class="sourceCode bash" id="cb4"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">stagiaire@mydeby</span>:~/PROJECTS$ tree -aL 1 hedgedoc_mariadb/</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="ex">hedgedoc_mariadb/</span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">├── <span class="ex">docker-compose.yml</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">├── <span class="ex">.env</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">├── <span class="ex">.envdatabase</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">├── <span class="ex">.envhedgedoc</span></a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">├── <span class="ex">.git</span></a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">├── <span class="ex">.gitignore</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">├── <span class="ex">hedgedoc_config</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10">├── <span class="ex">hedgedoc_uploads</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11">├── <span class="ex">mariadb_database</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12">└── <span class="ex">README.md</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="ex">4</span> directories, 6 files</a></code></pre>
-<pre class="sourceCode yaml" id="cb5"><code class="sourceCode yaml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">version:</span><span class="at"> </span><span class="st">&quot;3&quot;</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="fu">services:</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="fu">mariadb:</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="fu">image:</span><span class="at"> ghcr.io/linuxserver/mariadb:${MARIADB_IMAGE_VERSION}</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">    <span class="fu">container_name:</span><span class="at"> ${DATABASE_NAME}</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">    <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">      <span class="kw">-</span> <span class="fu">${DATABASE_VOLUME}:</span><span class="at">/config</span></a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">    <span class="fu">env_file:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">      <span class="kw">-</span> .envdatabase</a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">    <span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">      <span class="fu">backend:</span></a>
-<a class="sourceLine" id="cb5-12" data-line-number="12">    <span class="fu">restart:</span><span class="at"> ${RESTART_DEFAULT}</span></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14">  <span class="fu">hedgedoc:</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15">    <span class="fu">image:</span><span class="at"> ghcr.io/linuxserver/hedgedoc:${HEDGEDOC_IMAGE_VERSION}</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16">    <span class="fu">container_name:</span><span class="at"> ${APP_NAME}</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17">    <span class="fu">depends_on:</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18">      <span class="kw">-</span> mariadb</a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">    <span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb5-20" data-line-number="20">      <span class="kw">-</span> <span class="fu">${APP_VOLUME}:</span><span class="at">/config</span></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21">      <span class="kw">-</span> <span class="fu">hedgedoc_uploads:</span><span class="at">/hedgedoc/public/uploads</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23">    <span class="fu">env_file:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">      <span class="kw">-</span> .envhedgedoc</a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">    <span class="fu">ports:</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26">      <span class="kw">-</span> <span class="st">&quot;${APP_PORT_IN}:${APP_PORT_OUT}&quot;</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27">    <span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">      <span class="fu">backend:</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29">    <span class="fu">restart:</span><span class="at"> ${RESTART_DEFAULT}</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="fu">volumes:</span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33">  <span class="fu">mariadb_database:</span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34">  <span class="fu">hedgedoc_config:</span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35">  <span class="fu">hedgedoc_uploads:</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="fu">networks:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38">  <span class="fu">backend:</span></a></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">stagiaire@mydeby</span>:~/PROJECTS$ tree -aL 1 hedgedoc_mariadb/</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">hedgedoc_mariadb/</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>├── <span class="ex">docker-compose.yml</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>├── <span class="ex">.env</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>├── <span class="ex">.envdatabase</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>├── <span class="ex">.envhedgedoc</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a>├── <span class="ex">.git</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>├── <span class="ex">.gitignore</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>├── <span class="ex">hedgedoc_config</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>├── <span class="ex">hedgedoc_uploads</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>├── <span class="ex">mariadb_database</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>└── <span class="ex">README.md</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="ex">4</span> directories, 6 files</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;3&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="at">  </span><span class="fu">mariadb</span><span class="kw">:</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ghcr.io/linuxserver/mariadb:${MARIADB_IMAGE_VERSION}</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> ${DATABASE_NAME}</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ${DATABASE_VOLUME}:/config</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a><span class="at">    </span><span class="fu">env_file</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb5-9"><a href="#cb5-9"></a><span class="at">      </span><span class="kw">-</span><span class="at"> .envdatabase</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="at">    </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb5-11"><a href="#cb5-11"></a><span class="at">      </span><span class="fu">backend</span><span class="kw">:</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a><span class="at">    </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> ${RESTART_DEFAULT}</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="at">  </span><span class="fu">hedgedoc</span><span class="kw">:</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> ghcr.io/linuxserver/hedgedoc:${HEDGEDOC_IMAGE_VERSION}</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a><span class="at">    </span><span class="fu">container_name</span><span class="kw">:</span><span class="at"> ${APP_NAME}</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="at">      </span><span class="kw">-</span><span class="at"> mariadb</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a><span class="at">    </span><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a><span class="at">      </span><span class="kw">-</span><span class="at"> ${APP_VOLUME}:/config</span></span>
+<span id="cb5-21"><a href="#cb5-21"></a><span class="at">      </span><span class="kw">-</span><span class="at"> hedgedoc_uploads:/hedgedoc/public/uploads</span></span>
+<span id="cb5-22"><a href="#cb5-22"></a></span>
+<span id="cb5-23"><a href="#cb5-23"></a><span class="at">    </span><span class="fu">env_file</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb5-24"><a href="#cb5-24"></a><span class="at">      </span><span class="kw">-</span><span class="at"> .envhedgedoc</span></span>
+<span id="cb5-25"><a href="#cb5-25"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;${APP_PORT_IN}:${APP_PORT_OUT}&quot;</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a><span class="at">    </span><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb5-28"><a href="#cb5-28"></a><span class="at">      </span><span class="fu">backend</span><span class="kw">:</span></span>
+<span id="cb5-29"><a href="#cb5-29"></a><span class="at">    </span><span class="fu">restart</span><span class="kw">:</span><span class="at"> ${RESTART_DEFAULT}</span></span>
+<span id="cb5-30"><a href="#cb5-30"></a></span>
+<span id="cb5-31"><a href="#cb5-31"></a></span>
+<span id="cb5-32"><a href="#cb5-32"></a><span class="fu">volumes</span><span class="kw">:</span></span>
+<span id="cb5-33"><a href="#cb5-33"></a><span class="at">  </span><span class="fu">mariadb_database</span><span class="kw">:</span></span>
+<span id="cb5-34"><a href="#cb5-34"></a><span class="at">  </span><span class="fu">hedgedoc_config</span><span class="kw">:</span></span>
+<span id="cb5-35"><a href="#cb5-35"></a><span class="at">  </span><span class="fu">hedgedoc_uploads</span><span class="kw">:</span></span>
+<span id="cb5-36"><a href="#cb5-36"></a></span>
+<span id="cb5-37"><a href="#cb5-37"></a><span class="fu">networks</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb5-38"><a href="#cb5-38"></a><span class="at">  </span><span class="fu">backend</span><span class="kw">:</span></span></code></pre></div>
 <h3 id="déploiement-dun-stack-micro-service-via-ansible">5.3 Déploiement d’un stack micro-service via Ansible</h3>
 <h4 id="prérequis">5.3.1 Prérequis</h4>
 <h5 id="installation-de-ansible.posix">5.3.1.1 Installation de <strong>ansible.posix</strong>:</h5>
-<pre class="sourceCode bash" id="cb6"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="ex">ansible-galaxy</span> collection install ansible.posix</a></code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">ansible-galaxy</span> collection install ansible.posix</span></code></pre></div>
 <h5 id="installation-du-rôle-ansible-docker">5.3.1.2 Installation du rôle ansible <strong>Docker</strong></h5>
-<pre class="sourceCode bash" id="cb7"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="ex">ansible-galaxy</span> role install -r roles/requirements.yml -p roles/</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="ex">-</span> extracting ansible-role-docker__3.1.2 to /home/stagiaire/ProjetCapGemini/Entreprise2fifou/roles/ansible-role-docker__3.1.2</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="ex">-</span> ansible-role-docker__3.1.2 (3.1.2) <span class="ex">was</span> installed successfully</a></code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">ansible-galaxy</span> role install -r roles/requirements.yml -p roles/</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">-</span> extracting ansible-role-docker__3.1.2 to /home/stagiaire/ProjetCapGemini/Entreprise2fifou/roles/ansible-role-docker__3.1.2</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="ex">-</span> ansible-role-docker__3.1.2 (3.1.2) <span class="ex">was</span> installed successfully</span></code></pre></div>
 <p>Avec <code>requirements.yml</code> contenant:</p>
-<pre class="sourceCode yaml" id="cb8"><code class="sourceCode yaml"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">### Roles</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">## GITHUB / GALAXY</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="fu">roles:</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">-</span> <span class="fu">src:</span><span class="at"> </span><span class="st">&#39;https://github.com/geerlingguy/ansible-role-docker&#39;</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"> <span class="fu">version:</span><span class="at"> </span><span class="st">&#39;3.1.2&#39;</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"> <span class="fu">scm:</span><span class="at"> git</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7"> <span class="fu">name:</span><span class="at"> ansible-role-docker__3.1.2</span></a></code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">### Roles</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">## GITHUB / GALAXY</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">roles</span><span class="kw">:</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="kw">-</span><span class="at"> </span><span class="fu">src</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;https://github.com/geerlingguy/ansible-role-docker&#39;</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="at"> </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&#39;3.1.2&#39;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="at"> </span><span class="fu">scm</span><span class="kw">:</span><span class="at"> git</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ansible-role-docker__3.1.2</span></span></code></pre></div>
 <h5 id="installation-de-community.docker">5.3.1.3 Installation de <strong>community.docker</strong>:</h5>
-<pre class="sourceCode bash" id="cb9"><code class="sourceCode bash"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="ex">ansible-galaxy</span> collection install community.docker</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="ex">Process</span> install dependency map</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="ex">Starting</span> collection install process</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="ex">Installing</span> <span class="st">&#39;community.docker:1.9.0&#39;</span> to <span class="st">&#39;/home/stagiaire/.ansible/collections/ansible_collections/community/docker&#39;</span></a></code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="ex">ansible-galaxy</span> collection install community.docker</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">Process</span> install dependency map</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="ex">Starting</span> collection install process</span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="ex">Installing</span> <span class="st">&#39;community.docker:1.9.0&#39;</span> to <span class="st">&#39;/home/stagiaire/.ansible/collections/ansible_collections/community/docker&#39;</span></span></code></pre></div>
 <h4 id="section">5.3.2</h4>
-<pre class="sourceCode bash" id="cb10"><code class="sourceCode bash"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># Preparation du bootstrap-playbook.yml</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">## Copie de clé</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="ex">ssh-copy-id</span> -i /home/stagiaire/.ssh/id_ed25519.pub stagiaire@192.168.3.3</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co">## Test de connexion </span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="fu">ssh</span> stagiaire@192.168.3.3</a></code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Preparation du bootstrap-playbook.yml</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">## Copie de clé</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="ex">ssh-copy-id</span> -i /home/stagiaire/.ssh/id_ed25519.pub stagiaire@192.168.3.3</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="co">## Test de connexion </span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="fu">ssh</span> stagiaire@192.168.3.3</span></code></pre></div>
 <h2 id="déploiement">6. Déploiement</h2>
 <div class="success">
 <p>Tests + Implémentations =&gt; OK</p>
@@ -307,91 +319,94 @@ ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG8EhxxAC6ZHMyLQo7c+rRTPD48T/PJxb4Rn9qQNXLHl
 <p>Tutoriel: <a href="https://www.geekmunity.fr/?p=1804" class="uri">https://www.geekmunity.fr/?p=1804</a></p>
 <h3 id="choix-des-images-à-analyser">9.1.2 Choix de(s) image(s) à analyser</h3>
 <p>D’abord il s’agit de choisir le conatiner à analyser. Pour lister l’ensemble des images disponibles:</p>
-<pre class="sourceCode bash" id="cb11"><code class="sourceCode bash"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="ex">docker</span> image ls --all</a></code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="ex">docker</span> image ls --all</span></code></pre></div>
 <p>On obtient:</p>
 <p><img src="2021-08-02-POEI-ProjetCapGemini/2021-08-06_10h43_04.png" /></p>
 <p>Les 2 images qui nous intéresse pour le moment sont:</p>
-<pre class="sourceCode bash" id="cb12"><code class="sourceCode bash"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="ex">REPOSITORY</span>                                                         TAG           IMAGE ID       CREATED        SIZE</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="ex">ghcr.io/linuxserver/hedgedoc</span>                                       latest        ecc1e7056f47   6 days ago     584MB</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="ex">ghcr.io/linuxserver/mariadb</span>                                        latest        280679d1098c   6 days ago     352MB</a></code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="ex">REPOSITORY</span>                                                         TAG           IMAGE ID       CREATED        SIZE</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="ex">ghcr.io/linuxserver/hedgedoc</span>                                       latest        ecc1e7056f47   6 days ago     584MB</span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="ex">ghcr.io/linuxserver/mariadb</span>                                        latest        280679d1098c   6 days ago     352MB</span></code></pre></div>
 <h3 id="téléchargement-execution-live-de-trivy">9.1.3 Téléchargement &amp; Execution <em>Live</em> de <strong>Trivy</strong></h3>
 <p>Pour lancer un scan de vulnérabilité sur une image, utiliser la syntaxe suivante:</p>
-<pre class="sourceCode bash" id="cb13"><code class="sourceCode bash"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="ex">docker</span> run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest <span class="kw">|</span> <span class="fu">less</span></a></code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">docker</span> run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest <span class="kw">|</span> <span class="fu">less</span></span></code></pre></div>
 <h5 id="résultat-1">Résultat</h5>
 <p><img src="2021-08-02-POEI-ProjetCapGemini/2021-08-06_10h54_33.gif" /></p>
 <h3 id="log-des-vulnérabilités">9.1.4 Log des vulnérabilités</h3>
 <p>Ici on récupère les informations de vulnérabilités dans un fichier de logs associé:</p>
-<pre class="sourceCode bash" id="cb14"><code class="sourceCode bash"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="ex">docker</span> run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest <span class="op">&gt;</span> auditsec_HedgeDoc_APP.log</a></code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="ex">docker</span> run aquasec/trivy ghcr.io/linuxserver/hedgedoc:latest <span class="op">&gt;</span> auditsec_HedgeDoc_APP.log</span></code></pre></div>
 <h5 id="résultat-2">Résultat</h5>
 <p><img src="2021-08-02-POEI-ProjetCapGemini/2021-08-06_11h04_50.gif" /></p>
 <h3 id="autres-options">9.1.5 Autres Options</h3>
 <h4 id="scan-par-type">9.1.5.1 Scan par type</h4>
 <p>On peut également scanner par type de vulnérabilités, exemple avec CRITICAL:</p>
-<pre class="sourceCode bash" id="cb15"><code class="sourceCode bash"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="ex">docker</span> run aquasec/trivy --severity CRITICAL ghcr.io/linuxserver/hedgedoc:latest  <span class="kw">|</span> <span class="fu">less</span></a></code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="ex">docker</span> run aquasec/trivy --severity CRITICAL ghcr.io/linuxserver/hedgedoc:latest  <span class="kw">|</span> <span class="fu">less</span></span></code></pre></div>
 <h5 id="résultat-3">Résultat</h5>
 <p><img src="2021-08-02-POEI-ProjetCapGemini/2021-08-06_11h26_33.png" /></p>
 <h3 id="scan-dun-service">9.1.3 Scan d’un service</h3>
 <p>Installation de <code>Trivy</code> sur le serveur <strong>ansiblectl</strong>.</p>
 <p>Pour faire cette installation nous utiliserons un script, dont est la bes est disponible sur le site: <a href="https://aquasecurity.github.io/trivy/v0.19.2/getting-started/installation/" class="uri">https://aquasecurity.github.io/trivy/v0.19.2/getting-started/installation/</a>.</p>
 <p>Contenu du script <code>install_trivy.sh</code>:</p>
-<pre class="sourceCode bash" id="cb16"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="fu">sudo</span> apt-get install wget apt-transport-https gnupg lsb-release -y</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="fu">wget</span> -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key <span class="kw">|</span> <span class="fu">sudo</span> apt-key add -</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="bu">echo</span> deb https://aquasecurity.github.io/trivy-repo/deb <span class="va">$(</span><span class="ex">lsb_release</span> -sc<span class="va">)</span> main <span class="kw">|</span> <span class="fu">sudo</span> tee -a /etc/apt/sources.list.d/trivy.list</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="fu">sudo</span> apt-get update -y</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="fu">sudo</span> apt-get install trivy -y</a></code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">sudo</span> apt-get install wget apt-transport-https gnupg lsb-release -y</span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">wget</span> -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key <span class="kw">|</span> <span class="fu">sudo</span> apt-key add -</span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="bu">echo</span> deb https://aquasecurity.github.io/trivy-repo/deb <span class="va">$(</span><span class="ex">lsb_release</span> -sc<span class="va">)</span> main <span class="kw">|</span> <span class="fu">sudo</span> tee -a /etc/apt/sources.list.d/trivy.list</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="fu">sudo</span> apt-get update -y</span>
+<span id="cb16-5"><a href="#cb16-5"></a><span class="fu">sudo</span> apt-get install trivy -y</span></code></pre></div>
 <p>On peut scanner les vulnérabilités d’un service <em>(serveur:port)</em>:</p>
-<pre class="sourceCode bash" id="cb17"><code class="sourceCode bash"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="ex">trivy</span> server --listen 192.168.3.3:3000</a></code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="ex">trivy</span> server --listen 192.168.3.3:3000</span></code></pre></div>
 <h1 id="intégration-continue">10. Intégration continue</h1>
 <h2 id="pipeline-n1-hedgedoc_mariadb">Pipeline n°1 HedgeDoc_MariaDB</h2>
 <p>Contenu du fichier <code>.gitlab-ci.yml</code>:</p>
-<pre class="sourceCode yaml" id="cb18"><code class="sourceCode yaml"><a class="sourceLine" id="cb18-1" data-line-number="1"></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">  <span class="fu">image:</span><span class="at"> tmaier/docker-compose</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5">  <span class="fu">stages:</span></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">    <span class="kw">-</span> build</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7">    <span class="kw">-</span> test</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">    <span class="kw">-</span> deploy</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9">  <span class="fu">before_script:</span></a>
-<a class="sourceLine" id="cb18-10" data-line-number="10">    <span class="kw">-</span> &gt;</a>
-<a class="sourceLine" id="cb18-11" data-line-number="11">      echo <span class="st">&quot;$CI_REGISTRY_PASSWORD&quot;</span> | </a>
-<a class="sourceLine" id="cb18-12" data-line-number="12">      docker login $CI_REGISTRY </a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">      <span class="kw">-</span>u $CI_REGISTRY_USER </a>
-<a class="sourceLine" id="cb18-14" data-line-number="14">      <span class="kw">-</span>-password-stdin</a>
-<a class="sourceLine" id="cb18-15" data-line-number="15">  <span class="fu">services:</span></a>
-<a class="sourceLine" id="cb18-16" data-line-number="16">    <span class="kw">-</span> <span class="fu">docker:</span><span class="at">dind</span></a>
-<a class="sourceLine" id="cb18-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb18-18" data-line-number="18">  <span class="fu">test:</span></a>
-<a class="sourceLine" id="cb18-19" data-line-number="19">    <span class="fu">stage:</span><span class="at"> test</span></a>
-<a class="sourceLine" id="cb18-20" data-line-number="20">    <span class="fu">script:</span></a>
-<a class="sourceLine" id="cb18-21" data-line-number="21">      <span class="kw">-</span> docker-compose -f docker-compose.yml up -d</a>
-<a class="sourceLine" id="cb18-22" data-line-number="22">      <span class="kw">-</span> sleep 15</a>
-<a class="sourceLine" id="cb18-23" data-line-number="23">      <span class="kw">-</span> docker-compose -f docker-compose.yml ps | grep -o <span class="st">&quot;(healthy)&quot;</span></a>
-<a class="sourceLine" id="cb18-24" data-line-number="24"></a>
-<a class="sourceLine" id="cb18-25" data-line-number="25">    <span class="fu">rules:</span></a>
-<a class="sourceLine" id="cb18-26" data-line-number="26">      <span class="kw">-</span> <span class="fu">changes:</span><span class="at">  </span><span class="co"># Déclenché uniquement quand docker-compose.yml est modifié</span></a>
-<a class="sourceLine" id="cb18-27" data-line-number="27">        <span class="kw">-</span> docker-compose.yml</a>
-<a class="sourceLine" id="cb18-28" data-line-number="28"></a>
-<a class="sourceLine" id="cb18-29" data-line-number="29"><span class="co">...</span></a></code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb18-1"><a href="#cb18-1"></a></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="pp">---</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="at">  </span><span class="fu">image</span><span class="kw">:</span><span class="at"> tmaier/docker-compose</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="at">  </span><span class="fu">stages</span><span class="kw">:</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="at">    </span><span class="kw">-</span><span class="at"> build</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> test</span></span>
+<span id="cb18-8"><a href="#cb18-8"></a><span class="at">    </span><span class="kw">-</span><span class="at"> deploy</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a><span class="at">  </span><span class="fu">before_script</span><span class="kw">:</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a><span class="kw">    - </span><span class="ch">&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>      echo &quot;$CI_REGISTRY_PASSWORD&quot; | </span>
+<span id="cb18-12"><a href="#cb18-12"></a>      docker login $CI_REGISTRY </span>
+<span id="cb18-13"><a href="#cb18-13"></a>      -u $CI_REGISTRY_USER </span>
+<span id="cb18-14"><a href="#cb18-14"></a>      --password-stdin</span>
+<span id="cb18-15"><a href="#cb18-15"></a><span class="at">  </span><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb18-16"><a href="#cb18-16"></a><span class="at">    </span><span class="kw">-</span><span class="at"> docker:dind</span></span>
+<span id="cb18-17"><a href="#cb18-17"></a></span>
+<span id="cb18-18"><a href="#cb18-18"></a><span class="at">  </span><span class="fu">test</span><span class="kw">:</span></span>
+<span id="cb18-19"><a href="#cb18-19"></a><span class="at">    </span><span class="fu">stage</span><span class="kw">:</span><span class="at"> test</span></span>
+<span id="cb18-20"><a href="#cb18-20"></a><span class="at">    </span><span class="fu">script</span><span class="kw">:</span></span>
+<span id="cb18-21"><a href="#cb18-21"></a><span class="at">      </span><span class="kw">-</span><span class="at"> docker-compose -f docker-compose.yml up -d</span></span>
+<span id="cb18-22"><a href="#cb18-22"></a><span class="at">      </span><span class="kw">-</span><span class="at"> sleep 15</span></span>
+<span id="cb18-23"><a href="#cb18-23"></a><span class="at">      </span><span class="kw">-</span><span class="at"> docker-compose -f docker-compose.yml ps | grep -o &quot;(healthy)&quot;</span></span>
+<span id="cb18-24"><a href="#cb18-24"></a></span>
+<span id="cb18-25"><a href="#cb18-25"></a><span class="at">    </span><span class="fu">rules</span><span class="kw">:</span></span>
+<span id="cb18-26"><a href="#cb18-26"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">changes</span><span class="kw">:</span><span class="co">  # Déclenché uniquement quand docker-compose.yml est modifié</span></span>
+<span id="cb18-27"><a href="#cb18-27"></a><span class="at">        </span><span class="kw">-</span><span class="at"> docker-compose.yml</span></span>
+<span id="cb18-28"><a href="#cb18-28"></a></span>
+<span id="cb18-29"><a href="#cb18-29"></a><span class="co">...</span></span></code></pre></div>
 <h2 id="pipeline-n2-esn_3">Pipeline n°2: ESN_3</h2>
 <div class="warning">
 <p>Pas encore implémenté</p>
 </div>
 <h1 id="reste-à-faire">Reste à faire</h1>
-<ul>
-<li>[ ] Monitoring Prometheus &amp; Grafana</li>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+Monitoring Prometheus &amp; Grafana</li>
 </ul>
 <p><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.EnUfFN7C8Vfaep5DPRq6HQHaEc%26pid%3DApi&amp;f=1" /></p>
 <hr />
-<ul>
-<li>[ ] Surveillance des logs avec le Stack ELK <em>(ElasticSearch, Logstash, Kibana)</em></li>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+Surveillance des logs avec le Stack ELK <em>(ElasticSearch, Logstash, Kibana)</em></li>
 </ul>
 <p><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flogz.io%2Fwp-content%2Fuploads%2F2018%2F08%2Fimage21-1024x328.png&amp;f=1&amp;nofb=1" /></p>
 <hr />
-<ul>
-<li>[ ] Intégration continue des différents composants, y compris:
-<ul>
-<li>[ ] tests de sécurité automatisés des images Docker</li>
+<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+Intégration continue des différents composants, y compris:<ul class="task-list">
+<li><input type="checkbox" disabled="" />
+tests de sécurité automatisés des images Docker</li>
 </ul></li>
 </ul>
 <p><img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fblog.callr.tech%2Fgitlab-ansible-docker-ci-cd%2Fgitlab-docker-ansible.png&amp;f=1&amp;nofb=1" /></p>

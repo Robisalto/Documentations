@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /mnt/c/Users/Admin stagiaire.DESKTOP-8967908/GitHub/Documentations
+cd /mnt/c/Users/david/GitHub/Documentations
 clear
 echo " " > nav.txt
 
