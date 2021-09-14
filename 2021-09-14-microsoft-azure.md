@@ -114,6 +114,80 @@ Pour changer ça on utilisera le **pairing**.
 ![](2021-09-14-microsoft-azure/2021-09-13_11h58_04.png)
 
 
+# Module 4 - Sécurité
+
+## Azure Security Center
+![](2021-09-14-microsoft-azure/2021-09-14_09h35_03.png)
+
+## Azure Sentinel
+![](2021-09-14-microsoft-azure/2021-09-14_09h39_08.png)
+
+## Azure Key Vault
+![](2021-09-14-microsoft-azure/2021-09-14_09h40_03.png)
+
+
+## Groupes de sécurité réseau ou NSG *(Network Security Groups)*
+![](2021-09-14-microsoft-azure/2021-09-14_09h47_52.png)
+
+
+## Azure Firewall Manager
+![](2021-09-14-microsoft-azure/2021-09-14_09h50_28.png)
+
+
+## Protection Anti-DDOS
+![](2021-09-14-microsoft-azure/2021-09-14_09h51_07.png)
+
+:::info
+Pour centraliser toutes les options de sécurité on utilisera **Azure Firewall**.
+:::
+
+:::warning
+**Azure Firewall** est payant
+:::
+
+
+# Module 5 - Gouvernance, Confidentialité, Identité
+
+## Identité
+![](2021-09-14-microsoft-azure/2021-09-14_10h04_34.png)
+
+## Azure Active Directory *(ADD)*
+![](2021-09-14-microsoft-azure/2021-09-14_10h08_01.png)
+
+:::info
+On peut synchroniser un **Active Directory** *on-premise* vers un **ADD**
+:::
+
+## Tags *(balises)*
+![](2021-09-14-microsoft-azure/2021-09-14_10h24_26.png)
+
+:::info
+Permet de gérer plus facilement toutes les ressources.
+:::
+
+## Azure Policy
+![](2021-09-14-microsoft-azure/2021-09-14_10h25_36.png)
+
+
+
+# Module 6 - Facturation & Niveaux de Services
+
+6 facteurs influent sur le coût:
+
+![](2021-09-14-microsoft-azure/2021-09-14_10h56_00.png)
+![](2021-09-14-microsoft-azure/2021-09-14_11h00_46.png)
+
+
+## Azure Cost Management
+![](2021-09-14-microsoft-azure/2021-09-14_11h10_05.png)
+
+
+
+
+
+
+
+
 # Online Resources
 
 ## Official Resources
